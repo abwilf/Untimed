@@ -16,6 +16,7 @@
 		A2116D951CA968EC003D221D /* UntimedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116D941CA968EC003D221D /* UntimedUITests.swift */; };
 		A2116DA31CA96DB3003D221D /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116DA21CA96DB3003D221D /* Task.swift */; };
 		A2116DA51CA96F22003D221D /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116DA41CA96F22003D221D /* Assignment.swift */; };
+		A2C519181CAB38CF0074387D /* Appointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C519171CAB38CF0074387D /* Appointment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		A2116D961CA968EC003D221D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2116DA21CA96DB3003D221D /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		A2116DA41CA96F22003D221D /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
+		A2C519171CAB38CF0074387D /* Appointment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appointment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				A2116D781CA968EC003D221D /* Main.storyboard */,
 				A2116DA21CA96DB3003D221D /* Task.swift */,
 				A2116DA41CA96F22003D221D /* Assignment.swift */,
+				A2C519171CAB38CF0074387D /* Appointment.swift */,
 				A2116D7B1CA968EC003D221D /* Assets.xcassets */,
 				A2116D7D1CA968EC003D221D /* LaunchScreen.storyboard */,
 				A2116D801CA968EC003D221D /* Info.plist */,
@@ -266,6 +269,7 @@
 				A2116D771CA968EC003D221D /* ViewController.swift in Sources */,
 				A2116DA31CA96DB3003D221D /* Task.swift in Sources */,
 				A2116D751CA968EC003D221D /* AppDelegate.swift in Sources */,
+				A2C519181CAB38CF0074387D /* Appointment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,6 +496,7 @@
 				A2116D9B1CA968EC003D221D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A2116D9C1CA968EC003D221D /* Build configuration list for PBXNativeTarget "UntimedTests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +505,7 @@
 				A2116D9E1CA968EC003D221D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A2116D9F1CA968EC003D221D /* Build configuration list for PBXNativeTarget "UntimedUITests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +514,7 @@
 				A2116DA11CA968EC003D221D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

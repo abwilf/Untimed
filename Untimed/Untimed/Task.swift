@@ -11,6 +11,5 @@
 import Foundation
 
 class Task {
-    var title: String = "New Task"
-    
+    // nothing needed because subclasses reference (see assn and appt files)
 }
