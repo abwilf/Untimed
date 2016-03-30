@@ -36,10 +36,10 @@
             </objects>
             <point key="canvasLocation" x="1731.5" y="-430.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Test View Controller-->
         <scene sceneID="G6T-dS-ehx">
             <objects>
-                <viewController id="hNo-as-j3S" sceneMemberID="viewController">
+                <viewController id="hNo-as-j3S" customClass="TestViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1VC-OZ-0HO"/>
                         <viewControllerLayoutGuide type="bottom" id="h00-VW-b1a"/>
@@ -47,10 +47,25 @@
                     <view key="view" contentMode="scaleToFill" id="7N4-Mt-4Iz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8vL-SF-jMl">
+                                <rect key="frame" x="192" y="293" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXA-G5-6yc">
+                                <rect key="frame" x="192" y="214" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="SP8-s5-DCW"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="counterLabel" destination="EXA-G5-6yc" id="7kb-bz-aZg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w1N-g5-Rhh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
