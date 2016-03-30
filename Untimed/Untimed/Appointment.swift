@@ -11,5 +11,4 @@ import Foundation
 class Appointment: Task {
     var startTime: NSDate = NSDate()
     var endTime: NSDate = NSDate()
-    var title: String = "Unnamed Appointment"
 }
