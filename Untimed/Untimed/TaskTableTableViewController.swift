@@ -55,10 +55,21 @@ class TaskTableTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Task Cell", forIndexPath: indexPath)
 
+        // declare task obj
+        let task = taskManager.tasks[indexPath.row]
+        
+        
         // Configure the cell...
-        cell.textLabel?.text = taskManager.tasks[indexPath.row].title
-
-        return cell
+        cell.textLabel?.text = task.title
+        
+        if let appointment = task as? Appointment {
+            // everything we want to do for appointment, do here
+            
+            // nnot 3 pm- appt property
+            cell.detailTextLabel?.text = "3 pm"
+        }
+        
+       return cell
     }
     
 
@@ -97,14 +108,29 @@ class TaskTableTableViewController: UITableViewController {
     }
     */
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == "Select Task") {
+            
+            if let index = tableView.indexPathForSelectedRow?.row {
+                let task = taskManager.tasks[index]
+
+                segue.destinationViewController.title = task.title
+            
+                // single task view controller
+                if let stvc = segue.destinationViewController as? SingleTaskViewController {
+                    stvc.task = task
+                }
+            }
+        }
+        
     }
-    */
+
 
 }

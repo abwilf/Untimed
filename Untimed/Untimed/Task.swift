@@ -17,4 +17,9 @@ class Task {
     init(title: String) {
         self.title = title
     }
+    
+    
+    // default initializer
+    init() {
+    }
 }
