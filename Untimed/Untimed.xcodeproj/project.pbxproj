@@ -16,6 +16,7 @@
 		A2116D951CA968EC003D221D /* UntimedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116D941CA968EC003D221D /* UntimedUITests.swift */; };
 		A2116DA31CA96DB3003D221D /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116DA21CA96DB3003D221D /* Task.swift */; };
 		A2116DA51CA96F22003D221D /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116DA41CA96F22003D221D /* Assignment.swift */; };
+		A27FAAB01CAC378E00B1AE85 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */; };
 		A2C519181CAB38CF0074387D /* Appointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C519171CAB38CF0074387D /* Appointment.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		A2116D961CA968EC003D221D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2116DA21CA96DB3003D221D /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		A2116DA41CA96F22003D221D /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
+		A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		A2C519171CAB38CF0074387D /* Appointment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appointment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,6 +108,7 @@
 				A2116D741CA968EC003D221D /* AppDelegate.swift */,
 				A2116D761CA968EC003D221D /* ViewController.swift */,
 				A2116D781CA968EC003D221D /* Main.storyboard */,
+				A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */,
 				A2116DA21CA96DB3003D221D /* Task.swift */,
 				A2116DA41CA96F22003D221D /* Assignment.swift */,
 				A2C519171CAB38CF0074387D /* Appointment.swift */,
@@ -270,6 +273,7 @@
 				A2116DA31CA96DB3003D221D /* Task.swift in Sources */,
 				A2116D751CA968EC003D221D /* AppDelegate.swift in Sources */,
 				A2C519181CAB38CF0074387D /* Appointment.swift in Sources */,
+				A27FAAB01CAC378E00B1AE85 /* TaskViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
