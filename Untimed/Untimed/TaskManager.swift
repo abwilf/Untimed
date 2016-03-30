@@ -13,5 +13,21 @@ class TaskManager {
     var tasks: [Task] = [Assignment(title: "Make an app"), Appointment(title: "ML Dorf")]
     
     
+    // add save method
+    func save() {
+        // when delete or save
+        // problem: can't save taskobject to disc directly: use NSCoding to save custom classes to disc
+        // specify where you want to be stored
+        // watch out for the word documents
+    }
+    
+    
+    func loadFromDisc() {
+        // every time you open the app
+    }
+    
+    init () {
+        loadFromDisc()
+    }
 //    var tasks = ["Make an app", "Go to lecture", "Eat lunch"]
 }
