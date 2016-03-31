@@ -73,9 +73,8 @@ class TaskTableTableViewController: UITableViewController {
        
         if let appointment = task as? Appointment {
             
-            // everything we want to do for appointment, do here (subtitle)
+            // assigning subtitle text to appropriate Appointment member variables (startTime and endTime)
             // test: cell.detailTextLabel?.text = "3 pm"
-            
             cell.detailTextLabel?.text = "Starts \(appointment.startTime), ends \(appointment.endTime)"
 
         }
