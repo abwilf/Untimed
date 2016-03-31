@@ -10,6 +10,10 @@ import Foundation
 
 class TaskManager {
     
+    
+    
+    
+    // Assignment and Appointment inherit Task's non default constructor
     var tasks: [Task] = [Assignment(title: "Make an app"), Appointment(title: "ML Dorf")]
     
     
@@ -27,7 +31,7 @@ class TaskManager {
     }
     
     init () {
+        // also initializes member variables (tasks array)
         loadFromDisc()
     }
-//    var tasks = ["Make an app", "Go to lecture", "Eat lunch"]
 }

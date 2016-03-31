@@ -9,8 +9,11 @@
 import UIKit
 
 class SingleTaskViewController: UIViewController {
-
+    
+    // this is being set by the prepareforSegue function in TaskTableTable
     var task = Task()
+    
+    // FIXME: need to display all the elements of task for viewer's pleasure
 
     override func viewDidLoad() {
         super.viewDidLoad()
