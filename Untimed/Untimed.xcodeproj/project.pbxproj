@@ -113,18 +113,18 @@
 		A2116D731CA968EC003D221D /* Untimed */ = {
 			isa = PBXGroup;
 			children = (
-				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
-				A2116D741CA968EC003D221D /* AppDelegate.swift */,
-				A2116D761CA968EC003D221D /* ViewController.swift */,
 				A2116D781CA968EC003D221D /* Main.storyboard */,
-				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
-				A27FAAB71CAC54F800B1AE85 /* SingleTaskViewController.swift */,
-				A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */,
+				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
 				A2116DA21CA96DB3003D221D /* Task.swift */,
 				A2116DA41CA96F22003D221D /* Assignment.swift */,
 				A2C519171CAB38CF0074387D /* Appointment.swift */,
+				A27FAAB71CAC54F800B1AE85 /* SingleTaskViewController.swift */,
+				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
+				A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */,
+				A2116D761CA968EC003D221D /* ViewController.swift */,
 				A2116D7B1CA968EC003D221D /* Assets.xcassets */,
 				A2116D7D1CA968EC003D221D /* LaunchScreen.storyboard */,
+				A2116D741CA968EC003D221D /* AppDelegate.swift */,
 				A2116D801CA968EC003D221D /* Info.plist */,
 			);
 			path = Untimed;

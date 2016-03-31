@@ -18,6 +18,9 @@ class Task {
         self.title = title
     }
     
+    init(titleIn: String) {
+        title = titleIn
+    }
     
     // default initializer
     init() {
