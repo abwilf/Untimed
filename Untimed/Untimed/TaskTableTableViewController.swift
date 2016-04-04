@@ -11,13 +11,13 @@ import UIKit
 class TaskTableTableViewController: UITableViewController {
     
     // Creates object of TaskManager class and initializes tasks array
-    @IBOutlet var tableTasks : UITableView!
+    
     let taskManager = TaskManager()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableTasks.reloadData()
+       
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -154,13 +154,7 @@ class TaskTableTableViewController: UITableViewController {
         
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath){
-        if (editingStyle == UITableViewCellEditingStyle.Delete){
-            
-            taskManager.tasks.removeAtIndex(indexPath.row)
-            tableTasks.reloadData()
-        }
-    }
+  
 
 
 }
