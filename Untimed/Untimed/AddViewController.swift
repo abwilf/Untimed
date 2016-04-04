@@ -9,7 +9,7 @@
 import UIKit
 
 class AddViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,12 +30,22 @@ class AddViewController: UIViewController {
         
         // if click on Assignment
         if (segue.identifier == "Add Assignment") {
+            
+            // title the next page
             segue.destinationViewController.title = "Add Assignment"
+            
+            // add a blank assignment task to the array
+            
+            let hello = TaskManager()
+            hello.addAssignmentTask()
+            
         }
         
         // if click on Appointment
         if (segue.identifier == "Add Appointment") {
             segue.destinationViewController.title = "Add Appointment"
+            // add a blank assignment task to the array
+           // TaskManager.addAppointmentTask()
         }
         
         

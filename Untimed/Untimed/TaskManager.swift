@@ -16,6 +16,15 @@ class TaskManager {
     // empty array
     var tasks: [Task] = []
     
+    // adder functions
+    func addAssignmentTask() {
+        tasks += [Assignment(title: "New Assignment")]
+    }
+    
+    func addAppointmentTask() {
+        tasks += [Appointment(title: "New Appointment")]
+    }
+    
     
     // add save method
     func save() {

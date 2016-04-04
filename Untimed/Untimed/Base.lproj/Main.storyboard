@@ -129,11 +129,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="POf-1O-k8g">
-                                <rect key="frame" x="20" y="123" width="234" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="When is it due?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1w-SZ-gq1">
                                 <rect key="frame" x="20" y="180" width="117" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -157,6 +152,9 @@
                                     <!--2016-04-04 18:07:43 +0000-->
                                 </date>
                             </datePicker>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" wraps="YES" maximumValue="100" stepValue="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GYv-XK-Wkp">
+                                <rect key="frame" x="261" y="496" width="94" height="29"/>
+                            </stepper>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Assignment Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuE-Bk-NAO">
                                 <rect key="frame" x="15" y="89" width="133" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -170,15 +168,20 @@
                                     <color key="titleColor" red="1" green="0.16923387094474285" blue="0.15916609435858187" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" wraps="YES" maximumValue="100" stepValue="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GYv-XK-Wkp">
-                                <rect key="frame" x="261" y="496" width="94" height="29"/>
-                            </stepper>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="POf-1O-k8g">
+                                <rect key="frame" x="20" y="123" width="234" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="addAssignmentTitle" destination="POf-1O-k8g" id="aMJ-x1-8Qn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yHI-4Z-LZo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
