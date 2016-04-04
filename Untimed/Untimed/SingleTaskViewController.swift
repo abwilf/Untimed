@@ -13,12 +13,19 @@ class SingleTaskViewController: UIViewController {
     // this is being set by the prepareforSegue function in TaskTableTable
     var task = Task()
     
+    @IBOutlet weak var taskLabel: UILabel!
     // FIXME: need to display all the elements of task for viewer's pleasure
 
     override func viewDidLoad() {
         super.viewDidLoad()
     
     // Do any additional setup after loading the view.
+
+        if let appointment = task as? Appointment {
+        taskLabel.text  = "Due on \(appointment.startTime)"
+            
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
