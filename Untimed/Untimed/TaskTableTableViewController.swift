@@ -134,7 +134,7 @@ class TaskTableTableViewController: UITableViewController {
        
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        
+        // if you click on a cell
         if (segue.identifier == "Select Task") {
             
             // index = row number
@@ -150,6 +150,11 @@ class TaskTableTableViewController: UITableViewController {
                     stvc.task = task
                 }
             }
+        }
+        
+        // if click on add task button
+        if (segue.identifier == "Add Task") {
+            segue.destinationViewController.title = "Add Task"
         }
         
     }
