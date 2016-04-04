@@ -146,7 +146,7 @@ class TaskTableTableViewController: UITableViewController {
                 segue.destinationViewController.title = task.title
             
                 // single task view controller
-                if let stvc = segue.destinationViewController as? SingleTaskViewController {
+                if let stvc = segue.destinationViewController as? SingleTaskTableViewController {
                     stvc.task = task
                 }
             }
