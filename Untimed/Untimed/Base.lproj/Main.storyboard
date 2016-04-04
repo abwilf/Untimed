@@ -133,7 +133,14 @@
                             <outlet property="delegate" destination="bp7-Yw-ZGw" id="NYF-W5-Dq0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="930-Q1-oKY"/>
+                    <navigationItem key="navigationItem" id="930-Q1-oKY">
+                        <barButtonItem key="leftBarButtonItem" title="Sort by" id="asm-At-QJR"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="OUb-xu-cvk">
+                            <connections>
+                                <segue destination="FdW-1h-nlk" kind="show" identifier="Add Task" id="EiO-EV-v4c"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LcI-a2-6bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
