@@ -146,8 +146,83 @@
             </objects>
             <point key="canvasLocation" x="2194.5" y="-418.5"/>
         </scene>
-        <!--Single Task Table View Controller-->
-        <scene sceneID="deX-f6-n8P">
+        <!--Add View Controller-->
+        <scene sceneID="5mc-vs-WtB">
+            <objects>
+                <viewController id="FdW-1h-nlk" customClass="AddViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="I95-qN-PEa"/>
+                        <viewControllerLayoutGuide type="bottom" id="pSl-EU-y6H"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SS7-Ty-mrC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zru-QI-k8O">
+                                <rect key="frame" x="44" y="169" width="300" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <state key="normal" title="Assignment"/>
+                                <connections>
+                                    <segue destination="tY1-HK-POc" kind="show" identifier="Add Assignment" id="Arb-je-Puv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zwd-6T-6gO">
+                                <rect key="frame" x="44" y="319" width="300" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <state key="normal" title="Appointment"/>
+                                <connections>
+                                    <segue destination="0cu-7J-lLY" kind="show" identifier="Add Appointment" id="avp-NO-hG2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SVx-ZW-AJP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2355.5" y="-1502.5"/>
+        </scene>
+        <!--Add Assignment View Controller-->
+        <scene sceneID="vyW-Xq-Wyh">
+            <objects>
+                <viewController id="tY1-HK-POc" customClass="AddAssignmentViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="EQF-d4-6BE"/>
+                        <viewControllerLayoutGuide type="bottom" id="jHt-pm-5ZH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cN6-0n-hNn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yHI-4Z-LZo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2960.5" y="-2141.5"/>
+        </scene>
+        <!--Add Appointment View Controller-->
+        <scene sceneID="8Ih-1S-LD5">
+            <objects>
+                <viewController id="0cu-7J-lLY" customClass="AddAppointmentViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Pks-Oc-Zts"/>
+                        <viewControllerLayoutGuide type="bottom" id="XFD-tg-mEG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8Ac-KG-khn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="09O-ed-iNA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3047.5" y="-1331.5"/>
+        </scene>
+        <!--Single Task View Controller-->
+        <scene sceneID="FSw-4W-kCR">
             <objects>
                 <tableViewController id="kQn-Tu-McS" customClass="SingleTaskTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="EJX-4P-LdK">
