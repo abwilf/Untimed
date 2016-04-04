@@ -155,6 +155,12 @@ class TaskTableTableViewController: UITableViewController {
     }
     
   
-
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath){
+        if (editingStyle == UITableViewCellEditingStyle.Delete){
+            
+            taskManager.tasks.removeAtIndex(indexPath.row)
+            tableView.reloadData()
+        }
+    }
 
 }
