@@ -147,7 +147,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGf-Kp-yvU">
-                                <rect key="frame" x="158" y="560" width="59" height="30"/>
+                                <rect key="frame" x="158" y="544" width="59" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Done"/>
                             </button>
@@ -157,15 +157,22 @@
                                     <!--2016-04-04 18:07:43 +0000-->
                                 </date>
                             </datePicker>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" wraps="YES" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="GYv-XK-Wkp">
-                                <rect key="frame" x="261" y="496" width="94" height="29"/>
-                            </stepper>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Assignment Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuE-Bk-NAO">
                                 <rect key="frame" x="15" y="89" width="133" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kB5-hj-1DO">
+                                <rect key="frame" x="154" y="576" width="75" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="1" green="0.16923387094474285" blue="0.15916609435858187" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" wraps="YES" maximumValue="100" stepValue="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GYv-XK-Wkp">
+                                <rect key="frame" x="261" y="496" width="94" height="29"/>
+                            </stepper>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -175,7 +182,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yHI-4Z-LZo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2818.5" y="-2187.5"/>
+            <point key="canvasLocation" x="3038.5" y="-2111.5"/>
         </scene>
         <!--Add Appointment View Controller-->
         <scene sceneID="8Ih-1S-LD5">
@@ -312,7 +319,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XHz-ja-TfR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2752" y="-385"/>
+            <point key="canvasLocation" x="2861.5" y="-385.5"/>
         </scene>
         <!--Item-->
         <scene sceneID="7bg-4x-UqG">
