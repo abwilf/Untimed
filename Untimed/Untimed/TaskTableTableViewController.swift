@@ -10,7 +10,6 @@ import UIKit
 
 class TaskTableTableViewController: UITableViewController {
     
-    
     // Creates object of TaskManager class and initializes tasks array
     @IBOutlet var tableTasks : UITableView!
     let taskManager = TaskManager()
