@@ -24,6 +24,8 @@
 		A27FAAB61CAC44FF00B1AE85 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */; };
 		A27FAAB81CAC54F800B1AE85 /* SingleTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27FAAB71CAC54F800B1AE85 /* SingleTaskViewController.swift */; };
 		A2C519181CAB38CF0074387D /* Appointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C519171CAB38CF0074387D /* Appointment.swift */; };
+		A2DFBA511CB308C40043D93D /* AddAppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2DFBA4F1CB308C40043D93D /* AddAppointmentViewController.swift */; };
+		A2DFBA521CB308C40043D93D /* AddAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2DFBA501CB308C40043D93D /* AddAssignmentViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		A27FAAB71CAC54F800B1AE85 /* SingleTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleTaskViewController.swift; sourceTree = "<group>"; };
 		A2C519171CAB38CF0074387D /* Appointment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appointment.swift; sourceTree = "<group>"; };
+		A2DFBA4F1CB308C40043D93D /* AddAppointmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAppointmentViewController.swift; sourceTree = "<group>"; };
+		A2DFBA501CB308C40043D93D /* AddAssignmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAssignmentViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,10 +122,10 @@
 			isa = PBXGroup;
 			children = (
 				A2116D781CA968EC003D221D /* Main.storyboard */,
-				A20DE5A11CB2DE7F00F6948D /* AddAppointmentViewController.swift */,
-				A20DE59F1CB2DCFC00F6948D /* AddAssignmentViewController.swift */,
 				A21F78CF1CB2DA5000517FD9 /* AddViewController.swift */,
 				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
+				A2DFBA4F1CB308C40043D93D /* AddAppointmentViewController.swift */,
+				A2DFBA501CB308C40043D93D /* AddAssignmentViewController.swift */,
 				A2116DA21CA96DB3003D221D /* Task.swift */,
 				A2116DA41CA96F22003D221D /* Assignment.swift */,
 				A2C519171CAB38CF0074387D /* Appointment.swift */,
@@ -292,14 +296,15 @@
 				A2116D771CA968EC003D221D /* ViewController.swift in Sources */,
 				A21F78D01CB2DA5000517FD9 /* AddViewController.swift in Sources */,
 				A2116DA31CA96DB3003D221D /* Task.swift in Sources */,
+				A2DFBA521CB308C40043D93D /* AddAssignmentViewController.swift in Sources */,
 				A2116D751CA968EC003D221D /* AppDelegate.swift in Sources */,
 				A10A6A701CAC33E900DB9C5F /* TestViewController.swift in Sources */,
-				A20DE5A01CB2DCFC00F6948D /* AddAssignmentViewController.swift in Sources */,
 				A2C519181CAB38CF0074387D /* Appointment.swift in Sources */,
 				A27FAAB21CAC38CF00B1AE85 /* TaskTableTableViewController.swift in Sources */,
 				A27FAAB01CAC378E00B1AE85 /* TaskViewController.swift in Sources */,
 				A27FAAB81CAC54F800B1AE85 /* SingleTaskViewController.swift in Sources */,
 				A1D7D2B61CB2E08400053AE6 /* SingleTaskTableViewController.swift in Sources */,
+				A2DFBA511CB308C40043D93D /* AddAppointmentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
