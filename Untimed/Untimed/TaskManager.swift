@@ -17,6 +17,14 @@ class TaskManager {
     var tasks: [Task] = []
     
     
+    func addTask (taskIn: Task) {
+        // add to array
+        tasks += [taskIn]
+        // save to disc
+        
+    }
+    
+    
     // add save method
     func save() {
         // when delete or save

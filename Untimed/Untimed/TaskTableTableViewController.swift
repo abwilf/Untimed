@@ -14,6 +14,22 @@ class TaskTableTableViewController: UITableViewController {
     
     let taskManager = TaskManager()
 
+    
+    // unwind segue
+    // FIXME: ADD ADDAPPT
+    @IBAction func unwindToTaskPageAndAddTask(sender: UIStoryboardSegue)
+    {
+        
+        if let aavc = sender.sourceViewController as? AddAssignmentViewController {
+            
+            taskManager.addTask(aavc.addedAssignment)
+            
+           // tableView = inherited property from UITableViewCOntroller class
+            tableView.reloadData()
+        }
+        
+        // Pull any data from the view controller which initiated the unwind segue.
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +74,8 @@ class TaskTableTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        
+    
         
         // not loading 10,000 cells on ipod at once.  "Task Cell" is identifier of the cell
         let cell = tableView.dequeueReusableCellWithIdentifier("Task Cell", forIndexPath: indexPath)

@@ -10,6 +10,9 @@ import UIKit
 
 class AddAssignmentViewController: UIViewController {
 
+    var addedAssignment = Assignment()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
