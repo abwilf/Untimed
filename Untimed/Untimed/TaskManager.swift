@@ -27,6 +27,7 @@ class TaskManager {
     
     
     func loadFromDisc() {
+        
         // every time you open the app
     }
     
