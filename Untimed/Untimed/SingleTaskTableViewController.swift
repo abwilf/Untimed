@@ -33,13 +33,13 @@ class SingleTaskTableViewController: UITableViewController {
             let timeFormatter = NSDateFormatter()
             
             //format date
-            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+            dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
             
             //only gets date
             let strDate = dateFormatter.stringFromDate(appointment.startTime)
             
             //format time
-            timeFormatter.timeStyle = NSDateFormatterStyle.LongStyle
+            timeFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
             
             //only gets time
             let strDateStartTime = timeFormatter.stringFromDate(appointment.startTime)
@@ -60,13 +60,13 @@ class SingleTaskTableViewController: UITableViewController {
             let timeFormatter = NSDateFormatter()
             
             //format date
-            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+            dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
             
             //only gets date
             let strDate = dateFormatter.stringFromDate(assignment.dueDate)
             
             //format time
-            timeFormatter.timeStyle = NSDateFormatterStyle.LongStyle
+            timeFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
             
             //only gets time
             let strDueDate = timeFormatter.stringFromDate(assignment.dueDate)
