@@ -20,7 +20,7 @@ class TaskTableTableViewController: UITableViewController {
     @IBAction func unwindToTaskPageAndAddTask(sender: UIStoryboardSegue)
     {
         // add assignment created here!
-        if let aavc = sender.sourceViewController as? AddAssignmentViewController {
+        if let aavc = sender.sourceViewController as? AddAssignmentTableViewController {
             
             taskManager.addTask(aavc.addedAssignment)
             
@@ -83,7 +83,6 @@ class TaskTableTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         
-    
         
         // not loading 10,000 cells on ipod at once.  "Task Cell" is identifier of the cell
         let cell = tableView.dequeueReusableCellWithIdentifier("Task Cell", forIndexPath: indexPath)

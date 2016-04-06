@@ -88,73 +88,101 @@
             </objects>
             <point key="canvasLocation" x="2194.5" y="-418.5"/>
         </scene>
-        <!--Add Assignment View Controller-->
-        <scene sceneID="vyW-Xq-Wyh">
+        <!--Add Assignment Table View Controller-->
+        <scene sceneID="67k-aF-hJC">
             <objects>
-                <viewController id="tY1-HK-POc" customClass="AddAssignmentViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="EQF-d4-6BE"/>
-                        <viewControllerLayoutGuide type="bottom" id="jHt-pm-5ZH"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="cN6-0n-hNn">
+                <tableViewController id="KpF-z1-8Sg" customClass="AddAssignmentTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="b2f-qi-I34">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter assignment title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="POf-1O-k8g">
-                                <rect key="frame" x="20" y="123" width="234" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="When is it due?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1w-SZ-gq1">
-                                <rect key="frame" x="20" y="180" width="117" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How long will it take to complete?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCZ-Ws-JaV">
-                                <rect key="frame" x="20" y="450" width="256" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGf-Kp-yvU">
-                                <rect key="frame" x="158" y="544" width="59" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Done"/>
-                            </button>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Kiz-fW-7XB">
-                                <rect key="frame" x="0.0" y="209" width="375" height="216"/>
-                                <date key="date" timeIntervalSinceReferenceDate="481486063.941131">
-                                    <!--2016-04-04 18:07:43 +0000-->
-                                </date>
-                            </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Assignment Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuE-Bk-NAO">
-                                <rect key="frame" x="15" y="89" width="133" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kB5-hj-1DO">
-                                <rect key="frame" x="154" y="576" width="75" height="41"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="1" green="0.16923387094474285" blue="0.15916609435858187" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" wraps="YES" maximumValue="100" stepValue="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GYv-XK-Wkp">
-                                <rect key="frame" x="261" y="496" width="94" height="29"/>
-                            </stepper>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="hY4-nt-LCz"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                        <sections>
+                            <tableViewSection headerTitle="Assignment Title" id="zAX-yj-LHN">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="zit-bc-2Pp">
+                                        <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zit-bc-2Pp" id="Uq3-Dr-3IJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter assignment title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="POf-1O-k8g">
+                                                    <rect key="frame" x="15" y="7" width="332" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <action selector="didFinisheEditingAssignmentTitle:" destination="KpF-z1-8Sg" eventType="editingDidEnd" id="J4E-ba-k43"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Due Date:" id="oET-YT-iad">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="228" id="SbU-EF-Pf2">
+                                        <rect key="frame" x="0.0" y="164" width="375" height="228"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SbU-EF-Pf2" id="9Wq-vG-1ls">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="227.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Kiz-fW-7XB">
+                                                    <rect key="frame" x="0.0" y="8" width="375" height="216"/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="481486063.941131">
+                                                        <!--2016-04-04 18:07:43 +0000-->
+                                                    </date>
+                                                    <connections>
+                                                        <action selector="didEnterDueDate:" destination="KpF-z1-8Sg" eventType="valueChanged" id="ndy-Ux-1Bv"/>
+                                                    </connections>
+                                                </datePicker>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="How long will it take to complete?" id="Iws-at-wD5">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="yEl-IY-8CK">
+                                        <rect key="frame" x="0.0" y="420" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yEl-IY-8CK" id="Yt2-xw-iSC">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="JHc-Fa-yhh">
+                                                    <rect key="frame" x="273" y="8" width="94" height="29"/>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="KpF-z1-8Sg" id="zls-8H-ga7"/>
+                            <outlet property="delegate" destination="KpF-z1-8Sg" id="VKy-C5-tNS"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="0bo-mW-ZAH">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="I8g-Ds-TML">
+                            <connections>
+                                <action selector="cancelPressed:" destination="KpF-z1-8Sg" id="Pjb-Bv-P0o"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="I6Y-ve-dfC">
+                            <connections>
+                                <segue destination="bfw-eO-dAU" kind="unwind" unwindAction="unwindToTaskPageAndAddTask:" id="tHL-By-gSp"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yHI-4Z-LZo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ahu-Kd-CMv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="bfw-eO-dAU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4641.5" y="2.5"/>
+            <point key="canvasLocation" x="4134.5" y="-587.5"/>
         </scene>
         <!--Add Appointment Table View Controller-->
         <scene sceneID="y5x-iq-Wze">
@@ -316,7 +344,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MiY-i0-MOc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="v1a-8G-CEJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3646.5" y="-1709.5"/>
+            <point key="canvasLocation" x="3780.5" y="-1704.5"/>
         </scene>
         <!--Single Task Table View Controller-->
         <scene sceneID="FSw-4W-kCR">
@@ -474,12 +502,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="tY1-HK-POc" kind="relationship" relationship="rootViewController" id="Exk-pR-dzj"/>
+                        <segue destination="KpF-z1-8Sg" kind="relationship" relationship="rootViewController" id="YPm-uU-Adb"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="70m-c0-h6Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3350.5" y="-101.5"/>
+            <point key="canvasLocation" x="3454.5" y="-477.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vHH-ti-rfF">
