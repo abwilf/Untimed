@@ -11,7 +11,7 @@ import Foundation
 class TaskManager {
     // Assignment and Appointment inherit Task's non default constructor
     
-    // var tasks: [Task] = [Assignment(title: "Make an app"), Appointment(title: "ML Dorf")]
+    //var tasks: [Task] = [Assignment(title: "Make an app"), Appointment(title: "ML Dorf")]
     
     // empty array
     var tasks: [Task] = []

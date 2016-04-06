@@ -11,7 +11,6 @@ import UIKit
 class AddAppointmentTableViewController: UITableViewController {
     
     
-    var addedAppointment = Appointment()
 
     
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
@@ -20,13 +19,28 @@ class AddAppointmentTableViewController: UITableViewController {
     
 
     
-    // title
+    // created task that we will modify
+    var addedAppointment = Appointment()
+
+    // update title
     @IBAction func didFinishEditingAppointmentTitle(sender: UITextField) {
         // if able to unwrap, set it equal
         if let newTitle = sender.text {
             addedAppointment.title = newTitle
         }
     }
+    
+    // update repeat (bool)
+    
+    // update start time
+    
+    
+    // update end time
+    
+    
+    // add task to array - connect to save
+    
+    
     
     
     override func viewDidLoad() {
@@ -38,7 +52,8 @@ class AddAppointmentTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
