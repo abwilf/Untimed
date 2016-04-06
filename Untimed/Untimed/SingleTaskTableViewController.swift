@@ -28,11 +28,29 @@ class SingleTaskTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         if let appointment = task as? Appointment {
+            
+            let dateFormatter = NSDateFormatter()
+            let timeFormatter = NSDateFormatter()
+            
+            //format date
+            dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+            
+            //only gets date
+            let strDate = dateFormatter.stringFromDate(appointment.startTime)
+            
+            //format time
+            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+            
+            //only gets time
+            let strDateStartTime = timeFormatter.stringFromDate(appointment.startTime)
+            let strDateEndTime = timeFormatter.stringFromDate(appointment.endTime)
+            
+            
             titleOneLabel.text  = "Starts"
-            detailOneLabel.text = "\(appointment.startTime)"
+            detailOneLabel.text = "\(strDate) - \(strDateStartTime)"
             
             titleTwoLabel.text = "Ends"
-            detailTwoLabel.text = "\(appointment.endTime)"
+            detailTwoLabel.text = "\(strDate) - \(strDateEndTime)"
         }
         
         else if let assignment = task as? Assignment {
