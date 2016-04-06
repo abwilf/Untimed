@@ -33,9 +33,12 @@ class AddAssignmentTableViewController: UITableViewController {
         addedAssignment.dueDate = newDueDate
     }
     
+    @IBOutlet weak var switchLabel: UILabel!
+    
     @IBAction func addButtonPressed(sender: UIStepper) {
-        addedAssignment.timeNeeded = Int(sender.value)
-        // print(addedAssignment.timeNeeded)
+        addedAssignment.timeNeeded = sender.value
+        switchLabel.text = "\(String(sender.value)) hours"
+        print(addedAssignment.timeNeeded)
     }
     
     

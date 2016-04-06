@@ -11,6 +11,6 @@ import Foundation
 // superclass = Task
 class Assignment: Task {
     var dueDate: NSDate = NSDate()
-    var timeNeeded: Int = 0
+    var timeNeeded: Double = 0
 }
 
