@@ -125,9 +125,34 @@ class TaskTableTableViewController: UITableViewController {
             
         // if not, task must be an Assignment.  show different subtitles
         else if let assignment = task as? Assignment {
+            let dateFormatter = NSDateFormatter()
+            let timeFormatter = NSDateFormatter()
+            
+            //format date
+            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+            
+            //only gets date
+            let strDate = dateFormatter.stringFromDate(assignment.dueDate)
+            
+
+            /*
+
+        
+
+            // remove last character of string (the comma after 2016)
+            if (strDate.characters.count) > 0 {
+                strDate.characters.count = strDate.characters.count - 2
+            }
+            
+            */
+            //format time
+            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+            
+            //only gets time
+            let strDueTime = timeFormatter.stringFromDate(assignment.dueDate)
             
             // set subtitle to member variables of the assignment object
-            cell.detailTextLabel?.text = "Due on \(assignment.dueDate), \(assignment.timeNeeded) hours needed"
+            cell.detailTextLabel?.text = "\(assignment.timeNeeded) hours remaining; Due \(strDate), at \(strDueTime)"
         }
         
        return cell

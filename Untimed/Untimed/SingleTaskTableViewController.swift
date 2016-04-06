@@ -66,19 +66,17 @@ class SingleTaskTableViewController: UITableViewController {
             let strDate = dateFormatter.stringFromDate(assignment.dueDate)
             
             //format time
-            timeFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
+            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
             
             //only gets time
-            let strDueDate = timeFormatter.stringFromDate(assignment.dueDate)
+            let strDueTime = timeFormatter.stringFromDate(assignment.dueDate)
         
 
-            
-            
             titleOneLabel.text = "Due On"
-            detailOneLabel.text = "\(strDate) - \(strDueDate)"
+            detailOneLabel.text = "\(strDate) at \(strDueTime)"
             
-            titleTwoLabel.text = "Time Needed"
-            detailTwoLabel.text = "\(assignment.timeNeeded) hours"
+            titleTwoLabel.text = "Hours Remaining"
+            detailTwoLabel.text = "\(assignment.timeNeeded)"
         }
     }
         
