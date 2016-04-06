@@ -106,7 +106,7 @@ class TaskTableTableViewController: UITableViewController {
             let timeFormatter = NSDateFormatter()
             
             // format date
-            dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+            dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
             
             // only gets date
             let strDate = dateFormatter.stringFromDate(appointment.startTime)
