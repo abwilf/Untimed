@@ -36,7 +36,7 @@ class AddAppointmentTableViewController: UITableViewController {
         var newStartDate = NSDate()
         newStartDate = sender.date
         addedAppointment.startTime = newStartDate
-        print(newStartDate)
+        //print(newStartDate)
     }
     
     
@@ -46,9 +46,7 @@ class AddAppointmentTableViewController: UITableViewController {
         var newEndDate = NSDate()
         newEndDate = sender.date
         addedAppointment.endTime = newEndDate
-       
-        // FIXME: DELETE- TESTING
-        print(newEndDate)
+        //print(newEndDate)
     }
     
     
