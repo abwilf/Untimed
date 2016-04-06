@@ -88,7 +88,7 @@
             </objects>
             <point key="canvasLocation" x="2194.5" y="-418.5"/>
         </scene>
-        <!--Add Assignment Table View Controller-->
+        <!--Add Assignment-->
         <scene sceneID="67k-aF-hJC">
             <objects>
                 <tableViewController id="KpF-z1-8Sg" customClass="AddAssignmentTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
@@ -165,7 +165,7 @@
                             <outlet property="delegate" destination="KpF-z1-8Sg" id="VKy-C5-tNS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="0bo-mW-ZAH">
+                    <navigationItem key="navigationItem" title="Add Assignment" id="0bo-mW-ZAH">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="I8g-Ds-TML">
                             <connections>
                                 <action selector="cancelPressed:" destination="KpF-z1-8Sg" id="Pjb-Bv-P0o"/>
@@ -184,7 +184,7 @@
             </objects>
             <point key="canvasLocation" x="4134.5" y="-587.5"/>
         </scene>
-        <!--Add Appointment Table View Controller-->
+        <!--Add Appointment-->
         <scene sceneID="y5x-iq-Wze">
             <objects>
                 <tableViewController id="T8F-bT-Ss5" customClass="AddAppointmentTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
@@ -202,7 +202,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q12-Gh-WIR">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Appointment Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q12-Gh-WIR">
                                                     <rect key="frame" x="15" y="7" width="234" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -328,7 +328,7 @@
                             <outlet property="delegate" destination="T8F-bT-Ss5" id="NO9-eZ-pRm"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="N5G-dH-CsM">
+                    <navigationItem key="navigationItem" title="Add Appointment" id="N5G-dH-CsM">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="GSt-pi-xkJ">
                             <connections>
                                 <action selector="cancelPressed:" destination="T8F-bT-Ss5" id="IjO-VY-ax0"/>
