@@ -33,9 +33,10 @@ class AddAssignmentTableViewController: UITableViewController {
         addedAssignment.dueDate = newDueDate
     }
     
-    
-    // FIXME: implement how long will it take to complete connection
-    
+    @IBAction func addButtonPressed(sender: UIStepper) {
+        addedAssignment.timeNeeded = Int(sender.value)
+        // print(addedAssignment.timeNeeded)
+    }
     
     
     
