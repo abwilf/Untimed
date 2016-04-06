@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Tasks-->
@@ -69,24 +68,21 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Tasks" id="930-Q1-oKY">
-                        <barButtonItem key="leftBarButtonItem" title="Sort by" id="asm-At-QJR"/>
-                        <rightBarButtonItems>
-                            <barButtonItem title="Add Assn" id="Qkd-wj-66e">
-                                <connections>
-                                    <segue destination="ytc-m8-s5S" kind="presentation" id="cyl-Cn-Xkd"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Add Appt" id="MZC-cs-jgM">
-                                <connections>
-                                    <segue destination="JN3-bG-ly9" kind="presentation" id="jGW-zF-WyI"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" title="Add Appt" id="MZC-cs-jgM">
+                            <connections>
+                                <segue destination="JN3-bG-ly9" kind="presentation" id="jGW-zF-WyI"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Add Assn" id="Qkd-wj-66e">
+                            <connections>
+                                <segue destination="ytc-m8-s5S" kind="presentation" id="cyl-Cn-Xkd"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LcI-a2-6bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2194.5" y="-418.5"/>
+            <point key="canvasLocation" x="2106.5" y="-418.5"/>
         </scene>
         <!--Add Assignment-->
         <scene sceneID="67k-aF-hJC">
@@ -424,11 +420,11 @@
             </objects>
             <point key="canvasLocation" x="3269.5" y="774.5"/>
         </scene>
-        <!--Item-->
+        <!--Daily Schedule-->
         <scene sceneID="7bg-4x-UqG">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6cJ-wJ-D9u" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="84M-Vx-kAS"/>
+                    <tabBarItem key="tabBarItem" title="Daily Schedule" id="84M-Vx-kAS"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qss-Cx-X1O">
@@ -444,7 +440,7 @@
             </objects>
             <point key="canvasLocation" x="509.5" y="732.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Daily Schedule-->
         <scene sceneID="h3l-Sg-Rc8">
             <objects>
                 <tableViewController id="H4w-oZ-fvh" sceneMemberID="viewController">
@@ -459,6 +455,20 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zEg-VE-49U" id="laY-TT-vYd">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0hM-iV-TNx">
+                                            <rect key="frame" x="17" y="11" width="31.5" height="19.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="Subtitle" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6x-lA-hBc">
+                                            <rect key="frame" x="11" y="11" width="353" height="19.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -467,11 +477,22 @@
                             <outlet property="delegate" destination="H4w-oZ-fvh" id="cbk-v7-aXa"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="9Ph-E5-LgY"/>
+                    <navigationItem key="navigationItem" title="Daily Schedule" id="9Ph-E5-LgY">
+                        <barButtonItem key="leftBarButtonItem" title="Add Appt" id="bGF-5F-9XA">
+                            <connections>
+                                <segue destination="JN3-bG-ly9" kind="presentation" id="KvW-Z0-IVw"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Add Assn" id="58W-le-uvA">
+                            <connections>
+                                <segue destination="ytc-m8-s5S" kind="presentation" id="XVE-1H-48j"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IXi-Rj-4wS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505.5" y="630.5"/>
+            <point key="canvasLocation" x="2233.5" y="654.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="4bA-cx-dfp">
@@ -507,7 +528,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="70m-c0-h6Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3454.5" y="-477.5"/>
+            <point key="canvasLocation" x="2974.5" y="-418.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vHH-ti-rfF">
@@ -535,7 +556,11 @@
                     </connections>
                 </datePicker>
             </objects>
-            <point key="canvasLocation" x="2939.5" y="-1125.5"/>
+            <point key="canvasLocation" x="2856.5" y="-1247.5"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="jGW-zF-WyI"/>
+        <segue reference="cyl-Cn-Xkd"/>
+    </inferredMetricsTieBreakers>
 </document>
