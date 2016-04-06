@@ -10,9 +10,6 @@ import UIKit
 
 class AddAppointmentTableViewController: UITableViewController {
     
-    
-
-    
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
             presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -24,6 +21,7 @@ class AddAppointmentTableViewController: UITableViewController {
 
     // update title
     @IBAction func didFinishEditingAppointmentTitle(sender: UITextField) {
+        
         // if able to unwrap, set it equal
         if let newTitle = sender.text {
             addedAppointment.title = newTitle
@@ -34,12 +32,31 @@ class AddAppointmentTableViewController: UITableViewController {
     
     // update start time
     
+    @IBAction func didEnterStartDate(sender: UIDatePicker) {
+        var newStartDate = NSDate()
+        newStartDate = sender.date
+        addedAppointment.startTime = newStartDate
+        print(newStartDate)
+    }
+    
     
     // update end time
     
+    @IBAction func didEnterEndDate(sender: UIDatePicker) {
+        var newEndDate = NSDate()
+        newEndDate = sender.date
+        addedAppointment.endTime = newEndDate
+       
+        // FIXME: DELETE- TESTING
+        print(newEndDate)
+    }
     
-    // add task to array - connect to save
     
+    
+    
+    // add task to array - connect to save button
+    
+   
     
     
     

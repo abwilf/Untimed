@@ -19,13 +19,21 @@ class TaskTableTableViewController: UITableViewController {
     // FIXME: ADD ADDAPPT
     @IBAction func unwindToTaskPageAndAddTask(sender: UIStoryboardSegue)
     {
-        
+        // add assignment created here!
         if let aavc = sender.sourceViewController as? AddAssignmentViewController {
             
             taskManager.addTask(aavc.addedAssignment)
             
            // tableView = inherited property from UITableViewCOntroller class
             tableView.reloadData()
+        }
+        
+        
+        // add appointment created here!
+        if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
+            taskManager.addTask(aapptvc.addedAppointment)
+            
+            tableView.reloadData() 
         }
         
         // Pull any data from the view controller which initiated the unwind segue.
