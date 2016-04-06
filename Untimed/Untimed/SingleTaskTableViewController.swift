@@ -33,13 +33,13 @@ class SingleTaskTableViewController: UITableViewController {
             let timeFormatter = NSDateFormatter()
             
             //format date
-            dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
             
             //only gets date
             let strDate = dateFormatter.stringFromDate(appointment.startTime)
             
             //format time
-            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+            timeFormatter.timeStyle = NSDateFormatterStyle.LongStyle
             
             //only gets time
             let strDateStartTime = timeFormatter.stringFromDate(appointment.startTime)
@@ -54,8 +54,28 @@ class SingleTaskTableViewController: UITableViewController {
         }
         
         else if let assignment = task as? Assignment {
+            
+            
+            let dateFormatter = NSDateFormatter()
+            let timeFormatter = NSDateFormatter()
+            
+            //format date
+            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+            
+            //only gets date
+            let strDate = dateFormatter.stringFromDate(assignment.dueDate)
+            
+            //format time
+            timeFormatter.timeStyle = NSDateFormatterStyle.LongStyle
+            
+            //only gets time
+            let strDueDate = timeFormatter.stringFromDate(assignment.dueDate)
+        
+
+            
+            
             titleOneLabel.text = "Due On"
-            detailOneLabel.text = "\(assignment.dueDate)"
+            detailOneLabel.text = "\(strDate) - \(strDueDate)"
             
             titleTwoLabel.text = "Time Needed"
             detailTwoLabel.text = "\(assignment.timeNeeded) hours"
