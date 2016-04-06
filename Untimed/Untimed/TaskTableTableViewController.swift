@@ -102,18 +102,25 @@ class TaskTableTableViewController: UITableViewController {
             // assigning subtitle text to appropriate Appointment member variables (startTime and endTime)
             // test: cell.detailTextLabel?.text = "3 pm"
             
-            var dateFormatter = NSDateFormatter()
+            let dateFormatter = NSDateFormatter()
+            let timeFormatter = NSDateFormatter()
             
-            dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-            dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+            // format date
+            dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
             
-            var strDateStart = dateFormatter.stringFromDate(appointment.startTime)
+            // only gets date
+            let strDate = dateFormatter.stringFromDate(appointment.startTime)
             
-            var strDateEnd = dateFormatter.stringFromDate(appointment.endTime)
-                    
-            cell.detailTextLabel?.text = "Starts \(strDateStart), ends \(strDateEnd)"
-
             
+            // format time
+            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+            
+            // only gets time
+            let strDateStartTime = timeFormatter.stringFromDate(appointment.startTime)
+            let strDateEndTime = timeFormatter.stringFromDate(appointment.endTime)
+            
+            // print it
+            cell.detailTextLabel?.text = "\(strDate) - \(strDateStartTime) to \(strDateEndTime)"
         }
             
         // if not, task must be an Assignment.  show different subtitles
