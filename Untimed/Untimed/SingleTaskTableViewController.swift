@@ -11,6 +11,7 @@ import UIKit
 class SingleTaskTableViewController: UITableViewController {
     
     var task = Task()
+    var index: Int = 0
 
     @IBOutlet weak var titleOneLabel: UILabel!
     @IBOutlet weak var detailOneLabel: UILabel!

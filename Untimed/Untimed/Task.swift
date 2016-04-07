@@ -25,4 +25,15 @@ class Task {
     // default initializer
     init() {
     }
+    
+    func encodeWithCoder(aCoder: NSCoder!) {
+        aCoder.encodeObject(title, forKey:"Title")
+        
+    }
+    
+    init (coder aDecoder: NSCoder!) {
+        self.title = aDecoder.decodeObjectForKey("Title") as! String
+       
+    }
+    
 }

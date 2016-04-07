@@ -12,5 +12,22 @@ import Foundation
 class Assignment: Task {
     var dueDate: NSDate = NSDate()
     var timeNeeded: Double = 0
+
+    
+    override func encodeWithCoder(aCoder: NSCoder!) {
+        aCoder.encodeObject(dueDate, forKey:"DueDate")
+        aCoder.encodeObject(timeNeeded, forKey:"TimeNeeded")
+    }
+    
+    
+   override init (coder aDecoder: NSCoder!) {
+        self.dueDate = aDecoder.decodeObjectForKey("DueDate") as! NSDate
+        self.timeNeeded = aDecoder.decodeObjectForKey("TimeNeeded") as! Double
+        super.init()
+    }
+    
+    
+
 }
+
 

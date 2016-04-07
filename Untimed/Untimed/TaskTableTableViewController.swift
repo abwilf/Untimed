@@ -13,10 +13,10 @@ class TaskTableTableViewController: UITableViewController {
     // Creates object of TaskManager class and initializes tasks array
     
     let taskManager = TaskManager()
+    
 
     
     // unwind segue
-    // FIXME: ADD ADDAPPT
     @IBAction func unwindToTaskPageAndAddTask(sender: UIStoryboardSegue)
     {
         // add assignment created here!
@@ -38,6 +38,14 @@ class TaskTableTableViewController: UITableViewController {
         
         // Pull any data from the view controller which initiated the unwind segue.
     }
+    
+    @IBAction func unwindToTaskPageAndDeleteTask(sender: UIStoryboardSegue) {
+        if let sttvc = sender.sourceViewController as? SingleTaskTableViewController {
+            let index = sttvc.index
+            taskManager.deleteTaskAtIndex(index)
+        }
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +77,7 @@ class TaskTableTableViewController: UITableViewController {
         if section == 0 {
             // return number of rows we want in this section (all) - count is a built in function to return the number of elements in an array
             return taskManager.tasks.count
+            
         }
         
         else {
@@ -216,6 +225,7 @@ class TaskTableTableViewController: UITableViewController {
                 // single task view controller
                 if let stvc = segue.destinationViewController as? SingleTaskTableViewController {
                     stvc.task = task
+                    stvc.index = index
                 }
             }
         }

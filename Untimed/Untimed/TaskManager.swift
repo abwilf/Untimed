@@ -20,8 +20,13 @@ class TaskManager {
     func addTask (taskIn: Task) {
         // add to array
         tasks += [taskIn]
-        // save to disc
+        save()
+    }
+    
+    func deleteTaskAtIndex (index: Int) {
+        tasks.removeAtIndex(index)
         
+        save()
     }
     
     
@@ -31,11 +36,21 @@ class TaskManager {
         // problem: can't save taskobject to disc directly: use NSCoding to save custom classes to disc
         // specify where you want to be stored
         // watch out for the word documents
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        defaults.setObject(tasks, forKey: "SavedTasks")
+        
+        // actually set object (ios optimizes)
+        defaults.synchronize()
+        
     }
     
     
     func loadFromDisc() {
+        let defaults = NSUserDefaults.standardUserDefaults()
         
+        // if I'm able to get a tasks array at this key, put it into tasks, if not, create a blank one and put it into tasks
+        tasks = defaults.objectForKey("SavedTasks") as? [Task] ?? [Task]()
         // every time you open the app
     }
     
