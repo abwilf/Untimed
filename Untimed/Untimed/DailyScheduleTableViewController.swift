@@ -12,7 +12,12 @@ class DailyScheduleTableViewController: UITableViewController {
 
     let taskManager = TaskManager()
     
-    // unwind segue adding task from add pages
+    
+    @IBAction func reloadPressed(sender: UIBarButtonItem) {
+        taskManager.loadFromDisc()
+    }
+    
+    // connecting add and single task viewer pages to this
     @IBAction func unwindToDailySchedulePageAndAddTask(sender: UIStoryboardSegue)
     {
         // add assignment created here!
@@ -82,7 +87,7 @@ class DailyScheduleTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
 
-        // Configure the cell...
+        
 
         return cell
     }

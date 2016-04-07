@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Tasks-->
@@ -68,16 +69,23 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Tasks" id="930-Q1-oKY">
-                        <barButtonItem key="leftBarButtonItem" title="Add Appt" id="MZC-cs-jgM">
+                        <barButtonItem key="leftBarButtonItem" title="Reload" id="trH-Fp-d05">
                             <connections>
-                                <segue destination="JN3-bG-ly9" kind="presentation" id="jGW-zF-WyI"/>
+                                <action selector="reloadPressed:" destination="bp7-Yw-ZGw" id="IKx-W9-8QK"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Add Assn" id="Qkd-wj-66e">
-                            <connections>
-                                <segue destination="ytc-m8-s5S" kind="presentation" id="cyl-Cn-Xkd"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Add Assn" id="Qkd-wj-66e">
+                                <connections>
+                                    <segue destination="ytc-m8-s5S" kind="presentation" id="cyl-Cn-Xkd"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Add Appt" id="MZC-cs-jgM">
+                                <connections>
+                                    <segue destination="JN3-bG-ly9" kind="presentation" id="jGW-zF-WyI"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LcI-a2-6bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -477,7 +485,7 @@
             </objects>
             <point key="canvasLocation" x="509.5" y="732.5"/>
         </scene>
-        <!--Daily Schedule Table View Controller-->
+        <!--Daily Schedule-->
         <scene sceneID="h3l-Sg-Rc8">
             <objects>
                 <tableViewController id="H4w-oZ-fvh" customClass="DailyScheduleTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
@@ -514,17 +522,24 @@
                             <outlet property="delegate" destination="H4w-oZ-fvh" id="cbk-v7-aXa"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="9Ph-E5-LgY">
-                        <barButtonItem key="leftBarButtonItem" title="Add Appt" id="bGF-5F-9XA">
+                    <navigationItem key="navigationItem" title="Daily Schedule" id="9Ph-E5-LgY">
+                        <barButtonItem key="leftBarButtonItem" title="Reload" id="rPT-by-pY3">
                             <connections>
-                                <segue destination="JN3-bG-ly9" kind="presentation" id="KvW-Z0-IVw"/>
+                                <action selector="reloadPressed:" destination="H4w-oZ-fvh" id="uV9-Sk-0cQ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Add Assn" id="58W-le-uvA">
-                            <connections>
-                                <segue destination="ytc-m8-s5S" kind="presentation" id="XVE-1H-48j"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Add Assn" id="58W-le-uvA">
+                                <connections>
+                                    <segue destination="ytc-m8-s5S" kind="presentation" id="XVE-1H-48j"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Add Appt" id="bGF-5F-9XA">
+                                <connections>
+                                    <segue destination="JN3-bG-ly9" kind="presentation" id="KvW-Z0-IVw"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IXi-Rj-4wS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -597,7 +612,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cyl-Cn-Xkd"/>
-        <segue reference="jGW-zF-WyI"/>
+        <segue reference="KvW-Z0-IVw"/>
+        <segue reference="XVE-1H-48j"/>
     </inferredMetricsTieBreakers>
 </document>

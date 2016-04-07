@@ -16,6 +16,12 @@ class TaskTableTableViewController: UITableViewController {
     
 
     
+    @IBAction func reloadPressed(sender: UIBarButtonItem) {
+        taskManager.loadFromDisc()
+    }
+   
+    
+    
     // unwind segue
     @IBAction func unwindToTaskPageAndAddTask(sender: UIStoryboardSegue)
     {
