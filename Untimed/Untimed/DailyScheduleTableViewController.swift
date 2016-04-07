@@ -11,7 +11,7 @@ import UIKit
 class DailyScheduleTableViewController: UITableViewController {
 
     let taskManager = TaskManager()
-    
+
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
         taskManager.loadFromDisc()
@@ -49,6 +49,51 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
 
+    
+    // the calendar - a 2d array with rows (time of day- row 0 is 8-9am) and cols (date starting at first day you open the app)
+    var calendarArray = [[Task]]()
+    
+    func putApptsAndFreeTimeInCalArray() {
+        
+        // put appointments in the calendar array by pulling them from tasks array
+        for var i = 0; i < taskManager.tasks.count; ++i {
+            
+            // if object == appointment, assign to calendarArray
+            if let appt = taskManager.tasks[i] as? Appointment {
+                // FIXME: NEED TO DO THIS!
+                //put the appt in the right spot in the cal array - use .startTime and .endTime
+
+            }
+        }
+        
+        
+        // declare free object
+        let freeTime: Free = Free()
+        
+        
+        // put free object in all slots not occupied by appointment
+        for var i = 0; i < calendarArray.count; ++i {
+            for var j = 0; j < calendarArray.count; ++j {
+               
+                // if the spot is taken by an appointment ignore it
+                if let isFree = calendarArray[i][j] as? Appointment {
+                }
+                
+                // otherwise, allocate a free object to it
+                else {
+                    calendarArray[i][j] = freeTime
+                }
+            }
+        }
+    }
+    
+
+    
+    // add up the amount of free time before each assignment's due date
+    
+    // allocate assignments based on the difference between their freeTimeBeforeDueDate and the timeNeeded
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
