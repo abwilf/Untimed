@@ -63,9 +63,9 @@ class DailyScheduleTableViewController: UITableViewController {
                 
                 //Puts appointment in to correct spot in array
                 for var i = 0; i < 12; ++i {
-                if appt.startTime == i + 8 && appt.endTime == i + 9 {
-                    calendarArray.insert([appt], atIndex: i)
-                }
+                    if appt.startTime == i + 8 && appt.endTime == i + 9 {
+                        calendarArray.insert([appt], atIndex: i)
+                    }
                 }
 
             }
@@ -101,15 +101,15 @@ class DailyScheduleTableViewController: UITableViewController {
     var timeBeforeDueDate = 0
     func calcTimeUntilDue(){
         
-    for var i = 0; i < taskManager.tasks.count; ++i {
+        for var i = 0; i < taskManager.tasks.count; ++i {
     
     // if object == appointment, assign to calendarArray
-    if let assn = taskManager.tasks[i] as? Assignment {
-    
-    let currentDate = NSDate()
-    var timeBeforeDueDate = assn.dueDate - currentDate //FIX THIS!!
-    }
+            if let assn = taskManager.tasks[i] as? Assignment {
+                let currentDate = NSDate()
+ //               var timeBeforeDueDate = assn.dueDate - currentDate //FIX THIS!!
+            }
         }
+    }
     
     // allocate assignments based on the difference between their freeTimeBeforeDueDate and the timeNeeded
     
