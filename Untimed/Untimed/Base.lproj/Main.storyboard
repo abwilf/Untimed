@@ -455,7 +455,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XHz-ja-TfR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="2Ey-tU-T7V" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3269.5" y="774.5"/>
+            <point key="canvasLocation" x="3309.5" y="510.5"/>
         </scene>
         <!--Daily Schedule-->
         <scene sceneID="7bg-4x-UqG">
@@ -477,16 +477,16 @@
             </objects>
             <point key="canvasLocation" x="509.5" y="732.5"/>
         </scene>
-        <!--Daily Schedule-->
+        <!--Daily Schedule Table View Controller-->
         <scene sceneID="h3l-Sg-Rc8">
             <objects>
-                <tableViewController id="H4w-oZ-fvh" sceneMemberID="viewController">
+                <tableViewController id="H4w-oZ-fvh" customClass="DailyScheduleTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="XXA-Eo-OF5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="zEg-VE-49U">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Daily Schedule Cell" id="zEg-VE-49U">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zEg-VE-49U" id="laY-TT-vYd">
@@ -514,7 +514,7 @@
                             <outlet property="delegate" destination="H4w-oZ-fvh" id="cbk-v7-aXa"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Daily Schedule" id="9Ph-E5-LgY">
+                    <navigationItem key="navigationItem" id="9Ph-E5-LgY">
                         <barButtonItem key="leftBarButtonItem" title="Add Appt" id="bGF-5F-9XA">
                             <connections>
                                 <segue destination="JN3-bG-ly9" kind="presentation" id="KvW-Z0-IVw"/>
@@ -529,7 +529,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IXi-Rj-4wS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2233.5" y="654.5"/>
+            <point key="canvasLocation" x="2113.5" y="814.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="4bA-cx-dfp">
@@ -597,7 +597,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="jGW-zF-WyI"/>
         <segue reference="cyl-Cn-Xkd"/>
+        <segue reference="jGW-zF-WyI"/>
     </inferredMetricsTieBreakers>
 </document>
