@@ -21,12 +21,12 @@ class Appointment: Task {
         super.init()
     }
     
-    override func encodeWithCoder(aCoder: NSCoder!) {
+    override func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(startTime, forKey:"StartTime")
         aCoder.encodeObject(endTime, forKey:"EndTime")
     }
     
-    override init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.startTime = aDecoder.decodeObjectForKey("StartTime") as! NSDate
         self.endTime = aDecoder.decodeObjectForKey("EndTime") as! NSDate
