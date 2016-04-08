@@ -109,22 +109,33 @@ class DailyScheduleTableViewController: UITableViewController {
     // 2. iterate through and count up the number of Free objects in the array in that time period
     // 3. return the count of all those free objects
     
-    var amountOfFreeTimeBeforeDueDate = 0
+    var amountOfFreeHoursBeforeDueDate = 0
+    
     // FIXME: needs assignment argument and return type
     
-    /*
-    func calcFreeTimeUntilDue() {
+    
+    func calcFreeTimeUntilDue(assgt: Assignment) -> Int {
+        let currentDate = NSDate()
+        /*
+        let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
+        let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: assgt.dueDate)
+        let currentDateComponents = NSCalendar.currentCalendar().component(unitFlags, fromDate: currentDate)
+        */
+        
+        var diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: assgt.dueDate, options: NSCalendarOptions.init(rawValue: 0))
         
         for var i = 0; i < taskManager.tasks.count; ++i {
-            // FIXME: j < number of days until due! (is j = 0 always current day?)
-            for var j = 0; j < (/*FIXME*/); ++j {
+            // FIXME: I think this only works if two dates are within the same month
+            for var j = 0; j < (diffDateComponents.day); ++j {
+                // FIXME: how to check if task is of subclass free?
                 if let free = taskManager.tasks[i][j] as? Free {
-                    amountOfFreeTimeBeforeDueDate += 1
+                    amountOfFreeHoursBeforeDueDate += 1
                 }
             }
         }
+        return amountOfFreeHoursBeforeDueDate
     }
-    */
+    
     
     
     
