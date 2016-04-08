@@ -18,7 +18,7 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     // connecting add and single task viewer pages to this
-    @IBAction func unwindToDailySchedulePageAndAddTask(sender: UIStoryboardSegue)
+    @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
     {
         // add assignment created here!
         if let aavc = sender.sourceViewController as? AddAssignmentTableViewController {
@@ -41,10 +41,11 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     // unwind segue deleting task from delete in singletasktableviewcontroller
-    @IBAction func unwindToDailySchedulePageAndDeleteTask(sender: UIStoryboardSegue) {
+    @IBAction func unwindAndDeleteTask(sender: UIStoryboardSegue) {
         if let sttvc = sender.sourceViewController as? SingleTaskTableViewController {
             let index = sttvc.index
             taskManager.deleteTaskAtIndex(index)
+             tableView.reloadData()
         }
     }
     
@@ -109,8 +110,9 @@ class DailyScheduleTableViewController: UITableViewController {
     // 2. iterate through and count up the number of Free objects in the array in that time period
     // 3. return the count of all those free objects
     
-    var amountOfFreeHoursBeforeDueDate = 0
     
+    // MAKE THIS A MEMBER VARIABLE
+    var amountOfFreeTimeBeforeDueDate = 0
     // FIXME: needs assignment argument and return type
     
     
@@ -148,6 +150,7 @@ class DailyScheduleTableViewController: UITableViewController {
     
     // #6 FROM TO DO LIST: allocate assignments to the calendar array based on the difference between their amountOfFreeTimeBeforeDueDate and the timeNeeded
     
+    /*
     override func viewDidLoad() {
         super.viewDidLoad()
         var assignNext = Task()
@@ -158,10 +161,10 @@ class DailyScheduleTableViewController: UITableViewController {
                 
                 assignNext = taskManager.tasks[i]
             }
-            }
             return assignNext
     }
     
+*/
         
         
 
@@ -170,7 +173,7 @@ class DailyScheduleTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

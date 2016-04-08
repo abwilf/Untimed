@@ -31,13 +31,16 @@ class Assignment: Task {
 
     override func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(dueDate, forKey:"DueDate")
-        aCoder.encodeObject(timeNeeded, forKey:"TimeNeeded")        
+        aCoder.encodeObject(timeNeeded, forKey:"TimeNeeded")
+        aCoder.encodeObject(title, forKey:"Title")
+        
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.dueDate = aDecoder.decodeObjectForKey("DueDate") as! NSDate
         self.timeNeeded = aDecoder.decodeObjectForKey("TimeNeeded") as! Double
+            aDecoder.decodeObjectForKey("Title") as! String
     }
 
 }

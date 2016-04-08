@@ -28,12 +28,10 @@ class Task: NSObject, NSCoding {
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(title, forKey:"Title")
-        
     }
     
     required init (coder aDecoder: NSCoder) {
         self.title = aDecoder.decodeObjectForKey("Title") as? String ?? ""
-       
     }
     
 }

@@ -23,7 +23,7 @@ class TaskTableTableViewController: UITableViewController {
     
     
     // unwind segue
-    @IBAction func unwindToTaskPageAndAddTask(sender: UIStoryboardSegue)
+    @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
     {
         // add assignment created here!
         if let aavc = sender.sourceViewController as? AddAssignmentTableViewController {
@@ -45,10 +45,11 @@ class TaskTableTableViewController: UITableViewController {
         // Pull any data from the view controller which initiated the unwind segue.
     }
     
-    @IBAction func unwindToTaskPageAndDeleteTask(sender: UIStoryboardSegue) {
+    @IBAction func unwindAndDeleteTask(sender: UIStoryboardSegue) {
         if let sttvc = sender.sourceViewController as? SingleTaskTableViewController {
             let index = sttvc.index
             taskManager.deleteTaskAtIndex(index)
+             tableView.reloadData()
         }
     }
 
