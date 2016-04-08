@@ -111,7 +111,7 @@ class DailyScheduleTableViewController: UITableViewController {
     
     var amountOfFreeTimeBeforeDueDate = 0
     // FIXME: needs assignment argument and return type
-    
+    //Does this have to be a member variable of asssignment???
     /*
     func calcFreeTimeUntilDue() {
         
@@ -132,6 +132,20 @@ class DailyScheduleTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var assignNext = Task()
+        
+        func getNextAssignment() {
+        for var i = 0; i < taskManager.tasks.count; ++i {
+            if ((taskManager.tasks[i] as? Assignment) && (taskManager.tasks[i + 1] as? Assignment) (taskManager.tasks[i].amountOfFreeTimeBeforeDueDate - taskManager.tasks[i].timeNeeded) < (taskManager.tasks[i + 1].amountOfFreeTimeBeforeDueDate - taskManager.tasks[i + 1].timeNeeded) {
+                
+                assignNext = taskManager.tasks[i]
+            }
+            }
+            return assignNext
+    }
+    
+        
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
