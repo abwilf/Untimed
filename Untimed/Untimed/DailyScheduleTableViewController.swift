@@ -125,7 +125,7 @@ class DailyScheduleTableViewController: UITableViewController {
         var diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: assgt.dueDate, options: NSCalendarOptions.init(rawValue: 0))
         
         for var i = 0; i < taskManager.tasks.count; ++i {
-            // FIXME: I think this only works if two dates are within the same month
+            // FIXME: only works if two dates are within the same month
             for var j = 0; j < (diffDateComponents.day); ++j {
                 // FIXME: how to check if task is of subclass free?
                 if let free = taskManager.tasks[i][j] as? Free {
