@@ -104,15 +104,11 @@ class DailyScheduleTableViewController: UITableViewController {
         
         // put free object in all slots not occupied by appointment
         
-        // FIXME: check if .count is correct
-        for var i = 0; i < taskManager.calendarArray.count; ++i {
-            for var j = 0; j < 31/*taskManager.calendarArray.count*/; ++j {
+        for var i = 0; i < 12; ++i {
+            for var j = 0; j < 28; ++j {
                
                 // if the spot is taken by an appointment ignore it
-                if let isFree = taskManager.calendarArray[i][j] as? Appointment {
-                    
-                    // Sets correct slots equal to free in the array
-                    taskManager.calendarArray.insert([isFree], atIndex: i)
+                if let _ = taskManager.calendarArray[i][j] as? Appointment {
                     }
                 
                 // otherwise, allocate a free object to it
