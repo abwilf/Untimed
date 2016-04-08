@@ -82,7 +82,7 @@ class DailyScheduleTableViewController: UITableViewController {
         
         // FIXME: check if .count is correct
         for var i = 0; i < taskManager.calendarArray.count; ++i {
-            for var j = 0; j < taskManager.calendarArray.count; ++j {
+            for var j = 0; j < 31/*taskManager.calendarArray.count*/; ++j {
                
                 // if the spot is taken by an appointment ignore it
                 if let isFree = taskManager.calendarArray[i][j] as? Appointment {
@@ -124,10 +124,17 @@ class DailyScheduleTableViewController: UITableViewController {
         
         var diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: assgt.dueDate, options: NSCalendarOptions.init(rawValue: 0))
         
+        
+        // tasks is 1D array
+        // sort by date 
+        // sort by time
+        // then calculate free time
+        // make due date just a date (no time)
         for var i = 0; i < taskManager.tasks.count; ++i {
             // FIXME: only works if two dates are within the same month
             for var j = 0; j < (diffDateComponents.day); ++j {
                 // FIXME: how to check if task is of subclass free?
+                // get all tasks that are due today
                 if let free = taskManager.tasks[i][j] as? Free {
                     amountOfFreeHoursBeforeDueDate += 1
                 }

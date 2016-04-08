@@ -132,7 +132,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="227.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Kiz-fW-7XB">
+                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Kiz-fW-7XB">
                                                     <rect key="frame" x="0.0" y="8" width="375" height="216"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="481486063.941131">
                                                         <!--2016-04-04 18:07:43 +0000-->
