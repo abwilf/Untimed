@@ -115,7 +115,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
-                                                        <action selector="didFinisheEditingAssignmentTitle:" destination="KpF-z1-8Sg" eventType="editingDidEnd" id="J4E-ba-k43"/>
+                                                        <action selector="didChangeEditingAssignmentTitle:" destination="KpF-z1-8Sg" eventType="editingChanged" id="psX-0C-xLC"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -186,7 +186,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="I6Y-ve-dfC">
                             <connections>
-                                <segue destination="bfw-eO-dAU" kind="unwind" unwindAction="unwindToTaskPageAndAddTask:" id="tHL-By-gSp"/>
+                                <segue destination="bfw-eO-dAU" kind="unwind" unwindAction="unwindAndAddTask:" id="9mh-L2-0Ol"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -352,7 +352,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="TLt-2R-C4r">
                             <connections>
-                                <segue destination="v1a-8G-CEJ" kind="unwind" unwindAction="unwindToTaskPageAndAddTask:" id="1IK-gS-pLZ"/>
+                                <segue destination="v1a-8G-CEJ" kind="unwind" unwindAction="unwindAndAddTask:" id="c7R-Gy-ryR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -433,17 +433,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dzu-Bg-Mz1">
-                                                    <rect key="frame" x="113" y="8" width="149" height="30"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <state key="normal" title="Delete">
                                                         <color key="titleColor" red="1" green="0.065262594519999995" blue="0.04155516242" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
+                                                    <connections>
+                                                        <segue destination="2Ey-tU-T7V" kind="unwind" unwindAction="unwindAndDeleteTask:" id="BXs-Mc-Nnd"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="2Ey-tU-T7V" kind="unwind" unwindAction="unwindToTaskPageAndDeleteTask:" id="gGj-wc-EJC"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>

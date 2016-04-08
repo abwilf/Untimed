@@ -19,7 +19,7 @@ class AddAssignmentTableViewController: UITableViewController {
     
     
     // assn title
-    @IBAction func didFinisheEditingAssignmentTitle(sender: UITextField) {
+    @IBAction func didChangeEditingAssignmentTitle(sender: UITextField) {
         if let newTitle = sender.text {
             addedAssignment.title = newTitle
         }
