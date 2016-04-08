@@ -12,7 +12,7 @@ import Foundation
 class Assignment: Task {
     var dueDate: NSDate = NSDate()
     var timeNeeded: Double = 0
-    var amountOfFreeTimeBeforeDueDate: Int = 0
+    var amountOfFreeHoursBeforeDueDate: Int = 0
     /*
     let calendar = NSCalendar.currentCalendar()
     let components = calendar.components([.Month, .Day], fromDate: dueDate)

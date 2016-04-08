@@ -53,10 +53,13 @@ class DailyScheduleTableViewController: UITableViewController {
     
     // the calendar - a 2d array with rows (time of day- row 0 is 8-9am) and cols (date starting at first day you open the app)
    
+    func allocateapptshappeningondayjtothecorrectspotindayjonthecalarray(j: Int, arr: [[Task]]) {
+        // iterate through tasks array
+        // if appt, assign to spot in cal array based on hour value
+    }
+    
     
     func putApptsAndFreeTimeInCalArray() {
-        
-        
         
         // FIXME: calendarArray is now a member variable of taskmanager
         // #3: put appointments in the calendar array by pulling them from tasks array
@@ -67,7 +70,10 @@ class DailyScheduleTableViewController: UITableViewController {
                 
                 //Puts appointment in to correct spot in array
                 for var i = 0; i < 12; ++i {
-                    if appt.startTime == i + 8 && appt.endTime == i + 9 {
+    
+                    let diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.startTime, toDate: appt.endTime, options: NSCalendarOptions.init(rawValue: 0))
+    
+                    if appt.startTime == i + 8 && appt.endTime == i + 8 + diffDateComponents.hour {
                         taskManager.calendarArray.insert([appt], atIndex: i)
                     }
                 }
@@ -76,8 +82,8 @@ class DailyScheduleTableViewController: UITableViewController {
         }
         
         
-    // declare free object
-    let freeTime: Free = Free()
+        // declare free object
+        let freeTime: Free = Free()
         
         // put free object in all slots not occupied by appointment
         
@@ -112,11 +118,10 @@ class DailyScheduleTableViewController: UITableViewController {
     
     
     // MAKE THIS A MEMBER VARIABLE
-    var amountOfFreeTimeBeforeDueDate = 0
     // FIXME: needs assignment argument and return type
     
     
-    func calcFreeTimeUntilDue(assgt: Assignment) -> Int {
+    func calcFreeTimeUntilDue(assgt: Assignment) {
         let currentDate = NSDate()
         /*
         let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
@@ -124,25 +129,26 @@ class DailyScheduleTableViewController: UITableViewController {
         let currentDateComponents = NSCalendar.currentCalendar().component(unitFlags, fromDate: currentDate)
         */
         
-        var diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: assgt.dueDate, options: NSCalendarOptions.init(rawValue: 0))
+        let diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: assgt.dueDate, options: NSCalendarOptions.init(rawValue: 0))
         
         
-        // tasks is 1D array
+        // tasks is ,1D array
         // sort by date 
         // sort by time
         // then calculate free time
         // make due date just a date (no time)
-        for var i = 0; i < taskManager.tasks.count; ++i {
+        
+        // FIXME: magic number!! (12)
+        for var i = 0; i < 12; ++i {
             // FIXME: only works if two dates are within the same month
             for var j = 0; j < (diffDateComponents.day); ++j {
                 // FIXME: how to check if task is of subclass free?
                 // get all tasks that are due today
-                if let free = taskManager.tasks[i][j] as? Free {
-                    amountOfFreeHoursBeforeDueDate += 1
+                if let free = taskManager.calendarArray[i][j] as? Free {
+                    assgt.amountOfFreeHoursBeforeDueDate += 1
                 }
             }
         }
-        return amountOfFreeHoursBeforeDueDate
     }
     
     
