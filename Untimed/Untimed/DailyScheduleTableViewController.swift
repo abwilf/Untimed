@@ -55,7 +55,8 @@ class DailyScheduleTableViewController: UITableViewController {
     
     func putApptsAndFreeTimeInCalArray() {
         
-        // put appointments in the calendar array by pulling them from tasks array
+        
+        // #3: put appointments in the calendar array by pulling them from tasks array
         for var i = 0; i < taskManager.tasks.count; ++i {
             
             // if object == appointment, assign to calendarArray
@@ -77,6 +78,8 @@ class DailyScheduleTableViewController: UITableViewController {
         
         
         // put free object in all slots not occupied by appointment
+        
+        // FIXME: check if .count is correct
         for var i = 0; i < calendarArray.count; ++i {
             for var j = 0; j < calendarArray.count; ++j {
                
@@ -95,23 +98,33 @@ class DailyScheduleTableViewController: UITableViewController {
         }
     }
     
-
     
-    // add up the amount of time before each assignment's due date
-    var timeBeforeDueDate = 0
-    func calcTimeUntilDue(){
+    
+    // #5 FROM TO-DO LIST
+    
+    // add up the amount of free objects before each assignment's due date
+    
+    // 1. find the two places in the calendar array (start and end)
+    // 2. iterate through and count up the number of Free objects in the array in that time period
+    // 3. return the count of all those free objects
+    
+    var amountOfFreeTimeBeforeDueDate = 0
+    
+    func calcTimeUntilDue() {
         
         for var i = 0; i < taskManager.tasks.count; ++i {
     
     // if object == appointment, assign to calendarArray
             if let assn = taskManager.tasks[i] as? Assignment {
                 let currentDate = NSDate()
- //               var timeBeforeDueDate = assn.dueDate - currentDate //FIX THIS!!
+ //       //FIX THIS!!  var amountOfFreeTimeBeforeDueDate = assn.dueDate - currentDate 
             }
         }
     }
     
-    // allocate assignments based on the difference between their freeTimeBeforeDueDate and the timeNeeded
+    
+    
+    // #6 FROM TO DO LIST: allocate assignments based on the difference between their amountOfFreeTimeBeforeDueDate and the timeNeeded
     
     
     

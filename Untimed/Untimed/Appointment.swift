@@ -10,7 +10,7 @@ import Foundation
 
 class Appointment: Task {
     
-    // to test: var startTime = "11.30
+    // to test: var startTime = "11.30"
     var startTime: NSDate = NSDate()
     
     // to test: var endTime = " 1 am tomorrow"
