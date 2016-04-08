@@ -109,15 +109,16 @@ class DailyScheduleTableViewController: UITableViewController {
     // 3. return the count of all those free objects
     
     var amountOfFreeTimeBeforeDueDate = 0
+    // FIXME: needs assignment argument and return type
     
-    func calcTimeUntilDue() {
+    func calcFreeTimeUntilDue() {
         
         for var i = 0; i < taskManager.tasks.count; ++i {
-    
-    // if object == appointment, assign to calendarArray
-            if let assn = taskManager.tasks[i] as? Assignment {
-                let currentDate = NSDate()
- //       //FIX THIS!!  var amountOfFreeTimeBeforeDueDate = assn.dueDate - currentDate 
+            // FIXME: j < number of days until due! (is j = 0 always current day?)
+            for var j = 0; j< (/*FIXME*/); ++j {
+                if let free = taskManager.tasks[i][j] as? Free {
+                    amountOfFreeTimeBeforeDueDate += 1
+                }
             }
         }
     }

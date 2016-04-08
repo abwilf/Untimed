@@ -13,7 +13,18 @@ class Assignment: Task {
     var dueDate: NSDate = NSDate()
     var timeNeeded: Double = 0
 
+    /*
+    let calendar = NSCalendar.currentCalendar()
+    let components = calendar.components([.Month, .Day], fromDate: dueDate)
     
+    // why doesn't this work?
+    let calendar = NSCalendar.currentCalendar()
+    let dateComponents: NSDateComponents = calendar.components([NSCalendarUnit.Day, NSCalendarUnit.Month, NSCalendarUnit.Year, NSCalendarUnit.WeekOfYear, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second, NSCalendarUnit.Nanosecond], fromDate: dueDate)
+
+    let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
+    let components = NSCalendar.currentCalendar().components(unitFlags, fromDate: dueDate)
+    */
+
    // override func encodeWithCoder(aCoder: NSCoder!) {
        // aCoder.encodeObject(dueDate, forKey:"DueDate")
        // aCoder.encodeObject(timeNeeded, forKey:"TimeNeeded")
