@@ -19,7 +19,6 @@ class AddAssignmentTableViewController: UITableViewController {
     
     
     // assn title
-    // THIS MAY BE FAULTY! Reimplement if necessary
     @IBAction func didFinisheEditingAssignmentTitle(sender: UITextField) {
         if let newTitle = sender.text {
             addedAssignment.title = newTitle
@@ -38,7 +37,6 @@ class AddAssignmentTableViewController: UITableViewController {
     @IBAction func addButtonPressed(sender: UIStepper) {
         addedAssignment.timeNeeded = sender.value
         switchLabel.text = "\(String(sender.value)) hours"
-        print(addedAssignment.timeNeeded)
     }
     
     

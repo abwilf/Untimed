@@ -51,11 +51,13 @@ class DailyScheduleTableViewController: UITableViewController {
 
     
     // the calendar - a 2d array with rows (time of day- row 0 is 8-9am) and cols (date starting at first day you open the app)
-    var calendarArray = [[Task]]()
+   
     
     func putApptsAndFreeTimeInCalArray() {
         
         
+        
+        // FIXME: calendarArray is now a member variable of taskmanager
         // #3: put appointments in the calendar array by pulling them from tasks array
         for var i = 0; i < taskManager.tasks.count; ++i {
             
@@ -65,7 +67,7 @@ class DailyScheduleTableViewController: UITableViewController {
                 //Puts appointment in to correct spot in array
                 for var i = 0; i < 12; ++i {
                     if appt.startTime == i + 8 && appt.endTime == i + 9 {
-                        calendarArray.insert([appt], atIndex: i)
+                        taskManager.calendarArray.insert([appt], atIndex: i)
                     }
                 }
 
@@ -73,26 +75,25 @@ class DailyScheduleTableViewController: UITableViewController {
         }
         
         
-        // declare free object
-        let freeTime: Free = Free()
-        
+    // declare free object
+    let freeTime: Free = Free()
         
         // put free object in all slots not occupied by appointment
         
         // FIXME: check if .count is correct
-        for var i = 0; i < calendarArray.count; ++i {
-            for var j = 0; j < calendarArray.count; ++j {
+        for var i = 0; i < taskManager.calendarArray.count; ++i {
+            for var j = 0; j < taskManager.calendarArray.count; ++j {
                
                 // if the spot is taken by an appointment ignore it
-                if let isFree = calendarArray[i][j] as? Appointment {
+                if let isFree = taskManager.calendarArray[i][j] as? Appointment {
                     
                     // Sets correct slots equal to free in the array
-                    calendarArray.insert([isFree], atIndex: i)
+                    taskManager.calendarArray.insert([isFree], atIndex: i)
                     }
                 
                 // otherwise, allocate a free object to it
                 else {
-                    calendarArray[i][j] = freeTime
+                    taskManager.calendarArray[i][j] = freeTime
                 }
             }
         }
@@ -111,23 +112,23 @@ class DailyScheduleTableViewController: UITableViewController {
     var amountOfFreeTimeBeforeDueDate = 0
     // FIXME: needs assignment argument and return type
     
+    /*
     func calcFreeTimeUntilDue() {
         
         for var i = 0; i < taskManager.tasks.count; ++i {
             // FIXME: j < number of days until due! (is j = 0 always current day?)
-            for var j = 0; j< (/*FIXME*/); ++j {
+            for var j = 0; j < (/*FIXME*/); ++j {
                 if let free = taskManager.tasks[i][j] as? Free {
                     amountOfFreeTimeBeforeDueDate += 1
                 }
             }
         }
     }
+    */
     
     
     
-    // #6 FROM TO DO LIST: allocate assignments based on the difference between their amountOfFreeTimeBeforeDueDate and the timeNeeded
-    
-    
+    // #6 FROM TO DO LIST: allocate assignments to the calendar array based on the difference between their amountOfFreeTimeBeforeDueDate and the timeNeeded
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,13 +162,77 @@ class DailyScheduleTableViewController: UITableViewController {
     */
 
     
-    // this is where our allocation goes! look at the same spot in tasktabletable for formatting ideas
-    
+
+    // #7 FROM TO DO LIST: allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
-
         
-
+       
+        // if row = 0, allocate first cell as 8 - 9 am: \(task.name)
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
+        
+        // only doing it for today (col = 0)
+        let task = taskManager.calendarArray[indexPath.row][0]
+        
+        // 8 - 9 am block
+        if indexPath.row == 0 {
+            cell.textLabel?.text = "8-9 a.m.: \(task.title)"
+        }
+        
+        // 9 - 10 block
+        if indexPath.row == 1 {
+            cell.textLabel?.text = "9-10 a.m.: \(task.title)"
+        }
+        
+        // 10 - 11 block
+        if indexPath.row == 2 {
+            cell.textLabel?.text = "10-11 a.m.: \(task.title)"
+        }
+        
+        // 11 - 12 block
+        if indexPath.row == 3 {
+            cell.textLabel?.text = "11 a.m. - 12 p.m.: \(task.title)"
+        }
+        
+        // 12 - 1 block
+        if indexPath.row == 4 {
+            cell.textLabel?.text = "8-9 a.m.: \(task.title)"
+        }
+        
+        // 1 - 2 block
+        if indexPath.row == 5 {
+            cell.textLabel?.text = "1-2 p.m.: \(task.title)"
+        }
+        
+        // 2 - 3 block
+        if indexPath.row == 6 {
+            cell.textLabel?.text = "2-3 p.m.: \(task.title)"
+        }
+        
+        // 3 - 4 block
+        if indexPath.row == 7 {
+            cell.textLabel?.text = "3-4 p.m.: \(task.title)"
+        }
+        
+        // 4 - 5 block
+        if indexPath.row == 8 {
+            cell.textLabel?.text = "4-5 p.m.: \(task.title)"
+        }
+        
+        // 5 - 6 block
+        if indexPath.row == 9 {
+            cell.textLabel?.text = "5-6 p.m.: \(task.title)"
+        }
+        
+        // 6 - 7 block
+        if indexPath.row == 10 {
+            cell.textLabel?.text = "6-7 p.m.: \(task.title)"
+        }
+        
+        // 7-8 block
+        if indexPath.row == 11 {
+            cell.textLabel?.text = "7-8 p.m.: \(task.title)"
+        }
         return cell
     }
     

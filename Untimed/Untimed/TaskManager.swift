@@ -13,8 +13,11 @@ class TaskManager {
     
     //var tasks: [Task] = [Assignment(title: "Make an app"), Appointment(title: "ML Dorf")]
     
-    // empty array
+    // empty array of tasks
     var tasks: [Task] = []
+    
+    // calendar array
+    var calendarArray = [[Task]]()
     
     
     func addTask (taskIn: Task) {

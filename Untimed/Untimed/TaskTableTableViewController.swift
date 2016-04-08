@@ -30,7 +30,7 @@ class TaskTableTableViewController: UITableViewController {
             
             taskManager.addTask(aavc.addedAssignment)
             
-           // tableView = inherited property from UITableViewCOntroller class
+           // tableView = inherited property from UITableViewController class
             tableView.reloadData()
         }
         

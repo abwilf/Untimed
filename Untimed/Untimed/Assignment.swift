@@ -24,20 +24,21 @@ class Assignment: Task {
     let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
     let components = NSCalendar.currentCalendar().components(unitFlags, fromDate: dueDate)
     */
+    
+    override init() {
+       super.init()
+    }
 
-   // override func encodeWithCoder(aCoder: NSCoder!) {
-       // aCoder.encodeObject(dueDate, forKey:"DueDate")
-       // aCoder.encodeObject(timeNeeded, forKey:"TimeNeeded")
-   // }
+    override func encodeWithCoder(aCoder: NSCoder!) {
+        aCoder.encodeObject(dueDate, forKey:"DueDate")
+        aCoder.encodeObject(timeNeeded, forKey:"TimeNeeded")        
+    }
     
-    
-  // override init (coder aDecoder: NSCoder!) {
-       // self.dueDate = aDecoder.decodeObjectForKey("DueDate") as! NSDate
-       // self.timeNeeded = aDecoder.decodeObjectForKey("TimeNeeded") as! Double
-       // super.init()
-    // }
-    
-    
+    override init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+        self.dueDate = aDecoder.decodeObjectForKey("DueDate") as! NSDate
+        self.timeNeeded = aDecoder.decodeObjectForKey("TimeNeeded") as! Double
+    }
 
 }
 
