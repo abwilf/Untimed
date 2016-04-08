@@ -10,7 +10,7 @@
 
 import Foundation
 
-class Task {
+class Task: NSObject, NSCoding {
     // nothing needed because subclasses reference (see assn and appt files)
     var title: String = "Unnamed Task"
     
@@ -23,16 +23,16 @@ class Task {
     }
     
     // default initializer
-    init() {
+    override init() {
     }
     
-    func encodeWithCoder(aCoder: NSCoder!) {
+    func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(title, forKey:"Title")
         
     }
     
-    init (coder aDecoder: NSCoder!) {
-        self.title = aDecoder.decodeObjectForKey("Title") as! String
+    required init (coder aDecoder: NSCoder) {
+        self.title = aDecoder.decodeObjectForKey("Title") as? String ?? ""
        
     }
     

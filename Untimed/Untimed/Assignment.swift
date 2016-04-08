@@ -12,7 +12,7 @@ import Foundation
 class Assignment: Task {
     var dueDate: NSDate = NSDate()
     var timeNeeded: Double = 0
-
+    var amountOfFreeTimeBeforeDueDate: Int = 0
     /*
     let calendar = NSCalendar.currentCalendar()
     let components = calendar.components([.Month, .Day], fromDate: dueDate)
@@ -29,12 +29,12 @@ class Assignment: Task {
        super.init()
     }
 
-    override func encodeWithCoder(aCoder: NSCoder!) {
+    override func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(dueDate, forKey:"DueDate")
         aCoder.encodeObject(timeNeeded, forKey:"TimeNeeded")        
     }
     
-    override init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.dueDate = aDecoder.decodeObjectForKey("DueDate") as! NSDate
         self.timeNeeded = aDecoder.decodeObjectForKey("TimeNeeded") as! Double
