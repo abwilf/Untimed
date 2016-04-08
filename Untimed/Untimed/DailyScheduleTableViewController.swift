@@ -61,6 +61,7 @@ class DailyScheduleTableViewController: UITableViewController {
     
     func putApptsAndFreeTimeInCalArray() {
         
+        let currentDate = NSDate()
         // FIXME: calendarArray is now a member variable of taskmanager
         // #3: put appointments in the calendar array by pulling them from tasks array
         for var i = 0; i < taskManager.tasks.count; ++i {
@@ -69,14 +70,30 @@ class DailyScheduleTableViewController: UITableViewController {
             if let appt = taskManager.tasks[i] as? Appointment {
                 
                 //Puts appointment in to correct spot in array
-                for var i = 0; i < 12; ++i {
     
-                    let diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.startTime, toDate: appt.endTime, options: NSCalendarOptions.init(rawValue: 0))
-    
-                    if appt.startTime == i + 8 && appt.endTime == i + 8 + diffDateComponents.hour {
-                        taskManager.calendarArray.insert([appt], atIndex: i)
+                    let diffDateComponentsHour = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.startTime, toDate: appt.endTime, options: NSCalendarOptions.init(rawValue: 0))
+                    
+                    let diffDateComponentsDay = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.endTime, toDate: currentDate, options: NSCalendarOptions.init(rawValue: 0))
+                    
+                    let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
+                    
+                    let startTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: appt.startTime)
+                    
+                    /*
+                    let endTimeComponents = NSCalendar.currentCalendar().component(unitFlags, fromDate: appt.endTime)
+    */
+                
+                
+                    for var i = 0; i < 12; ++i {
+
+                        // NOTE: possibly limited to two dates within the same month
+                        if startTimeComponents.hour == i + 8 {
+                            for var k = 0; k < (diffDateComponentsHour.hour); ++k {
+                                taskManager.calendarArray[i + k][diffDateComponentsDay.day] = appt
+                            }
+                        }
                     }
-                }
+                
 
             }
         }
