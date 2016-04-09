@@ -223,17 +223,17 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="didFinishEditingAppointmentTitle:" destination="T8F-bT-Ss5" eventType="editingDidEnd" id="3RS-kb-T3M"/>
+                                                        <action selector="didChangeEditingAssignmentTitle:" destination="T8F-bT-Ss5" eventType="editingChanged" id="eK5-wD-MnG"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="jHf-QF-MqD">
-                                        <rect key="frame" x="0.0" y="136" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="15" id="jHf-QF-MqD">
+                                        <rect key="frame" x="0.0" y="136" width="375" height="15"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jHf-QF-MqD" id="KMa-b9-wQq">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="14.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -242,7 +242,7 @@
                             <tableViewSection headerTitle="Starts" id="Tuh-NC-F4b">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="eSJ-dy-TgF" detailTextLabel="mvj-nW-jA7" rowHeight="2" style="IBUITableViewCellStyleValue1" id="ev0-2X-cgz">
-                                        <rect key="frame" x="0.0" y="208" width="375" height="2"/>
+                                        <rect key="frame" x="0.0" y="179" width="375" height="2"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ev0-2X-cgz" id="BeA-vB-Xvk">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="1.5"/>
@@ -266,7 +266,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="234" id="ngw-JX-AT9">
-                                        <rect key="frame" x="0.0" y="210" width="375" height="234"/>
+                                        <rect key="frame" x="0.0" y="181" width="375" height="234"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ngw-JX-AT9" id="zCC-18-eul">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
@@ -289,7 +289,7 @@
                             <tableViewSection headerTitle="Ends" id="HUm-vm-sUK">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="1" id="z4w-uh-cE5">
-                                        <rect key="frame" x="0.0" y="472" width="375" height="1"/>
+                                        <rect key="frame" x="0.0" y="443" width="375" height="1"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z4w-uh-cE5" id="voC-ms-Ubi">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
@@ -297,7 +297,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="235" id="9vr-VS-Nth">
-                                        <rect key="frame" x="0.0" y="473" width="375" height="235"/>
+                                        <rect key="frame" x="0.0" y="444" width="375" height="235"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9vr-VS-Nth" id="MTI-Ch-JTg">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="234.5"/>
@@ -312,27 +312,6 @@
                                                         <action selector="didEnterEndDate:" destination="T8F-bT-Ss5" eventType="valueChanged" id="eLM-Th-Pzo"/>
                                                     </connections>
                                                 </datePicker>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="235" id="wkv-XJ-dBw">
-                                        <rect key="frame" x="0.0" y="708" width="375" height="235"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wkv-XJ-dBw" id="NQ3-C6-bGY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="234.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="235" id="5mu-OW-8fL">
-                                        <rect key="frame" x="0.0" y="943" width="375" height="235"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5mu-OW-8fL" id="aL1-y9-2u0">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="234.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fmb-Zg-C0d">
-                                                    <rect key="frame" x="162" y="102" width="51" height="31"/>
-                                                </switch>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>

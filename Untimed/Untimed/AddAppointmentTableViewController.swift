@@ -19,14 +19,13 @@ class AddAppointmentTableViewController: UITableViewController {
     // created task that we will modify
     var addedAppointment = Appointment()
 
-    // update title
-    @IBAction func didFinishEditingAppointmentTitle(sender: UITextField) {
-        
+    @IBAction func didChangeEditingAssignmentTitle(sender: UITextField) {
         // if able to unwrap, set it equal
         if let newTitle = sender.text {
             addedAppointment.title = newTitle
         }
     }
+    
     
     // update repeat (bool)
     
