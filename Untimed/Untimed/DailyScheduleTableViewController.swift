@@ -16,10 +16,15 @@ class DailyScheduleTableViewController: UITableViewController {
     func callRelevantMemberEquations() {
         taskManager.putApptsAndFreeTimeInCalArray()
         
+        
     }
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
         taskManager.loadFromDisc()
+        taskManager.putApptsAndFreeTimeInCalArray()
+        
+        // this will allocate one assignment to the nearest slot
+        taskManager.findMostUrgentAssnAndAllocateToCalArray()
     }
     
     
@@ -67,14 +72,6 @@ class DailyScheduleTableViewController: UITableViewController {
     // 2. iterate through and count up the number of Free objects in the array in that time period
     // 3. return the count of all those free objects
     
-    
-    // MAKE THIS A MEMBER VARIABLE
-    // FIXME: needs assignment argument and return type
-    
-    
-    
-       
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
