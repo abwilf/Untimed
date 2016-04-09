@@ -125,6 +125,7 @@ class DailyScheduleTableViewController: UITableViewController {
     // FIXME: needs assignment argument and return type
     
     
+    
     func calcFreeTimeUntilDue(assgt: Assignment) {
         let currentDate = NSDate()
         
@@ -146,26 +147,20 @@ class DailyScheduleTableViewController: UITableViewController {
         }
     }
     
+    
+    func putAssgInCalArrayAtFirstFreeSpot(assg: Assignment) -> Bool {
 
-    
-    
-    /*
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        var assignNext = Task()
-        
-        // 12 row sections, only accounting for 28 days in the future at this point
         for var j = 0; j < 28; ++j {
             for var i = 0; i < 12; ++i {
                 if let _ = taskManager.calendarArray[i][j] as? Assignment {
                     taskManager.calendarArray[i][j] = assg
                     return true
-                }
+                    }
             }
         }
-        
         return false
     }
+
 
 
     // FIXME: check if this only happens cell by cell, TEST: timeNeeded is correct in more than 1 hr blocks
@@ -209,11 +204,12 @@ class DailyScheduleTableViewController: UITableViewController {
                     
                     // put in calendar array in the first free spot
                     putAssgInCalArrayAtFirstFreeSpot(temp)
-                }
+                    
+                    // 12 row sections, only accounting for 28 days in the future at this point
             }
         }
+        }
     }
-    
     
 
         // Uncomment the following line to preserve selection between presentations
@@ -374,7 +370,3 @@ class DailyScheduleTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
-*/
-
-}
