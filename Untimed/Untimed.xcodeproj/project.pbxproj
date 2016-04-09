@@ -125,6 +125,7 @@
 			children = (
 				A2116D781CA968EC003D221D /* Main.storyboard */,
 				A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */,
+				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
 				A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */,
 				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
@@ -133,7 +134,6 @@
 				A2116DA41CA96F22003D221D /* Assignment.swift */,
 				A2C519171CAB38CF0074387D /* Appointment.swift */,
 				A27989AB1CB6D5B7007BC49F /* Free.swift */,
-				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */,
 				A2116D761CA968EC003D221D /* ViewController.swift */,
 				A2116D7B1CA968EC003D221D /* Assets.xcassets */,

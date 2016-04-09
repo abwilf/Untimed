@@ -169,6 +169,8 @@ class DailyScheduleTableViewController: UITableViewController {
     
     // #6 FROM TO DO LIST: allocate assignments to the calendar array based on the difference between their amountOfFreeTimeBeforeDueDate and the timeNeeded
     
+    
+    
     /*
     override func viewDidLoad() {
         super.viewDidLoad()
