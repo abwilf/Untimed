@@ -28,7 +28,6 @@ class TaskManager {
     
     func deleteTaskAtIndex (index: Int) {
         tasks.removeAtIndex(index)
-        
         save()
     }
     

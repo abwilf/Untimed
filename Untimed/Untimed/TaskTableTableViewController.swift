@@ -49,7 +49,7 @@ class TaskTableTableViewController: UITableViewController {
         if let sttvc = sender.sourceViewController as? SingleTaskTableViewController {
             let index = sttvc.index
             taskManager.deleteTaskAtIndex(index)
-             tableView.reloadData()
+            tableView.reloadData()
         }
     }
 
@@ -247,8 +247,7 @@ class TaskTableTableViewController: UITableViewController {
   
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath){
         if (editingStyle == UITableViewCellEditingStyle.Delete){
-            
-            taskManager.tasks.removeAtIndex(indexPath.row)
+            taskManager.deleteTaskAtIndex(indexPath.row)
             tableView.reloadData()
         }
     }
