@@ -121,28 +121,6 @@ class TaskManager {
     }
     
     
-    func calcFreeTimeUntilDue(assgt: Assignment) {
-        let currentDate = NSDate()
-        
-        let diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: assgt.dueDate, options: NSCalendarOptions.init(rawValue: 0))
-        
-        
-        // make due date just a date (no time)
-        
-        // FIXME: magic number!! (12)
-        for var i = 0; i < 12; ++i {
-            // FIXME: only works if two dates are within the same month
-            for var j = 0; j < (diffDateComponents.day); ++j {
-                // FIXME: how to check if task is of subclass free?
-                // get all tasks that are due today
-                if let _ = self.calendarArray[i][j] as? Free {
-                    assgt.amountOfFreeHoursBeforeDueDate += 1
-                }
-                
-            }
-        }
-    }
-    
    
     
     func putAssgInCalArrayAtFirstFreeSpot(assg: Assignment) -> Bool {
