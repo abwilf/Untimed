@@ -127,11 +127,6 @@ class DailyScheduleTableViewController: UITableViewController {
     
     func calcFreeTimeUntilDue(assgt: Assignment) {
         let currentDate = NSDate()
-        /*
-        let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
-        let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: assgt.dueDate)
-        let currentDateComponents = NSCalendar.currentCalendar().component(unitFlags, fromDate: currentDate)
-        */
         
         let diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: assgt.dueDate, options: NSCalendarOptions.init(rawValue: 0))
         
@@ -144,7 +139,7 @@ class DailyScheduleTableViewController: UITableViewController {
             for var j = 0; j < (diffDateComponents.day); ++j {
                 // FIXME: how to check if task is of subclass free?
                 // get all tasks that are due today
-                if let free = taskManager.calendarArray[i][j] as? Free {
+                if let _ = taskManager.calendarArray[i][j] as? Free {
                     assgt.amountOfFreeHoursBeforeDueDate += 1
                 }
             }
@@ -159,18 +154,67 @@ class DailyScheduleTableViewController: UITableViewController {
         super.viewDidLoad()
         var assignNext = Task()
         
-        func getNextAssignment() {
-        for var i = 0; i < taskManager.tasks.count; ++i {
-            if ((taskManager.tasks[i] as? Assignment) && (taskManager.tasks[i + 1] as? Assignment) (taskManager.tasks[i].amountOfFreeTimeBeforeDueDate - taskManager.tasks[i].timeNeeded) < (taskManager.tasks[i + 1].amountOfFreeTimeBeforeDueDate - taskManager.tasks[i + 1].timeNeeded) {
-                
-                assignNext = taskManager.tasks[i]
+        // 12 row sections, only accounting for 28 days in the future at this point
+        for var j = 0; j < 28; ++j {
+            for var i = 0; i < 12; ++i {
+                if let _ = taskManager.calendarArray[i][j] as? Assignment {
+                    taskManager.calendarArray[i][j] = assg
+                    return true
+                }
             }
-            return assignNext
+        }
+        
+        return false
+    }
+
+
+    // FIXME: check if this only happens cell by cell, TEST: timeNeeded is correct in more than 1 hr blocks
+    func findMostUrgentAssnAndAllocateToCalArray() {
+        
+        // find most urgent
+        
+        // assign winner to first object of type Assignment in the array
+        var winner: Assignment = Assignment()
+        let defaultAssignment: Assignment = Assignment()
+        var tasksIndex = 0
+        for var i = 0; i < taskManager.tasks.count; ++i {
+            if let currentAssignment = taskManager.tasks[i] as? Assignment {
+                if winner == defaultAssignment {
+                    if taskManager.tasks[i] != defaultAssignment {
+                        winner = currentAssignment
+                        tasksIndex = i
+                    }
+                }
+            }
+        }
+        
+        
+        // assign winner to the greatest
+        for var j = 0; j < taskManager.tasks.count - tasksIndex; ++j {
+            if let moreUrgentAssn = taskManager.tasks[tasksIndex + j] as? Assignment {
+                if moreUrgentAssn.lackOfUrgencyScore() < winner.lackOfUrgencyScore() {
+                    winner = moreUrgentAssn
+                }
+            }
+        }
+       
+        // allocate to cal array
+        for var j = 0; j < taskManager.tasks.count; ++j {
+            if let temp = taskManager.tasks[j] as? Assignment {
+                // if same object
+                if temp == winner {
+                    
+                    // decrement timeNeeded value by one b/c this is only allocating to one cell
+                    temp.timeNeeded -= 1
+                    
+                    // put in calendar array in the first free spot
+                    putAssgInCalArrayAtFirstFreeSpot(temp)
+                }
+            }
+        }
     }
     
-*/
-        
-        
+    
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -273,6 +317,11 @@ class DailyScheduleTableViewController: UITableViewController {
             cell.textLabel?.text = "7-8 p.m.: \(task.title)"
         }
         return cell
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.reloadData()
     }
     
 
