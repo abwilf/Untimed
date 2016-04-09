@@ -13,6 +13,12 @@ class Assignment: Task {
     var dueDate: NSDate = NSDate()
     var timeNeeded: Double = 0
     var amountOfFreeHoursBeforeDueDate: Int = 0
+    
+    func lackOfUrgencyScore() -> Int {
+        return (amountOfFreeHoursBeforeDueDate - Int(timeNeeded))
+    }
+    
+    
     /*
     let calendar = NSCalendar.currentCalendar()
     let components = calendar.components([.Month, .Day], fromDate: dueDate)
@@ -25,10 +31,14 @@ class Assignment: Task {
     let components = NSCalendar.currentCalendar().components(unitFlags, fromDate: dueDate)
     */
     
+    
+    
     override init() {
        super.init()
     }
-
+    
+    
+    
     override func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(dueDate, forKey:"DueDate")
         aCoder.encodeObject(timeNeeded, forKey:"TimeNeeded")
