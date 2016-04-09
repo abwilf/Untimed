@@ -49,15 +49,6 @@ class DailyScheduleTableViewController: UITableViewController {
         }
     }
     
-
-    
-    // the calendar - a 2d array with rows (time of day- row 0 is 8-9am) and cols (date starting at first day you open the app)
-   
-    func allocateapptshappeningondayjtothecorrectspotindayjonthecalarray(j: Int, arr: [[Task]]) {
-        // iterate through tasks array
-        // if appt, assign to spot in cal array based on hour value
-    }
-    
     
     func putApptsAndFreeTimeInCalArray() {
         
@@ -140,10 +131,6 @@ class DailyScheduleTableViewController: UITableViewController {
         let diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: assgt.dueDate, options: NSCalendarOptions.init(rawValue: 0))
         
         
-        // tasks is ,1D array
-        // sort by date 
-        // sort by time
-        // then calculate free time
         // make due date just a date (no time)
         
         // FIXME: magic number!! (12)
@@ -162,7 +149,10 @@ class DailyScheduleTableViewController: UITableViewController {
 
     
     
-    func putAssgInCalArrayAtFirstFreeSpot(assg: Assignment) -> Bool {
+    /*
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        var assignNext = Task()
         
         // 12 row sections, only accounting for 28 days in the future at this point
         for var j = 0; j < 28; ++j {
@@ -385,4 +375,6 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     */
 
+*/
 
+}

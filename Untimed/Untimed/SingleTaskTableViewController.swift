@@ -40,7 +40,7 @@ class SingleTaskTableViewController: UITableViewController {
             let strDate = dateFormatter.stringFromDate(appointment.startTime)
             
             //format time
-            timeFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
+            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
             
             //only gets time
             let strDateStartTime = timeFormatter.stringFromDate(appointment.startTime)
