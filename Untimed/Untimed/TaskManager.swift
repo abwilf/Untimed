@@ -15,9 +15,9 @@ class TaskManager {
     
     // empty array of tasks
     var tasks: [Task] = []
-    
+
     // calendar array
-    var calendarArray = [[Task]]()
+    var calendarArray :  [[Task]] = Array(count: 12, repeatedValue: Array(count: 28, repeatedValue: Free()))
     
     
     func addTask (taskIn: Task) {
@@ -79,6 +79,9 @@ class TaskManager {
         putApptsAndFreeTimeInCalArray()
         
         // put ordered assignments
+        let assignmentArray = tasks.filter(isAssignment) as! [Assignment]
+        var orderedAssignmentArray = assignmentArray.sort(isOrderedBefore)
+        
         for var i = 0; i < orderedAssignmentArray.count; i++ {
             putAssgInCalArrayAtFirstFreeSpot(orderedAssignmentArray[0])
             orderedAssignmentArray[0].timeNeeded -= 1
@@ -86,7 +89,7 @@ class TaskManager {
         }
     }
     
-    func putApptsAndFreeTimeInCalArray() -> [[Task]]{
+    func putApptsAndFreeTimeInCalArray() {
         
         let currentDate = NSDate()
         // FIXME: calendarArray is now a member variable of taskmanager
@@ -150,23 +153,18 @@ class TaskManager {
             return false
         }
        
-        var assignmentArray = tasks.filter(isAssignment)
+    
     
         
-        func isOrderedBefore (a1: Task, a2: Task) -> Bool {
-            if let assn1 = a1 as? Assignment {
-                if let assn2 = a2 as? Assignment {
-                    if assn1.urgency < assn2.urgency {
+        func isOrderedBefore (a1: Assignment, a2: Assignment) -> Bool {
+                    if a1.urgency < a2.urgency {
                         return true
                     }
                     return false
                 }
-            }
-            
-        }
    
        
-        let orderedAssignmentArray = assignmentArray.sort(isOrderedBefore)
+    
         
     
     func putAssgInCalArrayAtFirstFreeSpot(assg: Assignment) -> Bool {

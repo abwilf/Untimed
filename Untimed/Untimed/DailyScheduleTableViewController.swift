@@ -92,13 +92,13 @@ class DailyScheduleTableViewController: UITableViewController {
         return 1
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // 12 hour days = 12 rows
         return 12
     }
-    */
+
 
     
 
