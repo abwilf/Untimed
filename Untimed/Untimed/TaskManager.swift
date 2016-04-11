@@ -84,15 +84,14 @@ class TaskManager {
     func putApptsAndFreeTimeInCalArray() {
         
         let currentDate = NSDate()
-        // FIXME: calendarArray is now a member variable of taskmanager
-        // #3: put appointments in the calendar array by pulling them from tasks array
+
+        // put appointments in the calendar array
         for var i = 0; i < self.tasks.count; ++i {
-            
+           
             // if object == appointment, assign to calendarArray
             if let appt = self.tasks[i] as? Appointment {
                 
                 //Puts appointment in to correct spot in array
-                
                 let diffDateComponentsHour = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.startTime, toDate: appt.endTime, options: NSCalendarOptions.init(rawValue: 0))
                 
                 let diffDateComponentsDay = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.endTime, toDate: currentDate, options: NSCalendarOptions.init(rawValue: 0))
@@ -101,13 +100,11 @@ class TaskManager {
                 
                 let startTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: appt.startTime)
                 
-                
-                for var i = 0; i < 12; ++i {
-                    
+                for var j = 0; j < 12; ++j {
                     // NOTE: possibly limited to two dates within the same month
-                    if startTimeComponents.hour == i + 8 {
+                    if startTimeComponents.hour == j + 8 {
                         for var k = 0; k < (diffDateComponentsHour.hour); ++k {
-                            self.calendarArray[diffDateComponentsDay.day][i + k] = appt
+                            self.calendarArray[diffDateComponentsDay.day][j + k] = appt
                         }
                     }
                 }
