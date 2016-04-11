@@ -494,6 +494,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="kQn-Tu-McS" kind="show" id="HGx-N3-NZd"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -591,7 +594,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="KvW-Z0-IVw"/>
         <segue reference="XVE-1H-48j"/>
+        <segue reference="HGx-N3-NZd"/>
+        <segue reference="KvW-Z0-IVw"/>
     </inferredMetricsTieBreakers>
 </document>
