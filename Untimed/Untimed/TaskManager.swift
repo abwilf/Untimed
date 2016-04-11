@@ -66,9 +66,10 @@ class TaskManager {
         }
     }
     
-    func putApptsAndFreeTimeInCalArray() {
+    func putApptsAndFreeTimeInCalArray() -> [[Task]]{
         
         let currentDate = NSDate()
+        let localCalArray = [[Task]]
         // FIXME: calendarArray is now a member variable of taskmanager
         // #3: put appointments in the calendar array by pulling them from tasks array
         for var i = 0; i < self.tasks.count; ++i {
@@ -139,7 +140,7 @@ class TaskManager {
     
     
     // FIXME: check if this only happens cell by cell, TEST: timeNeeded is correct in more than 1 hr blocks
-    func findMostUrgentAssnAndAllocateToCalArray() {
+    func findMostUrgentAssnAndAllocateToCalArray() -> tasks{
         
         // find most urgent
         
