@@ -251,9 +251,7 @@ class DailyScheduleTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         
         // only doing it for today (col = 0)
-        //let task = taskManager.calendarArray[indexPath.row][0]
-        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~Delete following line and uncomment above line ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        let task = taskManager.calendarArray[indexPath.row][1]
+        let task = taskManager.calendarArray[indexPath.row][0]
         
         // 8 - 9 am block
         if indexPath.row == 0 {
