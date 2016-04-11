@@ -66,6 +66,127 @@ class TaskManager {
         }
     }
     
+    func putApptsAndFreeTimeInCalArray() {
+        
+        let currentDate = NSDate()
+        // FIXME: calendarArray is now a member variable of taskmanager
+        // #3: put appointments in the calendar array by pulling them from tasks array
+        for var i = 0; i < self.tasks.count; ++i {
+            
+            // if object == appointment, assign to calendarArray
+            if let appt = self.tasks[i] as? Appointment {
+                
+                //Puts appointment in to correct spot in array
+                
+                let diffDateComponentsHour = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.startTime, toDate: appt.endTime, options: NSCalendarOptions.init(rawValue: 0))
+                
+                let diffDateComponentsDay = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.endTime, toDate: currentDate, options: NSCalendarOptions.init(rawValue: 0))
+                
+                let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
+                
+                let startTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: appt.startTime)
+                
+                
+                for var i = 0; i < 12; ++i {
+                    
+                    // NOTE: possibly limited to two dates within the same month
+                    if startTimeComponents.hour == i + 8 {
+                        for var k = 0; k < (diffDateComponentsHour.hour); ++k {
+                            self.calendarArray[i + k][diffDateComponentsDay.day] = appt
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        // declare free object
+        let freeTime: Free = Free()
+        
+        // put free object in all slots not occupied by appointment
+        
+        for var i = 0; i < 12; ++i {
+            for var j = 0; j < 28; ++j {
+                
+                // if the spot is taken by an appointment ignore it
+                if let _ = self.calendarArray[i][j] as? Appointment {
+                }
+                    
+                    // otherwise, allocate a free object to it
+                else {
+                    self.calendarArray[i][j] = freeTime
+                }
+            }
+        }
+    }
+    
+    
+   
+    
+    func putAssgInCalArrayAtFirstFreeSpot(assg: Assignment) -> Bool {
+        
+        for var j = 0; j < 28; ++j {
+            for var i = 0; i < 12; ++i {
+                if let _ = self.calendarArray[i][j] as? Assignment {
+                    self.calendarArray[i][j] = assg
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    
+    
+    // FIXME: check if this only happens cell by cell, TEST: timeNeeded is correct in more than 1 hr blocks
+    func findMostUrgentAssnAndAllocateToCalArray() {
+        
+        // find most urgent
+        
+        // assign winner to first object of type Assignment in the array
+        var winner: Assignment = Assignment()
+        let defaultAssignment: Assignment = Assignment()
+        var tasksIndex = 0
+        for var i = 0; i < self.tasks.count; ++i {
+            if let currentAssignment = self.tasks[i] as? Assignment {
+                if winner == defaultAssignment {
+                    if self.tasks[i] != defaultAssignment {
+                        winner = currentAssignment
+                        tasksIndex = i
+                    }
+                }
+            }
+        }
+        
+        
+        // assign winner to the greatest
+        for var j = 0; j < self.tasks.count - tasksIndex; ++j {
+            if let moreUrgentAssn = self.tasks[tasksIndex + j] as? Assignment {
+                if moreUrgentAssn.lackOfUrgencyScore() < winner.lackOfUrgencyScore() {
+                    winner = moreUrgentAssn
+                }
+            }
+        }
+        
+        // allocate to cal array
+        for var j = 0; j < self.tasks.count; ++j {
+            if let temp = self.tasks[j] as? Assignment {
+                // if same object
+                if temp == winner {
+                    
+                    // decrement timeNeeded value by one b/c this is only allocating to one cell
+                    temp.timeNeeded -= 1
+                    
+                    // put in calendar array in the first free spot
+                    putAssgInCalArrayAtFirstFreeSpot(temp)
+                    
+                    // 12 row sections, only accounting for 28 days in the future at this point
+                }
+            }
+        }
+    }
+
+    
     init () {
         // also initializes member variables (tasks array)
         loadFromDisc()

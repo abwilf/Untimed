@@ -153,8 +153,6 @@ class TaskTableTableViewController: UITableViewController {
 
             /*
 
-        
-
             // remove last character of string (the comma after 2016)
             if (strDate.characters.count) > 0 {
                 strDate.characters.count = strDate.characters.count - 2
