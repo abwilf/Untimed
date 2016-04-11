@@ -11,14 +11,11 @@ import Foundation
 class TaskManager {
     // Assignment and Appointment inherit Task's non default constructor
     
-    //var tasks: [Task] = [Assignment(title: "Make an app"), Appointment(title: "ML Dorf")]
-    
     // empty array of tasks
     var tasks: [Task] = []
 
     // calendar array
-    var calendarArray :  [[Task]] = Array(count: 12, repeatedValue: Array(count: 28, repeatedValue: Free()))
-    
+    var calendarArray: [[Task]] = Array(count: 12, repeatedValue: Array(count: 28, repeatedValue: Free()))
     
     func addTask (taskIn: Task) {
         // add to array
@@ -54,9 +51,7 @@ class TaskManager {
     
     func loadFromDisc() {
         
-        // create calendar array 
-        
-        
+        // create calendar array
         let defaults = NSUserDefaults.standardUserDefaults()
         
         // if I'm able to get a tasks array at this key, put it into tasks, if not, create a blank one and put it into tasks
@@ -71,9 +66,6 @@ class TaskManager {
             tasks = []
         }
     }
-    
-    
-    
     
     func allocateTime() {
         putApptsAndFreeTimeInCalArray()
@@ -146,26 +138,20 @@ class TaskManager {
         
     // Create sorted array of assignments
         
-        func isAssignment (t: Task) -> Bool {
-            if let _ = t as? Assignment {
-                return true
-            }
-            return false
+    func isAssignment (t: Task) -> Bool {
+        if let _ = t as? Assignment {
+            return true
         }
-       
-    
-    
-        
-        func isOrderedBefore (a1: Assignment, a2: Assignment) -> Bool {
-                    if a1.urgency < a2.urgency {
-                        return true
-                    }
-                    return false
-                }
+        return false
+    }
+
+    func isOrderedBefore (a1: Assignment, a2: Assignment) -> Bool {
+        if a1.urgency < a2.urgency {
+            return true
+        }
+        return false
+    }
    
-       
-    
-        
     
     func putAssgInCalArrayAtFirstFreeSpot(assg: Assignment) -> Bool {
         
@@ -179,57 +165,6 @@ class TaskManager {
         }
         return false
     }
-    
-    
-    
-    // FIXME: check if this only happens cell by cell, TEST: timeNeeded is correct in more than 1 hr blocks
-//    func findMostUrgentAssnAndAllocateToCalArray() {
-//        
-//        // find most urgent
-//        
-//        // assign winner to first object of type Assignment in the array
-//        var winner: Assignment = Assignment()
-//        let defaultAssignment: Assignment = Assignment()
-//        var tasksIndex = 0
-//        for var i = 0; i < self.tasks.count; ++i {
-//            if let currentAssignment = self.tasks[i] as? Assignment {
-//                if winner == defaultAssignment {
-//                    if self.tasks[i] != defaultAssignment {
-//                        winner = currentAssignment
-//                        tasksIndex = i
-//                    }
-//                }
-//            }
-//        }
-//        
-//        
-//        // assign winner to the greatest
-//        for var j = 0; j < self.tasks.count - tasksIndex; ++j {
-//            if let moreUrgentAssn = self.tasks[tasksIndex + j] as? Assignment {
-//                if moreUrgentAssn.lackOfUrgencyScore() < winner.lackOfUrgencyScore() {
-//                    winner = moreUrgentAssn
-//                }
-//            }
-//        }
-//        
-//        // allocate to cal array
-//        for var j = 0; j < self.tasks.count; ++j {
-//            if let temp = self.tasks[j] as? Assignment {
-//                // if same object
-//                if temp == winner {
-//                    
-//                    // decrement timeNeeded value by one b/c this is only allocating to one cell
-//                    temp.timeNeeded -= 1
-//                    
-//                    // put in calendar array in the first free spot
-//                    putAssgInCalArrayAtFirstFreeSpot(temp)
-//                    
-//                    // 12 row sections, only accounting for 28 days in the future at this point
-//                }
-//            }
-//        }
-//    }
-
     
     init () {
         // also initializes member variables (tasks array)

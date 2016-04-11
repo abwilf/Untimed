@@ -63,7 +63,6 @@ class DailyScheduleTableViewController: UITableViewController {
     
     
     
-    
     // #5 FROM TO-DO LIST
     
     // add up the amount of free objects before each assignment's due date
@@ -105,72 +104,71 @@ class DailyScheduleTableViewController: UITableViewController {
     // #7 FROM TO DO LIST: allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-       
         // if row = 0, allocate first cell as 8 - 9 am: \(task.name)
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         
         // only doing it for today (col = 0)
-        let task = taskManager.calendarArray[indexPath.row][0]
+        let task = taskManager.calendarArray[indexPath.row][1]
         
         // 8 - 9 am block
         if indexPath.row == 0 {
-            cell.textLabel?.text = "8-9 a.m.: \(task.title)"
+            cell.textLabel?.text = "8-9 am: \(task.title)"
         }
         
         // 9 - 10 block
         if indexPath.row == 1 {
-            cell.textLabel?.text = "9-10 a.m.: \(task.title)"
+            cell.textLabel?.text = "9-10 am: \(task.title)"
         }
         
         // 10 - 11 block
         if indexPath.row == 2 {
-            cell.textLabel?.text = "10-11 a.m.: \(task.title)"
+            cell.textLabel?.text = "10-11 am: \(task.title)"
         }
         
         // 11 - 12 block
         if indexPath.row == 3 {
-            cell.textLabel?.text = "11 a.m. - 12 p.m.: \(task.title)"
+            cell.textLabel?.text = "11 am-12 pm: \(task.title)"
         }
         
         // 12 - 1 block
         if indexPath.row == 4 {
-            cell.textLabel?.text = "8-9 a.m.: \(task.title)"
+            cell.textLabel?.text = "12-1 pm: \(task.title)"
         }
         
         // 1 - 2 block
         if indexPath.row == 5 {
-            cell.textLabel?.text = "1-2 p.m.: \(task.title)"
+            cell.textLabel?.text = "1-2 pm: \(task.title)"
         }
         
         // 2 - 3 block
         if indexPath.row == 6 {
-            cell.textLabel?.text = "2-3 p.m.: \(task.title)"
+            cell.textLabel?.text = "2-3 pm: \(task.title)"
         }
         
         // 3 - 4 block
         if indexPath.row == 7 {
-            cell.textLabel?.text = "3-4 p.m.: \(task.title)"
+            cell.textLabel?.text = "3-4 pm: \(task.title)"
         }
         
         // 4 - 5 block
         if indexPath.row == 8 {
-            cell.textLabel?.text = "4-5 p.m.: \(task.title)"
+            cell.textLabel?.text = "4-5 pm: \(task.title)"
         }
         
         // 5 - 6 block
         if indexPath.row == 9 {
-            cell.textLabel?.text = "5-6 p.m.: \(task.title)"
+            cell.textLabel?.text = "5-6 pm: \(task.title)"
         }
         
         // 6 - 7 block
         if indexPath.row == 10 {
-            cell.textLabel?.text = "6-7 p.m.: \(task.title)"
+            cell.textLabel?.text = "6-7 pm: \(task.title)"
         }
         
         // 7-8 block
         if indexPath.row == 11 {
-            cell.textLabel?.text = "7-8 p.m.: \(task.title)"
+            cell.textLabel?.text = "7-8 pm: \(task.title)"
         }
         return cell
     }
