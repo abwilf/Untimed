@@ -19,13 +19,14 @@ class DailyScheduleTableViewController: UITableViewController {
         
     }
     
-    @IBAction func reloadPressed(sender: UIBarButtonItem) {
+    /* @IBAction func reloadPressed(sender: UIBarButtonItem) {
         taskManager.loadFromDisc()
         taskManager.putApptsAndFreeTimeInCalArray()
         
         // this will allocate one assignment to the nearest slot
         taskManager.findMostUrgentAssnAndAllocateToCalArray()
     }
+/*
     
     
     // connecting add and single task viewer pages to this

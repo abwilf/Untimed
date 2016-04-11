@@ -80,7 +80,9 @@ class TaskManager {
         
         // put ordered assignments
         for var i = 0; i < orderedAssignmentArray.count; i++ {
-            putAssgInCalArrayAtFirstFreeSpot()
+            putAssgInCalArrayAtFirstFreeSpot(orderedAssignmentArray[0])
+            orderedAssignmentArray[0].timeNeeded -= 1
+            orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
         }
     }
     
@@ -171,7 +173,7 @@ class TaskManager {
         
         for var j = 0; j < 28; ++j {
             for var i = 0; i < 12; ++i {
-                if let _ = self.calendarArray[i][j] as? Assignment {
+                if let _ = self.calendarArray[i][j] as? Free {
                     self.calendarArray[i][j] = assg
                     return true
                 }
