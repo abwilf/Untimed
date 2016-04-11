@@ -94,7 +94,7 @@ class TaskManager {
                 //Puts appointment in to correct spot in array
                 let diffDateComponentsHour = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.startTime, toDate: appt.endTime, options: NSCalendarOptions.init(rawValue: 0))
                 
-                let diffDateComponentsDay = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.endTime, toDate: currentDate, options: NSCalendarOptions.init(rawValue: 0))
+                let diffDateComponentsDay = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: appt.endTime, options: NSCalendarOptions.init(rawValue: 0))
                 
                 let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
                 
@@ -104,7 +104,8 @@ class TaskManager {
                     // NOTE: possibly limited to two dates within the same month
                     if startTimeComponents.hour == j + 8 {
                         for var k = 0; k < (diffDateComponentsHour.hour); ++k {
-                            self.calendarArray[diffDateComponentsDay.day][j + k] = appt
+                            // compare today to tomorrow
+                            self.calendarArray[j + k][diffDateComponentsDay.day] = appt
                         }
                     }
                 }
