@@ -14,8 +14,10 @@ class Assignment: Task {
     var timeNeeded: Double = 0
     var amountOfFreeHoursBeforeDueDate: Int = 0
     
-    func lackOfUrgencyScore() -> Int {
-        return (amountOfFreeHoursBeforeDueDate - Int(timeNeeded))
+    var urgency: Int {
+        get {
+            return (amountOfFreeHoursBeforeDueDate - Int(timeNeeded))
+        }
     }
     
     
