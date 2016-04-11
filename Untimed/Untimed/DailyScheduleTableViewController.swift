@@ -103,12 +103,15 @@ class DailyScheduleTableViewController: UITableViewController {
 
     // #7 FROM TO DO LIST: allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+     
         
         // if row = 0, allocate first cell as 8 - 9 am: \(task.name)
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         
         // only doing it for today (col = 0)
+        
+        //change to today!!
         let task = taskManager.calendarArray[indexPath.row][1]
         
         // 8 - 9 am block
@@ -228,3 +231,4 @@ class DailyScheduleTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+}
