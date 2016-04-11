@@ -188,6 +188,7 @@ class DailyScheduleTableViewController: UITableViewController {
     */
 
     
+    /*
     // delete from dailysched view
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
     
@@ -200,6 +201,7 @@ class DailyScheduleTableViewController: UITableViewController {
         }
     
     }
+    */
 
 
     /*
