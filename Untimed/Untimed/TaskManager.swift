@@ -68,18 +68,50 @@ class TaskManager {
     }
     
     func allocateTime() {
+        // put appts and free time in
         putApptsAndFreeTimeInCalArray()
         
-        // put ordered assignments
+        // make an assignments only array and order it by urgency
         let assignmentArray = tasks.filter(isAssignment) as! [Assignment]
         var orderedAssignmentArray = assignmentArray.sort(isOrderedBefore)
         
-        for var i = 0; i < orderedAssignmentArray.count; i++ {
-            putAssgInCalArrayAtFirstFreeSpot(orderedAssignmentArray[0])
-            orderedAssignmentArray[0].timeNeeded -= 1
-            orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
+        if orderedAssignmentArray.isEmpty {
+            return
+        }
+        
+        else {
+
+            while orderedAssignmentArray[0].timeNeeded > 0 {
+                
+                // FIXME: need to make sure you replace the timeNeeded value of the spot you took
+                putAssgInCalArrayAtFirstFreeSpot(orderedAssignmentArray[0])
+                orderedAssignmentArray[0].timeNeeded -= 1
+                
+                // reorder array
+                orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
+                
+            }
         }
     }
+        
+        /*
+        // if orderedAssignment Array isn't blank
+        if orderedAssignmentArray != [] {
+              // allocate one hour of the most urgent assignment to the cal array
+            while orderedAssignmentArray[0].timeNeeded > 0 {
+                
+                // FIXME: need to make sure you replace the timeNeeded value of the spot you took
+                putAssgInCalArrayAtFirstFreeSpot(orderedAssignmentArray[0])
+                orderedAssignmentArray[0].timeNeeded -= 1
+               
+                // reorder array
+                orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
+
+            }
+        */
+        
+        
+       
     
     func putApptsAndFreeTimeInCalArray() {
         
@@ -156,6 +188,7 @@ class TaskManager {
         for var j = 0; j < 28; ++j {
             for var i = 0; i < 12; ++i {
                 if let _ = self.calendarArray[i][j] as? Free {
+                    // if there was already an assignment there, replace it and increase its timeNeeded value by 1
                     self.calendarArray[i][j] = assg
                     return true
                 }

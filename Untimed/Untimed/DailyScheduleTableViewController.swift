@@ -112,21 +112,38 @@ class DailyScheduleTableViewController: UITableViewController {
         // only doing it for today (col = 0)
         
         //change to today!!
-        let task = taskManager.calendarArray[indexPath.row][1]
+        let todaysCalLocation: Int = 0
         
-        // 8 - 9 am block
-        if indexPath.row == 0 {
-            cell.textLabel?.text = "8-9 am: \(task.title)"
+        let task = taskManager.calendarArray[indexPath.row][todaysCalLocation]
+        
+        // if Free, name Free
+        if let _ = taskManager.calendarArray[indexPath.row][todaysCalLocation] as? Free {
+            // before 11-12 blocks
+            if indexPath.row < 3 {
+                cell.textLabel?.text = "\(indexPath.row + 8)-\(indexPath.row + 9) am: Free"
+            }
+            
+            // 11 - 12 block
+            if indexPath.row == 3 {
+                cell.textLabel?.text = "11 am-12 pm: Free"
+            }
+            
+            // 12 - 1 block
+            if indexPath.row == 4 {
+                cell.textLabel?.text = "12-1 pm: Free"
+            }
+            
+            // after 12 - 1 block.  there are 11 rows, and the rest is accounting for the 12-13 to 12-1 change
+            if indexPath.row > 4 && indexPath.row <= 11 {
+                cell.textLabel?.text = "\(indexPath.row + 8 - 12)-\(indexPath.row + 9 - 12) pm: Free"
+            }
+            return cell
         }
+    
         
-        // 9 - 10 block
-        if indexPath.row == 1 {
-            cell.textLabel?.text = "9-10 am: \(task.title)"
-        }
-        
-        // 10 - 11 block
-        if indexPath.row == 2 {
-            cell.textLabel?.text = "10-11 am: \(task.title)"
+        // if not Free, make cell title name = task title.  This is before 11 - 12 block
+        if indexPath.row < 3 {
+            cell.textLabel?.text = "\(indexPath.row + 8)-\(indexPath.row + 9) am: \(task.title)"
         }
         
         // 11 - 12 block
@@ -139,40 +156,11 @@ class DailyScheduleTableViewController: UITableViewController {
             cell.textLabel?.text = "12-1 pm: \(task.title)"
         }
         
-        // 1 - 2 block
-        if indexPath.row == 5 {
-            cell.textLabel?.text = "1-2 pm: \(task.title)"
+        // after 12 - 1 block.  there are 11 rows, and the rest is accounting for the 12-13 to 12-1 change
+        if indexPath.row > 4 && indexPath.row <= 11 {
+            cell.textLabel?.text = "\(indexPath.row + 8 - 12)-\(indexPath.row + 9 - 12) pm: \(task.title)"
         }
         
-        // 2 - 3 block
-        if indexPath.row == 6 {
-            cell.textLabel?.text = "2-3 pm: \(task.title)"
-        }
-        
-        // 3 - 4 block
-        if indexPath.row == 7 {
-            cell.textLabel?.text = "3-4 pm: \(task.title)"
-        }
-        
-        // 4 - 5 block
-        if indexPath.row == 8 {
-            cell.textLabel?.text = "4-5 pm: \(task.title)"
-        }
-        
-        // 5 - 6 block
-        if indexPath.row == 9 {
-            cell.textLabel?.text = "5-6 pm: \(task.title)"
-        }
-        
-        // 6 - 7 block
-        if indexPath.row == 10 {
-            cell.textLabel?.text = "6-7 pm: \(task.title)"
-        }
-        
-        // 7-8 block
-        if indexPath.row == 11 {
-            cell.textLabel?.text = "7-8 pm: \(task.title)"
-        }
         return cell
     }
     
