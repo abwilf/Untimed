@@ -67,18 +67,17 @@ class TaskManager {
         }
     }
     
-    func allocateTime() {
-        // put appts and free time in
-        putApptsAndFreeTimeInCalArray()
-        
+    func allocateAssignments() {
         // make an assignments only array and order it by urgency
         let assignmentArray = tasks.filter(isAssignment) as! [Assignment]
         var orderedAssignmentArray = assignmentArray.sort(isOrderedBefore)
         
+        // if there are no assignments to allocate, kick out
         if orderedAssignmentArray.isEmpty {
             return
         }
-        
+            
+        // if not, allocate assignments
         else {
             // while most urgent still has time left to allocate, allocate it
             while orderedAssignmentArray[0].timeNeeded > 0 {
@@ -91,10 +90,18 @@ class TaskManager {
                 // reorder array
                 orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
                 
-                // FIXME: TODO:
                 // FIXME: TODO: resave tasks array as all the tasks in calendar array
             }
+        return
         }
+    }
+    
+    func allocateTime() {
+        // put appts and free time in
+        putApptsAndFreeTimeInCalArray()
+        // allocate Assignments
+        allocateAssignments()
+        
     }
         
         /*
@@ -126,10 +133,19 @@ class TaskManager {
             // if object == appointment, assign to calendarArray
             if let appt = self.tasks[i] as? Appointment {
                 
-                //Puts appointment in to correct spot in array
+                //gets difference in hour value to allocate rows
                 let diffDateComponentsHour = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.startTime, toDate: appt.endTime, options: NSCalendarOptions.init(rawValue: 0))
                 
-                let diffDateComponentsDay = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: appt.endTime, options: NSCalendarOptions.init(rawValue: 0))
+                // gets int value of day (april 12 = 12) component of currentDate to allocate cols difference
+                let componentsNow = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
+                let currentDay = componentsNow.day
+                
+                // gets same info for day of appt
+                let componentsAppt = NSCalendar.currentCalendar().components([.Day], fromDate: appt.startTime)
+                let apptDay = componentsAppt.day
+                
+                // day difference = place in col array
+                let dayDiff = apptDay - currentDay
                 
                 let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
                 
@@ -139,8 +155,8 @@ class TaskManager {
                     // NOTE: possibly limited to two dates within the same month
                     if startTimeComponents.hour == j + 8 {
                         for var k = 0; k < (diffDateComponentsHour.hour); ++k {
-                            // compare today to tomorrow
-                            self.calendarArray[j + k][diffDateComponentsDay.day] = appt
+                            // compare today to day of appt to put in cal array
+                            self.calendarArray[j + k][dayDiff] = appt
                         }
                     }
                 }

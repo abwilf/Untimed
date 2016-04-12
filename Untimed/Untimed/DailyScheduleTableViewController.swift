@@ -140,7 +140,7 @@ class DailyScheduleTableViewController: UITableViewController {
         // only doing it for today (col = 0)
         
         //change to today!!
-        let todaysCalLocation: Int = 0
+        let todaysCalLocation: Int = 1
         
         let task = taskManager.calendarArray[indexPath.row][todaysCalLocation]
         
