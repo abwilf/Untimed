@@ -80,16 +80,19 @@ class TaskManager {
         }
         
         else {
-
+            // while most urgent still has time left to allocate, allocate it
             while orderedAssignmentArray[0].timeNeeded > 0 {
                 
                 // FIXME: need to make sure you replace the timeNeeded value of the spot you took
+                // FIXME: figure out which timeNeeded to modify
                 putAssgInCalArrayAtFirstFreeSpot(orderedAssignmentArray[0])
                 orderedAssignmentArray[0].timeNeeded -= 1
                 
                 // reorder array
                 orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
                 
+                // FIXME: TODO:
+                // FIXME: TODO: resave tasks array as all the tasks in calendar array
             }
         }
     }

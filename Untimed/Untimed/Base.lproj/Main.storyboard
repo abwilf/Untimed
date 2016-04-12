@@ -510,18 +510,11 @@
                                 <action selector="reloadPressed:" destination="H4w-oZ-fvh" id="uV9-Sk-0cQ"/>
                             </connections>
                         </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem title="Add Assn" id="58W-le-uvA">
-                                <connections>
-                                    <segue destination="ytc-m8-s5S" kind="presentation" id="XVE-1H-48j"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Add Appt" id="bGF-5F-9XA">
-                                <connections>
-                                    <segue destination="JN3-bG-ly9" kind="presentation" id="KvW-Z0-IVw"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" title="Temp" id="Oae-Tz-9Gd">
+                            <connections>
+                                <action selector="dateButtonPressed:" destination="H4w-oZ-fvh" id="INJ-YM-jA3"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IXi-Rj-4wS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -594,8 +587,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="XVE-1H-48j"/>
         <segue reference="HGx-N3-NZd"/>
-        <segue reference="KvW-Z0-IVw"/>
     </inferredMetricsTieBreakers>
 </document>

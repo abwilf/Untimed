@@ -19,6 +19,34 @@ class DailyScheduleTableViewController: UITableViewController {
         
     }
     
+
+    /*
+    var dateButton: UIBarButtonItem {
+        
+        // customize title
+        let currentDate = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        let strDate = dateFormatter.stringFromDate(currentDate)
+        
+        // create view
+        dateButton.setTitleTextAttributes("\(strDate)":  , forState: UIControlState.Normal)
+        
+        // set it equal to the bar button
+        let myCustomBarButtonItem:UIBarButtonItem = UIBarButtonItem(customView: dateButton)
+        self.navigationItem.rightBarButtonItem  = myCustomBarButtonItem
+        
+        
+        self.navigationItem.setRightBarButtonItem(UIBarButtonItem(barButtonSystemItem: dateButton, target: self, action: "barButtonItemClicked:"), animated: true)
+    }
+
+    */
+    
+    @IBAction func dateButtonPressed(sender: AnyObject) {
+        // FIXME: specify date
+    }
+    
+    
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
         taskManager.loadFromDisc()
         taskManager.putApptsAndFreeTimeInCalArray()
@@ -180,7 +208,6 @@ class DailyScheduleTableViewController: UITableViewController {
 
     
     /*
-    // delete from dailysched view
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
     
         if (editingStyle == UITableViewCellEditingStyle.Delete){
