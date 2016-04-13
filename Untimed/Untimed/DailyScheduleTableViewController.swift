@@ -49,10 +49,9 @@ class DailyScheduleTableViewController: UITableViewController {
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
         taskManager.loadFromDisc()
-        taskManager.putApptsAndFreeTimeInCalArray()
         
-        // this will allocate one assignment to the nearest slot
-        //taskManager.findMostUrgentAssnAndAllocateToCalArray()
+        // re-allocate tasks
+        taskManager.allocateTime()
     }
     
     
