@@ -136,15 +136,62 @@ class SingleTaskTableViewController: UITableViewController {
         return true
     }
     */
+    
+    // ONE SEC
+    
+    @IBAction func unwindAndEditTask(sender: UIStoryboardSegue)
+    {
+        // add assignment created here!
+        if let easppttvc = sender.sourceViewController as? EditAppointmentTableViewController {
+            
+            task = easppttvc.appt
+            // tableView = inherited property from UITableViewController class
+            tableView.reloadData()
+        }
+        
+        
+        // add appointment created here!
+        if let eassntvc = sender.sourceViewController as? EditAssignmentTableViewController {
+            
+            task = eassntvc.assn
+            
+            // FIXME: reload properly?
+            tableView.reloadData()
+        }
+        
+    }
 
-    /*
-    // MARK: - Navigation
+
+    
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-    }
-    */
+        
+        
+        if let _ = task as? Appointment {
 
+            if (segue.identifier == "Edit Appointment") {
+                
+                    // set title to our task's title
+                    segue.destinationViewController.title = task.title
+                    // single task view controller
+                    if let eappttvc = segue.destinationViewController as? EditAppointmentTableViewController {
+                        eappttvc.appt = task as! Appointment
+                    }
+            }
+        }
+        
+        else if let _ = task as? Assignment {
+            if (segue.identifier == "Edit Assignment") {
+                
+                segue.destinationViewController.title = task.title
+                if let eassntvc = segue.destinationViewController as? EditAssignmentTableViewController {
+                        eassntvc.assn = task as! Assignment
+                }
+            }
+        }
+
+    }
 }
