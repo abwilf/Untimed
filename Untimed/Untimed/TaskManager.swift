@@ -242,8 +242,19 @@ class TaskManager {
                 // if Free, set assignment equal to spot in cal array
                 if let _ = calendarArray[i][j] as? Free {
                     calendarArray[i][j] = assg
-                    xOut = j + 1
-                    yOut = i + 1
+                    
+                    // hours cannot go beyond the 11 slots
+                    if i + 1 <= 11 {
+                        yOut = i + 1
+                        xOut = j
+                    }
+                    
+                    // if it is more than 11, increment day and restart hour
+                    else {
+                        yOut = 0
+                        xOut = j + 1
+                    }
+                    
                     return (xOut, yOut)
                 }
                 if let _ = calendarArray[i][j] as? Assignment {
@@ -254,8 +265,17 @@ class TaskManager {
                             if  temp == orderedAssignmentArray[k] {
                                 orderedAssignmentArray[k].timeNeeded += 1
                                 calendarArray[i][j] = assg
-                                xOut = j + 1
-                                yOut = i + 1
+                                // hours cannot go beyond the 11 slots
+                                if i + 1 <= 11 {
+                                    yOut = i + 1
+                                    xOut = j
+                                }
+                                    
+                                    // if it is more than 11, increment day and restart hour
+                                else {
+                                    yOut = 0
+                                    xOut = j + 1
+                                }
                                 return (xOut, yOut)
                             }
                         }
