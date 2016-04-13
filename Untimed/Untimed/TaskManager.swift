@@ -151,12 +151,18 @@ class TaskManager {
                 
                 let startTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: appt.startTime)
                 
-                for var j = 0; j < 12; ++j {
-                    // NOTE: possibly limited to two dates within the same month
-                    if startTimeComponents.hour == j + 8 {
-                        for var k = 0; k < (diffDateComponentsHour.hour); ++k {
-                            // compare today to day of appt to put in cal array
-                            self.calendarArray[j + k][dayDiff] = appt
+                if dayDiff < 0 {
+                    deleteTaskAtIndex(i)
+                }
+                
+                else {
+                    for var j = 0; j < 12; ++j {
+                        // NOTE: possibly limited to two dates within the same month
+                        if startTimeComponents.hour == j + 8 {
+                            for var k = 0; k < (diffDateComponentsHour.hour); ++k {
+                                // compare today to day of appt to put in cal array
+                                self.calendarArray[j + k][dayDiff] = appt
+                            }
                         }
                     }
                 }
