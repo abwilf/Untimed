@@ -107,6 +107,10 @@ class TaskManager {
                 let temp = putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], x: 0, y: 0)
                 xIn = temp.xOut
                 yIn = temp.yOut
+                // decrement time needed of most urgent
+                orderedAssignmentArray[0].timeNeeded -= 1
+                // reorder array
+                orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
             }
             
             // afterwards
