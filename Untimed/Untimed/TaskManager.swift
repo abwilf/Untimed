@@ -19,7 +19,7 @@ class TaskManager {
     
     
     
-    var unfilteredArray: [Task] = []
+    var unfilteredArray: [Task] = Array(count: 40, repeatedValue: Free())
     var assignmentArray = [Assignment]()
     var orderedAssignmentArray = [Assignment]()
     
@@ -102,12 +102,14 @@ class TaskManager {
             var xIn: Int = 0
             var yIn: Int = 0
             
+            /*
             // first time through
             if orderedAssignmentArray[0].timeNeeded > 0 {
                 let temp = putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], x: 0, y: 0)
                 xIn = temp.xOut
                 yIn = temp.yOut
             }
+            */
             
             // afterwards
             while orderedAssignmentArray[0].timeNeeded > 0 {
@@ -228,36 +230,37 @@ class TaskManager {
    
     
     func putAssgInCalArrayAtFirstFreeOrAssignmentSpot(assg: Assignment, x: Int, y: Int) -> (xOut: Int, yOut: Int) {
+        var xOut = 0
+        var yOut = 0
         // go through cal array, starting at the place we last allocated at
         for var j = x; j < 28; ++j {
             for var i = y; i < 12; ++i {
                 // if Free, set assignment equal to spot in cal array
                 if let _ = calendarArray[i][j] as? Free {
                     calendarArray[i][j] = assg
-                    let xOut = j + 1
-                    let yOut = i + 1
+                    xOut = j + 1
+                    yOut = i + 1
                     return (xOut, yOut)
                 }
                 if let _ = calendarArray[i][j] as? Assignment {
                     // find that position in calendar array in tasks list and increment its time needed by one because we're about to replace it w/ a more urgent assn
                     
                     for var k = 0; k < tasks.count; ++k {
-                        if calendarArray[i][j] == orderedAssignmentArray[k] {
-                            orderedAssignmentArray[k].timeNeeded += 1
-                            calendarArray[i][j] = assg
-                            let xOut = j + 1
-                            let yOut = i + 1
-                            return (xOut, yOut)
+                        if let temp = calendarArray[i][j] as? Assignment {
+                            if  temp == orderedAssignmentArray[k] {
+                                orderedAssignmentArray[k].timeNeeded += 1
+                                calendarArray[i][j] = assg
+                                xOut = j + 1
+                                yOut = i + 1
+                                return (xOut, yOut)
                             }
                         }
                     }
                 }
                 
             }
-        
-            let xOut = 0
-            let yOut = 0
-            return (xOut, yOut)
+        }
+        return (xOut, yOut)
     }
     
     init () {
