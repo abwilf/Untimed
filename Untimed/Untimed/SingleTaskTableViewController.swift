@@ -48,10 +48,10 @@ class SingleTaskTableViewController: UITableViewController {
             
             
             titleOneLabel.text  = "Starts"
-            detailOneLabel.text = "\(strDate) - \(strDateStartTime)"
+            detailOneLabel.text = "\(strDate) at \(strDateStartTime)"
             
             titleTwoLabel.text = "Ends"
-            detailTwoLabel.text = "\(strDate) - \(strDateEndTime)"
+            detailTwoLabel.text = "\(strDate) at \(strDateEndTime)"
         }
         
         else if let assignment = task as? Assignment {
