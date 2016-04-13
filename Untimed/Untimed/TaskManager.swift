@@ -17,6 +17,26 @@ class TaskManager {
     // calendar array
     var calendarArray: [[Task]] = Array(count: 12, repeatedValue: Array(count: 28, repeatedValue: Free()))
     
+    
+    
+    var unfilteredArray: [Task] = []
+    var assignmentArray = [Assignment]()
+    var orderedAssignmentArray = [Assignment]()
+    
+
+
+    func createOrderedArray() {
+        
+        // unfilteredArray
+        unfilteredArray = tasks
+        
+        // assnArray
+        assignmentArray = unfilteredArray.filter(isAssignment) as! [Assignment]
+        
+        // orderedAssnArray
+        orderedAssignmentArray = assignmentArray.sort(isOrderedBefore)
+    }
+    
     func addTask (taskIn: Task) {
         // add to array
         tasks += [taskIn]
@@ -69,9 +89,7 @@ class TaskManager {
     
     func allocateAssignments() {
         // make an assignments only array and order it by urgency
-        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        let assignmentArray = tasks.filter(isAssignment) as! [Assignment]
-        var orderedAssignmentArray = assignmentArray.sort(isOrderedBefore)
+        createOrderedArray()
         
         // if there are no assignments to allocate, kick out
         if orderedAssignmentArray.isEmpty {
@@ -81,13 +99,28 @@ class TaskManager {
         // if not, allocate assignments
         else {
             // while most urgent still has time left to allocate, allocate it
+            var xIn: Int = 0
+            var yIn: Int = 0
+            
+            // first time through
+            if orderedAssignmentArray[0].timeNeeded > 0 {
+                let temp = putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], x: 0, y: 0)
+                xIn = temp.xOut
+                yIn = temp.yOut
+            }
+            
+            // afterwards
             while orderedAssignmentArray[0].timeNeeded > 0 {
                 
-                putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0])
+                // declare location variables to pass into putAssg function
+                let temp = putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], x: xIn, y: yIn)
+                xIn = temp.xOut
+                yIn = temp.yOut
+                
+                // decrement time needed of most urgent
                 orderedAssignmentArray[0].timeNeeded -= 1
                 // reorder array
                 orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
-                
                 
                 // FIXME: TODO: resave tasks array as all the tasks in calendar array
             }
@@ -194,31 +227,37 @@ class TaskManager {
     }
    
     
-    func putAssgInCalArrayAtFirstFreeOrAssignmentSpot(assg: Assignment) {
-        // go through cal array
-        for var j = 0; j < 28; ++j {
-            for var i = 0; i < 12; ++i {
+    func putAssgInCalArrayAtFirstFreeOrAssignmentSpot(assg: Assignment, x: Int, y: Int) -> (xOut: Int, yOut: Int) {
+        // go through cal array, starting at the place we last allocated at
+        for var j = x; j < 28; ++j {
+            for var i = y; i < 12; ++i {
                 // if Free, set assignment equal to spot in cal array
-                if let _ = self.calendarArray[i][j] as? Free {
-                    self.calendarArray[i][j] = assg
-                    return
+                if let _ = calendarArray[i][j] as? Free {
+                    calendarArray[i][j] = assg
+                    let xOut = j + 1
+                    let yOut = i + 1
+                    return (xOut, yOut)
                 }
-                if let _ = self.calendarArray[i][j] as? Assignment {
+                if let _ = calendarArray[i][j] as? Assignment {
                     // find that position in calendar array in tasks list and increment its time needed by one because we're about to replace it w/ a more urgent assn
                     
                     for var k = 0; k < tasks.count; ++k {
-                        if self.calendarArray[i][j] == tasks[k] {
-                            if let assnMaybe = tasks[k] as? Assignment {
-                                assnMaybe.timeNeeded += 1
-                                self.calendarArray[i][j] = assg
-                                return
+                        if calendarArray[i][j] == orderedAssignmentArray[k] {
+                            orderedAssignmentArray[k].timeNeeded += 1
+                            calendarArray[i][j] = assg
+                            let xOut = j + 1
+                            let yOut = i + 1
+                            return (xOut, yOut)
                             }
                         }
                     }
                 }
                 
             }
-        }
+        
+            let xOut = 0
+            let yOut = 0
+            return (xOut, yOut)
     }
     
     init () {
