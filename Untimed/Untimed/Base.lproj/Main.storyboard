@@ -432,6 +432,11 @@
                             <outlet property="delegate" destination="kQn-Tu-McS" id="nhr-D0-Ozh"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="zSu-kh-LKw"/>
+                        <barButtonItem title="Item" id="8C6-ha-QMT"/>
+                    </toolbarItems>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="detailOneLabel" destination="hGi-9a-HKZ" id="rDU-uO-Q1H"/>
                         <outlet property="detailTwoLabel" destination="Yx4-LN-3nx" id="L5P-i6-frM"/>
