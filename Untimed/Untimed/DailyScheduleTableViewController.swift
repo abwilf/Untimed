@@ -44,6 +44,7 @@ class DailyScheduleTableViewController: UITableViewController {
         // re-allocate tasks
         taskManager.loadFromDisc()
         taskManager.allocateTime()
+        tableView.reloadData()
     }
     
     

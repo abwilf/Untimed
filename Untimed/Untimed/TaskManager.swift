@@ -25,7 +25,7 @@ class TaskManager {
     
 
 
-    func createOrderedArray() {
+    private func createOrderedArray() {
         
         // unfilteredArray
         unfilteredArray = tasks
@@ -116,22 +116,6 @@ class TaskManager {
             tasks = []
         }
         
-        /*
-        // calendarArray
-        let defaultsCal = NSUserDefaults.standardUserDefaults()
-        
-        // if I'm able to get a tasks array at this key, put it into tasks, if not, create a blank one and put it into tasks
-        let archiveCal = defaultsCal.objectForKey("SavedCalendarArray") as? NSData ?? NSData()
-        // every time you open the app
-        
-        if let tempCal = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? [[Task]] {
-            calendarArray = tempCal
-        }
-            
-        else {
-            calendarArray = []
-        }
-        */
     }
     
     
