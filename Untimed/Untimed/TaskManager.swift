@@ -38,9 +38,11 @@ class TaskManager {
         
         // assign free hours before due to all assignments in orderedArray
         for var i = 0; i < orderedAssignmentArray.count; ++i {
-            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(orderedAssignmentArray[i],         dayCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).dayCoordinate, hourCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).hourCoordinate)
+            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(orderedAssignmentArray[i], dayCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).dayCoordinate, hourCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).hourCoordinate)
         }
         // sort by urgency
+        
+        //FIXME: PROBLEM IS HERE
         orderedAssignmentArray.sort(isOrderedBefore)
     }
     
@@ -118,6 +120,8 @@ class TaskManager {
     
     func allocateAssignments() {
         // make an assignments only array and order it by urgency
+        
+        // FIXME:  THE ERROR IS HERE: IT'S NOT PUTTING THE MOST URGENT IN THE 0 SPOT
         createOrderedArray()
         
         // if there are no assignments to allocate, kick out
