@@ -14,26 +14,12 @@ class Assignment: Task {
     var timeNeeded: Double = 0
     var amountOfFreeHoursBeforeDueDate: Int = 0
     
+    
     var urgency: Int {
         get {
             return (amountOfFreeHoursBeforeDueDate - Int(timeNeeded))
         }
     }
-    
-    
-    /*
-    let calendar = NSCalendar.currentCalendar()
-    let components = calendar.components([.Month, .Day], fromDate: dueDate)
-    
-    // why doesn't this work?
-    let calendar = NSCalendar.currentCalendar()
-    let dateComponents: NSDateComponents = calendar.components([NSCalendarUnit.Day, NSCalendarUnit.Month, NSCalendarUnit.Year, NSCalendarUnit.WeekOfYear, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second, NSCalendarUnit.Nanosecond], fromDate: dueDate)
-
-    let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
-    let components = NSCalendar.currentCalendar().components(unitFlags, fromDate: dueDate)
-    */
-    
-    
     
     override init() {
        super.init()

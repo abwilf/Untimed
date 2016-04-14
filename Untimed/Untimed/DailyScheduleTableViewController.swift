@@ -12,13 +12,6 @@ class DailyScheduleTableViewController: UITableViewController {
 
     let taskManager = TaskManager()
 
-    // call member function
-    func callRelevantMemberEquations() {
-        taskManager.putApptsAndFreeTimeInCalArray()
-        
-        
-    }
-    
 
     /*
     var dateButton: UIBarButtonItem {
@@ -48,9 +41,8 @@ class DailyScheduleTableViewController: UITableViewController {
     
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
-        taskManager.loadFromDisc()
-        
         // re-allocate tasks
+        taskManager.loadFromDisc()
         taskManager.allocateTime()
     }
     
@@ -125,10 +117,7 @@ class DailyScheduleTableViewController: UITableViewController {
         return 12
     }
 
-
-    
-
-    // #7 FROM TO DO LIST: allocate elements from calendar array to cells in view
+    // allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
      
         

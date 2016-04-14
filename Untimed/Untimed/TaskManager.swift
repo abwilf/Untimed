@@ -34,8 +34,37 @@ class TaskManager {
         assignmentArray = unfilteredArray.filter(isAssignment) as! [Assignment]
         
         // orderedAssnArray
-        orderedAssignmentArray = assignmentArray.sort(isOrderedBefore)
+        orderedAssignmentArray = assignmentArray
+            
+        // for all tasks in orderedAssnArray, get their urgency
+            // for each task, run through all the spots in cal array that are free or assignment and count them up to get their amountOfFreeHoursBeforeDueDate
+            
+        for var i = 0; i < orderedAssignmentArray.count; ++i {
+            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(orderedAssignmentArray[i],         dayCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).dayCoordinate, hourCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).hourCoordinate)
+        }
+        
+        // sort by urgency
+        orderedAssignmentArray.sort(isOrderedBefore)
     }
+    
+    func dueDateInCalFormat(dueDate: NSDate) -> (dayCoordinate: Int, hourCoordinate: Int) {
+        var dayCoordinate: Int = 0
+        var hourCoordinate: Int = 0
+        
+        // FIXME: use for loop to calculate dayCoordinate and hourCoordinate of dueDate from orderedAssignmentArray[i].dueDate
+        return (dayCoordinate, hourCoordinate)
+    }
+    
+    func calcFreeTimeBeforeDueDate (assignmentIn: Assignment, dayCoordinateIn: Int, hourCoordinateIn: Int) -> Int {
+        var freeTimeBeforeDueDate: Int = 0
+        
+        
+        // FIXME: iterate through calendar array from right now to dueDateInCalFormat to find number of free hours before dueDate
+        
+        return freeTimeBeforeDueDate
+    }
+    
+    
     
     func addTask (taskIn: Task) {
         // add to array
@@ -53,25 +82,25 @@ class TaskManager {
     
     // add save method
     func save() {
-        // when delete or save
-        // problem: can't save taskobject to disc directly: use NSCoding to save custom classes to disc
-        // specify where you want to be stored
-        // watch out for the word documents
-        
+        // save tasks array
         let archive: NSData = NSKeyedArchiver.archivedDataWithRootObject(tasks)
-
         let defaults = NSUserDefaults.standardUserDefaults()
-        
         defaults.setObject(archive, forKey: "SavedTasks")
-        
-        // actually set object (ios optimizes)
         defaults.synchronize()
+        
+        /*
+        // save cal array
+        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject(calendarArray)
+        let defaultsCal = NSUserDefaults.standardUserDefaults()
+        defaultsCal.setObject(archiveCal, forKey: "SavedCalendarArray")
+        defaultsCal.synchronize()
+        */
     }
     
     
     func loadFromDisc() {
         
-        // create calendar array
+        // tasksarray
         let defaults = NSUserDefaults.standardUserDefaults()
         
         // if I'm able to get a tasks array at this key, put it into tasks, if not, create a blank one and put it into tasks
@@ -85,7 +114,26 @@ class TaskManager {
         else {
             tasks = []
         }
+        
+        /*
+        // calendarArray
+        let defaultsCal = NSUserDefaults.standardUserDefaults()
+        
+        // if I'm able to get a tasks array at this key, put it into tasks, if not, create a blank one and put it into tasks
+        let archiveCal = defaultsCal.objectForKey("SavedCalendarArray") as? NSData ?? NSData()
+        // every time you open the app
+        
+        if let tempCal = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? [[Task]] {
+            calendarArray = tempCal
+        }
+            
+        else {
+            calendarArray = []
+        }
+        */
     }
+    
+    
     
     func allocateAssignments() {
         // make an assignments only array and order it by urgency
@@ -102,19 +150,6 @@ class TaskManager {
             var xIn: Int = 0
             var yIn: Int = 0
             
-            /*
-            // first time through
-            if orderedAssignmentArray[0].timeNeeded > 0 {
-                let temp = putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], x: 0, y: 0)
-                xIn = temp.xOut
-                yIn = temp.yOut
-                // decrement time needed of most urgent
-                orderedAssignmentArray[0].timeNeeded -= 1
-                // reorder array
-                orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
-            }
-            */
-            
             // afterwards
             while orderedAssignmentArray[0].timeNeeded > 0 {
                 
@@ -127,8 +162,6 @@ class TaskManager {
                 orderedAssignmentArray[0].timeNeeded -= 1
                 // reorder array
                 orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
-                
-                // FIXME: TODO: resave tasks array as all the tasks in calendar array
             }
         return
         }
@@ -138,7 +171,10 @@ class TaskManager {
         // put appts and free time in
         putApptsAndFreeTimeInCalArray()
         // allocate Assignments
-        allocateAssignments()        
+        allocateAssignments()
+        
+        //FIXME: YES?
+        //save()
     }
         
     
