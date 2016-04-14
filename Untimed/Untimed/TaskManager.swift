@@ -36,14 +36,10 @@ class TaskManager {
         // orderedAssnArray
         orderedAssignmentArray = assignmentArray
         
-        
-        /* FIXME: COME BACK
-        // assign free hours before due to all assignments
+        // assign free hours before due to all assignments in orderedArray
         for var i = 0; i < orderedAssignmentArray.count; ++i {
             orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(orderedAssignmentArray[i],         dayCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).dayCoordinate, hourCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).hourCoordinate)
         }
-        */
-        
         // sort by urgency
         orderedAssignmentArray.sort(isOrderedBefore)
     }
@@ -52,7 +48,7 @@ class TaskManager {
         var dayCoordinate: Int = 0
         var hourCoordinate: Int = 0
         
-        // FIXME: use for loop to calculate dayCoordinate and hourCoordinate of dueDate from orderedAssignmentArray[i].dueDate
+        // FIXME: derive dayCoordinate and hourCoordinate of dueDate from orderedAssignmentArray[i].dueDate
         return (dayCoordinate, hourCoordinate)
     }
     
@@ -60,7 +56,7 @@ class TaskManager {
         var freeTimeBeforeDueDate: Int = 0
         
         
-        // FIXME: iterate through calendar array from right now to dueDateInCalFormat to find number of free hours before dueDate
+        // FIXME: iterate through calendar array from right now to dueDateInCalFormat and count up find number of free or assignment hour blocks before dueDate
         
         return freeTimeBeforeDueDate
     }
