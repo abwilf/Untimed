@@ -138,8 +138,7 @@ class TaskManager {
         // put appts and free time in
         putApptsAndFreeTimeInCalArray()
         // allocate Assignments
-        allocateAssignments()
-        
+        allocateAssignments()        
     }
         
     
@@ -254,19 +253,20 @@ class TaskManager {
                         yOut = 0
                         xOut = j + 1
                     }
-                    
                     return (xOut, yOut)
                 }
                 if let _ = calendarArray[i][j] as? Assignment {
                     // find that position in calendar array in tasks list and increment its time needed by one because we're about to replace it w/ a more urgent assn
                     
-                    for var k = 0; k < tasks.count; ++k {
+                    for var k = 0; k < orderedAssignmentArray.count; ++k {
                         if let temp = calendarArray[i][j] as? Assignment {
+                            // iterate through orderedAssn looking for the object in calArray
                             if  temp == orderedAssignmentArray[k] {
                                 orderedAssignmentArray[k].timeNeeded += 1
                                 calendarArray[i][j] = assg
                                 // hours cannot go beyond the 11 slots
                                 if i + 1 <= 11 {
+                                    // next time, start at the next hour spot
                                     yOut = i + 1
                                     xOut = j
                                 }
