@@ -13,11 +13,10 @@ class TaskManager {
     
     // empty array of tasks
     var tasks: [Task] = []
-
+    let CELLS_PER_DAY = 12
+    
     // calendar array
     var calendarArray: [[Task]] = Array(count: 12, repeatedValue: Array(count: 28, repeatedValue: Free()))
-    
-    
     
     var unfilteredArray: [Task] = Array(count: 40, repeatedValue: Free())
     var assignmentArray = [Assignment]()
@@ -72,7 +71,7 @@ class TaskManager {
         // iterate through calendar array from right now to dueDateInCalFormat and count up find number of free or assignment hour blocks before dueDate
         
         // iterate through today from current hour until end of day
-        for var k = currentDateComponents.hour - 8; k < 12; ++k {
+        for var k = currentDateComponents.hour - 8; k < CELLS_PER_DAY; ++k {
             if let _ = calendarArray[k][0] as? Free {
                 freeTimeBeforeDueDate += 1
             }
@@ -82,7 +81,7 @@ class TaskManager {
         }
         // iterate through all hours of days that aren't current day or dueDate.day
         for var j = 1; j < diffDateComponents.day - 1; ++j {
-            for var i = 0; j < 12; ++i {
+            for var i = 0; i < CELLS_PER_DAY; ++i {
                 if let _ = calendarArray[i][j] as? Free {
                     freeTimeBeforeDueDate += 1
                 }
@@ -241,7 +240,7 @@ class TaskManager {
                 }
                 
                 else {
-                    for var j = 0; j < 12; ++j {
+                    for var j = 0; j < CELLS_PER_DAY; ++j {
                         // NOTE: possibly limited to two dates within the same month
                         if startTimeComponents.hour == j + 8 {
                             for var k = 0; k < (diffDateComponentsHour.hour); ++k {
@@ -260,7 +259,7 @@ class TaskManager {
         
         // put free object in all slots not occupied by appointment
         
-        for var i = 0; i < 12; ++i {
+        for var i = 0; i < CELLS_PER_DAY; ++i {
             for var j = 0; j < 28; ++j {
                 
                 // if the spot is taken by an appointment ignore it
@@ -299,7 +298,7 @@ class TaskManager {
         var yOut = 0
         // go through cal array, starting at the place we last allocated at
         for var j = x; j < 28; ++j {
-            for var i = y; i < 12; ++i {
+            for var i = y; i < CELLS_PER_DAY; ++i {
                 // if Free, set assignment equal to spot in cal array
                 if let _ = calendarArray[i][j] as? Free {
                     calendarArray[i][j] = assg
