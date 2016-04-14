@@ -50,15 +50,56 @@ class TaskManager {
         var dayCoordinate: Int = 0
         var hourCoordinate: Int = 0
         
-        // FIXME: derive dayCoordinate and hourCoordinate of dueDate from orderedAssignmentArray[i].dueDate
+        let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
+        let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: dueDate)
+        
+        dayCoordinate = dueDateComponents.day
+        hourCoordinate = dueDateComponents.hour
+        
         return (dayCoordinate, hourCoordinate)
     }
     
     func calcFreeTimeBeforeDueDate (assignmentIn: Assignment, dayCoordinateIn: Int, hourCoordinateIn: Int) -> Int {
         var freeTimeBeforeDueDate: Int = 0
+    
+        let currentDate = NSDate()
+        let diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: assignmentIn.dueDate, options: NSCalendarOptions.init(rawValue: 0))
+        let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
+        let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
+        let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: assignmentIn.dueDate)
+
         
+        // iterate through calendar array from right now to dueDateInCalFormat and count up find number of free or assignment hour blocks before dueDate
         
-        // FIXME: iterate through calendar array from right now to dueDateInCalFormat and count up find number of free or assignment hour blocks before dueDate
+        // iterate through today from current hour until end of day
+        for var k = currentDateComponents.hour - 8; k < 12; ++k {
+            if let _ = calendarArray[k][0] as? Free {
+                freeTimeBeforeDueDate += 1
+            }
+            if let _ = calendarArray[k][0] as? Assignment {
+                freeTimeBeforeDueDate += 1
+            }
+        }
+        // iterate through all hours of days that aren't current day or dueDate.day
+        for var j = 1; j < diffDateComponents.day - 1; ++j {
+            for var i = 0; j < 12; ++i {
+                if let _ = calendarArray[i][j] as? Free {
+                    freeTimeBeforeDueDate += 1
+                }
+                if let _ = calendarArray[i][j] as? Assignment {
+                    freeTimeBeforeDueDate += 1
+                }
+            }
+        }
+        // starting at first hour value, iterate until dueDate.hour
+        for var m = 0; m < dueDateComponents.hour - 8; ++m {
+            if let _ = calendarArray[m][diffDateComponents.day] as? Free {
+                freeTimeBeforeDueDate += 1
+            }
+            if let _ = calendarArray[m][diffDateComponents.day] as? Assignment {
+                freeTimeBeforeDueDate += 1
+            }
+        }
         
         return freeTimeBeforeDueDate
     }
