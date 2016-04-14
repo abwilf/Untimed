@@ -35,13 +35,14 @@ class TaskManager {
         
         // orderedAssnArray
         orderedAssignmentArray = assignmentArray
-            
-        // for all tasks in orderedAssnArray, get their urgency
-            // for each task, run through all the spots in cal array that are free or assignment and count them up to get their amountOfFreeHoursBeforeDueDate
-            
+        
+        
+        /* FIXME: COME BACK
+        // assign free hours before due to all assignments
         for var i = 0; i < orderedAssignmentArray.count; ++i {
             orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(orderedAssignmentArray[i],         dayCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).dayCoordinate, hourCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).hourCoordinate)
         }
+        */
         
         // sort by urgency
         orderedAssignmentArray.sort(isOrderedBefore)
