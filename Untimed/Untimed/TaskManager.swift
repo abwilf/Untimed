@@ -45,15 +45,31 @@ class TaskManager {
         orderedAssignmentArray.sort(isOrderedBefore)
     }
     
+    // returns appropriate calendar coords 
     func dueDateInCalFormat(dueDate: NSDate) -> (dayCoordinate: Int, hourCoordinate: Int) {
         var dayCoordinate: Int = 0
         var hourCoordinate: Int = 0
         
-        let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
-        let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: dueDate)
+        let currentDate = NSDate()
         
-        dayCoordinate = dueDateComponents.day
-        hourCoordinate = dueDateComponents.hour
+        let componentsNowDay = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
+        let currentDay = componentsNowDay.day
+        
+        let componentsDueDateDay = NSCalendar.currentCalendar().components([.Day], fromDate: dueDate)
+        let dueDateDay = componentsDueDateDay.day
+        
+        let componentsNowHour = NSCalendar.currentCalendar().components([.Hour], fromDate: currentDate)
+        let currentHour = componentsNowHour.hour
+        
+        let componentsDueDateHour = NSCalendar.currentCalendar().components([.Hour], fromDate: dueDate)
+        let dueDateHour = componentsDueDateHour.hour
+        
+        // day difference = place in col array
+        let dayDiff = dueDateDay - currentDay
+        let hourDiff = dueDateHour - currentHour
+        
+        dayCoordinate = dayDiff
+        hourCoordinate = hourDiff
         
         return (dayCoordinate, hourCoordinate)
     }
