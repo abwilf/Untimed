@@ -209,13 +209,14 @@ class TaskManager {
             
         // if not, allocate assignments
         else {
-            // while most urgent still has time left to allocate, allocate it
+            // start at today
             var dayIn: Int = 0
     
             let currentDate = NSDate()
             let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
             let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
             
+            // start at current hour
             var hourIn = currentDateComponents.hour - 7
             
             // afterwards

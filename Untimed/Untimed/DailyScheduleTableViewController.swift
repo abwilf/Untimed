@@ -12,28 +12,6 @@ class DailyScheduleTableViewController: UITableViewController {
 
     let taskManager = TaskManager()
 
-
-    /*
-    var dateButton: UIBarButtonItem {
-        
-        // customize title
-        let currentDate = NSDate()
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        let strDate = dateFormatter.stringFromDate(currentDate)
-        
-        // create view
-        dateButton.setTitleTextAttributes("\(strDate)":  , forState: UIControlState.Normal)
-        
-        // set it equal to the bar button
-        let myCustomBarButtonItem:UIBarButtonItem = UIBarButtonItem(customView: dateButton)
-        self.navigationItem.rightBarButtonItem  = myCustomBarButtonItem
-        
-        
-        self.navigationItem.setRightBarButtonItem(UIBarButtonItem(barButtonSystemItem: dateButton, target: self, action: "barButtonItemClicked:"), animated: true)
-    }
-
-    */
     
     @IBAction func dateButtonPressed(sender: AnyObject) {
         // FIXME: specify date
