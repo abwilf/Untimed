@@ -13,7 +13,7 @@ class Assignment: Task {
     var dueDate: NSDate = NSDate()
     var timeNeeded: Double = 0
     var amountOfFreeHoursBeforeDueDate: Int = 0
-    
+    var hoursLeftToAllocate: Int = 0
     
     var urgency: Int {
         get {
