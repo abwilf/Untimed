@@ -17,7 +17,12 @@ class Assignment: Task {
     
     var urgency: Int {
         get {
-            return (amountOfFreeHoursBeforeDueDate - Int(timeNeeded))
+            if timeNeeded > 0 {
+                return (amountOfFreeHoursBeforeDueDate - Int(timeNeeded))
+            }
+            else {
+                return 1000000
+            }
         }
     }
     
