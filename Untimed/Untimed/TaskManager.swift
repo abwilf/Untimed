@@ -42,7 +42,7 @@ class TaskManager {
         // sort by urgency
         
         //FIXME: PROBLEM IS HERE
-        orderedAssignmentArray.sort(isOrderedBefore)
+        orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
     }
     
     // returns appropriate calendar coords 
