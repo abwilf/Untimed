@@ -189,7 +189,12 @@ class TaskManager {
         else {
             // while most urgent still has time left to allocate, allocate it
             var dayIn: Int = 0
-            var hourIn: Int = 0
+    
+            let currentDate = NSDate()
+            let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
+            let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
+            
+            var hourIn = currentDateComponents.hour - 7
             
             // afterwards
             while orderedAssignmentArray[0].timeNeeded > 0 {
