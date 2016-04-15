@@ -41,8 +41,12 @@ class DailyScheduleTableViewController: UITableViewController {
     
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
-        // re-allocate tasks
+        
+        
+        // re-allocate
         taskManager.loadFromDisc()
+        
+        // problem may be here?!
         taskManager.allocateTime()
         tableView.reloadData()
     }

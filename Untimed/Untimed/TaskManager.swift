@@ -37,7 +37,18 @@ class TaskManager {
         
         // assign free hours before due to all assignments in orderedArray
         for var i = 0; i < orderedAssignmentArray.count; ++i {
+            
+            /*
             orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(orderedAssignmentArray[i], dayCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).dayCoordinate, hourCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).hourCoordinate)
+            */
+            
+            
+            let assignment = orderedAssignmentArray[i]
+            
+            let assnDueDate = dueDateInCalFormat(assignment.dueDate)
+            
+            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(assignment, dayCoordinateIn: assnDueDate.dayCoordinate, hourCoordinateIn: assnDueDate.hourCoordinate)
+            
         }
         // sort by urgency
         
@@ -58,15 +69,14 @@ class TaskManager {
         let componentsDueDateDay = NSCalendar.currentCalendar().components([.Day], fromDate: dueDate)
         let dueDateDay = componentsDueDateDay.day
         
-        let componentsNowHour = NSCalendar.currentCalendar().components([.Hour], fromDate: currentDate)
-        let currentHour = componentsNowHour.hour
-        
         let componentsDueDateHour = NSCalendar.currentCalendar().components([.Hour], fromDate: dueDate)
         let dueDateHour = componentsDueDateHour.hour
         
         // day difference = place in col array
         let dayDiff = dueDateDay - currentDay
-        let hourDiff = dueDateHour - currentHour
+        
+        // conversion factor
+        let hourDiff = dueDateHour - 8
         
         dayCoordinate = dayDiff
         hourCoordinate = hourDiff
@@ -83,6 +93,18 @@ class TaskManager {
         let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
         let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: assignmentIn.dueDate)
 
+        // let currentDate = NSDate()
+        
+        let componentsNowDay = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
+        let currentDay = componentsNowDay.day
+        
+        let componentsDueDateDay = NSCalendar.currentCalendar().components([.Day], fromDate: assignmentIn.dueDate)
+        let dueDateDay = componentsDueDateDay.day
+        
+        
+        
+        // day difference = place in col array
+        let dayDiff = dueDateDay - currentDay
         
         // iterate through calendar array from right now to dueDateInCalFormat and count up find number of free or assignment hour blocks before dueDate
         
@@ -96,7 +118,7 @@ class TaskManager {
             }
         }
         // iterate through all hours of days that aren't current day or dueDate.day
-        for var j = 1; j < diffDateComponents.day - 1; ++j {
+        for var j = 1; j < dayDiff - 1; ++j {
             for var i = 0; i < CELLS_PER_DAY; ++i {
                 if let _ = calendarArray[i][j] as? Free {
                     freeTimeBeforeDueDate += 1
@@ -108,10 +130,10 @@ class TaskManager {
         }
         // starting at first hour value, iterate until dueDate.hour
         for var m = 0; m < dueDateComponents.hour - 8; ++m {
-            if let _ = calendarArray[m][diffDateComponents.day] as? Free {
+            if let _ = calendarArray[m][dayDiff] as? Free {
                 freeTimeBeforeDueDate += 1
             }
-            if let _ = calendarArray[m][diffDateComponents.day] as? Assignment {
+            if let _ = calendarArray[m][dayDiff] as? Assignment {
                 freeTimeBeforeDueDate += 1
             }
         }
