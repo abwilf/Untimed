@@ -188,18 +188,20 @@ class TaskManager {
         // if not, allocate assignments
         else {
             // while most urgent still has time left to allocate, allocate it
-            var xIn: Int = 0
-            var yIn: Int = 0
+            var dayIn: Int = 0
+            var hourIn: Int = 0
             
             // afterwards
             while orderedAssignmentArray[0].timeNeeded > 0 {
                 
+                
                 // declare location variables to pass into putAssg function
-                let temp = putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], x: xIn, y: yIn)
-                xIn = temp.xOut
-                yIn = temp.yOut
+                let temp = putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], day: dayIn, hour: hourIn)
+                dayIn = temp.dayOut
+                hourIn = temp.hourOut
                 
                 // decrement time needed of most urgent
+                // FIXME: CHANGE TO HOURSLEFT
                 orderedAssignmentArray[0].timeNeeded -= 1
                 // reorder array
                 orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
@@ -309,28 +311,28 @@ class TaskManager {
     }
    
     
-    func putAssgInCalArrayAtFirstFreeOrAssignmentSpot(assg: Assignment, x: Int, y: Int) -> (xOut: Int, yOut: Int) {
-        var xOut = 0
-        var yOut = 0
+    func putAssgInCalArrayAtFirstFreeOrAssignmentSpot(assg: Assignment, day: Int, hour: Int) -> (dayOut: Int, hourOut: Int) {
+        var dayOut = 0
+        var hourOut = 0
         // go through cal array, starting at the place we last allocated at
-        for var j = x; j < 28; ++j {
-            for var i = y; i < CELLS_PER_DAY; ++i {
+        for var j = day; j < 28; ++j {
+            for var i = hour; i < CELLS_PER_DAY; ++i {
                 // if Free, set assignment equal to spot in cal array
                 if let _ = calendarArray[i][j] as? Free {
                     calendarArray[i][j] = assg
                     
                     // hours cannot go beyond the 11 slots
                     if i + 1 <= 11 {
-                        yOut = i + 1
-                        xOut = j
+                        hourOut = i + 1
+                        dayOut = j
                     }
                     
                     // if it is more than 11, increment day and restart hour
                     else {
-                        yOut = 0
-                        xOut = j + 1
+                        hourOut = 0
+                        dayOut = j + 1
                     }
-                    return (xOut, yOut)
+                    return (dayOut, hourOut)
                 }
                 if let _ = calendarArray[i][j] as? Assignment {
                     // find that position in calendar array in tasks list and increment its time needed by one because we're about to replace it w/ a more urgent assn
@@ -344,16 +346,16 @@ class TaskManager {
                                 // hours cannot go beyond the 11 slots
                                 if i + 1 <= 11 {
                                     // next time, start at the next hour spot
-                                    yOut = i + 1
-                                    xOut = j
+                                    hourOut = i + 1
+                                    dayOut = j
                                 }
                                     
                                     // if it is more than 11, increment day and restart hour
                                 else {
-                                    yOut = 0
-                                    xOut = j + 1
+                                    hourOut = 0
+                                    dayOut = j + 1
                                 }
-                                return (xOut, yOut)
+                                return (dayOut, hourOut)
                             }
                         }
                     }
@@ -361,7 +363,7 @@ class TaskManager {
                 
             }
         }
-        return (xOut, yOut)
+        return (dayOut, hourOut)
     }
     
     init () {
