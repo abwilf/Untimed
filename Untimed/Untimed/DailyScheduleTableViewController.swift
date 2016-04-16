@@ -16,6 +16,12 @@ class DailyScheduleTableViewController: UITableViewController {
     var selectedDate = NSDate() {
         didSet {
             updateTitle()
+            
+            // re-allocate
+            taskManager.loadFromDisc()
+            
+            // problem may be here?!
+            taskManager.allocateTime()
             tableView.reloadData()
         }
     }
@@ -27,9 +33,7 @@ class DailyScheduleTableViewController: UITableViewController {
             selectedDate = cdvc.newDate
         }
     }
-    
-    
-    
+
     func updateTitle() {
         dateLocationDay = calArrayIndexFromNSDate(selectedDate)
         if dateLocationDay == 0 {
@@ -75,14 +79,8 @@ class DailyScheduleTableViewController: UITableViewController {
         return (dayIndex)
     }
     
-    @IBAction func dateButtonPressed(sender: AnyObject) {
-        // FIXME: specify date
-    }
-    
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
-        
-        
         // re-allocate
         taskManager.loadFromDisc()
         
@@ -113,15 +111,6 @@ class DailyScheduleTableViewController: UITableViewController {
         }
         
         // Pull any data from the view controller which initiated the unwind segue.
-    }
-    
-    // unwind segue deleting task from delete in singletasktableviewcontroller
-    @IBAction func unwindAndDeleteTask(sender: UIStoryboardSegue) {
-        if let sttvc = sender.sourceViewController as? SingleTaskTableViewController {
-            let index = sttvc.index
-            taskManager.deleteTaskAtIndex(index)
-             tableView.reloadData()
-        }
     }
     
     
