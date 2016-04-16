@@ -22,8 +22,8 @@ class TaskManager {
     var assignmentArray = [Assignment]()
     var orderedAssignmentArray = [Assignment]()
     
-
-
+    
+    
     private func createOrderedArray() {
         
         // turn tasks into array of Assignments
@@ -48,7 +48,7 @@ class TaskManager {
         orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
     }
     
-    // returns appropriate calendar coords 
+    // returns appropriate calendar coords
     func dueDateInCalFormat(dueDate: NSDate) -> (dayCoordinate: Int, hourCoordinate: Int) {
         var dayCoordinate: Int = 0
         var hourCoordinate: Int = 0
@@ -78,13 +78,13 @@ class TaskManager {
     
     func calcFreeTimeBeforeDueDate (assignmentIn: Assignment, dayCoordinateIn: Int, hourCoordinateIn: Int) -> Int {
         var freeTimeBeforeDueDate: Int = 0
-    
+        
         let currentDate = NSDate()
         let diffDateComponents = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: currentDate, toDate: assignmentIn.dueDate, options: NSCalendarOptions.init(rawValue: 0))
         let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
         let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
         let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: assignmentIn.dueDate)
-
+        
         // let currentDate = NSDate()
         
         let componentsNowDay = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
@@ -179,7 +179,7 @@ class TaskManager {
         if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Task] {
             tasks = temp
         }
-        
+            
         else {
             tasks = []
         }
@@ -197,7 +197,7 @@ class TaskManager {
             return
         }
             
-        // if not, allocate assignments
+            // if not, allocate assignments
         else {
             
             // start at today
@@ -231,7 +231,7 @@ class TaskManager {
                     }
                 }
             }
-
+            
             
             // allocate
             while orderedAssignmentArray[0].hoursLeftToAllocate > 0 {
@@ -245,11 +245,13 @@ class TaskManager {
                 // sort by urgency
                 orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
             }
-        return
+            return
         }
     }
     
     func allocateTime() {
+        // clear out past tasks
+        deletePastTasks()
         // put appts and free time in
         putApptsAndFreeTimeInCalArray()
         // allocate Assignments
@@ -258,19 +260,19 @@ class TaskManager {
         //FIXME: YES?
         //save()
     }
-        
     
-        
-        
-       
+    
+    
+    
+    
     
     func putApptsAndFreeTimeInCalArray() {
         
         let currentDate = NSDate()
-
+        
         // put appointments in the calendar array
         for var i = 0; i < self.tasks.count; ++i {
-           
+            
             // if object == appointment, assign to calendarArray
             if let appt = self.tasks[i] as? Appointment {
                 
@@ -295,7 +297,7 @@ class TaskManager {
                 if dayDiff < 0 {
                     deleteTaskAtIndex(i)
                 }
-                
+                    
                 else {
                     for var j = 0; j < CELLS_PER_DAY; ++j {
                         // NOTE: possibly limited to two dates within the same month
@@ -332,16 +334,16 @@ class TaskManager {
         }
     }
     
-        
+    
     // Create sorted array of assignments
-        
+    
     func isAssignment (t: Task) -> Bool {
         if let _ = t as? Assignment {
             return true
         }
         return false
     }
-
+    
     func isOrderedBefore (a1: Assignment, a2: Assignment) -> Bool {
         // less is more urgent
         if a1.urgency < a2.urgency {
@@ -349,7 +351,7 @@ class TaskManager {
         }
         return false
     }
-   
+    
     
     func putAssgInCalArrayAtFirstFreeOrAssignmentSpot(assg: Assignment, day: Int, hour: Int) -> (dayOut: Int, hourOut: Int) {
         var dayOut = 0
@@ -366,8 +368,8 @@ class TaskManager {
                         hourOut = i + 1
                         dayOut = j
                     }
-                    
-                    // if it is more than 11, increment day and restart hour
+                        
+                        // if it is more than 11, increment day and restart hour
                     else {
                         hourOut = 0
                         dayOut = j + 1
@@ -376,14 +378,70 @@ class TaskManager {
                 }
                 if let _ = calendarArray[i][j] as? Assignment {
                     // find that position in calendar array in tasks list and increment its time needed by one because we're about to replace it w/ a more urgent assn
-                   print("ERROR! Calendar array was not properly cleared, or this allocation did not start at the correct spot (one after the previous slot was allocated to)")
+                    print("ERROR! Calendar array was not properly cleared, or this allocation did not start at the correct spot (one after the previous slot was allocated to)")
                     
                 }
             }
             
         }
         return (dayOut, hourOut)
-
+        
+    }
+    
+    func deletePastTasks() {
+        let currentDate = NSDate()
+        for var i = 0; i < tasks.count; ++i {
+            
+            if let temp = tasks[i] as? Appointment {
+                
+                let componentsNowDay = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
+                let currentDay = componentsNowDay.day
+                
+                let componentsEndTimeDay = NSCalendar.currentCalendar().components([.Day], fromDate: temp.endTime)
+                let endTimeDay = componentsEndTimeDay.day
+                
+                let componentsEndTimeHour = NSCalendar.currentCalendar().components([.Hour], fromDate: temp.endTime)
+                let endTimeHour = componentsEndTimeHour.hour
+                
+                // day difference = place in col array
+                let dayDiff = endTimeDay - currentDay
+                
+                // conversion factor
+                let hourDiff = endTimeHour - 8
+                
+                if dayDiff < 0 {
+                    deleteTaskAtIndex(i)
+                }
+                if dayDiff == 0 && hourDiff < 0 {
+                    deleteTaskAtIndex(i)
+                }
+            }
+            if let temp = tasks[i] as? Assignment {
+                let componentsNowDay = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
+                let currentDay = componentsNowDay.day
+                
+                let componentsDueDateDay = NSCalendar.currentCalendar().components([.Day], fromDate: temp.dueDate)
+                let DueDateDay = componentsDueDateDay.day
+                
+                let componentsDueDateHour = NSCalendar.currentCalendar().components([.Hour], fromDate: temp.dueDate)
+                let DueDateHour = componentsDueDateHour.hour
+                
+                // day difference = place in col array
+                let dayDiff = DueDateDay - currentDay
+                
+                // conversion factor
+                let hourDiff = DueDateHour - 8
+                
+                if dayDiff < 0 {
+                    deleteTaskAtIndex(i)
+                }
+                if dayDiff == 0 && hourDiff < 0 {
+                    deleteTaskAtIndex(i)
+                }
+            }
+            
+            
+        }
     }
     
     init () {
