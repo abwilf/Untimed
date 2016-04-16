@@ -793,7 +793,6 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Change Date" id="Oae-Tz-9Gd">
                             <connections>
-                                <action selector="dateButtonPressed:" destination="H4w-oZ-fvh" id="INJ-YM-jA3"/>
                                 <segue destination="SIy-8F-afs" kind="presentation" identifier="Change Date" id="Z9S-Rm-eQK"/>
                             </connections>
                         </barButtonItem>
@@ -826,16 +825,28 @@
                                 <date key="date" timeIntervalSinceReferenceDate="482512743.35056299">
                                     <!--2016-04-16 15:19:03 +0000-->
                                 </date>
+                                <connections>
+                                    <action selector="changedDate:" destination="GJR-EK-5PO" eventType="valueChanged" id="rFR-bX-oJY"/>
+                                </connections>
                             </datePicker>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="bJH-lp-RoR">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="OqY-7D-Or5"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="t6S-hw-gGi"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="OqY-7D-Or5">
+                            <connections>
+                                <action selector="cancelPressed:" destination="GJR-EK-5PO" id="2RA-dv-hSN"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="t6S-hw-gGi">
+                            <connections>
+                                <segue destination="xae-Xh-ZOJ" kind="unwind" unwindAction="unwindAndChangeDate:" id="fxC-yo-to3"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a19-eD-t4n" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="xae-Xh-ZOJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3348.5" y="691.5"/>
         </scene>

@@ -10,4 +10,16 @@ import UIKit
 
 class ChangeDateViewController: UIViewController {
 
+    var newDate = NSDate()
+    
+    @IBAction func changedDate(sender: UIDatePicker) {
+        newDate = sender.date
+    }
+    
+    
+    @IBAction func cancelPressed(sender: UIBarButtonItem) {
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
 }

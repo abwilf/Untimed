@@ -11,6 +11,15 @@ import UIKit
 class DailyScheduleTableViewController: UITableViewController {
 
     let taskManager = TaskManager()
+    
+    var selectedDate = NSDate()
+
+    @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
+        if let cdvc = sender.sourceViewController as? ChangeDateViewController {
+            selectedDate = cdvc.newDate
+        }
+    }
+
 
     func calArrayIndexFromNSDate(date: NSDate) -> (dayIndex:Int, hourIndex:Int) {
         let currentDate = NSDate()
