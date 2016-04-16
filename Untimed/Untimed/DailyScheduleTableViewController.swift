@@ -11,21 +11,53 @@ import UIKit
 class DailyScheduleTableViewController: UITableViewController {
 
     let taskManager = TaskManager()
+    var dateLocationDay: Int = 0
+   
+    var selectedDate = NSDate() {
+        didSet {
+            updateTitle()
+            tableView.reloadData()
+        }
+    }
     
-    var selectedDate = NSDate()
 
+    // update selectedDate with changed date value
     @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
         if let cdvc = sender.sourceViewController as? ChangeDateViewController {
             selectedDate = cdvc.newDate
         }
     }
+    
+    
+    
+    func updateTitle() {
+        dateLocationDay = calArrayIndexFromNSDate(selectedDate)
+        if dateLocationDay == 0 {
+            title = "Today"
+        }
+        
+        if dateLocationDay == 1 {
+            title = "Tomorrow"
+        }
+        
+        if dateLocationDay > 1 {
+            
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+            let printedDate = dateFormatter.stringFromDate(selectedDate)
+            title = "\(printedDate)"
+        }
+        
+    }
+    
+    
 
 
-    func calArrayIndexFromNSDate(date: NSDate) -> (dayIndex:Int, hourIndex:Int) {
+    func calArrayIndexFromNSDate(date: NSDate) -> (Int) {
         let currentDate = NSDate()
         
         var dayIndex = 0
-        var hourIndex = 0
+       // var hourIndex = 0
         
         let componentsNowDay = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
         let currentDay = componentsNowDay.day
@@ -33,14 +65,14 @@ class DailyScheduleTableViewController: UITableViewController {
         let componentsDateDay = NSCalendar.currentCalendar().components([.Day], fromDate: date)
         let dateDay = componentsDateDay.day
         
-        let componentsDateHour = NSCalendar.currentCalendar().components([.Day], fromDate: date)
-        let dateHour = componentsDateHour.day
+       // let componentsDateHour = NSCalendar.currentCalendar().components([.Day], fromDate: date)
+       // let dateHour = componentsDateHour.day
         
         // day difference = place in col array
         dayIndex = dateDay - currentDay
-        hourIndex = dateHour - 8
+        //hourIndex = dateHour - 8
         
-        return (dayIndex, hourIndex)
+        return (dayIndex)
     }
     
     @IBAction func dateButtonPressed(sender: AnyObject) {
@@ -138,15 +170,10 @@ class DailyScheduleTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         
-        // only doing it for today (col = 0)
-        
-        //change to today!!
-        let todaysCalLocation: Int = 0
-        
-        let task = taskManager.calendarArray[indexPath.row][todaysCalLocation]
+        let task = taskManager.calendarArray[indexPath.row][dateLocationDay]
         
         // if Free, name Free
-        if let _ = taskManager.calendarArray[indexPath.row][todaysCalLocation] as? Free {
+        if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Free {
             // before 11-12 blocks
             if indexPath.row < 3 {
                 cell.textLabel?.text = "\(indexPath.row + 8)-\(indexPath.row + 9) am: Free"
@@ -196,7 +223,7 @@ class DailyScheduleTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
-        title = "Alex's Schedule"
+        title = "Today"
     }
     
 
