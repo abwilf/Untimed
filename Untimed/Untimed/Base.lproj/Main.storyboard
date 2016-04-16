@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Tasks-->
@@ -69,23 +68,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Tasks" id="930-Q1-oKY">
-                        <barButtonItem key="leftBarButtonItem" title="Reload" id="trH-Fp-d05">
+                        <barButtonItem key="leftBarButtonItem" title="Add Assn" id="Qkd-wj-66e">
                             <connections>
-                                <action selector="reloadPressed:" destination="bp7-Yw-ZGw" id="IKx-W9-8QK"/>
+                                <segue destination="ytc-m8-s5S" kind="presentation" id="cyl-Cn-Xkd"/>
                             </connections>
                         </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem title="Add Assn" id="Qkd-wj-66e">
-                                <connections>
-                                    <segue destination="ytc-m8-s5S" kind="presentation" id="cyl-Cn-Xkd"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Add Appt" id="MZC-cs-jgM">
-                                <connections>
-                                    <segue destination="JN3-bG-ly9" kind="presentation" id="jGW-zF-WyI"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" title="Add Appt" id="MZC-cs-jgM">
+                            <connections>
+                                <segue destination="JN3-bG-ly9" kind="presentation" id="jGW-zF-WyI"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LcI-a2-6bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -492,7 +484,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XHz-ja-TfR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="2Ey-tU-T7V" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3309.5" y="510.5"/>
+            <point key="canvasLocation" x="3997.5" y="342.5"/>
         </scene>
         <!--Edit Appointment Table View Controller-->
         <scene sceneID="v3N-8g-VWc">
@@ -618,7 +610,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gWh-dt-kGY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Pph-jx-cuc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4037.5" y="1371.5"/>
+            <point key="canvasLocation" x="4365.5" y="1347.5"/>
         </scene>
         <!--Edit Assignment Table View Controller-->
         <scene sceneID="Jgl-TM-xyH">
@@ -734,7 +726,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cP6-oT-frZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Kvy-1S-yDA" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3593.5" y="1402"/>
+            <point key="canvasLocation" x="3873.5" y="1393.5"/>
         </scene>
         <!--Daily Schedule-->
         <scene sceneID="7bg-4x-UqG">
@@ -786,9 +778,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="kQn-Tu-McS" kind="show" id="HGx-N3-NZd"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -802,9 +791,10 @@
                                 <action selector="reloadPressed:" destination="H4w-oZ-fvh" id="uV9-Sk-0cQ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Temp" id="Oae-Tz-9Gd">
+                        <barButtonItem key="rightBarButtonItem" title="Change Date" id="Oae-Tz-9Gd">
                             <connections>
                                 <action selector="dateButtonPressed:" destination="H4w-oZ-fvh" id="INJ-YM-jA3"/>
+                                <segue destination="GJR-EK-5PO" kind="show" identifier="Change Date" id="VBZ-Kd-OUl"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -812,6 +802,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IXi-Rj-4wS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2113.5" y="814.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="dJh-ig-KwE">
+            <objects>
+                <viewController id="GJR-EK-5PO" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ipc-mP-MuR"/>
+                        <viewControllerLayoutGuide type="bottom" id="xQW-6S-fpz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4QF-Bq-m8r">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="View another date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cL0-aN-HG7">
+                                <rect key="frame" x="20" y="108" width="144" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Jms-oc-7g6">
+                                <rect key="frame" x="0.0" y="157" width="375" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="482512743.35056299">
+                                    <!--2016-04-16 15:19:03 +0000-->
+                                </date>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a19-eD-t4n" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2762" y="692"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="4bA-cx-dfp">
@@ -878,7 +900,4 @@
             <point key="canvasLocation" x="2856.5" y="-1247.5"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="HGx-N3-NZd"/>
-    </inferredMetricsTieBreakers>
 </document>
