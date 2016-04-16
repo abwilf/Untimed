@@ -802,7 +802,7 @@
             </objects>
             <point key="canvasLocation" x="2113.5" y="814.5"/>
         </scene>
-        <!--Change Date View Controller-->
+        <!--Change Date-->
         <scene sceneID="dJh-ig-KwE">
             <objects>
                 <viewController id="GJR-EK-5PO" customClass="ChangeDateViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
@@ -814,8 +814,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="View another date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cL0-aN-HG7">
-                                <rect key="frame" x="20" y="108" width="144" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="What date would you like to see?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cL0-aN-HG7">
+                                <rect key="frame" x="8" y="106" width="251" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -829,10 +829,16 @@
                                     <action selector="changedDate:" destination="GJR-EK-5PO" eventType="valueChanged" id="rFR-bX-oJY"/>
                                 </connections>
                             </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="(pick a date after today)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jip-FS-IgD">
+                                <rect key="frame" x="61" y="135" width="183" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="bJH-lp-RoR">
+                    <navigationItem key="navigationItem" title="Change Date" id="bJH-lp-RoR">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="OqY-7D-Or5">
                             <connections>
                                 <action selector="cancelPressed:" destination="GJR-EK-5PO" id="2RA-dv-hSN"/>
