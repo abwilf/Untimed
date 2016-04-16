@@ -12,6 +12,30 @@ class DailyScheduleTableViewController: UITableViewController {
 
     let taskManager = TaskManager()
 
+    func calArrayIndexFromNSDate(date: NSDate) -> (dayIndex:Int, hourIndex:Int) {
+        let currentDate = NSDate()
+        
+        var dayIndex = 0
+        var hourIndex = 0
+        
+        let componentsNowDay = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
+        let currentDay = componentsNowDay.day
+        
+        let componentsDateDay = NSCalendar.currentCalendar().components([.Day], fromDate: date)
+        let dateDay = componentsDateDay.day
+        
+        let componentsNowHour = NSCalendar.currentCalendar().components([.Hour], fromDate: currentDate)
+        let currentHour = componentsNowHour.day
+        
+        let componentsDateHour = NSCalendar.currentCalendar().components([.Day], fromDate: date)
+        let dateHour = componentsDateHour.day
+        
+        // day difference = place in col array
+        dayIndex = dateDay - currentDay
+        hourIndex = dateHour - currentHour
+        
+        return (dayIndex, hourIndex)
+    }
     
     @IBAction func dateButtonPressed(sender: AnyObject) {
         // FIXME: specify date
