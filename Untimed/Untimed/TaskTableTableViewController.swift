@@ -166,7 +166,7 @@ class TaskTableTableViewController: UITableViewController {
             let strDueTime = timeFormatter.stringFromDate(assignment.dueDate)
             
             // set subtitle to member variables of the assignment object
-            cell.detailTextLabel?.text = "\(assignment.timeNeeded) hours remaining; Due \(strDate), at \(strDueTime)"
+            cell.detailTextLabel?.text = "\(assignment.timeNeeded - Double(assignment.timeCompleted)) hours remaining; Due \(strDate), at \(strDueTime)"
         }
         
        return cell
