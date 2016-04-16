@@ -14,11 +14,12 @@ class Assignment: Task {
     var timeNeeded: Double = 0
     var amountOfFreeHoursBeforeDueDate: Int = 0
     var hoursLeftToAllocate: Int = 0
+    var timeCompleted: Int = 0
     
     var urgency: Int {
         get {
-            if timeNeeded > 0 {
-                return (amountOfFreeHoursBeforeDueDate - Int(timeNeeded))
+            if hoursLeftToAllocate > 0 {
+                return (amountOfFreeHoursBeforeDueDate - hoursLeftToAllocate)
             }
             else {
                 return 1000000

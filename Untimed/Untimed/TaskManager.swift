@@ -26,33 +26,25 @@ class TaskManager {
 
     private func createOrderedArray() {
         
-        // unfilteredArray
+        // turn tasks into array of Assignments
         unfilteredArray = tasks
-        
-        // assnArray
         assignmentArray = unfilteredArray.filter(isAssignment) as! [Assignment]
-        
-        // orderedAssnArray
         orderedAssignmentArray = assignmentArray
         
-        // assign free hours before due to all assignments in orderedArray
-        for var i = 0; i < orderedAssignmentArray.count; ++i {
-            
-            /*
-            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(orderedAssignmentArray[i], dayCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).dayCoordinate, hourCoordinateIn: dueDateInCalFormat(orderedAssignmentArray[i].dueDate).hourCoordinate)
-            */
-            
-            
-            let assignment = orderedAssignmentArray[i]
-            
-            let assnDueDate = dueDateInCalFormat(assignment.dueDate)
-            
-            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(assignment, dayCoordinateIn: assnDueDate.dayCoordinate, hourCoordinateIn: assnDueDate.hourCoordinate)
-            
+        // reinitialize hoursleft of all orderedAssnArray elements to timeNeeded - timeComplete
+        for var j = 0; j < orderedAssignmentArray.count; ++j {
+            orderedAssignmentArray[j].hoursLeftToAllocate = Int(orderedAssignmentArray[j].timeNeeded) - orderedAssignmentArray[j].timeCompleted
         }
-        // sort by urgency
         
-        //FIXME: PROBLEM IS HERE
+        
+        // assign free hours before due date to all assignments in orderedArray
+        for var i = 0; i < orderedAssignmentArray.count; ++i {
+            let assignment = orderedAssignmentArray[i]
+            let assnDueDate = dueDateInCalFormat(assignment.dueDate)
+            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(assignment, dayCoordinateIn: assnDueDate.dayCoordinate, hourCoordinateIn: assnDueDate.hourCoordinate)
+        }
+        
+        // sort by urgency, which is based now on hoursLeft
         orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
     }
     
@@ -197,9 +189,7 @@ class TaskManager {
     
     
     func allocateAssignments() {
-        // make an assignments only array and order it by urgency
-        
-        // FIXME:  THE ERROR IS HERE: IT'S NOT PUTTING THE MOST URGENT IN THE 0 SPOT
+        // make an assignments only array and order it by urgency (based on hoursleft)
         createOrderedArray()
         
         // if there are no assignments to allocate, kick out
@@ -209,29 +199,50 @@ class TaskManager {
             
         // if not, allocate assignments
         else {
+            
             // start at today
             var dayIn: Int = 0
-    
+            
+            // start at current hour
             let currentDate = NSDate()
             let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
             let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
-            
-            // start at current hour
             var hourIn = currentDateComponents.hour - 7
             
-            // afterwards
-            while orderedAssignmentArray[0].timeNeeded > 0 {
-                
-                
-                // declare location variables to pass into putAssg function
+            
+            // create free object to assign
+            let freeObj = Free()
+            
+            
+            // clear calendar array of all assignments for the rest of today
+            for var i = hourIn; i < CELLS_PER_DAY; ++i {
+                if let _ = calendarArray[i][dayIn] as? Assignment {
+                    calendarArray[i][dayIn] = freeObj
+                }
+            }
+            
+            // clear for every day afterwards
+            for var j = dayIn + 1; j < 28; ++j {
+                // FIXME: should start at current hour then run through each day starting at index zero
+                for var i = 0; i < CELLS_PER_DAY; ++i {
+                    // if spot is assignment, make it free
+                    if let _ = calendarArray[i][j] as? Assignment {
+                        calendarArray[i][j] = freeObj
+                    }
+                }
+            }
+
+            
+            // allocate
+            while orderedAssignmentArray[0].hoursLeftToAllocate > 0 {
+                // put in at first available spot starting from now
                 let temp = putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], day: dayIn, hour: hourIn)
                 dayIn = temp.dayOut
                 hourIn = temp.hourOut
                 
-                // decrement time needed of most urgent
-                // FIXME: CHANGE TO HOURSLEFT
-                orderedAssignmentArray[0].timeNeeded -= 1
-                // reorder array
+                // decrement hoursLeft of most urgent
+                orderedAssignmentArray[0].hoursLeftToAllocate -= 1
+                // sort by urgency
                 orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
             }
         return
@@ -332,6 +343,7 @@ class TaskManager {
     }
 
     func isOrderedBefore (a1: Assignment, a2: Assignment) -> Bool {
+        // less is more urgent
         if a1.urgency < a2.urgency {
             return true
         }
@@ -364,34 +376,14 @@ class TaskManager {
                 }
                 if let _ = calendarArray[i][j] as? Assignment {
                     // find that position in calendar array in tasks list and increment its time needed by one because we're about to replace it w/ a more urgent assn
+                   print("ERROR! Calendar array was not properly cleared, or this allocation did not start at the correct spot (one after the previous slot was allocated to)")
                     
-                    for var k = 0; k < orderedAssignmentArray.count; ++k {
-                        if let temp = calendarArray[i][j] as? Assignment {
-                            // iterate through orderedAssn looking for the object in calArray
-                            if  temp == orderedAssignmentArray[k] {
-                                orderedAssignmentArray[k].timeNeeded += 1
-                                calendarArray[i][j] = assg
-                                // hours cannot go beyond the 11 slots
-                                if i + 1 <= 11 {
-                                    // next time, start at the next hour spot
-                                    hourOut = i + 1
-                                    dayOut = j
-                                }
-                                    
-                                    // if it is more than 11, increment day and restart hour
-                                else {
-                                    hourOut = 0
-                                    dayOut = j + 1
-                                }
-                                return (dayOut, hourOut)
-                            }
-                        }
-                    }
                 }
-                
             }
+            
         }
         return (dayOut, hourOut)
+
     }
     
     init () {
