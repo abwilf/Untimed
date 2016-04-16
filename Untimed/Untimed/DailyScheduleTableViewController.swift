@@ -24,15 +24,12 @@ class DailyScheduleTableViewController: UITableViewController {
         let componentsDateDay = NSCalendar.currentCalendar().components([.Day], fromDate: date)
         let dateDay = componentsDateDay.day
         
-        let componentsNowHour = NSCalendar.currentCalendar().components([.Hour], fromDate: currentDate)
-        let currentHour = componentsNowHour.day
-        
         let componentsDateHour = NSCalendar.currentCalendar().components([.Day], fromDate: date)
         let dateHour = componentsDateHour.day
         
         // day difference = place in col array
         dayIndex = dateDay - currentDay
-        hourIndex = dateHour - currentHour
+        hourIndex = dateHour - 8
         
         return (dayIndex, hourIndex)
     }
