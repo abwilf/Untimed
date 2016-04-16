@@ -400,21 +400,13 @@ class TaskManager {
                 let componentsEndTimeDay = NSCalendar.currentCalendar().components([.Day], fromDate: temp.endTime)
                 let endTimeDay = componentsEndTimeDay.day
                 
-                let componentsEndTimeHour = NSCalendar.currentCalendar().components([.Hour], fromDate: temp.endTime)
-                let endTimeHour = componentsEndTimeHour.hour
-                
                 // day difference = place in col array
                 let dayDiff = endTimeDay - currentDay
-                
-                // conversion factor
-                let hourDiff = endTimeHour - 8
                 
                 if dayDiff < 0 {
                     deleteTaskAtIndex(i)
                 }
-                if dayDiff == 0 && hourDiff < 0 {
-                    deleteTaskAtIndex(i)
-                }
+                
             }
             if let temp = tasks[i] as? Assignment {
                 let componentsNowDay = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
@@ -423,21 +415,13 @@ class TaskManager {
                 let componentsDueDateDay = NSCalendar.currentCalendar().components([.Day], fromDate: temp.dueDate)
                 let DueDateDay = componentsDueDateDay.day
                 
-                let componentsDueDateHour = NSCalendar.currentCalendar().components([.Hour], fromDate: temp.dueDate)
-                let DueDateHour = componentsDueDateHour.hour
-                
                 // day difference = place in col array
                 let dayDiff = DueDateDay - currentDay
-                
-                // conversion factor
-                let hourDiff = DueDateHour - 8
                 
                 if dayDiff < 0 {
                     deleteTaskAtIndex(i)
                 }
-                if dayDiff == 0 && hourDiff < 0 {
-                    deleteTaskAtIndex(i)
-                }
+                
             }
             
             
