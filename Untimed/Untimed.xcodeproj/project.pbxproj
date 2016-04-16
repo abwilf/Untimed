@@ -19,6 +19,7 @@
 		A2116D951CA968EC003D221D /* UntimedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116D941CA968EC003D221D /* UntimedUITests.swift */; };
 		A2116DA31CA96DB3003D221D /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116DA21CA96DB3003D221D /* Task.swift */; };
 		A2116DA51CA96F22003D221D /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116DA41CA96F22003D221D /* Assignment.swift */; };
+		A21825071CC2C931008D366D /* ChangeDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21825061CC2C931008D366D /* ChangeDateViewController.swift */; };
 		A21F78D01CB2DA5000517FD9 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21F78CF1CB2DA5000517FD9 /* AddViewController.swift */; };
 		A227C4FA1CB46AD400B3971D /* AddAppointmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */; };
 		A22D22171CB6BA6100F085F4 /* DailyScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */; };
@@ -68,6 +69,7 @@
 		A2116D961CA968EC003D221D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2116DA21CA96DB3003D221D /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		A2116DA41CA96F22003D221D /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
+		A21825061CC2C931008D366D /* ChangeDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeDateViewController.swift; sourceTree = "<group>"; };
 		A21F78CF1CB2DA5000517FD9 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAppointmentTableViewController.swift; sourceTree = "<group>"; };
 		A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyScheduleTableViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				A2116D781CA968EC003D221D /* Main.storyboard */,
+				A21825061CC2C931008D366D /* ChangeDateViewController.swift */,
 				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
 				A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */,
 				A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */,
@@ -304,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A21825071CC2C931008D366D /* ChangeDateViewController.swift in Sources */,
 				A24771591CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift in Sources */,
 				A27FAAB61CAC44FF00B1AE85 /* TaskManager.swift in Sources */,
 				A29A9A2C1CBE98480011A5BF /* EditAppointmentTableViewController.swift in Sources */,

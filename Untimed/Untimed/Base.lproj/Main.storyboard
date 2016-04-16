@@ -484,7 +484,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XHz-ja-TfR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="2Ey-tU-T7V" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3997.5" y="342.5"/>
+            <point key="canvasLocation" x="4584.5" y="342.5"/>
         </scene>
         <!--Edit Appointment Table View Controller-->
         <scene sceneID="v3N-8g-VWc">
@@ -610,7 +610,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gWh-dt-kGY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Pph-jx-cuc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4365.5" y="1347.5"/>
+            <point key="canvasLocation" x="4952.5" y="1347.5"/>
         </scene>
         <!--Edit Assignment Table View Controller-->
         <scene sceneID="Jgl-TM-xyH">
@@ -726,7 +726,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cP6-oT-frZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Kvy-1S-yDA" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3873.5" y="1393.5"/>
+            <point key="canvasLocation" x="4460.5" y="1393.5"/>
         </scene>
         <!--Daily Schedule-->
         <scene sceneID="7bg-4x-UqG">
@@ -794,7 +794,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Change Date" id="Oae-Tz-9Gd">
                             <connections>
                                 <action selector="dateButtonPressed:" destination="H4w-oZ-fvh" id="INJ-YM-jA3"/>
-                                <segue destination="GJR-EK-5PO" kind="show" identifier="Change Date" id="VBZ-Kd-OUl"/>
+                                <segue destination="SIy-8F-afs" kind="presentation" identifier="Change Date" id="Z9S-Rm-eQK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -803,10 +803,10 @@
             </objects>
             <point key="canvasLocation" x="2113.5" y="814.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Change Date View Controller-->
         <scene sceneID="dJh-ig-KwE">
             <objects>
-                <viewController id="GJR-EK-5PO" sceneMemberID="viewController">
+                <viewController id="GJR-EK-5PO" customClass="ChangeDateViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ipc-mP-MuR"/>
                         <viewControllerLayoutGuide type="bottom" id="xQW-6S-fpz"/>
@@ -830,10 +830,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="bJH-lp-RoR">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="OqY-7D-Or5"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="t6S-hw-gGi"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a19-eD-t4n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2762" y="692"/>
+            <point key="canvasLocation" x="3348.5" y="691.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="4bA-cx-dfp">
@@ -898,6 +902,24 @@
                 </datePicker>
             </objects>
             <point key="canvasLocation" x="2856.5" y="-1247.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="oDQ-eY-TDe">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SIy-8F-afs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="YNk-1A-hTQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="GJR-EK-5PO" kind="relationship" relationship="rootViewController" id="1AG-Ld-8Ze"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ox5-Mz-E6V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2761.5" y="691.5"/>
         </scene>
     </scenes>
 </document>
