@@ -31,6 +31,9 @@ class DailyScheduleTableViewController: UITableViewController {
     @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
         if let cdvc = sender.sourceViewController as? ChangeDateViewController {
             selectedDate = cdvc.newDate
+            taskManager.loadFromDisc()
+            taskManager.allocateTime()
+            tableView.reloadData()
         }
     }
 
