@@ -28,7 +28,14 @@ class TaskTableTableViewController: UITableViewController {
         // add assignment created here!
         if let aavc = sender.sourceViewController as? AddAssignmentTableViewController {
             
+            
+            // FIXME: if amountofFreeTimebefore due is less than timeNeeded, make title of task an error message
+            if aavc.addedAssignment.amountOfFreeHoursBeforeDueDate < Int(aavc.addedAssignment.timeNeeded) {
+                aavc.addedAssignment.title += " -- Note: could not allocate all hours before due date"
+            }
+            
             taskManager.addTask(aavc.addedAssignment)
+
             
            // tableView = inherited property from UITableViewController class
             tableView.reloadData()
@@ -38,6 +45,8 @@ class TaskTableTableViewController: UITableViewController {
         // add appointment created here!
         if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
             taskManager.addTask(aapptvc.addedAppointment)
+            
+            // FIXME: if end time is before start time, make tasktitle = ERROR: end time is before start time
             
             tableView.reloadData() 
         }
