@@ -220,29 +220,6 @@ class TaskManager {
             var hourIn = currentDateComponents.hour - 7
             
             
-            // create free object to assign
-            let freeObj = Free()
-            
-            
-            // clear calendar array of all assignments for the rest of today
-            for var i = hourIn; i < CELLS_PER_DAY; ++i {
-                if let _ = calendarArray[i][dayIn] as? Assignment {
-                    calendarArray[i][dayIn] = freeObj
-                }
-            }
-            
-            // clear for every day afterwards
-            for var j = dayIn + 1; j < 28; ++j {
-                // FIXME: should start at current hour then run through each day starting at index zero
-                for var i = 0; i < CELLS_PER_DAY; ++i {
-                    // if spot is assignment, make it free
-                    if let _ = calendarArray[i][j] as? Assignment {
-                        calendarArray[i][j] = freeObj
-                    }
-                }
-            }
-            
-            
             // allocate
             while orderedAssignmentArray[0].hoursLeftToAllocate > 0 {
                 // put in at first available spot starting from now
@@ -260,21 +237,49 @@ class TaskManager {
     }
     
     func allocateTime() {
-        // clear out past tasks
+        // clear out past tasks in task list
         deletePastTasks()
+        
+        // clear out all future spots in cal array before allocating again from tasks list
+        clearFutureCalArray()
+        
         // put appts and free time in
         putApptsAndFreeTimeInCalArray()
         // allocate Assignments
-        allocateAssignments()
-        
-        //FIXME: YES?
-        //save()
+        allocateAssignments()        
     }
     
     
     
     
-    
+    func clearFutureCalArray() {
+        // start at today
+        let dayIn: Int = 0
+        
+        // start at current hour
+        let currentDate = NSDate()
+        let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
+        let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
+        let hourIn = currentDateComponents.hour - 7
+        
+        
+        // create free object to assign
+        let freeObj = Free()
+        
+        
+        // clear calendar array of all assignments for the rest of today
+        for var i = hourIn; i < CELLS_PER_DAY; ++i {
+            calendarArray[i][dayIn] = freeObj
+        }
+        
+        // clear for every day afterwards
+        for var j = dayIn + 1; j < 28; ++j {
+            // FIXME: should start at current hour then run through each day starting at index zero
+            for var i = 0; i < CELLS_PER_DAY; ++i {
+                    calendarArray[i][j] = freeObj
+            }
+        }
+    }
     
     func putApptsAndFreeTimeInCalArray() {
         
