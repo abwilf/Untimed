@@ -40,8 +40,7 @@ class TaskManager {
         // assign free hours before due date to all assignments in orderedArray
         for var i = 0; i < orderedAssignmentArray.count; ++i {
             let assignment = orderedAssignmentArray[i]
-            let assnDueDate = dueDateInCalFormat(assignment.dueDate)
-            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(assignment, dayCoordinateIn: assnDueDate.dayCoordinate, hourCoordinateIn: assnDueDate.hourCoordinate)
+            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(assignment)
         }
         
         // sort by urgency, which is based now on hoursLeft
