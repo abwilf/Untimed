@@ -290,77 +290,78 @@ class TaskManager {
     func allocateApptsAndFreeTime() {
         
         let currentDate = NSDate()
-        
-        // put appointments in the calendar array
         for var i = 0; i < self.tasks.count; ++i {
             
-            // if object == appointment, assign to calendarArray
+            // part I: if object is an appointment, assign to calendarArray
             if let appt = self.tasks[i] as? Appointment {
                 
-                //gets difference in hour value to allocate rows
-                let diffDateComponentsHour = NSCalendar.currentCalendar().components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: appt.startTime, toDate: appt.endTime, options: NSCalendarOptions.init(rawValue: 0))
+                // declare units to call from NSCalendar format
+                let unitFlags: NSCalendarUnit = [.Minute, .Hour, .Day, .Month, .Year]
                 
-                // gets int value of day (april 12 = 12) component of currentDate to allocate cols difference
-                let componentsNow = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
-                let currentDay = componentsNow.day
-                
-                // gets same info for day of appt
-                let componentsAppt = NSCalendar.currentCalendar().components([.Day], fromDate: appt.startTime)
-                let apptDay = componentsAppt.day
-                
-                // day difference = place in col array
-                let dayDiff = apptDay - currentDay
-                
-                let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
-                
+                // declare components
                 let startTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: appt.startTime)
                 let endTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: appt.endTime)
+                let componentsNow = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
+                
+                // declare variables using components
+                let currentDay = componentsNow.day
+                let apptDay = startTimeComponents.day
+                let dayDiffEndAndStart = endTimeComponents.day - startTimeComponents.day
+                var hourDiffEndAndStart = endTimeComponents.hour - startTimeComponents.hour
                 
                 
-                // if appt is before today, delete (minimum constraint should stop the user from doing this)
-                if dayDiff < 0 {
+                // day difference = location in calendar array
+                let dayDiffApptAndNow = apptDay - currentDay
+                
+                // if appt is before today, delete (though minimum constraint should stop the user from doing this, this is a good backup)
+                if dayDiffApptAndNow < 0 {
                     deleteTaskAtIndex(i)
                 }
                 
-                // make sure start time is before end time
-                let dayDiffEndAndStart = endTimeComponents.day - startTimeComponents.day
-                let hourDiffEndAndStart = endTimeComponents.hour - startTimeComponents.hour
-            
+                // fill up the block if it has minutes in it
+                if endTimeComponents.minute > 0 {
+                    hourDiffEndAndStart += 1
+                }
+               
+                // if end time is before or same as start, don't allocate, and set name = to error message
+                if dayDiffEndAndStart == 0 && hourDiffEndAndStart <= 0 {
+                    tasks[i].title += " -- Warning: end time must be after start"
+                }
+
                 
-                // even if appt was this morning, allocate
+                // allocate
                 for var j = 0; j < CELLS_PER_DAY; ++j {
-                    // NOTE: possibly limited to two dates within the same month
+                    // k being less than hourDiff stops appts with end times before their start times from being run
                     if startTimeComponents.hour == j + 8 {
-                        for var k = 0; k < (diffDateComponentsHour.hour); ++k {
+                        for var k = 0; k < (hourDiffEndAndStart); ++k {
                             // compare today to day of appt to put in cal array
-                            self.calendarArray[j + k][dayDiff] = appt
+                            self.calendarArray[j + k][dayDiffApptAndNow] = appt
                         }
                     }
                 }
                 
-                if dayDiffEndAndStart == 0 && hourDiffEndAndStart <= 0 {
-                    // don't allocate, and set name = to error message
-                    tasks[i].title += " -- Warning: end time must be after start"
-                    // return
-                }
+             
+                
             }
         }
         
-        
+        // part II: put free object in all slots not occupied by appointment
+
         // declare free object
         let freeTime: Free = Free()
         
-        // put free object in all slots not occupied by appointment
-        
+        // allocate them
         for var i = 0; i < CELLS_PER_DAY; ++i {
             for var j = 0; j < 28; ++j {
                 
                 // if the spot is taken by an appointment ignore it
                 if let _ = self.calendarArray[i][j] as? Appointment {
                 }
+                
+                // otherwise, allocate a free object to it
                 else if let _ = self.calendarArray[i][j] as? Assignment {
                 }
-                    // otherwise, allocate a free object to it
+                
                 else {
                     self.calendarArray[i][j] = freeTime
                 }
@@ -368,9 +369,7 @@ class TaskManager {
         }
     }
     
-    
-    // Create sorted array of assignments
-    
+    // used in creating a sorted array of assignments
     func isAssignment (t: Task) -> Bool {
         if let _ = t as? Assignment {
             return true
@@ -378,8 +377,8 @@ class TaskManager {
         return false
     }
     
+    // used in creating ordered array
     func isOrderedBefore (a1: Assignment, a2: Assignment) -> Bool {
-        // less is more urgent
         if a1.urgency < a2.urgency {
             return true
         }
@@ -403,15 +402,17 @@ class TaskManager {
                         dayOut = j
                     }
                         
-                        // if it is more than 11, increment day and restart hour
+                    // if they do, increment day and restart hour
                     else {
                         hourOut = 0
                         dayOut = j + 1
                     }
+                    
+                    // return where we last allocated, so we can restart here
                     return (dayOut, hourOut)
                 }
                 if let _ = calendarArray[i][j] as? Assignment {
-                    // find that position in calendar array in tasks list and increment its time needed by one because we're about to replace it w/ a more urgent assn
+                    // print error message to developer because cal array should have been wiped
                     print("ERROR! Calendar array was not properly cleared, or this allocation did not start at the correct spot (one after the previous slot was allocated to)")
                     
                 }
