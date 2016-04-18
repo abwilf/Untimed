@@ -8,12 +8,12 @@
 
 import UIKit
 
-// comment!
 class ChangeDateViewController: UIViewController {
-
+    
     var newDate = NSDate()
     
     @IBAction func changedDate(sender: UIDatePicker) {
+        sender.minimumDate = NSDate()
         newDate = sender.date
     }
     

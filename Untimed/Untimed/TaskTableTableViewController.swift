@@ -14,12 +14,12 @@ class TaskTableTableViewController: UITableViewController {
     
     let taskManager = TaskManager()
     
-
+    
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
         taskManager.loadFromDisc()
     }
-   
+    
     
     
     // unwind segue
@@ -27,17 +27,13 @@ class TaskTableTableViewController: UITableViewController {
     {
         // add assignment created here!
         if let aavc = sender.sourceViewController as? AddAssignmentTableViewController {
+            taskManager.addTask(aavc.addedAssignment)
             
-            
-            // FIXME: if amountofFreeTimebefore due is less than timeNeeded, make title of task an error message
+            // if amountofFreeTimebefore due is less than timeNeeded, make title of task an error message
             if aavc.addedAssignment.amountOfFreeHoursBeforeDueDate < Int(aavc.addedAssignment.timeNeeded) {
-                aavc.addedAssignment.title += " -- Note: could not allocate all hours before due date"
+                aavc.addedAssignment.title += " -- WARNING: could not allocate all hours before due date"
             }
             
-            taskManager.addTask(aavc.addedAssignment)
-
-            
-           // tableView = inherited property from UITableViewController class
             tableView.reloadData()
         }
         
@@ -46,9 +42,7 @@ class TaskTableTableViewController: UITableViewController {
         if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
             taskManager.addTask(aapptvc.addedAppointment)
             
-            // FIXME: if end time is before start time, make tasktitle = ERROR: end time is before start time
-            
-            tableView.reloadData() 
+            tableView.reloadData()
         }
         
         // Pull any data from the view controller which initiated the unwind segue.
@@ -61,31 +55,31 @@ class TaskTableTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // warning Incomplete implementation, return the number of sections.  This is like the contacts app, where there are 26 sections.
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // warning Incomplete implementation, return the number of rows
         
@@ -95,7 +89,7 @@ class TaskTableTableViewController: UITableViewController {
             return taskManager.tasks.count
             
         }
-        
+            
         else {
             return 0
         }
@@ -111,7 +105,7 @@ class TaskTableTableViewController: UITableViewController {
         
         // not loading 10,000 cells on ipod at once.  "Task Cell" is identifier of the cell
         let cell = tableView.dequeueReusableCellWithIdentifier("Task Cell", forIndexPath: indexPath)
-
+        
         // declare task object, and have it take the value of the array at the row specified by indexpath
         let task = taskManager.tasks[indexPath.row]
         
@@ -119,9 +113,9 @@ class TaskTableTableViewController: UITableViewController {
         // Configure the cell.  For both types of task, the title will just be task.title because the superclass has .title as a member variable.  If not a nil label, assign task title to it (if cell exists and is specified by indexpath.
         cell.textLabel?.text = task.title
         
-       
+        
         // This is where it splits into Appointment and Assignment. if task is an appt, list different details as the subtitle (detailTextLabel).  We test this by creating some variable (appointment) as a kind of thought experiment, setting it equal to the task object, and asking if that new variable, appointment, can be casted as an Appointment object, thereby asking if task is an Appointment object or not
-       
+        
         if let appointment = task as? Appointment {
             
             // assigning subtitle text to appropriate Appointment member variables (startTime and endTime)
@@ -148,7 +142,7 @@ class TaskTableTableViewController: UITableViewController {
             cell.detailTextLabel?.text = "\(strDate) - \(strDateStartTime) to \(strDateEndTime)"
         }
             
-        // if not, task must be an Assignment.  show different subtitles
+            // if not, task must be an Assignment.  show different subtitles
         else if let assignment = task as? Assignment {
             let dateFormatter = NSDateFormatter()
             let timeFormatter = NSDateFormatter()
@@ -159,12 +153,12 @@ class TaskTableTableViewController: UITableViewController {
             //only gets date
             let strDate = dateFormatter.stringFromDate(assignment.dueDate)
             
-
+            
             /*
-
+            
             // remove last character of string (the comma after 2016)
             if (strDate.characters.count) > 0 {
-                strDate.characters.count = strDate.characters.count - 2
+            strDate.characters.count = strDate.characters.count - 2
             }
             
             */
@@ -178,51 +172,51 @@ class TaskTableTableViewController: UITableViewController {
             cell.detailTextLabel?.text = "\(assignment.timeNeeded - Double(assignment.timeCompleted)) hours remaining; Due \(strDate), at \(strDueTime)"
         }
         
-       return cell
+        return cell
     }
     
-
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    // Return false if you do not want the specified item to be editable.
+    return true
     }
     */
-
+    
     /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    if editingStyle == .Delete {
+    // Delete the row from the data source
+    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    } else if editingStyle == .Insert {
+    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
     }
     */
-
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    
     }
     */
-
+    
     /*
     // Override to support conditional rearranging of the table view.
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    // Return false if you do not want the item to be re-orderable.
+    return true
     }
     */
-
-
+    
+    
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-       
+        
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         // if you click on a cell
@@ -232,10 +226,10 @@ class TaskTableTableViewController: UITableViewController {
             if let index = tableView.indexPathForSelectedRow?.row {
                 // create object of task class and reference the object in the array at row location. remember that the row locations for the array and for the table will both be 0 indexed and will correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
-
+                
                 // set the title of the view we're going to as that object's title
                 segue.destinationViewController.title = task.title
-            
+                
                 // single task view controller
                 if let stvc = segue.destinationViewController as? SingleTaskTableViewController {
                     stvc.task = task
@@ -251,12 +245,12 @@ class TaskTableTableViewController: UITableViewController {
         
     }
     
-  
+    
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath){
         if (editingStyle == UITableViewCellEditingStyle.Delete){
             taskManager.deleteTaskAtIndex(indexPath.row)
             tableView.reloadData()
         }
     }
-
+    
 }

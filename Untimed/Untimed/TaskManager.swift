@@ -131,7 +131,7 @@ class TaskManager {
                 }
             }
             // starting at first hour value of dueDate day, iterate until dueDate.hour
-            for var m = 0; m < dueDateComponents.hour - 8; ++m {
+            for var m = 0; m < dueDateComponents.hour - 9; ++m {
                 if let _ = calendarArray[m][dayDiff] as? Free {
                     freeTimeBeforeDueDate += 1
                 }
@@ -219,6 +219,11 @@ class TaskManager {
             let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
             var hourIn = currentDateComponents.hour - 7
             
+            // if not enough time to complete assignment before due date, make hourslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
+            
+            if orderedAssignmentArray[0].amountOfFreeHoursBeforeDueDate < Int(orderedAssignmentArray[0].timeNeeded) {
+                orderedAssignmentArray[0].hoursLeftToAllocate = orderedAssignmentArray[0].amountOfFreeHoursBeforeDueDate
+            }
             
             // allocate
             while orderedAssignmentArray[0].hoursLeftToAllocate > 0 {
@@ -244,9 +249,9 @@ class TaskManager {
         clearFutureCalArray()
         
         // put appts and free time in
-        putApptsAndFreeTimeInCalArray()
+        allocateApptsAndFreeTime()
         // allocate Assignments
-        allocateAssignments()        
+        allocateAssignments()
     }
     
     
@@ -276,12 +281,12 @@ class TaskManager {
         for var j = dayIn + 1; j < 28; ++j {
             // FIXME: should start at current hour then run through each day starting at index zero
             for var i = 0; i < CELLS_PER_DAY; ++i {
-                    calendarArray[i][j] = freeObj
+                calendarArray[i][j] = freeObj
             }
         }
     }
     
-    func putApptsAndFreeTimeInCalArray() {
+    func allocateApptsAndFreeTime() {
         
         let currentDate = NSDate()
         
@@ -308,21 +313,38 @@ class TaskManager {
                 let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
                 
                 let startTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: appt.startTime)
+                let endTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: appt.endTime)
                 
+                
+                // if appt is before today, delete
                 if dayDiff < 0 {
                     deleteTaskAtIndex(i)
                 }
-                    
-                else {
-                    for var j = 0; j < CELLS_PER_DAY; ++j {
-                        // NOTE: possibly limited to two dates within the same month
-                        if startTimeComponents.hour == j + 8 {
-                            for var k = 0; k < (diffDateComponentsHour.hour); ++k {
-                                // compare today to day of appt to put in cal array
-                                self.calendarArray[j + k][dayDiff] = appt
-                            }
+                
+                // make sure start time is before end time
+                let dayDiffEndAndStart = endTimeComponents.day - startTimeComponents.day
+                let hourDiffEndAndStart = endTimeComponents.hour - startTimeComponents.hour
+                
+                
+                // if the appt is the same day, and it ends before or exactly when it starts
+                
+                
+                // even if appt was this morning, allocate
+                
+                for var j = 0; j < CELLS_PER_DAY; ++j {
+                    // NOTE: possibly limited to two dates within the same month
+                    if startTimeComponents.hour == j + 8 {
+                        for var k = 0; k < (diffDateComponentsHour.hour); ++k {
+                            // compare today to day of appt to put in cal array
+                            self.calendarArray[j + k][dayDiff] = appt
                         }
                     }
+                }
+                
+                if dayDiffEndAndStart == 0 && hourDiffEndAndStart <= 0 {
+                    // don't allocate, and set name = to error message
+                    tasks[i].title += " -- Warning: end time before start time"
+                    // return
                 }
             }
         }

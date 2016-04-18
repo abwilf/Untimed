@@ -9,10 +9,10 @@
 import UIKit
 
 class DailyScheduleTableViewController: UITableViewController {
-
+    
     let taskManager = TaskManager()
     var dateLocationDay: Int = 0
-   
+    
     var selectedDate = NSDate() {
         didSet {
             updateTitle()
@@ -26,7 +26,7 @@ class DailyScheduleTableViewController: UITableViewController {
         }
     }
     
-
+    
     // update selectedDate with changed date value
     @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
         if let cdvc = sender.sourceViewController as? ChangeDateViewController {
@@ -36,7 +36,7 @@ class DailyScheduleTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
-
+    
     func updateTitle() {
         dateLocationDay = calArrayIndexFromNSDate(selectedDate)
         if dateLocationDay == 0 {
@@ -58,13 +58,13 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     
-
-
+    
+    
     func calArrayIndexFromNSDate(date: NSDate) -> (Int) {
         let currentDate = NSDate()
         
         var dayIndex = 0
-       // var hourIndex = 0
+        // var hourIndex = 0
         
         let componentsNowDay = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
         let currentDay = componentsNowDay.day
@@ -72,8 +72,8 @@ class DailyScheduleTableViewController: UITableViewController {
         let componentsDateDay = NSCalendar.currentCalendar().components([.Day], fromDate: date)
         let dateDay = componentsDateDay.day
         
-       // let componentsDateHour = NSCalendar.currentCalendar().components([.Day], fromDate: date)
-       // let dateHour = componentsDateHour.day
+        // let componentsDateHour = NSCalendar.currentCalendar().components([.Day], fromDate: date)
+        // let dateHour = componentsDateHour.day
         
         // day difference = place in col array
         dayIndex = dateDay - currentDay
@@ -127,36 +127,36 @@ class DailyScheduleTableViewController: UITableViewController {
     // 2. iterate through and count up the number of Free objects in the array in that time period
     // 3. return the count of all those free objects
     
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    // Uncomment the following line to preserve selection between presentations
+    // self.clearsSelectionOnViewWillAppear = false
     
-
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
-   
+    
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // 12 hour days = 12 rows
         return taskManager.CELLS_PER_DAY
     }
-
+    
     // allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-     
+        
         
         // if row = 0, allocate first cell as 8 - 9 am: \(task.name)
         
@@ -187,7 +187,7 @@ class DailyScheduleTableViewController: UITableViewController {
             }
             return cell
         }
-    
+        
         
         // if not Free, make cell title name = task title.  This is before 11 - 12 block
         if indexPath.row < 3 {
@@ -218,57 +218,57 @@ class DailyScheduleTableViewController: UITableViewController {
         title = "Today"
     }
     
-
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    // Return false if you do not want the specified item to be editable.
+    return true
     }
     */
-
+    
     
     /*
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
     
-        if (editingStyle == UITableViewCellEditingStyle.Delete){
-            
-            // delete and save
-            taskManager.deleteTaskAtIndex(indexPath.row)
-            tableView.reloadData()
-            }
-        }
+    if (editingStyle == UITableViewCellEditingStyle.Delete){
+    
+    // delete and save
+    taskManager.deleteTaskAtIndex(indexPath.row)
+    tableView.reloadData()
+    }
+    }
     
     }
     */
-
-
+    
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    
     }
     */
-
+    
     /*
     // Override to support conditional rearranging of the table view.
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    // Return false if you do not want the item to be re-orderable.
+    return true
     }
     */
-
     
-
+    
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-   
+    
     
     /*
-override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        if (segue.identifier == "Change Date") {
-            segue.destinationViewController.title = "Change Date"
-            }
-        }    
-*/
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    
+    if (segue.identifier == "Change Date") {
+    segue.destinationViewController.title = "Change Date"
+    }
+    }
+    */
 }

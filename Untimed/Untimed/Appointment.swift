@@ -16,6 +16,16 @@ class Appointment: Task {
     // to test: var endTime = " 1 am tomorrow"
     var endTime: NSDate = NSDate()
     
+    func adjustEndTime() -> Int {
+        let unitFlags: NSCalendarUnit = [.Minute, .Hour, .Day, .Month, .Year]
+        
+        let adjustedEndTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: endTime)
+        
+        if adjustedEndTimeComponents.minute > 0 {
+            return adjustedEndTimeComponents.hour + 1
+        }
+        return adjustedEndTimeComponents.hour
+    }
     
     override init() {
         super.init()
@@ -32,7 +42,7 @@ class Appointment: Task {
         self.startTime = aDecoder.decodeObjectForKey("StartTime") as! NSDate
         self.endTime = aDecoder.decodeObjectForKey("EndTime") as! NSDate
         self.endTime = aDecoder.decodeObjectForKey("EndTime") as! NSDate
-            aDecoder.decodeObjectForKey("Title") as? String
+        aDecoder.decodeObjectForKey("Title") as? String
         
     }
     
