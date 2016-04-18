@@ -11,7 +11,7 @@ import Foundation
 // superclass = Task
 class Assignment: Task {
     var dueDate: NSDate = NSDate()
-    var timeNeeded: Double = 0
+    var timeNeeded: Int = 0
     var amountOfFreeHoursBeforeDueDate: Int = 0
     var hoursLeftToAllocate: Int = 0
     var timeCompleted: Int = 0
@@ -43,7 +43,7 @@ class Assignment: Task {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.dueDate = aDecoder.decodeObjectForKey("DueDate") as! NSDate
-        self.timeNeeded = aDecoder.decodeObjectForKey("TimeNeeded") as! Double
+        self.timeNeeded = aDecoder.decodeObjectForKey("TimeNeeded") as! Int
             aDecoder.decodeObjectForKey("Title") as! String
     }
 
