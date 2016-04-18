@@ -800,7 +800,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IXi-Rj-4wS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2113.5" y="814.5"/>
+            <point key="canvasLocation" x="1965.5" y="814.5"/>
         </scene>
         <!--Change Date-->
         <scene sceneID="dJh-ig-KwE">

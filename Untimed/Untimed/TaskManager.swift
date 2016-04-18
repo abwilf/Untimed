@@ -317,7 +317,7 @@ class TaskManager {
                 let endTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: appt.endTime)
                 
                 
-                // if appt is before today, delete
+                // if appt is before today, delete (minimum constraint should stop the user from doing this)
                 if dayDiff < 0 {
                     deleteTaskAtIndex(i)
                 }
@@ -325,13 +325,9 @@ class TaskManager {
                 // make sure start time is before end time
                 let dayDiffEndAndStart = endTimeComponents.day - startTimeComponents.day
                 let hourDiffEndAndStart = endTimeComponents.hour - startTimeComponents.hour
-                
-                
-                // if the appt is the same day, and it ends before or exactly when it starts
-                
+            
                 
                 // even if appt was this morning, allocate
-                
                 for var j = 0; j < CELLS_PER_DAY; ++j {
                     // NOTE: possibly limited to two dates within the same month
                     if startTimeComponents.hour == j + 8 {
@@ -344,7 +340,7 @@ class TaskManager {
                 
                 if dayDiffEndAndStart == 0 && hourDiffEndAndStart <= 0 {
                     // don't allocate, and set name = to error message
-                    tasks[i].title += " -- Warning: end time before start time"
+                    tasks[i].title += " -- Warning: end time must be after start"
                     // return
                 }
             }
