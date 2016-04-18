@@ -130,6 +130,7 @@ class TaskManager {
                     }
                 }
             }
+            
             // starting at first hour value of dueDate day, iterate until dueDate.hour
             for var m = 0; m < dueDateComponents.hour - 9; ++m {
                 if let _ = calendarArray[m][dayDiff] as? Free {
@@ -221,7 +222,7 @@ class TaskManager {
             
             // if not enough time to complete assignment before due date, make hourslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
             
-            if orderedAssignmentArray[0].amountOfFreeHoursBeforeDueDate < Int(orderedAssignmentArray[0].timeNeeded) {
+            if orderedAssignmentArray[0].amountOfFreeHoursBeforeDueDate < Int(orderedAssignmentArray[0].hoursLeftToAllocate) {
                 orderedAssignmentArray[0].hoursLeftToAllocate = orderedAssignmentArray[0].amountOfFreeHoursBeforeDueDate
             }
             
