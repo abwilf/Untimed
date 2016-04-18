@@ -12,9 +12,17 @@ class ChangeDateViewController: UIViewController {
     
     var newDate = NSDate()
     
+
     @IBAction func changedDate(sender: UIDatePicker) {
-        sender.minimumDate = NSDate()
+        // min date = now        
+        let currentDate = NSDate()
+        sender.minimumDate = currentDate
         newDate = sender.date
+       
+        // max date = 28 days from now (where our cal array goes up to)
+        let daysToAdd: Int = 28;
+        let futureDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: currentDate, options: NSCalendarOptions.init(rawValue: 0))
+        sender.maximumDate = futureDate
     }
     
     
