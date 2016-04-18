@@ -319,7 +319,7 @@ class TaskManager {
                 }
                 
                 // fill up the block if it has minutes in it
-                if endTimeComponents.minute > 0 {
+                if endTimeComponents.minute > 0 && endTimeComponents.hour < CELLS_PER_DAY - 7 {
                     hourDiffEndAndStart += 1
                 }
                
