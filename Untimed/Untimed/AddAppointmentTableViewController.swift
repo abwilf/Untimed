@@ -33,6 +33,7 @@ class AddAppointmentTableViewController: UITableViewController {
     
     @IBAction func didEnterStartDate(sender: UIDatePicker) {
         var newStartDate = NSDate()
+        sender.minimumDate = NSDate()
         newStartDate = sender.date
         addedAppointment.startTime = newStartDate
         //print(newStartDate)
@@ -44,8 +45,8 @@ class AddAppointmentTableViewController: UITableViewController {
     @IBAction func didEnterEndDate(sender: UIDatePicker) {
         var newEndDate = NSDate()
         newEndDate = sender.date
+        sender.minimumDate = NSDate()
         addedAppointment.endTime = newEndDate
-        //print(newEndDate)
     }
     
     

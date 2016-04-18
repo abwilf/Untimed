@@ -124,7 +124,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="227.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="Kiz-fW-7XB">
+                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="Kiz-fW-7XB">
                                                     <rect key="frame" x="0.0" y="8" width="375" height="216"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="481486063.941131">
                                                         <!--2016-04-04 18:07:43 +0000-->
@@ -264,7 +264,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="qsu-wj-r1r">
+                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="qsu-wj-r1r">
                                                     <rect key="frame" x="0.0" y="8" width="375" height="216"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="481596326.22504902">
                                                         <!--2016-04-06 00:45:26 +0000-->
@@ -295,7 +295,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="234.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="dzD-Ew-VF4">
+                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="dzD-Ew-VF4">
                                                     <rect key="frame" x="-8" y="0.0" width="375" height="216"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="481597653.91309202">
                                                         <!--2016-04-06 01:07:33 +0000-->
