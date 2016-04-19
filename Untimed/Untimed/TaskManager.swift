@@ -256,7 +256,8 @@ class TaskManager {
         // tasksarray
         let defaults = NSUserDefaults.standardUserDefaults()
         
-        // if I'm able to get a tasks array at this key, put it into tasks, if not, create a blank one and put it into tasks
+        // if I'm able to get a tasks array at this key, put it into tasks, 
+        // if not, create a blank one and put it into tasks
         let archive = defaults.objectForKey("SavedTasks") as? NSData ?? NSData()
         // every time you open the app
         
@@ -290,7 +291,8 @@ class TaskManager {
             // start at current hour
             let currentDate = NSDate()
             let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
-            let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
+            let currentDateComponents =
+                NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
             var hourIn = currentDateComponents.hour - 7
             
             // if not enough time to complete assignment before due date, make hourslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
@@ -302,7 +304,8 @@ class TaskManager {
             // allocate
             while orderedAssignmentArray[0].hoursLeftToAllocate > 0 {
                 // put in at first available spot starting from now
-                let temp = putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], day: dayIn, hour: hourIn)
+                let temp =
+                    putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], day: dayIn, hour: hourIn)
                 dayIn = temp.dayOut
                 hourIn = temp.hourOut
                 
@@ -341,7 +344,8 @@ class TaskManager {
         // start at current hour
         let currentDate = NSDate()
         let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
-        let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
+        let currentDateComponents =
+            NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
         let hourIn = currentDateComponents.hour - 7
         
         
@@ -356,7 +360,6 @@ class TaskManager {
         
         // clear for every day afterwards
         for var j = dayIn + 1; j < 28; ++j {
-            // FIXME: should start at current hour then run through each day starting at index zero
             for var i = 0; i < CELLS_PER_DAY; ++i {
                 calendarArray[i][j] = freeObj
             }
@@ -405,10 +408,14 @@ class TaskManager {
                 }
 
                 // if you set the appointment out of range, only allocate within the range
-                if hourDiffEndAndStart > 11 {
-                    hourDiffEndAndStart = 11
+                if hourDiffEndAndStart > 12 {
+                    hourDiffEndAndStart = 12
                 }
                 
+                // if it starts before 8 am, start it at 8
+                if startTimeComponents.hour < 8 {
+                    startTimeComponents.hour = 8
+                }
                 // allocate
                 for var j = 0; j < CELLS_PER_DAY; ++j {
                     // k being less than hourDiff stops appts with end times before their start times from being run
