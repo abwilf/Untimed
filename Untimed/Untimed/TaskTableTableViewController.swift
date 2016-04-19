@@ -30,8 +30,9 @@ class TaskTableTableViewController: UITableViewController {
             taskManager.addTask(aavc.addedAssignment)
             
             // if amountofFreeTimebefore due is less than timeNeeded, make title of task an error message
-            if aavc.addedAssignment.amountOfFreeHoursBeforeDueDate < aavc.addedAssignment.timeNeeded {
-                aavc.addedAssignment.title += " -- WARNING: could not allocate all hours before due date"
+            if aavc.addedAssignment.amountOfFreeHoursBeforeDueDate <
+                aavc.addedAssignment.timeNeeded {
+                    aavc.addedAssignment.title += " -- WARNING: could not allocate all hours before due date"
             }
             
             tableView.reloadData()
@@ -39,7 +40,8 @@ class TaskTableTableViewController: UITableViewController {
         
         
         // add appointment created here!
-        if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
+        if let aapptvc = sender.sourceViewController as?
+            AddAppointmentTableViewController {
             taskManager.addTask(aapptvc.addedAppointment)
             
             tableView.reloadData()
@@ -55,7 +57,6 @@ class TaskTableTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

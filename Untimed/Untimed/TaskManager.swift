@@ -332,7 +332,7 @@ class TaskManager {
                 }
                 
                 // fill up the block if it has minutes in it
-                if endTimeComponents.minute > 0 && endTimeComponents.hour < CELLS_PER_DAY - 7 {
+                if endTimeComponents.minute > 0 && endTimeComponents.hour < CELLS_PER_DAY + 7 {
                     hourDiffEndAndStart += 1
                 }
                
@@ -343,7 +343,7 @@ class TaskManager {
 
                 // if you set the appointment out of range, only allocate within the range
                 if hourDiffEndAndStart > 11 {
-                    hourDiffEndAndStart = 12
+                    hourDiffEndAndStart = 11
                 }
                 
                 // allocate
