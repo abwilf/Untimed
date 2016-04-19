@@ -142,7 +142,7 @@ class TaskManager {
             }
             
             // starting at first hour value of dueDate day, iterate until dueDate.hour
-            for var m = 0; m < dueDateComponents.hour - 9; ++m {
+            for var m = 0; m < dueDateComponents.hour - 10; ++m {
                 if let _ = calendarArray[m][dayDiff] as? Free {
                     freeTimeBeforeDueDate += 1
                 }
