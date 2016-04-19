@@ -110,7 +110,7 @@ class TaskManager {
         
 
         if dayDiff == 0 {
-            if dueDateComponents.hour >= 8 && dueDateComponents.hour <= 19 {
+            if dueDateComponents.hour <= 19 {
                 for var k = currentDateComponents.hour - 7; k < dueDateComponents.hour - 8; ++k {
                     if let _ = calendarArray[k][0] as? Free {
                         freeTimeBeforeDueDate += 1
@@ -121,6 +121,7 @@ class TaskManager {
                 }
             }
         }
+        
         else {
             // iterate through today from current hour until end of day
             for var k = currentDateComponents.hour - 7; k < CELLS_PER_DAY; ++k {
