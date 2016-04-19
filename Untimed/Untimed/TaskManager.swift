@@ -141,14 +141,77 @@ class TaskManager {
                 }
             }
             
-            // starting at first hour value of dueDate day, iterate until dueDate.hour
-            for var m = 0; m < dueDateComponents.hour - 10; ++m {
-                if let _ = calendarArray[m][dayDiff] as? Free {
-                    freeTimeBeforeDueDate += 1
+            
+            
+            // on the due date, if it's due within our range
+            if dueDateComponents.hour >= 8 && dueDateComponents.hour <= 19 {
+                // starting at first hour value of dueDate day, 
+                // iterate until dueDate.hour and find free time
+                for var m = 0; m < dueDateComponents.hour - 8; ++m {
+                    if let _ = calendarArray[m][dayDiff] as? Free {
+                        freeTimeBeforeDueDate += 1
+                    }
+                    if let _ = calendarArray[m][dayDiff] as? Assignment {
+                        freeTimeBeforeDueDate += 1
+                    }
                 }
-                if let _ = calendarArray[m][dayDiff] as? Assignment {
-                    freeTimeBeforeDueDate += 1
+            }
+            
+            // on the due date, if it's not due within our range (before 8 am)
+            if dueDateComponents.hour < 8 {
+                return freeTimeBeforeDueDate
+            }
+            
+            // on the due date, if it's
+            if dueDateComponents.hour == 20 {
+                for var m = 0; m < dueDateComponents.hour - 9; ++m {
+                    if let _ = calendarArray[m][dayDiff] as? Free {
+                        freeTimeBeforeDueDate += 1
+                    }
+                    if let _ = calendarArray[m][dayDiff] as? Assignment {
+                        freeTimeBeforeDueDate += 1
+                    }
                 }
+            }
+            
+            if dueDateComponents.hour == 21 {
+                for var m = 0; m < dueDateComponents.hour - 10; ++m {
+                    if let _ = calendarArray[m][dayDiff] as? Free {
+                        freeTimeBeforeDueDate += 1
+                    }
+                    if let _ = calendarArray[m][dayDiff] as? Assignment {
+                        freeTimeBeforeDueDate += 1
+                    }
+                }
+            }
+                
+            if dueDateComponents.hour == 22 {
+                for var m = 0; m < dueDateComponents.hour - 11; ++m {
+                    if let _ = calendarArray[m][dayDiff] as? Free {
+                        freeTimeBeforeDueDate += 1
+                    }
+                    if let _ = calendarArray[m][dayDiff] as? Assignment {
+                        freeTimeBeforeDueDate += 1
+                    }
+                }
+            }
+                
+            if dueDateComponents.hour == 23 {
+                for var m = 0; m < dueDateComponents.hour - 12; ++m {
+                    if let _ = calendarArray[m][dayDiff] as? Free {
+                        freeTimeBeforeDueDate += 1
+                    }
+                    if let _ = calendarArray[m][dayDiff] as? Assignment {
+                        freeTimeBeforeDueDate += 1
+                    }
+                }
+            }
+                
+          
+            
+            // if it's after the 8 block
+            else if dueDateComponents.hour > 19 {
+                // count up the amount of free time up to 19
             }
         }
         return freeTimeBeforeDueDate
