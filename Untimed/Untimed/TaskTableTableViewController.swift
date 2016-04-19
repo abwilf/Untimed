@@ -18,8 +18,6 @@ class TaskTableTableViewController: UITableViewController {
         taskManager.loadFromDisc()
     }
     
-    
-    
     // unwind segue
     @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
     {
@@ -63,41 +61,23 @@ class TaskTableTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
-        
-        // Uncomment the following line to preserve selection between 
-        // presentations self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation 
-        // bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // warning Incomplete implementation, return the number of sections.  
-        // This is like the contacts app, where there are 26 sections.
         return 1
     }
     
     override func tableView(tableView: UITableView,
                     numberOfRowsInSection section: Int) -> Int {
-        // warning Incomplete implementation, return the number of rows
-        
-        // don't get thrown off by the "numberofRowsInSection" phrase.  
-        // "section" refers to the index number (like how arrays start 
-        // counting at 0).  Since we only have 1 section, we're saying that if 
-        //section = 0, we're in section 1, which is the only one, and we should
-        //return the number of rows we want in that section (in this case it's 
-        // all of them)
+        //return the number of rows we want in that section
         if section == 0 {
-            // return number of rows we want in this section (all) - count is a 
-            // built in function to return the number of elements in an array
+            // return number of rows we want in this section (all tasks)
             return taskManager.tasks.count
             
         }
@@ -109,13 +89,9 @@ class TaskTableTableViewController: UITableViewController {
     
     
     
-    // indexpath is a location where the tableView is looking to put an object. 
-    // indexpath has rows and sections, so you need to specify with dot operator.
-    
+    // indexpath is a location where the tableView is looking to put an object
     override func tableView(tableView: UITableView, cellForRowAtIndexPath
         indexPath: NSIndexPath) -> UITableViewCell {
-        
-        
         
         // not loading 10,000 cells on ipod at once.  "Task Cell" is identifier 
         // of the cell
@@ -127,26 +103,14 @@ class TaskTableTableViewController: UITableViewController {
         let task = taskManager.tasks[indexPath.row]
         
         
-        // Configure the cell.  For both types of task, the title will just be 
-        // task.title because the superclass has .title as a member variable.  
-        // If not a nil label, assign task title to it (if cell exists and is 
-        // specified by indexpath.
+        // Configure the cell
         cell.textLabel?.text = task.title
         
         
-        // This is where it splits into Appointment and Assignment. if task is 
-        // an appt, list different details as the subtitle (detailTextLabel).  
-        // We test this by creating some variable (appointment) as a kind of 
-        // thought experiment, setting it equal to the task object, and asking
-        // if that new variable, appointment, can be casted as an Appointment 
-        // object, thereby asking if task is an Appointment object or not
-        
+        // This is where it splits into Appointment and Assignment
         if let appointment = task as? Appointment {
             
-            // assigning subtitle text to appropriate Appointment member 
-            // variables (startTime and endTime)
-            // test: cell.detailTextLabel?.text = "3 pm"
-            
+            // assigning subtitle text to appropriate Appointment member
             let dateFormatter = NSDateFormatter()
             let timeFormatter = NSDateFormatter()
             
@@ -180,16 +144,7 @@ class TaskTableTableViewController: UITableViewController {
             
             //only gets date
             let strDate = dateFormatter.stringFromDate(assignment.dueDate)
-            
-            
-            /*
-            
-            // remove last character of string (the comma after 2016)
-            if (strDate.characters.count) > 0 {
-            strDate.characters.count = strDate.characters.count - 2
-            }
-            
-            */
+
             //format time
             timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
             
@@ -245,10 +200,6 @@ class TaskTableTableViewController: UITableViewController {
     }
     */
     
-    
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little 
     // preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
