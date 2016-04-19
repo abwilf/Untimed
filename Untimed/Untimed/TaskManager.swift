@@ -15,9 +15,11 @@ class TaskManager {
     var tasks: [Task] = []
     let CELLS_PER_DAY = 12
     
-    // calendar array
-    var calendarArray: [[Task]] = Array(count: 12, repeatedValue: Array(count: 28, repeatedValue: Free()))
+    // calendar array = 2d array of 12 hours by 28 days
+    var calendarArray: [[Task]] = Array(count: 12,
+        repeatedValue: Array(count: 28, repeatedValue: Free()))
     
+    // create variables to order array later
     var unfilteredArray: [Task] = Array(count: 40, repeatedValue: Free())
     var assignmentArray = [Assignment]()
     var orderedAssignmentArray = [Assignment]()
@@ -26,21 +28,23 @@ class TaskManager {
     
     private func createOrderedArray() {
         
-        // turn tasks into array of Assignments
+        // turn tasksarray  into array of Assignments
         unfilteredArray = tasks
         assignmentArray = unfilteredArray.filter(isAssignment) as! [Assignment]
         orderedAssignmentArray = assignmentArray
         
-        // reinitialize hoursleft of all orderedAssnArray elements to timeNeeded - timeComplete
+        // reinitialize hoursleft of all elements to timeNeeded - timeComplete
         for var j = 0; j < orderedAssignmentArray.count; ++j {
-            orderedAssignmentArray[j].hoursLeftToAllocate = Int(orderedAssignmentArray[j].timeNeeded) - orderedAssignmentArray[j].timeCompleted
+            orderedAssignmentArray[j].hoursLeftToAllocate =
+                Int(orderedAssignmentArray[j].timeNeeded) -
+                orderedAssignmentArray[j].timeCompleted
         }
-        
         
         // assign free hours before due date to all assignments in orderedArray
         for var i = 0; i < orderedAssignmentArray.count; ++i {
             let assignment = orderedAssignmentArray[i]
-            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate = calcFreeTimeBeforeDueDate(assignment)
+            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate =
+                calcFreeTimeBeforeDueDate(assignment)
         }
         
         // sort by urgency, which is based now on hoursLeft
@@ -48,31 +52,35 @@ class TaskManager {
     }
     
     // returns appropriate calendar coords
-    func dueDateInCalFormat(dueDate: NSDate) -> (dayCoordinate: Int, hourCoordinate: Int) {
+    func dueDateInCalFormat(dueDate: NSDate) ->
+        (dayCoordinate: Int, hourCoordinate: Int) {
         var dayCoordinate: Int = 0
         var hourCoordinate: Int = 0
         
-        let currentDate = NSDate()
-        
-        let componentsNowDay = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
-        let currentDay = componentsNowDay.day
-        
-        let componentsDueDateDay = NSCalendar.currentCalendar().components([.Day], fromDate: dueDate)
-        let dueDateDay = componentsDueDateDay.day
-        
-        let componentsDueDateHour = NSCalendar.currentCalendar().components([.Hour], fromDate: dueDate)
-        let dueDateHour = componentsDueDateHour.hour
-        
-        // day difference = place in col array
-        let dayDiff = dueDateDay - currentDay
-        
-        // conversion factor
-        let hourDiff = dueDateHour - 8
-        
-        dayCoordinate = dayDiff
-        hourCoordinate = hourDiff
-        
-        return (dayCoordinate, hourCoordinate)
+            let currentDate = NSDate()
+            
+            let componentsNowDay = NSCalendar.currentCalendar().components([.Day],
+                fromDate: currentDate)
+            let currentDay = componentsNowDay.day
+            
+            let componentsDueDateDay = NSCalendar.currentCalendar().components([.Day],
+                fromDate: dueDate)
+            let dueDateDay = componentsDueDateDay.day
+            
+            let componentsDueDateHour = NSCalendar.currentCalendar().components([.Hour],
+                fromDate: dueDate)
+            let dueDateHour = componentsDueDateHour.hour
+            
+            // day difference = place in col array
+            let dayDiff = dueDateDay - currentDay
+            
+            // conversion factor
+            let hourDiff = dueDateHour - 8
+            
+            dayCoordinate = dayDiff
+            hourCoordinate = hourDiff
+            
+            return (dayCoordinate, hourCoordinate)
     }
     
     func calcFreeTimeBeforeDueDate (assignmentIn: Assignment) -> Int {
@@ -80,8 +88,10 @@ class TaskManager {
         
         let currentDate = NSDate()
         let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
-        let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
-        let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: assignmentIn.dueDate)
+        let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags,
+                                                                            fromDate: currentDate)
+        let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags,
+                                                                        fromDate: assignmentIn.dueDate)
         
         // let currentDate = NSDate()
         
@@ -233,10 +243,13 @@ class TaskManager {
                 dayIn = temp.dayOut
                 hourIn = temp.hourOut
                 
-                // decrement hoursLeft of most urgent
-                orderedAssignmentArray[0].hoursLeftToAllocate -= 1
-                // sort by urgency
-                orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
+                // if hourIn = 0, it means it went to the next day and didn't allocate
+                if hourIn != 0 {
+                    // decrement hoursLeft of most urgent
+                    orderedAssignmentArray[0].hoursLeftToAllocate -= 1
+                    // sort by urgency
+                    orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
+                }
             }
             return
         }
@@ -328,6 +341,10 @@ class TaskManager {
                     tasks[i].title += " -- Warning: end time must be after start"
                 }
 
+                // if you set the appointment out of range, only allocate within the range
+                if hourDiffEndAndStart > 11 {
+                    hourDiffEndAndStart = 12
+                }
                 
                 // allocate
                 for var j = 0; j < CELLS_PER_DAY; ++j {
@@ -389,6 +406,13 @@ class TaskManager {
     func putAssgInCalArrayAtFirstFreeOrAssignmentSpot(assg: Assignment, day: Int, hour: Int) -> (dayOut: Int, hourOut: Int) {
         var dayOut = 0
         var hourOut = 0
+        
+        if hour >= CELLS_PER_DAY {
+            hourOut = 0
+            dayOut = 1
+            return (dayOut, hourOut)
+        }
+        
         // go through cal array, starting at the place we last allocated at
         for var j = day; j < 28; ++j {
             for var i = hour; i < CELLS_PER_DAY; ++i {
