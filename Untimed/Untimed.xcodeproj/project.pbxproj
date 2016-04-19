@@ -28,6 +28,7 @@
 		A27FAAB01CAC378E00B1AE85 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */; };
 		A27FAAB21CAC38CF00B1AE85 /* TaskTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */; };
 		A27FAAB61CAC44FF00B1AE85 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */; };
+		A286B83B1CC5D993005736E4 /* documentation.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A286B83A1CC5D993005736E4 /* documentation.pdf */; };
 		A29A9A2A1CBE98340011A5BF /* EditAssignmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */; };
 		A29A9A2C1CBE98480011A5BF /* EditAppointmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */; };
 		A2C519181CAB38CF0074387D /* Appointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C519171CAB38CF0074387D /* Appointment.swift */; };
@@ -78,6 +79,7 @@
 		A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableTableViewController.swift; sourceTree = "<group>"; };
 		A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
+		A286B83A1CC5D993005736E4 /* documentation.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = documentation.pdf; sourceTree = "<group>"; };
 		A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditAssignmentTableViewController.swift; path = ../EditAssignmentTableViewController.swift; sourceTree = "<group>"; };
 		A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAppointmentTableViewController.swift; sourceTree = "<group>"; };
 		A2C519171CAB38CF0074387D /* Appointment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appointment.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				A2C519171CAB38CF0074387D /* Appointment.swift */,
 				A27989AB1CB6D5B7007BC49F /* Free.swift */,
 				214745F31CB8B568007BABCA /* core.pdf */,
+				A286B83A1CC5D993005736E4 /* documentation.pdf */,
 				A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */,
 				A2116D761CA968EC003D221D /* ViewController.swift */,
 				A2116D7B1CA968EC003D221D /* Assets.xcassets */,
@@ -284,6 +287,7 @@
 				214745F41CB8B568007BABCA /* core.pdf in Resources */,
 				A2116D7C1CA968EC003D221D /* Assets.xcassets in Resources */,
 				A2116D7A1CA968EC003D221D /* Main.storyboard in Resources */,
+				A286B83B1CC5D993005736E4 /* documentation.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
