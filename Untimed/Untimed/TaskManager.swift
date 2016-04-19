@@ -108,14 +108,16 @@ class TaskManager {
         
         // iterate through calendar array from right now to dueDateInCalFormat and count up find number of free or assignment hour blocks before dueDate
         
-        
+
         if dayDiff == 0 {
-            for var k = currentDateComponents.hour - 7; k < dueDateComponents.hour - 8; ++k {
-                if let _ = calendarArray[k][0] as? Free {
-                    freeTimeBeforeDueDate += 1
-                }
-                if let _ = calendarArray[k][0] as? Assignment {
-                    freeTimeBeforeDueDate += 1
+            if dueDateComponents.hour >= 8 && dueDateComponents.hour <= 19 {
+                for var k = currentDateComponents.hour - 7; k < dueDateComponents.hour - 8; ++k {
+                    if let _ = calendarArray[k][0] as? Free {
+                        freeTimeBeforeDueDate += 1
+                    }
+                    if let _ = calendarArray[k][0] as? Assignment {
+                        freeTimeBeforeDueDate += 1
+                    }
                 }
             }
         }
