@@ -21,6 +21,8 @@ class TaskManager {
     // FIXME: let CELLS_PER_DAY = HOURS_IN_DAY * (MINS_IN_HOUR / BLOCK_INTERVAL_SIZE)
     let CELLS_PER_DAY = 12
     
+    let FIRST_WORKING_HOUR = 8;
+    
     // calendar array = 2d array of 12 hours by 28 days
     var calendarArray: [[Task]] = Array(count: 12,
         repeatedValue: Array(count: 28, repeatedValue: Free()))
