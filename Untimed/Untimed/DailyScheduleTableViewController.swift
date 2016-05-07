@@ -158,7 +158,7 @@ class DailyScheduleTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // 12 hour days = 12 rows
-        return taskManager.CELLS_PER_DAY
+        return taskManager.cellsPerDay
     }
     
     // allocate elements from calendar array to cells in view

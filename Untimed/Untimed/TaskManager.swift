@@ -14,14 +14,14 @@ class TaskManager {
     // empty array of tasks
     var tasks: [Task] = []
     
-    let HOURS_IN_DAY = 24
+    let HOURS_IN_DAY = 12
     let MINS_IN_HOUR = 60
     // 15 min intervals
-    let BLOCK_INTERVAL_SIZE = 1 / 15
-    // FIXME: let CELLS_PER_DAY = HOURS_IN_DAY * (MINS_IN_HOUR / BLOCK_INTERVAL_SIZE)
-    let CELLS_PER_DAY = 12
+    let BLOCK_INTERVAL_SIZE = 60
+    var cellsPerDay = -1
     
-    let FIRST_WORKING_HOUR = 8;
+    let FIRST_WORKING_HOUR = 8
+    let LAST_WORKING_HOUR = 8
     
     // calendar array = 2d array of 12 hours by 28 days
     var calendarArray: [[Task]] = Array(count: 12,
@@ -58,6 +58,11 @@ class TaskManager {
         // sort by urgency, which is based now on hoursLeft
         orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
     }
+    
+    func setCellsPerDay() {
+        cellsPerDay = HOURS_IN_DAY * (MINS_IN_HOUR / BLOCK_INTERVAL_SIZE)
+    }
+        
     
     // returns appropriate calendar coords
     func nsDateInCalFormat(nsDateObject: NSDate) ->
@@ -132,7 +137,7 @@ class TaskManager {
         
         else {
             // iterate through today from current hour until end of day
-            for var k = currentDateComponents.hour - 7; k < CELLS_PER_DAY; ++k {
+            for var k = currentDateComponents.hour - 7; k < cellsPerDay; ++k {
                 if let _ = calendarArray[k][0] as? Free {
                     freeTimeBeforeDueDate += 1
                 }
@@ -142,7 +147,7 @@ class TaskManager {
             }
             // iterate through all hours of days that aren't current day or dueDate.day
             for var j = 1; j < dayDiff; ++j {
-                for var i = 0; i < CELLS_PER_DAY; ++i {
+                for var i = 0; i < cellsPerDay; ++i {
                     if let _ = calendarArray[i][j] as? Free {
                         freeTimeBeforeDueDate += 1
                     }
@@ -333,6 +338,7 @@ class TaskManager {
     }
     
     func allocateTime() {
+        setCellsPerDay()
         // clear out past tasks in task list
         deletePastTasks()
         
@@ -365,13 +371,13 @@ class TaskManager {
         
         
         // clear calendar array of all assignments for the rest of today
-        for var i = hourIn; i < CELLS_PER_DAY; ++i {
+        for var i = hourIn; i < cellsPerDay; ++i {
             calendarArray[i][dayIn] = freeObj
         }
         
         // clear for every day afterwards
         for var j = dayIn + 1; j < 28; ++j {
-            for var i = 0; i < CELLS_PER_DAY; ++i {
+            for var i = 0; i < cellsPerDay; ++i {
                 calendarArray[i][j] = freeObj
             }
         }
@@ -409,7 +415,7 @@ class TaskManager {
                 }
                 
                 // fill up the block if it has minutes in it
-                if endTimeComponents.minute > 0 && endTimeComponents.hour < CELLS_PER_DAY + 7 {
+                if endTimeComponents.minute > 0 && endTimeComponents.hour < cellsPerDay + 7 {
                     hourDiffEndAndStart += 1
                 }
                
@@ -428,7 +434,7 @@ class TaskManager {
                     startTimeComponents.hour = 8
                 }
                 // allocate
-                for var j = 0; j < CELLS_PER_DAY; ++j {
+                for var j = 0; j < cellsPerDay; ++j {
                     // k being less than hourDiff stops appts with end times before their start times from being run
                     if startTimeComponents.hour == j + 8 {
                         for var k = 0; k < (hourDiffEndAndStart); ++k {
@@ -449,7 +455,7 @@ class TaskManager {
         let freeTime: Free = Free()
         
         // allocate them
-        for var i = 0; i < CELLS_PER_DAY; ++i {
+        for var i = 0; i < cellsPerDay; ++i {
             for var j = 0; j < 28; ++j {
                 
                 // if the spot is taken by an appointment ignore it
@@ -488,7 +494,7 @@ class TaskManager {
         var dayOut = 0
         var hourOut = 0
         
-        if hour >= CELLS_PER_DAY {
+        if hour >= cellsPerDay {
             hourOut = 0
             dayOut = 1
             return (dayOut, hourOut)
@@ -496,7 +502,7 @@ class TaskManager {
         
         // go through cal array, starting at the place we last allocated at
         for var j = day; j < 28; ++j {
-            for var i = hour; i < CELLS_PER_DAY; ++i {
+            for var i = hour; i < cellsPerDay; ++i {
                 // if Free, set assignment equal to spot in cal array
                 if let _ = calendarArray[i][j] as? Free {
                     calendarArray[i][j] = assg
