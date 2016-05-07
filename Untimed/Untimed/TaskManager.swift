@@ -13,6 +13,12 @@ class TaskManager {
     
     // empty array of tasks
     var tasks: [Task] = []
+    
+    let HOURS_IN_DAY = 24
+    let MINS_IN_HOUR = 60
+    // 15 min intervals
+    let BLOCK_INTERVAL_SIZE = 1 / 15
+    // FIXME: let CELLS_PER_DAY = HOURS_IN_DAY * (MINS_IN_HOUR / BLOCK_INTERVAL_SIZE)
     let CELLS_PER_DAY = 12
     
     // calendar array = 2d array of 12 hours by 28 days
