@@ -11,10 +11,13 @@ import UIKit
 class AddAppointmentTableViewController: UITableViewController {
     
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
-            presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
 
+    // did change start date
+    
+        // modifies end date minimum
     
     // created task that we will modify
     var addedAppointment = Appointment()
@@ -27,25 +30,28 @@ class AddAppointmentTableViewController: UITableViewController {
     }
     
     
-    // update repeat (bool)
+    // outlet modifying minimum end date so it can't be before start date
     
+    @IBOutlet weak var endDatePicker: UIDatePicker!
+    
+    var newStartDate = NSDate()
+
     // update start time
-    
     @IBAction func didEnterStartDate(sender: UIDatePicker) {
-        var newStartDate = NSDate()
         sender.minimumDate = NSDate()
         newStartDate = sender.date
         addedAppointment.startTime = newStartDate
-        //print(newStartDate)
+        
+        // update end date minimum to start date
+        endDatePicker.minimumDate = newStartDate
     }
     
-    
-    // update end time
-    
+
+    // update appointment's end time
     @IBAction func didEnterEndDate(sender: UIDatePicker) {
+        sender.minimumDate = newStartDate
         var newEndDate = NSDate()
         newEndDate = sender.date
-        sender.minimumDate = NSDate()
         addedAppointment.endTime = newEndDate
     }
     
