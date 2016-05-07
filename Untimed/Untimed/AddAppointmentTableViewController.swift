@@ -52,8 +52,6 @@ class AddAppointmentTableViewController: UITableViewController {
     
     
     
-    // add task to array - connect to save button
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -58,7 +58,7 @@ class TaskManager {
     }
     
     // returns appropriate calendar coords
-    func dueDateInCalFormat(dueDate: NSDate) ->
+    func nsDateInCalFormat(nsDateObject: NSDate) ->
         (dayCoordinate: Int, hourCoordinate: Int) {
         var dayCoordinate: Int = 0
         var hourCoordinate: Int = 0
@@ -70,11 +70,11 @@ class TaskManager {
             let currentDay = componentsNowDay.day
             
             let componentsDueDateDay = NSCalendar.currentCalendar().components([.Day],
-                fromDate: dueDate)
+                fromDate: nsDateObject)
             let dueDateDay = componentsDueDateDay.day
             
             let componentsDueDateHour = NSCalendar.currentCalendar().components([.Hour],
-                fromDate: dueDate)
+                fromDate: nsDateObject)
             let dueDateHour = componentsDueDateHour.hour
             
             // day difference = place in col array

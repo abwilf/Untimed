@@ -38,7 +38,7 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     func updateTitle() {
-        dateLocationDay = calArrayIndexFromNSDate(selectedDate)
+        dateLocationDay = nsDateInCalFormat(selectedDate).dayCoordinate
         if dateLocationDay == 0 {
             title = "Today"
         }
@@ -58,30 +58,37 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     
-    
-    
-    func calArrayIndexFromNSDate(date: NSDate) -> (Int) {
-        let currentDate = NSDate()
-        
-        var dayIndex = 0
-        // var hourIndex = 0
-        
-        let componentsNowDay = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
-        let currentDay = componentsNowDay.day
-        
-        let componentsDateDay = NSCalendar.currentCalendar().components([.Day], fromDate: date)
-        let dateDay = componentsDateDay.day
-        
-        // let componentsDateHour = NSCalendar.currentCalendar().components([.Day], fromDate: date)
-        // let dateHour = componentsDateHour.day
-        
-        // day difference = place in col array
-        dayIndex = dateDay - currentDay
-        //hourIndex = dateHour - 8
-        
-        return (dayIndex)
+    func nsDateInCalFormat(nsDateObject: NSDate) ->
+        (dayCoordinate: Int, hourCoordinate: Int) {
+            var dayCoordinate: Int = 0
+            var hourCoordinate: Int = 0
+            
+            let currentDate = NSDate()
+            
+            let componentsNowDay = NSCalendar.currentCalendar().components([.Day],
+                                                                           fromDate: currentDate)
+            let currentDay = componentsNowDay.day
+            
+            let componentsDueDateDay = NSCalendar.currentCalendar().components([.Day],
+                                                                               fromDate: nsDateObject)
+            let dueDateDay = componentsDueDateDay.day
+            
+            let componentsDueDateHour = NSCalendar.currentCalendar().components([.Hour],
+                                                                                fromDate: nsDateObject)
+            let dueDateHour = componentsDueDateHour.hour
+            
+            // day difference = place in col array
+            let dayDiff = dueDateDay - currentDay
+            
+            // conversion factor
+            let hourDiff = dueDateHour - 8
+            
+            dayCoordinate = dayDiff
+            hourCoordinate = hourDiff
+            
+            return (dayCoordinate, hourCoordinate)
     }
-    
+
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
         // re-allocate
