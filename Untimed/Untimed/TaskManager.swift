@@ -312,7 +312,6 @@ class TaskManager {
             var hourIn = currentDateComponents.hour - 7
             
             // if not enough time to complete assignment before due date, make hourslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
-            
             if orderedAssignmentArray[0].amountOfFreeHoursBeforeDueDate < Int(orderedAssignmentArray[0].hoursLeftToAllocate) {
                 orderedAssignmentArray[0].hoursLeftToAllocate = orderedAssignmentArray[0].amountOfFreeHoursBeforeDueDate
             }
@@ -325,13 +324,11 @@ class TaskManager {
                 dayIn = temp.dayOut
                 hourIn = temp.hourOut
                 
-                // if hourIn = 0, it means it went to the next day and didn't allocate
-                if hourIn != 0 {
-                    // decrement hoursLeft of most urgent
-                    orderedAssignmentArray[0].hoursLeftToAllocate -= 1
-                    // sort by urgency
-                    orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
-                }
+                // FIXME: it is possible that this doesn't work.  Consider using hourIn != 0.
+                // decrement hoursLeft of most urgent
+                orderedAssignmentArray[0].hoursLeftToAllocate -= 1
+                // sort by urgency
+                orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
             }
             return
         }
