@@ -175,7 +175,7 @@ class DailyScheduleTableViewController: UITableViewController {
         if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Free {
             // before 11-12 blocks
             if indexPath.row < 3 {
-                cell.textLabel?.text = "\(indexPath.row + 8)-\(indexPath.row + 9) am: Free"
+                cell.textLabel?.text = "\(indexPath.row + taskManager.FIRST_WORKING_HOUR)-\(indexPath.row + taskManager.FIRST_WORKING_HOUR + 1) am: Free"
             }
             
             // 11 - 12 block
@@ -190,7 +190,7 @@ class DailyScheduleTableViewController: UITableViewController {
             
             // after 12 - 1 block.  there are 11 rows, and the rest is accounting for the 12-13 to 12-1 change
             if indexPath.row > 4 && indexPath.row <= 11 {
-                cell.textLabel?.text = "\(indexPath.row + 8 - 12)-\(indexPath.row + 9 - 12) pm: Free"
+                cell.textLabel?.text = "\(indexPath.row + taskManager.FIRST_WORKING_HOUR - 12)- \(indexPath.row + taskManager.FIRST_WORKING_HOUR + 1 - 12) pm: Free"
             }
             return cell
         }
@@ -198,7 +198,7 @@ class DailyScheduleTableViewController: UITableViewController {
         
         // if not Free, make cell title name = task title.  This is before 11 - 12 block
         if indexPath.row < 3 {
-            cell.textLabel?.text = "\(indexPath.row + 8)-\(indexPath.row + 9) am: \(task.title)"
+            cell.textLabel?.text = "\(indexPath.row + taskManager.FIRST_WORKING_HOUR)-\(indexPath.row + taskManager.FIRST_WORKING_HOUR + 1) am: \(task.title)"
         }
         
         // 11 - 12 block
@@ -213,7 +213,7 @@ class DailyScheduleTableViewController: UITableViewController {
         
         // after 12 - 1 block.  there are 11 rows, and the rest is accounting for the 12-13 to 12-1 change
         if indexPath.row > 4 && indexPath.row <= 11 {
-            cell.textLabel?.text = "\(indexPath.row + 8 - 12)-\(indexPath.row + 9 - 12) pm: \(task.title)"
+            cell.textLabel?.text = "\(indexPath.row + taskManager.FIRST_WORKING_HOUR - 12)-\(indexPath.row + taskManager.FIRST_WORKING_HOUR + 1 - 12) pm: \(task.title)"
         }
         
         return cell
