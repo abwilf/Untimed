@@ -21,7 +21,7 @@ class TaskManager {
     var cellsPerDay = -1
     
     let FIRST_WORKING_HOUR = 8
-    let LAST_WORKING_HOUR = 8
+    let LAST_WORKING_HOUR = 20
     
     // calendar array = 2d array of 12 hours by 28 days
     var calendarArray: [[Task]] = Array(count: 12,
@@ -123,8 +123,8 @@ class TaskManager {
         
 
         if dayDiff == 0 {
-            if dueDateComponents.hour <= 19 {
-                for var k = currentDateComponents.hour - 7; k < dueDateComponents.hour - 8; ++k {
+            if dueDateComponents.hour <= LAST_WORKING_HOUR - 1 {
+                for var k = currentDateComponents.hour - FIRST_WORKING_HOUR + 1; k < dueDateComponents.hour - FIRST_WORKING_HOUR; ++k {
                     if let _ = calendarArray[k][0] as? Free {
                         freeTimeBeforeDueDate += 1
                     }
