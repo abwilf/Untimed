@@ -16,15 +16,24 @@ class TaskManager {
     
     let HOURS_IN_DAY = 12
     let MINS_IN_HOUR = 60
+    
+    // 24 hrs * 60 mins in an hour
+    let MINS_IN_DAY = 1440
+    let DAYS_IN_YEAR = 365
+    
     // 15 min intervals
     let BLOCK_INTERVAL_SIZE = 60
+    // let = mins in day
     var cellsPerDay = -1
     
+    
+    // FIXME: change to first working minute, and last working minute
     let FIRST_WORKING_HOUR = 8
     let LAST_WORKING_HOUR = 20
     
-    // calendar array = 2d array of 12 hours by 28 days
-    var calendarArray: [[Task]] = Array(count: 12,
+    // calendar array = 2d array of MINS_IN_DAY (rows) by 365 days (cols)
+    // FIXME: change 28 to DAYS_IN_YEAR days everywhere
+    var calendarArray: [[Task]] = Array(count: 1440,
         repeatedValue: Array(count: 28, repeatedValue: Free()))
     
     // create variables to order array later
@@ -36,40 +45,42 @@ class TaskManager {
     
     private func createOrderedArray() {
         
-        // turn tasksarray  into array of Assignments
+        // turn tasks array  into array of Assignments
         unfilteredArray = tasks
         assignmentArray = unfilteredArray.filter(isAssignment) as! [Assignment]
         orderedAssignmentArray = assignmentArray
         
-        // reinitialize hoursleft of all elements to timeNeeded - timeComplete
+        // initialize hoursLeftToAllocate of all elements to timeNeeded - timeCompleted
         for var j = 0; j < orderedAssignmentArray.count; ++j {
             orderedAssignmentArray[j].hoursLeftToAllocate =
                 Int(orderedAssignmentArray[j].timeNeeded) -
                 orderedAssignmentArray[j].timeCompleted
         }
         
-        // assign free hours before due date to all assignments in orderedArray
+        // find free hours before due date for all assignments in orderedArray
         for var i = 0; i < orderedAssignmentArray.count; ++i {
             let assignment = orderedAssignmentArray[i]
             orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate =
                 calcFreeTimeBeforeDueDate(assignment)
         }
         
-        // sort by urgency, which is based now on hoursLeft
+        // sort by urgency, which is based on hoursLeft and freehoursbeforeduedate
         orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
     }
+    
     
     func setCellsPerDay() {
         cellsPerDay = HOURS_IN_DAY * (MINS_IN_HOUR / BLOCK_INTERVAL_SIZE)
     }
         
     
-    // returns appropriate calendar coords
+    // returns appropriate calendar coordinates
     func nsDateInCalFormat(nsDateObject: NSDate) ->
         (dayCoordinate: Int, hourCoordinate: Int) {
         var dayCoordinate: Int = 0
         var hourCoordinate: Int = 0
         
+            // FIXME: clean up to one thing with dayCoordinate and minuteCoordinate
             let currentDate = NSDate()
             
             let componentsNowDay = NSCalendar.currentCalendar().components([.Day],
@@ -116,13 +127,16 @@ class TaskManager {
         
         
         
-        // day difference = place in col array
+        // day difference = place in cal array
         let dayDiff = dueDateDay - currentDay
         
         // iterate through calendar array from right now to dueDateInCalFormat and count up find number of free or assignment hour blocks before dueDate
         
 
+        // if it's today
         if dayDiff == 0 {
+            // if it's within our range
+            // FIXME: LAST WORKING MINUTE SHOULD BE VAR, and it shouldn't be dueDateComponents.hour
             if dueDateComponents.hour <= LAST_WORKING_HOUR - 1 {
                 for var k = currentDateComponents.hour - FIRST_WORKING_HOUR + 1; k < dueDateComponents.hour - FIRST_WORKING_HOUR; ++k {
                     if let _ = calendarArray[k][0] as? Free {
@@ -134,8 +148,10 @@ class TaskManager {
                 }
             }
         }
-        
+            
+        // if it's a day in the future
         else {
+            // FIXME: LAST WORKING MINUTE SHOULD BE VAR, and it shouldn't be dueDateComponents.hour
             // iterate through today from current hour until end of day
             for var k = currentDateComponents.hour - 7; k < cellsPerDay; ++k {
                 if let _ = calendarArray[k][0] as? Free {
@@ -287,8 +303,6 @@ class TaskManager {
         
     }
     
-    
-    
     func allocateAssignments() {
         // make an assignments only array and order it by urgency (based on hoursleft)
         createOrderedArray()
@@ -300,6 +314,8 @@ class TaskManager {
             
             // if not, allocate assignments
         else {
+            
+            // FIXME: use nsDateInCalFormat and get rid of this junk
             
             // start at today
             var dayIn: Int = 0
@@ -319,13 +335,15 @@ class TaskManager {
             // allocate
             while orderedAssignmentArray[0].hoursLeftToAllocate > 0 {
                 // put in at first available spot starting from now
+                // FIXME: replace hourIn with minuteLocationIn
                 let temp =
+                    // FIXME: alter this code to only allocate if 15 minutes free
                     putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], day: dayIn, hour: hourIn)
                 dayIn = temp.dayOut
                 hourIn = temp.hourOut
                 
-                // FIXME: it is possible that this doesn't work.  Consider using hourIn != 0.
                 // decrement hoursLeft of most urgent
+                // FIXME: change to -= 15 minutes
                 orderedAssignmentArray[0].hoursLeftToAllocate -= 1
                 // sort by urgency
                 orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
@@ -352,6 +370,8 @@ class TaskManager {
     
     
     func clearFutureCalArray() {
+        
+        // FIXME: use nsdateincalarray and delete this crap
         // start at today
         let dayIn: Int = 0
         
@@ -373,6 +393,7 @@ class TaskManager {
         }
         
         // clear for every day afterwards
+        // FIXME: GET RID OF 28 (magic number).  Should be numDaystoAllocate or something
         for var j = dayIn + 1; j < 28; ++j {
             for var i = 0; i < cellsPerDay; ++i {
                 calendarArray[i][j] = freeObj
@@ -388,6 +409,8 @@ class TaskManager {
             // part I: if object is an appointment, assign to calendarArray
             if let appt = self.tasks[i] as? Appointment {
                 
+                // FIXME: use nsDateInCalFormat and get rid of this junk {
+
                 // declare units to call from NSCalendar format
                 let unitFlags: NSCalendarUnit = [.Minute, .Hour, .Day, .Month, .Year]
                 
@@ -402,6 +425,7 @@ class TaskManager {
                 let dayDiffEndAndStart = endTimeComponents.day - startTimeComponents.day
                 var hourDiffEndAndStart = endTimeComponents.hour - startTimeComponents.hour
                 
+                // }
                 
                 // day difference = location in calendar array
                 let dayDiffApptAndNow = apptDay - currentDay
@@ -411,6 +435,7 @@ class TaskManager {
                     deleteTaskAtIndex(i)
                 }
                 
+                // FIXME: get rid of this rounding crap
                 // fill up the block if it has minutes in it
                 if endTimeComponents.minute > 0 && endTimeComponents.hour < cellsPerDay + 7 {
                     hourDiffEndAndStart += 1
@@ -453,6 +478,7 @@ class TaskManager {
         
         // allocate them
         for var i = 0; i < cellsPerDay; ++i {
+            // FIXME: MAGIC NUMBER.  SEARCH ALL 28's to find them.  run it through an online magic number finder too - Matt's annoying style grader
             for var j = 0; j < 28; ++j {
                 
                 // if the spot is taken by an appointment ignore it

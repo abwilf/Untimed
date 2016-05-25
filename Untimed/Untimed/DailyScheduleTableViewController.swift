@@ -86,6 +86,7 @@ class DailyScheduleTableViewController: UITableViewController {
             dayCoordinate = dayDiff
             hourCoordinate = hourDiff
             
+            // return minute block, not hour block
             return (dayCoordinate, hourCoordinate)
     }
 

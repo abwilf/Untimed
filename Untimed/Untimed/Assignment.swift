@@ -12,6 +12,8 @@ import Foundation
 class Assignment: Task {
     var dueDate: NSDate = NSDate()
     var timeNeeded: Int = 0
+    
+    // FIXME: change to amount of free minutes before due date
     var amountOfFreeHoursBeforeDueDate: Int = 0
     var hoursLeftToAllocate: Int = 0
     var timeCompleted: Int = 0
