@@ -12,6 +12,12 @@ class DailyScheduleTableViewController: UITableViewController {
     
     let taskManager = TaskManager()
     var dateLocationDay: Int = 0
+    let MINS_IN_DAY = 1440
+    let MINS_IN_HOUR = 60
+    
+    // create counting variables for allocation to tableview
+    var startingLocation = 0
+    
     
     var selectedDate = NSDate() {
         didSet {
@@ -58,38 +64,31 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     
-    func nsDateInCalFormat(nsDateObject: NSDate) ->
-        (dayCoordinate: Int, hourCoordinate: Int) {
-            var dayCoordinate: Int = 0
-            var hourCoordinate: Int = 0
-            
+    // returns appropriate calendar coordinates
+    func nsDateInCalFormat(dateIn: NSDate) ->
+        (dayCoordinate: Int, minuteCoordinate: Int) {
+            // declare variable we'll need to compare with dateIn
             let currentDate = NSDate()
             
-            let componentsNowDay = NSCalendar.currentCalendar().components([.Day],
-                                                                           fromDate: currentDate)
-            let currentDay = componentsNowDay.day
+            // converting from NSCal to Integer forms
+            let unitFlags: NSCalendarUnit = [.Hour, .Day, .Minute, .Month, .Year]
             
-            let componentsDueDateDay = NSCalendar.currentCalendar().components([.Day],
-                                                                               fromDate: nsDateObject)
-            let dueDateDay = componentsDueDateDay.day
+            let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags,
+                                                                                fromDate: currentDate)
+            let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags,
+                                                                            fromDate: dateIn)
             
-            let componentsDueDateHour = NSCalendar.currentCalendar().components([.Hour],
-                                                                                fromDate: nsDateObject)
-            let dueDateHour = componentsDueDateHour.hour
+            // finding day values to get dayCoordinate
+            let dueDateDay = dueDateComponents.day
+            let currentDay = currentDateComponents.day
             
-            // day difference = place in col array
-            let dayDiff = dueDateDay - currentDay
+            // column location in array
+            let dayCoordinate = dueDateDay - currentDay
             
-            // conversion factor
-            let hourDiff = dueDateHour - 8
-            
-            dayCoordinate = dayDiff
-            hourCoordinate = hourDiff
-            
-            // return minute block, not hour block
-            return (dayCoordinate, hourCoordinate)
+            // finding minute coordinate.  0 is midnight of today, 1439 is 11:59 pm
+            let minuteCoordinate = (dueDateComponents.hour * MINS_IN_HOUR) + dueDateComponents.minute
+            return (dayCoordinate, minuteCoordinate)
     }
-
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
         // re-allocate
@@ -124,98 +123,70 @@ class DailyScheduleTableViewController: UITableViewController {
         // Pull any data from the view controller which initiated the unwind segue.
     }
     
-    
-    
-    
-    // #5 FROM TO-DO LIST
-    
-    // add up the amount of free objects before each assignment's due date
-    
-    // 1. find the two places in the calendar array (start and end)
-    // 2. iterate through and count up the number of Free objects in the array in that time period
-    // 3. return the count of all those free objects
-    
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = false
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - Table view data source
-    
-    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        // 12 hour days = 12 rows
-        return taskManager.cellsPerDay
+        return MINS_IN_DAY
+    }
+    
+    func isNextSameAsThis (row: Int, col: Int) -> Bool {
+        if row > 0 && row < MINS_IN_DAY - 1 || row == 0 {
+            if taskManager.calendarArray[row][col] == taskManager.calendarArray[row + 1][col] {
+               return true
+            }
+        }
+        return false
     }
     
     // allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        // wipe cell and minute differential counts
+        var cellDifferentialCount = 0
+        var minuteDifferentialCount = 0
         
-        // if row = 0, allocate first cell as 8 - 9 am: \(task.name)
+        // initialize i to nextStartingLocation
+        var i = startingLocation
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
+        // giving cell information and telling where to find it
+        var cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         
-        let task = taskManager.calendarArray[indexPath.row][dateLocationDay]
-        
-        // if Free, name Free
-        if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Free {
-            // before 11-12 blocks
-            if indexPath.row < 3 {
-                cell.textLabel?.text = "\(indexPath.row + taskManager.FIRST_WORKING_HOUR)-\(indexPath.row + taskManager.FIRST_WORKING_HOUR + 1) am: Free"
+        // if this element is the same as the one after it, increment counters
+        while isNextSameAsThis(i, col: dateLocationDay) {
+            // FIXME: minuteDifferentialCount += 1
+            cellDifferentialCount += 1
+            i += 1
+        }
+    
+        if startingLocation + cellDifferentialCount < MINS_IN_DAY {
+            // since this is the last in the series of same elements, name the cell
+            if let temp = taskManager.calendarArray[startingLocation + cellDifferentialCount][dateLocationDay] as? Free {
+                // end time value: end minute value converted
+                // start time value: end minute - counter
+                cell.textLabel?.text = "Free"
             }
             
-            // 11 - 12 block
-            if indexPath.row == 3 {
-                cell.textLabel?.text = "11 am-12 pm: Free"
+            if let temp = taskManager.calendarArray[startingLocation + cellDifferentialCount][dateLocationDay] as? Appointment {
+                // FIXME: add minutes conversion for title
+                cell.textLabel?.text = "\(temp.title)"
             }
             
-            // 12 - 1 block
-            if indexPath.row == 4 {
-                cell.textLabel?.text = "12-1 pm: Free"
+            if let temp = taskManager.calendarArray[startingLocation + cellDifferentialCount][dateLocationDay] as? Assignment {
+                // FIXME: add minutes conversion for title
+                cell.textLabel?.text = "\(temp.title)"
             }
-            
-            // after 12 - 1 block.  there are 11 rows, and the rest is accounting for the 12-13 to 12-1 change
-            if indexPath.row > 4 && indexPath.row <= 11 {
-                cell.textLabel?.text = "\(indexPath.row + taskManager.FIRST_WORKING_HOUR - 12)- \(indexPath.row + taskManager.FIRST_WORKING_HOUR + 1 - 12) pm: Free"
-            }
-            return cell
         }
         
-        
-        // if not Free, make cell title name = task title.  This is before 11 - 12 block
-        if indexPath.row < 3 {
-            cell.textLabel?.text = "\(indexPath.row + taskManager.FIRST_WORKING_HOUR)-\(indexPath.row + taskManager.FIRST_WORKING_HOUR + 1) am: \(task.title)"
-        }
-        
-        // 11 - 12 block
-        if indexPath.row == 3 {
-            cell.textLabel?.text = "11 am-12 pm: \(task.title)"
-        }
-        
-        // 12 - 1 block
-        if indexPath.row == 4 {
-            cell.textLabel?.text = "12-1 pm: \(task.title)"
-        }
-        
-        // after 12 - 1 block.  there are 11 rows, and the rest is accounting for the 12-13 to 12-1 change
-        if indexPath.row > 4 && indexPath.row <= 11 {
-            cell.textLabel?.text = "\(indexPath.row + taskManager.FIRST_WORKING_HOUR - 12)-\(indexPath.row + taskManager.FIRST_WORKING_HOUR + 1 - 12) pm: \(task.title)"
-        }
+        // update startingLocation accordingly
+        startingLocation += cellDifferentialCount + 1
         
         return cell
     }
