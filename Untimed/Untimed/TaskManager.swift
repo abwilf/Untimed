@@ -135,6 +135,8 @@ class TaskManager {
             return (dayCoordinate, minuteCoordinate)
     }
     
+    
+    
     func numFreeBlocksInSameDayInterval (minuteCoordinate1In: Int, minuteCoordinate2In: Int, dayCoordinateIn: Int) -> Int {
         var numFreeBlocks: Int = 0
         var count = 0

@@ -16,8 +16,60 @@ class DailyScheduleTableViewController: UITableViewController {
     let MINS_IN_HOUR = 60
     
     // create counting variables for allocation to tableview
-    var startingLocation = 0
+    var startLocation = 0
     
+    
+    func minCoorInHr(minuteCoordinateIn: Int) -> String {
+        var hour = 0
+        var minute = 0
+        
+        // start at a.m.
+        var whichTime = 0
+        
+        // calculate hour
+        hour = minuteCoordinateIn / 60
+        
+        // decide if a.m. (0) or p.m. (1)
+        if hour < 12 {
+            whichTime = 0
+        }
+        
+        else {
+            whichTime = 1
+        }
+        
+        // convert from 24 hour time to 12 hour time
+        if hour > 12 {
+            hour -= 12
+        }
+        
+        if hour == 0 {
+            hour = 12
+        }
+        // calculate minute
+        minute = minuteCoordinateIn % 60
+        
+        // fix the 10:00 problem
+        if minute < 10 {
+            if whichTime == 0 {
+                return "\(hour):0\(minute) am"
+            }
+                
+            else {
+                return "\(hour):0\(minute) pm"
+            }
+        }
+        
+        else {
+            if whichTime == 0 {
+                return "\(hour):\(minute) am"
+            }
+                
+            else {
+                return "\(hour):\(minute) pm"
+            }
+        }
+    }
     
     var selectedDate = NSDate() {
         didSet {
@@ -93,8 +145,6 @@ class DailyScheduleTableViewController: UITableViewController {
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
         // re-allocate
         taskManager.loadFromDisc()
-        
-        // problem may be here?!
         taskManager.allocateTime()
         tableView.reloadData()
     }
@@ -150,43 +200,38 @@ class DailyScheduleTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // wipe cell and minute differential counts
-        var cellDifferentialCount = 0
-        var minuteDifferentialCount = 0
+        var cellDiff = 0
         
         // initialize i to nextStartingLocation
-        var i = startingLocation
+        var i = startLocation
         
         // giving cell information and telling where to find it
-        var cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         
         // if this element is the same as the one after it, increment counters
         while isNextSameAsThis(i, col: dateLocationDay) {
-            // FIXME: minuteDifferentialCount += 1
-            cellDifferentialCount += 1
+            cellDiff += 1
             i += 1
         }
     
-        if startingLocation + cellDifferentialCount < MINS_IN_DAY {
-            // since this is the last in the series of same elements, name the cell
-            if let temp = taskManager.calendarArray[startingLocation + cellDifferentialCount][dateLocationDay] as? Free {
-                // end time value: end minute value converted
-                // start time value: end minute - counter
-                cell.textLabel?.text = "Free"
+        // since this is the last in the series of same elements, name the cell
+        if startLocation + cellDiff < MINS_IN_DAY {
+            
+            // adding one to the second part because even though en event doesn't occupy the minute that the next event starts on, it's better to say 12-12.10: Eat, 12.10-1: HW, than 12-12.09: Eat, 12:10 - 1: HW. It's just a better way of displaying it.
+            if let _ = taskManager.calendarArray[startLocation + cellDiff][dateLocationDay] as? Free {
+                cell.textLabel?.text = minCoorInHr(startLocation) + " - " + minCoorInHr(startLocation + cellDiff + 1) + ": Free"
             }
             
-            if let temp = taskManager.calendarArray[startingLocation + cellDifferentialCount][dateLocationDay] as? Appointment {
-                // FIXME: add minutes conversion for title
-                cell.textLabel?.text = "\(temp.title)"
+            if let temp = taskManager.calendarArray[startLocation + cellDiff][dateLocationDay] as? Appointment {
+                cell.textLabel?.text = minCoorInHr(startLocation) + " - " + minCoorInHr(startLocation + cellDiff + 1) + ": \(temp.title)"
             }
             
-            if let temp = taskManager.calendarArray[startingLocation + cellDifferentialCount][dateLocationDay] as? Assignment {
-                // FIXME: add minutes conversion for title
-                cell.textLabel?.text = "\(temp.title)"
-            }
+            if let temp = taskManager.calendarArray[startLocation + cellDiff][dateLocationDay] as? Assignment {
+                cell.textLabel?.text = minCoorInHr(startLocation) + " - " + minCoorInHr(startLocation + cellDiff + 1) + ": \(temp.title)"            }
         }
         
         // update startingLocation accordingly
-        startingLocation += cellDifferentialCount + 1
+        startLocation += cellDiff + 1
         
         return cell
     }
