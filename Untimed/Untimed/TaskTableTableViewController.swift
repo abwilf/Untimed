@@ -28,8 +28,8 @@ class TaskTableTableViewController: UITableViewController {
             
             // if amountofFreeTimebefore due is less than timeNeeded, make title 
             // of task an error message
-            if aavc.addedAssignment.amountOfFreeHoursBeforeDueDate <
-                aavc.addedAssignment.timeNeeded {
+            if aavc.addedAssignment.numFreeBlocksBeforeDueDate <
+                aavc.addedAssignment.numBlocksNeeded {
                     aavc.addedAssignment.title +=
                 " -- WARNING: could not allocate all hours before due date"
             }
@@ -153,7 +153,7 @@ class TaskTableTableViewController: UITableViewController {
             
             // set subtitle to member variables of the assignment object
             cell.detailTextLabel?.text =
-                "\(assignment.timeNeeded - assignment.timeCompleted) hours remaining; Due \(strDate), at \(strDueTime)"
+                "\(Double(assignment.numBlocksNeeded - assignment.numBlocksCompleted) / 4.0) hours remaining; Due \(strDate), at \(strDueTime)"
         }
         
         return cell

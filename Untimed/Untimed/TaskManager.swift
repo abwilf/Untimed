@@ -33,9 +33,12 @@ class TaskManager {
     // FIXME: this should vary with the user inputted size
     var cellsPerDay = 1440
     
+    
     // FIXME: this is currently set at 8 am to 8 pm.  change to first working minute, and last working minute, make sure they're at midnight and 11:59 (1439)
     let firstWorkingMinute = 480
     let lastWorkingMinute = 1200
+    var workingCellsPerDay = 1440
+
     
     // create variables to order array later
     var unfilteredArray: [Task] = Array(count: 40, repeatedValue: Free())
@@ -67,6 +70,16 @@ class TaskManager {
     func isOrderedBefore (a1: Assignment, a2: Assignment) -> Bool {
         if a1.urgency < a2.urgency {
             return true
+        }
+        return false
+    }
+    
+    
+    func isNextSameAsThis (row: Int, col: Int) -> Bool {
+        if row > 0 && row < MINS_IN_DAY - 1 || row == 0 {
+            if calendarArray[row][col] == calendarArray[row + 1][col] {
+                return true
+            }
         }
         return false
     }
@@ -258,75 +271,24 @@ class TaskManager {
         assignmentArray = unfilteredArray.filter(isAssignment) as! [Assignment]
         orderedAssignmentArray = assignmentArray
         
-        // initialize hoursLeftToAllocate of all elements to timeNeeded - timeCompleted
+        // initialize hoursLeftToAllocate of all elements to numBlocksNeeded - numBlocksCompleted
         for var j = 0; j < orderedAssignmentArray.count; ++j {
-            orderedAssignmentArray[j].hoursLeftToAllocate =
-                Int(orderedAssignmentArray[j].timeNeeded) -
-                orderedAssignmentArray[j].timeCompleted
+            orderedAssignmentArray[j].numBlocksLeftToAllocate =
+                Int(orderedAssignmentArray[j].numBlocksNeeded) -
+                orderedAssignmentArray[j].numBlocksCompleted
         }
         
         // find free hours before due date for all assignments in orderedArray
         for var i = 0; i < orderedAssignmentArray.count; ++i {
             let assignment = orderedAssignmentArray[i]
-            orderedAssignmentArray[i].amountOfFreeHoursBeforeDueDate =
+            orderedAssignmentArray[i].numFreeBlocksBeforeDueDate =
                 calcFreeTimeBeforeDueDate(assignment)
         }
         
         // sort by urgency, which is based on hoursLeft and freehoursbeforeduedate
         orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
     }
-    
-    
-    func allocateAssignments() {
-        // make an assignments only array and order it by urgency (based on hoursleft)
-        createOrderedArray()
-        
-        // if there are no assignments to allocate, kick out
-        if orderedAssignmentArray.isEmpty {
-            return
-        }
-            
-            // if not, allocate assignments
-        else {
-            
-            // FIXME: use nsDateInCalFormat and get rid of this junk
-            
-            // start at today
-            var dayIn: Int = 0
-            
-            // start at current hour
-            let currentDate = NSDate()
-            let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
-            let currentDateComponents =
-                NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
-            var hourIn = currentDateComponents.hour - 7
-            
-            // if not enough time to complete assignment before due date, make hourslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
-            if orderedAssignmentArray[0].amountOfFreeHoursBeforeDueDate < Int(orderedAssignmentArray[0].hoursLeftToAllocate) {
-                orderedAssignmentArray[0].hoursLeftToAllocate = orderedAssignmentArray[0].amountOfFreeHoursBeforeDueDate
-            }
-            
-            // allocate
-            while orderedAssignmentArray[0].hoursLeftToAllocate > 0 {
-                // put in at first available spot starting from now
-                // FIXME: replace hourIn with minuteLocationIn
-                let temp =
-                    // FIXME: alter this code to only allocate if 15 minutes free
-                    putAssgInCalArrayAtFirstFreeOrAssignmentSpot(orderedAssignmentArray[0], day: dayIn, hour: hourIn)
-                dayIn = temp.dayOut
-                hourIn = temp.hourOut
-                
-                // decrement hoursLeft of most urgent
-                // FIXME: change to -= 15 minutes
-                orderedAssignmentArray[0].hoursLeftToAllocate -= 1
-                // sort by urgency
-                orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
-            }
-            return
-        }
-    }
-    
-    func allocateTime() {
+       func allocateTime() {
         // setCellsPerDay()
         
         // clear out past tasks in task list
@@ -362,48 +324,101 @@ class TaskManager {
     }
 
     
-    func putAssgInCalArrayAtFirstFreeOrAssignmentSpot(assg: Assignment, day: Int, hour: Int) -> (dayOut: Int, hourOut: Int) {
-        var dayOut = 0
-        var hourOut = 0
+    
+    func allocateAssignments() {
+        // make an assignments only array and order it by urgency (based on hoursleft)
+        createOrderedArray()
         
-        if hour >= cellsPerDay {
-            hourOut = 0
-            dayOut = 1
-            return (dayOut, hourOut)
+        // if there are no assignments to allocate, kick out
+        if orderedAssignmentArray.isEmpty {
+            return
         }
-        
-        // go through cal array, starting at the place we last allocated at
-        for var j = day; j < 28; ++j {
-            for var i = hour; i < cellsPerDay; ++i {
-                // if Free, set assignment equal to spot in cal array
-                if let _ = calendarArray[i][j] as? Free {
-                    calendarArray[i][j] = assg
-                    
-                    // hours cannot go beyond the 11 slots
-                    if i + 1 <= 11 {
-                        hourOut = i + 1
-                        dayOut = j
-                    }
-                        
-                        // if they do, increment day and restart hour
-                    else {
-                        hourOut = 0
-                        dayOut = j + 1
-                    }
-                    
-                    // return where we last allocated, so we can restart here
-                    return (dayOut, hourOut)
-                }
-                if let _ = calendarArray[i][j] as? Assignment {
-                    // print error message to developer because cal array should have been wiped
-                    print("ERROR! Calendar array was not properly cleared, or this allocation did not start at the correct spot (one after the previous slot was allocated to)")
-                    
-                }
+            
+        // otherwise, allocate assignments
+        else {
+            // variables for right now
+            let currentDate = NSDate()
+            let currentDateInCal = nsDateInCalFormat(currentDate)
+            
+            // variables for allocation
+            var day = currentDateInCal.dayCoordinate
+            var minute = currentDateInCal.minuteCoordinate
+            
+            // if not enough time to complete most urgent assignment before due date, make b.lockslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
+            let mostUrgentAssn = orderedAssignmentArray[0]
+            if mostUrgentAssn.numBlocksLeftToAllocate > mostUrgentAssn.numFreeBlocksBeforeDueDate {
+                mostUrgentAssn.numBlocksLeftToAllocate = mostUrgentAssn.numFreeBlocksBeforeDueDate
             }
             
+            // allocate
+            while mostUrgentAssn.numBlocksLeftToAllocate > 0 {
+                // put one block of most urgent in at first available spot starting now
+                let temp = putBlockInCalArrayAtFirstFreeSpot(mostUrgentAssn, dayIn: day, minuteIn: minute)
+                day = temp.dayOut
+                minute = temp.minuteOut
+                
+                // decrement numBlocksLeftToAllocate of most urgent
+                mostUrgentAssn.numBlocksLeftToAllocate -= 1
+                
+                // re-sort by urgency
+                orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
+            }
+            return
         }
-        return (dayOut, hourOut)
+    }
+    
+    
+    func isBlockFree(minIn: Int, dIn: Int) -> Bool {
+        // if 15 minutes in a row are free (1 block)
+        var count = 0
+        for var i = minIn; i < minIn + WORKING_INTERVAL_SIZE; ++i {
+            if calendarArray[minIn][dIn].title == "Unnamed Task" &&  minIn + WORKING_INTERVAL_SIZE < workingCellsPerDay && isNextSameAsThis(i, col: dIn) {
+                    count += 1
+            }
+        }
         
+        if count == 15 {
+            return true
+        }
+            
+        else {
+            return false
+        }
+    }
+    
+    
+    func putBlockInCalArrayAtFirstFreeSpot(assg: Assignment, dayIn: Int, minuteIn: Int) -> (dayOut: Int, minuteOut: Int) {
+        var dayOut = 0
+        var minuteOut = 0
+        
+        // if not enough time to allocate before working hours are up, switch to tomorrow
+        if minuteIn + 15 > workingCellsPerDay {
+            minuteOut = 0
+            dayOut = dayIn + 1
+            return (dayOut, minuteOut)
+        }
+        
+        var j = 0
+
+        // iterate through today
+        for var i = minuteIn; i < workingCellsPerDay - WORKING_INTERVAL_SIZE; ++i {
+            // if there's a block available from this moment on (this ever increasing moment starting at minuteIn)
+            if isBlockFree(i, dIn: dayIn)  {
+                // allocate to it (the next 15 cells)
+                for j = i; j < i + WORKING_INTERVAL_SIZE; ++j {
+                    // safeguard
+                    if let _ = calendarArray[j][dayIn] as? Assignment {
+                        // print error message to developer because cal array should have been wiped
+                        print("ERROR! Calendar array was not properly cleared, or this allocation did not start at the correct spot (one after the previous slot was allocated to)")
+                    }
+                    calendarArray[j][dayIn] = assg
+                }
+                // update minuteOut
+                minuteOut = j
+                return (dayOut, minuteOut)
+            }
+        }
+        return (dayOut, minuteOut)
     }
     
     init () {

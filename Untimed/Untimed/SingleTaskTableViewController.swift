@@ -76,8 +76,8 @@ class SingleTaskTableViewController: UITableViewController {
             titleOneLabel.text = "Due On"
             detailOneLabel.text = "\(strDate) at \(strDueTime)"
             
-            titleTwoLabel.text = "Hours Remaining"
-            detailTwoLabel.text = "\(assignment.timeNeeded)"
+            titleTwoLabel.text = "Time Remaining"
+            detailTwoLabel.text = "\(Double(assignment.numBlocksNeeded) / 4.0)"
         }
     }
         
@@ -158,10 +158,7 @@ class SingleTaskTableViewController: UITableViewController {
         }
         
     }
-
-
     
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
