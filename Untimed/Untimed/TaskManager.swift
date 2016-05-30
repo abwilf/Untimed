@@ -160,24 +160,13 @@ class TaskManager {
         return numFreeBlocks
     }
     
-    func clearFutureCalArray() {
-        
-        // create free object to assign
+    func clearCalArray() {
+        // create free object to assign in clearCalArray
         let freeObj = Free()
-        
-        // clear calendar array of all assignments for the rest of today
-        let rightNow = NSDate()
-        let rightNowMinute = nsDateInCalFormat(rightNow).minuteCoordinate
-        
-        for var i = rightNowMinute; i < MINS_IN_DAY; ++i {
-            calendarArray[i][0] = freeObj
-        }
-        
-        // clear for every day afterwards
-        // FIXME: 28
-        for var j = 1; j < 28; ++j {
-            for var i = 0; i < MINS_IN_DAY; ++i {
-                calendarArray[i][j] = freeObj
+        // starting from the first cell of today to the end of the array
+        for var i = 0; i < 28; ++i {
+            for var j = 0; j < cellsPerDay; ++j {
+                self.calendarArray[j][i] = freeObj
             }
         }
     }
@@ -338,114 +327,40 @@ class TaskManager {
     }
     
     func allocateTime() {
-        //setCellsPerDay()
+        // setCellsPerDay()
         
         // clear out past tasks in task list
         deletePastTasks()
         
-        // clear out all future spots in cal array before allocating again from tasks list
-        clearFutureCalArray()
+        // make all future spots in cal array Free before allocating again from tasks list
+        clearCalArray()
         
         // put appts and free time in
-        allocateApptsAndFreeTime()
+        allocateAppts()
+        
         // allocate Assignments
         allocateAssignments()
     }
     
-    func allocateApptsAndFreeTime() {
-        
-        let currentDate = NSDate()
+    func allocateAppts() {
+        // use in both allocations
+        var apptDayCoordinate: Int = 0
+        // iterate through tasks array looking for appointments
         for var i = 0; i < self.tasks.count; ++i {
-            
-            // part I: if object is an appointment, assign to calendarArray
+            // if object is an appointment, assign to calendarArray
             if let appt = self.tasks[i] as? Appointment {
+                apptDayCoordinate = nsDateInCalFormat(appt.startTime).dayCoordinate
+                let startTimeInMinCoordinates = nsDateInCalFormat(appt.startTime).minuteCoordinate
+                let endTimeInMinCoordinates = nsDateInCalFormat(appt.endTime).minuteCoordinate
                 
-                // FIXME: use nsDateInCalFormat and get rid of this junk {
-                
-                // declare units to call from NSCalendar format
-                let unitFlags: NSCalendarUnit = [.Minute, .Hour, .Day, .Month, .Year]
-                
-                // declare components
-                let startTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: appt.startTime)
-                let endTimeComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: appt.endTime)
-                let componentsNow = NSCalendar.currentCalendar().components([.Day], fromDate: currentDate)
-                
-                // declare variables using components
-                let currentDay = componentsNow.day
-                let apptDay = startTimeComponents.day
-                let dayDiffEndAndStart = endTimeComponents.day - startTimeComponents.day
-                var hourDiffEndAndStart = endTimeComponents.hour - startTimeComponents.hour
-                
-                // }
-                
-                // day difference = location in calendar array
-                let dayDiffApptAndNow = apptDay - currentDay
-                
-                // if appt is before today, delete (though minimum constraint should stop the user from doing this, this is a good backup)
-                if dayDiffApptAndNow < 0 {
-                    deleteTaskAtIndex(i)
-                }
-                
-                // FIXME: get rid of this rounding crap
-                // fill up the block if it has minutes in it
-                if endTimeComponents.minute > 0 && endTimeComponents.hour < cellsPerDay + 7 {
-                    hourDiffEndAndStart += 1
-                }
-                
-                // if end time is before or same as start, don't allocate, and set name = to error message
-                if dayDiffEndAndStart == 0 && hourDiffEndAndStart <= 0 {
-                    tasks[i].title += " -- Warning: end time must be after start"
-                }
-                
-                // if you set the appointment out of range, only allocate within the range
-                if hourDiffEndAndStart > 12 {
-                    hourDiffEndAndStart = 12
-                }
-                
-                // if it starts before 8 am, start it at 8
-                if startTimeComponents.hour < 8 {
-                    startTimeComponents.hour = 8
-                }
                 // allocate
-                for var j = 0; j < cellsPerDay; ++j {
-                    // k being less than hourDiff stops appts with end times before their start times from being run
-                    if startTimeComponents.hour == j + 8 {
-                        for var k = 0; k < (hourDiffEndAndStart); ++k {
-                            // compare today to day of appt to put in cal array
-                            self.calendarArray[j + k][dayDiffApptAndNow] = appt
-                        }
-                    }
-                }
-                
-                
-                
-            }
-        }
-        
-        // part II: put free object in all slots not occupied by appointment
-        
-        // declare free object
-        let freeTime: Free = Free()
-        
-        // allocate them
-        for var i = 0; i < cellsPerDay; ++i {
-            // FIXME: MAGIC NUMBER.  SEARCH ALL 28's to find them.  run it through an online magic number finder too - Matt's annoying style grader
-            for var j = 0; j < 28; ++j {
-                
-                // if the spot is taken by an appointment ignore it
-                if let _ = self.calendarArray[i][j] as? Appointment {
-                }
-                    
-                    // otherwise, allocate a free object to it
-                else if let _ = self.calendarArray[i][j] as? Assignment {
-                }
-                    
-                else {
-                    self.calendarArray[i][j] = freeTime
+                for var j = startTimeInMinCoordinates; j < endTimeInMinCoordinates; ++j {
+                    self.calendarArray[j][apptDayCoordinate] = appt
                 }
             }
         }
     }
+
     
     func putAssgInCalArrayAtFirstFreeOrAssignmentSpot(assg: Assignment, day: Int, hour: Int) -> (dayOut: Int, hourOut: Int) {
         var dayOut = 0
