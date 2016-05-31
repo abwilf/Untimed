@@ -125,6 +125,7 @@ class TaskManager {
     // returns appropriate calendar coordinates
     func nsDateInCalFormat(dateIn: NSDate) ->
         (dayCoordinate: Int, minuteCoordinate: Int) {
+            
             // declare variable we'll need to compare with dateIn
             let currentDate = NSDate()
             
@@ -136,19 +137,83 @@ class TaskManager {
             let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags,
                                                                             fromDate: dateIn)
             
-            // finding day values to get dayCoordinate
+            // finding minute coordinate.  0 is midnight of today, 1439 is 11:59 pm
+            let minuteCoordinate = (dueDateComponents.hour * 60) + dueDateComponents.minute
+            
+            // finding dayCoordinate first by finding day values
             let dueDateDay = dueDateComponents.day
             let currentDay = currentDateComponents.day
             
-            // column location in array
-            let dayCoordinate = dueDateDay - currentDay
+            // finding month values
+            let dueDateMonth = dueDateComponents.month
+            let currentMonth = currentDateComponents.month
             
-            // finding minute coordinate.  0 is midnight of today, 1439 is 11:59 pm
-            let minuteCoordinate = (dueDateComponents.hour * MINS_IN_HOUR) + dueDateComponents.minute
+            // finding year values
+            let dueDateYear = dueDateComponents.year
+            let currentYear = currentDateComponents.year
+            
+            // calculate column location in array
+            var dayCoordinate = 0
+            
+            // if year and month are the same, calculate only based on day coordinates
+            if dueDateYear == currentYear && dueDateMonth == currentMonth {
+                dayCoordinate = dueDateDay - currentDay
+            }
+            
+            // years must be the same
+            if dueDateYear != currentYear {
+                print ("ERROR! YEARS ARE NOT THE SAME")
+                return (dayCoordinate, minuteCoordinate)
+            }
+                
+                // if month is greater
+            else if dueDateMonth > currentMonth {
+                // from here to end of this month
+                let numDaysCurrentMonth = numDaysInMonth(currentMonth)
+                dayCoordinate += numDaysCurrentMonth - currentDay
+                
+                // adding in days from all included months
+                for var i = 0; i < 12; ++i {
+                    if doesInclude(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
+                        dayCoordinate += numDaysInMonth(i)
+                    }
+                }
+                
+                // for dueDateMonth
+                dayCoordinate += dueDateDay
+            }
+            
             return (dayCoordinate, minuteCoordinate)
     }
+    func numDaysInMonth(monthIn: Int) -> Int {
+        if monthIn == 1 || monthIn == 3 || monthIn == 5 || monthIn == 7 || monthIn == 8 || monthIn == 10 || monthIn == 12 {
+            return 31
+        }
+            
+        else if monthIn == 9 || monthIn == 4 || monthIn == 6 || monthIn == 11 {
+            return 30
+        }
+            
+        else if monthIn == 2 {
+            return 28
+        }
+            
+        else {
+            print ("ERROR! monthIn is incorrect in nsDateInCal function.")
+            return 0
+        }
+        
+    }
     
-    
+    func doesInclude(startMonth: Int, endMonth: Int, questionableMonth: Int) -> Bool {
+        if startMonth < questionableMonth && endMonth > questionableMonth {
+            return true
+        }
+            
+        else {
+            return false
+        }
+    }
     
     func numFreeBlocksInSameDayInterval (minuteCoordinate1In: Int, minuteCoordinate2In: Int, dayCoordinateIn: Int) -> Int {
         var numFreeBlocks: Int = 0
@@ -228,12 +293,13 @@ class TaskManager {
     
     
     func deletePastTasks() {
+       
+        // find current coordinates
+        let rightNow = NSDate()
+        let rightNowDayCoordinate = nsDateInCalFormat(rightNow).dayCoordinate
+        let rightNowMinuteCoordinate = nsDateInCalFormat(rightNow).minuteCoordinate
+        
         for var i = 0; i < tasks.count; ++i {
-            // find current coordinates
-            let rightNow = NSDate()
-            let rightNowDayCoordinate = nsDateInCalFormat(rightNow).dayCoordinate
-            let rightNowMinuteCoordinate = nsDateInCalFormat(rightNow).minuteCoordinate
-            
             // if the task is an appointment
             if let temp = tasks[i] as? Appointment {
                 // if the appointment happened before today, delete it

@@ -19,7 +19,7 @@ class DailyScheduleTableViewController: UITableViewController {
     var startLocation = 0
     
     
-    func minCoorInHr(minuteCoordinateIn: Int) -> String {
+    func minInHrCoord(minuteCoordinateIn: Int) -> String {
         var hour = 0
         var minute = 0
         
@@ -219,15 +219,15 @@ class DailyScheduleTableViewController: UITableViewController {
             
             // adding one to the second part because even though en event doesn't occupy the minute that the next event starts on, it's better to say 12-12.10: Eat, 12.10-1: HW, than 12-12.09: Eat, 12:10 - 1: HW. It's just a better way of displaying it.
             if let _ = taskManager.calendarArray[startLocation + cellDiff][dateLocationDay] as? Free {
-                cell.textLabel?.text = minCoorInHr(startLocation) + " - " + minCoorInHr(startLocation + cellDiff + 1) + ": Free"
+                cell.textLabel?.text = minInHrCoord(startLocation) + " - " + minInHrCoord(startLocation + cellDiff + 1) + ": Free"
             }
             
             if let temp = taskManager.calendarArray[startLocation + cellDiff][dateLocationDay] as? Appointment {
-                cell.textLabel?.text = minCoorInHr(startLocation) + " - " + minCoorInHr(startLocation + cellDiff + 1) + ": \(temp.title)"
+                cell.textLabel?.text = minInHrCoord(startLocation) + " - " + minInHrCoord(startLocation + cellDiff + 1) + ": \(temp.title)"
             }
             
             if let temp = taskManager.calendarArray[startLocation + cellDiff][dateLocationDay] as? Assignment {
-                cell.textLabel?.text = minCoorInHr(startLocation) + " - " + minCoorInHr(startLocation + cellDiff + 1) + ": \(temp.title)"            }
+                cell.textLabel?.text = minInHrCoord(startLocation) + " - " + minInHrCoord(startLocation + cellDiff + 1) + ": \(temp.title)"            }
         }
         
         // update startingLocation accordingly
