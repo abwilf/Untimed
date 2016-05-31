@@ -21,10 +21,9 @@ class TaskManager {
     
     let HOURS_IN_DAY = 12
     let MINS_IN_HOUR = 60
-    
-    // 24 hrs * 60 mins in an hour (excluding midnight of the following day)
     let MINS_IN_DAY = 1440
     let DAYS_IN_YEAR = 365
+    let MONTHS_IN_YEAR = 12
     
     // 15 min intervals
     let WORKING_INTERVAL_SIZE = 15
@@ -121,12 +120,10 @@ class TaskManager {
         }
         
     }
-    
     // returns appropriate calendar coordinates
     func nsDateInCalFormat(dateIn: NSDate) ->
         (dayCoordinate: Int, minuteCoordinate: Int) {
             
-            // declare variable we'll need to compare with dateIn
             let currentDate = NSDate()
             
             // converting from NSCal to Integer forms
@@ -159,32 +156,56 @@ class TaskManager {
             if dueDateYear == currentYear && dueDateMonth == currentMonth {
                 dayCoordinate = dueDateDay - currentDay
             }
-            
-            // years must be the same
-            if dueDateYear != currentYear {
-                print ("ERROR! YEARS ARE NOT THE SAME")
-                return (dayCoordinate, minuteCoordinate)
-            }
                 
-                // if month is greater
-            else if dueDateMonth > currentMonth {
+                // if month is greater and year is same
+            else if dueDateMonth > currentMonth && dueDateYear == currentYear {
                 // from here to end of this month
                 let numDaysCurrentMonth = numDaysInMonth(currentMonth)
                 dayCoordinate += numDaysCurrentMonth - currentDay
                 
-                // adding in days from all included months
-                for var i = 0; i < 12; ++i {
-                    if doesInclude(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
+                // adding in days from all included months (need to check all months codes)
+                for var i = 0; i < MONTHS_IN_YEAR; ++i {
+                    if doesIncludeSameYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
                         dayCoordinate += numDaysInMonth(i)
                     }
                 }
                 
-                // for dueDateMonth
+                // add in days for dueDateMonth
                 dayCoordinate += dueDateDay
+            }
+                
+                // if it's next calendar year, but earlier month (november 2015 - jan 2016)
+            else if dueDateMonth <= currentMonth && dueDateYear == currentYear + 1 {
+                // from here to end of this month
+                let numDaysCurrentMonth = numDaysInMonth(currentMonth)
+                dayCoordinate += numDaysCurrentMonth - currentDay
+                
+                // adding in days from all included months (need to check all months codes)
+                for var i = 0; i < MONTHS_IN_YEAR; ++i {
+                    if doesIncludeNextYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
+                        dayCoordinate += numDaysInMonth(i)
+                    }
+                }
+                
+                // add in days for dueDateMonth
+                dayCoordinate += dueDateDay
+                
             }
             
             return (dayCoordinate, minuteCoordinate)
     }
+    
+    func doesIncludeNextYear (startMonth: Int, endMonth: Int, questionableMonth: Int) -> Bool {
+        // if greater than start, but lsess than end
+        if (questionableMonth > startMonth && questionableMonth <= MONTHS_IN_YEAR) || (questionableMonth >= 1 && questionableMonth < endMonth) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    
     func numDaysInMonth(monthIn: Int) -> Int {
         if monthIn == 1 || monthIn == 3 || monthIn == 5 || monthIn == 7 || monthIn == 8 || monthIn == 10 || monthIn == 12 {
             return 31
@@ -205,7 +226,8 @@ class TaskManager {
         
     }
     
-    func doesInclude(startMonth: Int, endMonth: Int, questionableMonth: Int) -> Bool {
+    func doesIncludeSameYear(startMonth: Int, endMonth: Int, questionableMonth: Int) -> Bool {
+        // if between the two
         if startMonth < questionableMonth && endMonth > questionableMonth {
             return true
         }
@@ -214,7 +236,7 @@ class TaskManager {
             return false
         }
     }
-    
+        
     func numFreeBlocksInSameDayInterval (minuteCoordinate1In: Int, minuteCoordinate2In: Int, dayCoordinateIn: Int) -> Int {
         var numFreeBlocks: Int = 0
         var count = 0
