@@ -157,7 +157,7 @@ class TaskManager {
                 dayCoordinate = dueDateDay - currentDay
             }
                 
-                // if month is greater and year is same
+            // if month is greater and year is same
             else if dueDateMonth > currentMonth && dueDateYear == currentYear {
                 // from here to end of this month
                 let numDaysCurrentMonth = numDaysInMonth(currentMonth)
@@ -174,7 +174,7 @@ class TaskManager {
                 dayCoordinate += dueDateDay
             }
                 
-                // if it's next calendar year, but earlier month (november 2015 - jan 2016)
+            // if it's next calendar year, but earlier month (november 2015 - jan 2016)
             else if dueDateMonth <= currentMonth && dueDateYear == currentYear + 1 {
                 // from here to end of this month
                 let numDaysCurrentMonth = numDaysInMonth(currentMonth)
@@ -190,6 +190,15 @@ class TaskManager {
                 // add in days for dueDateMonth
                 dayCoordinate += dueDateDay
                 
+            }
+            
+            // if it's in the past (start with before this month)
+            else if dueDateMonth < currentMonth && dueDateYear <= currentYear {
+                dayCoordinate = -1
+            }
+            
+            else if dueDateMonth == currentMonth && dueDateYear <= currentYear && dueDateDay < currentDay {
+                dayCoordinate = -1
             }
             
             return (dayCoordinate, minuteCoordinate)
@@ -315,36 +324,31 @@ class TaskManager {
     
     
     func deletePastTasks() {
-       
-        // find current coordinates
-        let rightNow = NSDate()
-        let rightNowDayCoordinate = nsDateInCalFormat(rightNow).dayCoordinate
-        let rightNowMinuteCoordinate = nsDateInCalFormat(rightNow).minuteCoordinate
-        
         for var i = 0; i < tasks.count; ++i {
             // if the task is an appointment
             if let temp = tasks[i] as? Appointment {
                 // if the appointment happened before today, delete it
                 let apptDay = nsDateInCalFormat(temp.endTime).dayCoordinate
-                if apptDay - rightNowDayCoordinate < 0 {
+                if apptDay < 0 {
                     deleteTaskAtIndex(i)
                 }
             }
             
             // if the task is an assignment
             if let temp = tasks[i] as? Assignment {
-                // if the assignment was due before right now, delete it
+                // find coordinates
+                let rightNow = NSDate()
+                let rightNowMinuteCoordinate = nsDateInCalFormat(rightNow).minuteCoordinate
                 let dueDateDay = nsDateInCalFormat(temp.dueDate).dayCoordinate
                 let dueDateTime = nsDateInCalFormat(temp.dueDate).minuteCoordinate
                 
                 // if the assignment was due before today, delete it
-                let dayDiff = dueDateDay - rightNowDayCoordinate
-                if dayDiff < 0 {
+                if dueDateDay < 0 {
                     deleteTaskAtIndex(i)
                 }
                 
                 // if the assignment was due earlier today, delete it
-                if dayDiff == 0 && dueDateTime < rightNowMinuteCoordinate {
+                if dueDateDay == 0 && dueDateTime < rightNowMinuteCoordinate {
                     deleteTaskAtIndex(i)
                 }
             }
@@ -465,7 +469,8 @@ class TaskManager {
             }
         }
         
-        if count == 15 {
+        // is minus one because it only looks at whether the next one is the same.  Doesn't count for this one.
+        if count == WORKING_INTERVAL_SIZE - 1 {
             return true
         }
             
