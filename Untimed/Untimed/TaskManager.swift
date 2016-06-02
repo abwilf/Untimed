@@ -439,8 +439,8 @@ class TaskManager {
             var day = currentDateInCal.dayCoordinate
             var minute = currentDateInCal.minuteCoordinate
             
-            // if not enough time to complete most urgent assignment before due date, make b.lockslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
-            let mostUrgentAssn = orderedAssignmentArray[0]
+            // if not enough time to complete most urgent assignment before due date, make blockslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
+            var mostUrgentAssn = orderedAssignmentArray[0]
             if mostUrgentAssn.numBlocksLeftToAllocate > mostUrgentAssn.numFreeBlocksBeforeDueDate {
                 mostUrgentAssn.numBlocksLeftToAllocate = mostUrgentAssn.numFreeBlocksBeforeDueDate
             }
@@ -455,8 +455,9 @@ class TaskManager {
                 // decrement numBlocksLeftToAllocate of most urgent
                 mostUrgentAssn.numBlocksLeftToAllocate -= 1
                 
-                // re-sort by urgency
+                // re-sort by urgency, restating mostUrgentAssn so it updates
                 orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
+                mostUrgentAssn = orderedAssignmentArray[0]
             }
             return
         }
