@@ -466,7 +466,7 @@ class TaskManager {
     func isBlockFree(minIn: Int, dIn: Int) -> Bool {
         // if 15 minutes in a row are free (1 block)
         var count = 0
-        for var i = minIn; i < minIn + WORKING_INTERVAL_SIZE; ++i {
+        for var i = minIn; i < minIn + WORKING_INTERVAL_SIZE - 1; ++i {
             if calendarArray[minIn][dIn].title == "Unnamed Task" &&  minIn + WORKING_INTERVAL_SIZE < workingCellsPerDay && isNextSameAsThis(i, col: dIn) {
                     count += 1
             }
@@ -496,7 +496,7 @@ class TaskManager {
         
         var j = 0
 
-        // iterate through today
+        // iterate through today to where the last working block starts
         for var i = minuteIn; i < workingCellsPerDay - WORKING_INTERVAL_SIZE; ++i {
             // if there's a block available from this moment on (this ever increasing moment starting at minuteIn)
             if isBlockFree(i, dIn: dayIn)  {
