@@ -189,15 +189,18 @@ class TaskManager {
                 
                 // add in days for dueDateMonth
                 dayCoordinate += dueDateDay
-                
             }
             
-            // if it's in the past (start with before this month)
-            else if dueDateMonth < currentMonth && dueDateYear <= currentYear {
+            // if it's in the past            
+            else if dueDateYear < currentYear {
+                dayCoordinate = -1
+            }
+                
+            else if dueDateMonth < currentMonth && dueDateYear == currentYear {
                 dayCoordinate = -1
             }
             
-            else if dueDateMonth == currentMonth && dueDateYear <= currentYear && dueDateDay < currentDay {
+            else if dueDateMonth == currentMonth && dueDateYear == currentYear && dueDateDay < currentDay {
                 dayCoordinate = -1
             }
             
