@@ -9,8 +9,6 @@
 import Foundation
 
 class TaskManager {
-    // Assignment and Appointment inherit Task's non default constructor
-    
     // empty array of tasks
     var tasks: [Task] = []
     
@@ -29,15 +27,22 @@ class TaskManager {
     let WORKING_INTERVAL_SIZE = 15
     
     // let = mins in day for now
-    // FIXME: this should vary with the user inputted size
     var cellsPerDay = 1440
     
-    
     // FIXME: this is currently set at 8 am to 8 pm.  change to first working minute, and last working minute, make sure they're at midnight and 11:59 (1439)
-    let firstWorkingMinute = 480
-    let lastWorkingMinute = 1200
-    var workingCellsPerDay = 1440
+    var firstWorkingMinute = 480
+    var lastWorkingMinute = 1200
+    var workingCellsPerDay = 0
+    func setWorkingCellsPerDay() {
+        workingCellsPerDay = lastWorkingMinute - firstWorkingMinute
+    }
+    
+    /*
+    func setLastWorkingMinute() {
+        lastWorkingMinute -= 1
+    }
 
+    */
     
     // create variables to order array later
     var unfilteredArray: [Task] = Array(count: 40, repeatedValue: Free())
@@ -421,6 +426,10 @@ class TaskManager {
     
     
     func allocateAssignments() {
+        // setting based on user input (decreasing working minute by one b/c of dailysched format)
+        setWorkingCellsPerDay()
+        // setLastWorkingMinute()
+        
         // make an assignments only array and order it by urgency (based on hoursleft)
         createOrderedArray()
         
@@ -463,33 +472,12 @@ class TaskManager {
         }
     }
     
-    
-    func isBlockFree(minIn: Int, dIn: Int) -> Bool {
-        // if 15 minutes in a row are free (1 block)
-        var count = 0
-        for var i = minIn; i < minIn + WORKING_INTERVAL_SIZE - 1; ++i {
-            if calendarArray[minIn][dIn].title == "Unnamed Task" &&  minIn + WORKING_INTERVAL_SIZE < workingCellsPerDay && isNextSameAsThis(i, col: dIn) {
-                    count += 1
-            }
-        }
-        
-        // is minus one because it only looks at whether the next one is the same.  Doesn't count for this one.
-        if count == WORKING_INTERVAL_SIZE - 1 {
-            return true
-        }
-            
-        else {
-            return false
-        }
-    }
-    
-    
     func putBlockInCalArrayAtFirstFreeSpot(assg: Assignment, dayIn: Int, minuteIn: Int) -> (dayOut: Int, minuteOut: Int) {
         var dayOut = 0
         var minuteOut = 0
         
         // if not enough time to allocate before working hours are up, switch to tomorrow
-        if minuteIn + 15 > workingCellsPerDay {
+        if minuteIn + WORKING_INTERVAL_SIZE > lastWorkingMinute {
             minuteOut = 0
             dayOut = dayIn + 1
             return (dayOut, minuteOut)
@@ -498,7 +486,7 @@ class TaskManager {
         var j = 0
 
         // iterate through today to where the last working block starts
-        for var i = minuteIn; i < workingCellsPerDay - WORKING_INTERVAL_SIZE; ++i {
+        for var i = minuteIn; i < lastWorkingMinute - WORKING_INTERVAL_SIZE; ++i {
             // if there's a block available from this moment on (this ever increasing moment starting at minuteIn)
             if isBlockFree(i, dIn: dayIn)  {
                 // allocate to it (the next 15 cells)
@@ -517,6 +505,26 @@ class TaskManager {
         }
         return (dayOut, minuteOut)
     }
+    
+    func isBlockFree(minIn: Int, dIn: Int) -> Bool {
+        // if 15 minutes in a row are free (1 block)
+        var count = 0
+        for var i = minIn; i < minIn + WORKING_INTERVAL_SIZE - 1; ++i {
+            if calendarArray[minIn][dIn].title == "Unnamed Task" && isNextSameAsThis(i, col: dIn) {
+                count += 1
+            }
+        }
+        
+        // is minus one because it only looks at whether the next one is the same.  Doesn't count for this one.
+        if count == WORKING_INTERVAL_SIZE - 1 {
+            return true
+        }
+            
+        else {
+            return false
+        }
+    }
+    
     
     init () {
         // also initializes member variables (tasks array)
