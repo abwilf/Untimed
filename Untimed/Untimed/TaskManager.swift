@@ -351,7 +351,7 @@ class TaskManager {
                 }
                 
                 // if the assignment was due earlier today, delete it
-                if dueDateDay == 0 && dueDateTime < rightNowMinuteCoordinate {
+                if dueDateDay == 0 && dueDateTime < rightNowMinuteCoordinate + WORKING_INTERVAL_SIZE {
                     deleteTaskAtIndex(i)
                 }
             }
