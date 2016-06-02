@@ -478,7 +478,7 @@ class TaskManager {
         
         // if not enough time to allocate before working hours are up, switch to tomorrow
         if minuteIn + WORKING_INTERVAL_SIZE > lastWorkingMinute {
-            minuteOut = 0
+            minuteOut = firstWorkingMinute
             dayOut = dayIn + 1
             return (dayOut, minuteOut)
         }
