@@ -38,6 +38,11 @@ class DailyScheduleTableViewController: UITableViewController {
             whichTime = 1
         }
         
+        // midnight of the following day is in a.m.
+        if hour == 24 && minute == 0 {
+            whichTime = 0
+        }
+        
         // convert from 24 hour time to 12 hour time
         if hour > 12 {
             hour -= 12

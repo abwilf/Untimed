@@ -486,7 +486,7 @@ class TaskManager {
         var j = 0
 
         // iterate through today to where the last working block starts
-        for var i = minuteIn; i < lastWorkingMinute - WORKING_INTERVAL_SIZE; ++i {
+        for var i = minuteIn; i < lastWorkingMinute - WORKING_INTERVAL_SIZE + 1; ++i {
             // if there's a block available from this moment on (this ever increasing moment starting at minuteIn)
             if isBlockFree(i, dIn: dayIn)  {
                 // allocate to it (the next 15 cells)
