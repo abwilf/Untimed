@@ -457,22 +457,31 @@ class TaskManager {
             // allocate
             while mostUrgentAssn.numBlocksLeftToAllocate > 0 {
                 // put one block of most urgent in at first available spot starting now
-                let temp = putBlockInCalArrayAtFirstFreeSpot(mostUrgentAssn, dayIn: day, minuteIn: minute)
-                day = temp.dayOut
+                let temp = putBlockInCalArrayAtFirstFreeSpotToday(mostUrgentAssn, dayIn: day, minuteIn: minute)
+                
+                // if it's still allocating to today
+                if day == temp.dayOut {
+                    // decrement numBlocksLeftToAllocate of most urgent
+                    mostUrgentAssn.numBlocksLeftToAllocate -= 1
+                    
+                    // re-sort by urgency, restating mostUrgentAssn so it updates
+                    orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
+                    mostUrgentAssn = orderedAssignmentArray[0]
+                }
+                
+                // if needs to switch to tomorrow, don't decrement because it didn't allocate
+                else {
+                    day = temp.dayOut
+                }
+                
+                // either way, assign minute
                 minute = temp.minuteOut
-                
-                // decrement numBlocksLeftToAllocate of most urgent
-                mostUrgentAssn.numBlocksLeftToAllocate -= 1
-                
-                // re-sort by urgency, restating mostUrgentAssn so it updates
-                orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
-                mostUrgentAssn = orderedAssignmentArray[0]
             }
             return
         }
     }
     
-    func putBlockInCalArrayAtFirstFreeSpot(assg: Assignment, dayIn: Int, minuteIn: Int) -> (dayOut: Int, minuteOut: Int) {
+    func putBlockInCalArrayAtFirstFreeSpotToday(assg: Assignment, dayIn: Int, minuteIn: Int) -> (dayOut: Int, minuteOut: Int) {
         var dayOut = 0
         var minuteOut = 0
         
