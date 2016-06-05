@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
         <!--Tasks-->
@@ -108,6 +108,7 @@
                                                     <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
                                                         <action selector="didChangeEditingAssignmentTitle:" destination="KpF-z1-8Sg" eventType="editingChanged" id="psX-0C-xLC"/>
+                                                        <action selector="textFieldDoneEditing:" destination="KpF-z1-8Sg" eventType="editingDidEndOnExit" id="QSe-CF-dYZ"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -216,6 +217,7 @@
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
                                                         <action selector="didChangeEditingAssignmentTitle:" destination="T8F-bT-Ss5" eventType="editingChanged" id="eK5-wD-MnG"/>
+                                                        <action selector="textFieldDoneEditing:" destination="T8F-bT-Ss5" eventType="editingDidEndOnExit" id="G7Y-FR-rtk"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
