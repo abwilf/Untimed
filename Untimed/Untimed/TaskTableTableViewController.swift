@@ -159,6 +159,14 @@ class TaskTableTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let _ = taskManager.tasks[indexPath.row] as? Assignment {
+            performSegueWithIdentifier("Assignment View Segue", sender: TaskTableTableViewController())
+        }
+        if let _ = taskManager.tasks[indexPath.row] as? Appointment {
+            performSegueWithIdentifier("Appointment View Segue", sender: TaskTableTableViewController())
+        }
+    }
     
     /*
     // Override to support conditional editing of the table view.
@@ -206,7 +214,7 @@ class TaskTableTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         // if you click on a cell
-        if (segue.identifier == "Select Task") {
+        if (segue.identifier == "Appointment View Segue") {
             
             // index = row number
             if let index = tableView.indexPathForSelectedRow?.row {
@@ -217,6 +225,29 @@ class TaskTableTableViewController: UITableViewController {
                 let task = taskManager.tasks[index]
                 
                 // set the title of the view we're going to as that object's 
+                // title
+                segue.destinationViewController.title = task.title
+                
+                // single task view controller
+                if let stvc = segue.destinationViewController as?
+                    SingleTaskTableViewController {
+                    stvc.task = task
+                    stvc.index = index
+                }
+            }
+        }
+        
+        if (segue.identifier == "Assignment View Segue") {
+            
+            // index = row number
+            if let index = tableView.indexPathForSelectedRow?.row {
+                // create object of task class and reference the object in the
+                // array at row location. remember that the row locations for
+                // the array and for the table will both be 0 indexed and will
+                // correspond perfectly (that's why we use the same numbers)
+                let task = taskManager.tasks[index]
+                
+                // set the title of the view we're going to as that object's
                 // title
                 segue.destinationViewController.title = task.title
                 
