@@ -154,6 +154,18 @@ class DailyScheduleTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        // all of reloadPressed
+        super.viewWillAppear(animated)
+        taskManager.loadFromDisc()
+        
+        taskManager.allocateTime()
+        
+        // FIXME: for testing
+        taskManager.description()
+        
+        tableView.reloadData()
+    }
     
     // connecting add and single task viewer pages to this
     @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)

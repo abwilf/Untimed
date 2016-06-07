@@ -44,6 +44,12 @@ class TaskManager {
 
     */
     
+    func description() {
+        for var i = 0; i < tasks.count; ++i {
+            print ("\(tasks[i].title)\n")
+        }
+    }
+    
     // create variables to order array later
     var unfilteredArray: [Task] = Array(count: 40, repeatedValue: Free())
     var assignmentArray = [Assignment]()
@@ -92,6 +98,8 @@ class TaskManager {
     // add save method
     func save() {
         // save tasks array
+        
+        // FIXME: PRINT TASKS ARRAY TO TEST
         let archive: NSData = NSKeyedArchiver.archivedDataWithRootObject(tasks)
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(archive, forKey: "SavedTasks")
