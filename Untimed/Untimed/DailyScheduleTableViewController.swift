@@ -155,14 +155,20 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        // all of reloadPressed
+        
         super.viewWillAppear(animated)
+     
+        // works properly
         taskManager.loadFromDisc()
         
+        // FIXME: for testing if tasks loaded
+        // taskManager.tasksDescription()
+        
+        // works properly
         taskManager.allocateTime()
         
-        // FIXME: for testing
-        taskManager.description()
+        // FIXME: for testing if allocated to correct slot in calarray
+        taskManager.calArrayDescriptionAtIndex(900, day: 0)
         
         tableView.reloadData()
     }
@@ -200,6 +206,7 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     
+    // FIXME: change this when we have userinputted values
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MINS_IN_DAY
     }
@@ -231,6 +238,7 @@ class DailyScheduleTableViewController: UITableViewController {
             i += 1
         }
     
+        // // FIXME: change to lastworking minute.
         // since this is the last in the series of same elements, name the cell
         if startLocation + cellDiff < MINS_IN_DAY {
             
@@ -253,11 +261,13 @@ class DailyScheduleTableViewController: UITableViewController {
         return cell
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
         title = "Today"
     }
+    
     
     
     /*

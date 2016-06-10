@@ -44,7 +44,10 @@ class TaskManager {
 
     */
     
-    func description() {
+    func calArrayDescriptionAtIndex(min: Int, day: Int) {
+        print ("\(calendarArray[min][day].title)")
+    }
+    func tasksDescription() {
         for var i = 0; i < tasks.count; ++i {
             print ("\(tasks[i].title)\n")
         }
