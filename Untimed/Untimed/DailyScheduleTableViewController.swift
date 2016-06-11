@@ -149,6 +149,66 @@ class DailyScheduleTableViewController: UITableViewController {
             return (dayCoordinate, minuteCoordinate)
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // action sheets
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let warningController = UIAlertController(title: "Are you sure you want to delete this appointment?", message: nil, preferredStyle: .Alert)
+        // cancel action
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        }
+        alertController.addAction(cancelAction)
+        warningController.addAction(cancelAction)
+        // delete action
+        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
+            self.presentViewController(warningController, animated: true) {
+            }
+        }
+        warningController.addAction(deleteAction)
+
+        if let _ = dsCalArray[indexPath.row] as? Assignment {
+            
+            
+            let didntDoAction = UIAlertAction(title: "I didn't do this", style: .Default) { (action) in
+            }
+            let needTimeAction = UIAlertAction(title: "I need more time", style: .Default) { (action) in
+                self.performSegueWithIdentifier("More Time Segue", sender: DailyScheduleTableViewController())
+            }
+            let somethingElseAction = UIAlertAction(title: "I'd rather do something else", style: .Default) { (action) in
+                self.performSegueWithIdentifier("Choose Assignment Segue", sender: DailyScheduleTableViewController())
+            }
+            let finishedAction = UIAlertAction(title: "I've finished this assignment", style: .Default) { (action) in
+            }
+            let freeAction = UIAlertAction(title: "Free this block", style: .Default) { (action) in
+            }
+            
+            alertController.addAction(didntDoAction)
+            alertController.addAction(needTimeAction)
+            alertController.addAction(somethingElseAction)
+            alertController.addAction(freeAction)
+            alertController.addAction(finishedAction)
+        }
+        
+        if let _ = dsCalArray[indexPath.row] as? Appointment {
+            let rescheduleAction = UIAlertAction(title: "Reschedule", style: .Default) { (action) in
+            }
+            
+
+            
+            alertController.addAction(rescheduleAction)
+            alertController.addAction(deleteAction)
+        }
+        
+        if let _ = dsCalArray[indexPath.row] as? Free {
+            let addApptAction = UIAlertAction(title: "Add appointment", style: .Default) { (action) in
+                self.performSegueWithIdentifier("Choose Assignment Segue", sender: DailyScheduleTableViewController())
+            }
+            
+            alertController.addAction(addApptAction)
+        }
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
         // re-allocate
         taskManager.loadFromDisc()
