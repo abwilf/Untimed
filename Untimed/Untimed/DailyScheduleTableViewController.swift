@@ -321,15 +321,11 @@ class DailyScheduleTableViewController: UITableViewController {
         }
     }
     
-    func createDSCalArray() {
-        // initialize counting variables
-        let rightNow = NSDate()
-        let rightNowMinuteLocation = nsDateInCalFormat(rightNow).minuteCoordinate
-        
-        var i = rightNowMinuteLocation
+    func createDSCalArray() {        
+        var i = 0
         var cellDiff = 0
 
-        // iterate through tm.CalArray from now until the end of today
+        // iterate through tm.CalArray
         while i < MINS_IN_DAY {
             // wipe for reuse in each cell
             cellDiff = 0
