@@ -199,7 +199,6 @@ class DailyScheduleTableViewController: UITableViewController {
         
         if let _ = dsCalArray[indexPath.row] as? Free {
             let addApptAction = UIAlertAction(title: "Add appointment", style: .Default) { (action) in
-                self.performSegueWithIdentifier("Choose Assignment Segue", sender: DailyScheduleTableViewController())
             }
             
             alertController.addAction(addApptAction)
