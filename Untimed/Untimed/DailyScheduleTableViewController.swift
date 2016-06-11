@@ -149,26 +149,26 @@ class DailyScheduleTableViewController: UITableViewController {
             return (dayCoordinate, minuteCoordinate)
     }
     
+    // action sheets
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        // action sheets
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         let warningController = UIAlertController(title: "Are you sure you want to delete this appointment?", message: nil, preferredStyle: .Alert)
+        
         // cancel action
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
         }
         alertController.addAction(cancelAction)
         warningController.addAction(cancelAction)
+        
         // delete action
         let deleteAction = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
+            // delete warning
             self.presentViewController(warningController, animated: true) {
             }
         }
         warningController.addAction(deleteAction)
 
         if let _ = dsCalArray[indexPath.row] as? Assignment {
-            
-            
             let didntDoAction = UIAlertAction(title: "I didn't do this", style: .Default) { (action) in
             }
             let needTimeAction = UIAlertAction(title: "I need more time", style: .Default) { (action) in
@@ -192,9 +192,7 @@ class DailyScheduleTableViewController: UITableViewController {
         if let _ = dsCalArray[indexPath.row] as? Appointment {
             let rescheduleAction = UIAlertAction(title: "Reschedule", style: .Default) { (action) in
             }
-            
 
-            
             alertController.addAction(rescheduleAction)
             alertController.addAction(deleteAction)
         }
