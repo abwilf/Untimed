@@ -321,7 +321,7 @@ class DailyScheduleTableViewController: UITableViewController {
         }
     }
     
-    func createDSCalArray() {        
+    func createDSCalArray() {
         var i = 0
         var cellDiff = 0
 
@@ -367,12 +367,13 @@ class DailyScheduleTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        taskManager.tasksDescription()
+
         // create proprietary array
         createDSCalArray()
         
         // for testing
-        taskManager.tasksDescription()
         dsCalArrayDescription()
         
         
