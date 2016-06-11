@@ -304,12 +304,29 @@ class DailyScheduleTableViewController: UITableViewController {
             
             if let temp = task as? Free {
                 temp.title = "Free"
+                cell.textLabel?.text = minInHrCoord(task.dsCalAdjustedStartLocation) + " - " + minInHrCoord(task.dsCalAdjustedEndLocation + 1) + ": \(task.title)"
+                return cell
             }
             
+            // if it's an assignment, deal with different member variables
+            if let temp = task as? Assignment {
+                // take the minute location of end time of the previous task and the start time of the next task
+                let tempTitle: String = task.title
+                
+                temp.title = minInHrCoord(dsCalArray[indexPath.row - 1].dsCalAdjustedEndLocation + 1) + " - " + minInHrCoord(dsCalArray[indexPath.row + 1].dsCalAdjustedStartLocation) + ": \(task.title)"
+                print ("\(temp.title)")
+                cell.textLabel?.text = temp.title
+                
+                temp.title = tempTitle
+                return cell
+            }
+                
             // each cell aligns with indexpath.row as it progresses down
-            cell.textLabel?.text = minInHrCoord(task.dsCalAdjustedStartLocation) + " - " + minInHrCoord(task.dsCalAdjustedEndLocation + 1) + ": \(task.title)"
+            
+            else {
+                cell.textLabel?.text = minInHrCoord(task.dsCalAdjustedStartLocation) + " - " + minInHrCoord(task.dsCalAdjustedEndLocation + 1) + ": \(task.title)"
+            }
         }
-    
         return cell
     }
     
@@ -321,14 +338,10 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     func createDSCalArray() {
-        // initialize counting variables
-        let rightNow = NSDate()
-        let rightNowMinuteLocation = nsDateInCalFormat(rightNow).minuteCoordinate
-        
-        var i = rightNowMinuteLocation
+        var i = 0
         var cellDiff = 0
 
-        // iterate through tm.CalArray from now until the end of today
+        // iterate through tm.CalArray
         while i < MINS_IN_DAY {
             // wipe for reuse in each cell
             cellDiff = 0
@@ -370,12 +383,13 @@ class DailyScheduleTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        taskManager.tasksDescription()
+
         // create proprietary array
         createDSCalArray()
         
         // for testing
-        taskManager.tasksDescription()
         dsCalArrayDescription()
         
         

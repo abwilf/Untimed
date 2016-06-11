@@ -94,6 +94,13 @@ class TaskManager {
                 return true
             }
         }
+        
+        if let _ = calendarArray[row][col] as? Free {
+            if let _ = calendarArray[row + 1][col] as? Free {
+                return true
+            }
+        }
+        
         return false
     }
     
