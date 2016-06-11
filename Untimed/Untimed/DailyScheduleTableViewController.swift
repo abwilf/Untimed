@@ -15,6 +15,8 @@ class DailyScheduleTableViewController: UITableViewController {
     let MINS_IN_DAY = 1440
     let MINS_IN_HOUR = 60
     
+    var dsCalArray: [Task] = []
+
     // create counting variables for allocation to tableview
     var startLocation = 0
     
@@ -168,9 +170,19 @@ class DailyScheduleTableViewController: UITableViewController {
         taskManager.allocateTime()
         
         // FIXME: for testing if allocated to correct slot in calarray
-        taskManager.calArrayDescriptionAtIndex(900, day: 0)
+        //taskManager.calArrayDescriptionAtIndex(900, day: 0)
         
         tableView.reloadData()
+        
+        // FIXME: to add
+        // create proprietary array
+//        // FIXME:  add to viewwillappear when reload button works
+//        createDSCalArray()
+//        
+//        // for testing
+//        // taskManager.tasksDescription()
+//        dsCalArrayDescription()
+        
     }
     
     // connecting add and single task viewer pages to this
@@ -216,54 +228,100 @@ class DailyScheduleTableViewController: UITableViewController {
             if taskManager.calendarArray[row][col] == taskManager.calendarArray[row + 1][col] {
                return true
             }
+            if let _ = taskManager.calendarArray[row][col] as? Free {
+                if let _ = taskManager.calendarArray[row + 1][col] as? Free {
+                return true
+                }
+            }
         }
         return false
     }
     
     // allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        // wipe cell and minute differential counts
-        var cellDiff = 0
-        
-        // initialize i to nextStartingLocation
-        var i = startLocation
-        
+
         // giving cell information and telling where to find it
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
-        
-        // if this element is the same as the one after it, increment counters
-        while isNextSameAsThis(i, col: dateLocationDay) {
-            cellDiff += 1
-            i += 1
+        if indexPath.row < dsCalArray.count {
+            let task = dsCalArray[indexPath.row]
+            
+            if let temp = task as? Free {
+                temp.title = "Free"
+            }
+            
+            // each cell aligns with indexpath.row as it progresses down
+            cell.textLabel?.text = minInHrCoord(task.dsCalAdjustedStartLocation) + " - " + minInHrCoord(task.dsCalAdjustedEndLocation + 1) + ": \(task.title)"
         }
     
-        // // FIXME: change to lastworking minute.
-        // since this is the last in the series of same elements, name the cell
-        if startLocation + cellDiff < MINS_IN_DAY {
+        return cell
+    }
+    
+    
+    func dsCalArrayDescription() {
+        for var i = 0; i < dsCalArray.count; ++i {
+            print ("\(dsCalArray[i].title)\n")
+        }
+    }
+    
+    func createDSCalArray() {
+        // initialize counting variables
+        let rightNow = NSDate()
+        let rightNowMinuteLocation = nsDateInCalFormat(rightNow).minuteCoordinate
+        
+        var i = rightNowMinuteLocation
+        var cellDiff = 0
+
+        // iterate through tm.CalArray from now until the end of today
+        while i < MINS_IN_DAY {
+            // wipe for reuse in each cell
+            cellDiff = 0
             
-            // adding one to the second part because even though en event doesn't occupy the minute that the next event starts on, it's better to say 12-12.10: Eat, 12.10-1: HW, than 12-12.09: Eat, 12:10 - 1: HW. It's just a better way of displaying it.
-            if let _ = taskManager.calendarArray[startLocation + cellDiff][dateLocationDay] as? Free {
-                cell.textLabel?.text = minInHrCoord(startLocation) + " - " + minInHrCoord(startLocation + cellDiff + 1) + ": Free"
+            // starting location
+            let j = i
+            
+            // Only deal with one block of same things.  If this element is the same as the one after it, increment counters.
+            while isNextSameAsThis(i + cellDiff, col: dateLocationDay) {
+                cellDiff += 1
             }
             
-            if let temp = taskManager.calendarArray[startLocation + cellDiff][dateLocationDay] as? Appointment {
-                cell.textLabel?.text = minInHrCoord(startLocation) + " - " + minInHrCoord(startLocation + cellDiff + 1) + ": \(temp.title)"
-            }
+            i += cellDiff
             
-            if let temp = taskManager.calendarArray[startLocation + cellDiff][dateLocationDay] as? Assignment {
-                cell.textLabel?.text = minInHrCoord(startLocation) + " - " + minInHrCoord(startLocation + cellDiff + 1) + ": \(temp.title)"            }
+            // update object in tM calArray
+            taskManager.calendarArray[i][dateLocationDay].dsCalAdjustedStartLocation = j
+            taskManager.calendarArray[i][dateLocationDay].dsCalAdjustedEndLocation = i
+            
+            addToDSCalArray(j, endCoor: i, dayCoor: dateLocationDay)
+            
+            i += 1
+        }
+    }
+    
+    func addToDSCalArray(startCoor: Int, endCoor: Int, dayCoor: Int) {
+        if let temp = taskManager.calendarArray[endCoor][dayCoor] as? Free {
+            dsCalArray += [temp]
         }
         
-        // update startingLocation accordingly
-        startLocation += cellDiff + 1
+        if let temp = taskManager.calendarArray[endCoor][dateLocationDay] as? Assignment {
+            dsCalArray += [temp]
+        }
         
-        return cell
+        if let temp = taskManager.calendarArray[endCoor][dateLocationDay] as? Appointment {
+            dsCalArray += [temp]
+        }
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // create proprietary array
+        createDSCalArray()
+        
+        // for testing
+        taskManager.tasksDescription()
+        dsCalArrayDescription()
+        
+        
         tableView.reloadData()
         title = "Today"
     }

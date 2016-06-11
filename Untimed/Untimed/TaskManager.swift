@@ -102,7 +102,6 @@ class TaskManager {
     func save() {
         // save tasks array
         
-        // FIXME: PRINT TASKS ARRAY TO TEST
         let archive: NSData = NSKeyedArchiver.archivedDataWithRootObject(tasks)
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(archive, forKey: "SavedTasks")
@@ -289,11 +288,12 @@ class TaskManager {
     }
     
     func clearCalArray() {
-        // create free object to assign in clearCalArray
-        let freeObj = Free()
+        
         // starting from the first cell of today to the end of the array
         for var i = 0; i < 28; ++i {
             for var j = 0; j < cellsPerDay; ++j {
+                // create free object to assign in clearCalArray
+                let freeObj = Free()
                 self.calendarArray[j][i] = freeObj
             }
         }

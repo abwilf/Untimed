@@ -10,6 +10,5 @@ import Foundation
 
 // superclass = Task
 class Free: Task {
-//    var startTime = NSDate()
-//    var endTime = NSDate()
+   
 }

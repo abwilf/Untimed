@@ -14,6 +14,11 @@ class Task: NSObject, NSCoding {
     // nothing needed because subclasses reference (see assn and appt files)
     var title: String = "Unnamed Task"
     
+    // for ds allocation
+    var dsCalAdjustedStartLocation: Int = 0
+    var dsCalAdjustedEndLocation: Int = 0
+    
+    
     init(title: String) {
         self.title = title
     }
