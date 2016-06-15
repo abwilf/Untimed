@@ -149,6 +149,13 @@ class DailyScheduleTableViewController: UITableViewController {
             return (dayCoordinate, minuteCoordinate)
     }
     
+    // supporting function
+    func countNumBlocksInInterval(start: Int, end: Int) -> Int {
+        let temp = ((end - start) / 15) + 1
+        return temp
+    }
+    
+    
     // action sheets
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -168,8 +175,26 @@ class DailyScheduleTableViewController: UITableViewController {
         }
         warningController.addAction(deleteAction)
 
-        if let _ = dsCalArray[indexPath.row] as? Assignment {
+        if let temp = dsCalArray[indexPath.row] as? Assignment {
             let didntDoAction = UIAlertAction(title: "I didn't do this", style: .Default) { (action) in
+                // count numBlocks that should have been completed
+                let numBlocks = self.countNumBlocksInInterval(temp.dsCalAdjustedStartLocation, end: temp.dsCalAdjustedEndLocation)
+                
+                // testing
+                print ("\nnumBlocks is: \(numBlocks)\n")
+                
+                // add the value back to assignment in tasks array
+                
+                
+                // reallocate time
+                
+                
+                // save
+                
+                // reload data
+                
+                
+                
             }
             let needTimeAction = UIAlertAction(title: "I need more time", style: .Default) { (action) in
                 self.performSegueWithIdentifier("More Time Segue", sender: DailyScheduleTableViewController())
@@ -384,7 +409,7 @@ class DailyScheduleTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        taskManager.tasksDescription()
+        //taskManager.tasksDescription()
 
         // create proprietary array
         createDSCalArray()

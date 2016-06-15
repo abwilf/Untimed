@@ -44,15 +44,13 @@ class AddAppointmentTableViewController: UITableViewController {
         
         // update end date minimum to start date
         endDatePicker.minimumDate = newStartDate
+        addedAppointment.endTime = endDatePicker.date
     }
     
 
     // update appointment's end time
     @IBAction func didEnterEndDate(sender: UIDatePicker) {
-        sender.minimumDate = newStartDate
-        var newEndDate = NSDate()
-        newEndDate = sender.date
-        addedAppointment.endTime = newEndDate
+        addedAppointment.endTime = endDatePicker.date
     }
     
     
