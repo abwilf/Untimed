@@ -40,6 +40,30 @@ class AddAssignmentTableViewController: UITableViewController {
         switchLabel.text = "\(String(sender.value)) hours"
     }
     
+    
+    
+    var priorityValue = 1
+    
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
+    @IBAction func indexChanged(sender: UISegmentedControl) {
+        switch segmentedControl.selectedSegmentIndex
+        {
+        case 0:
+            priorityValue = 1;
+        case 1:
+            priorityValue = 2;
+        case 2:
+            priorityValue = 3;
+        default:
+            break;
+        }
+    }
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
