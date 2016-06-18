@@ -11,6 +11,8 @@ import UIKit
 class DailyScheduleTableViewController: UITableViewController {
     
     let taskManager = TaskManager()
+    var tmCopy = TaskManager()
+    
     var dateLocationDay: Int = 0
     let MINS_IN_DAY = 1440
     let MINS_IN_HOUR = 60
@@ -158,77 +160,80 @@ class DailyScheduleTableViewController: UITableViewController {
     
     // action sheets
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        let warningController = UIAlertController(title: "Are you sure you want to delete this appointment?", message: nil, preferredStyle: .Alert)
         
-        // cancel action
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-        }
-        alertController.addAction(cancelAction)
-        warningController.addAction(cancelAction)
-        
-        // delete action
-        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
-            // delete warning
-            self.presentViewController(warningController, animated: true) {
+        if indexPath.row <= dsCalArray.count {
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+            let warningController = UIAlertController(title: "Are you sure you want to delete this appointment?", message: nil, preferredStyle: .Alert)
+            
+            // cancel action
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
             }
-        }
-        warningController.addAction(deleteAction)
-
-        if let temp = dsCalArray[indexPath.row] as? Assignment {
-            let didntDoAction = UIAlertAction(title: "I didn't do this", style: .Default) { (action) in
-                // count numBlocks that should have been completed
-                let numBlocks = self.countNumBlocksInInterval(temp.dsCalAdjustedStartLocation, end: temp.dsCalAdjustedEndLocation)
-                
-                // testing
-                print ("\nnumBlocks is: \(numBlocks)\n")
-                
-                // add the value back to assignment in tasks array
-                
-                
-                // reallocate time
-                
-                
-                // save
-                
-                // reload data
-                
-                
-                
+            alertController.addAction(cancelAction)
+            warningController.addAction(cancelAction)
+            
+            // delete action
+            let deleteAction = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
+                // delete warning
+                self.presentViewController(warningController, animated: true) {
+                }
             }
-            let needTimeAction = UIAlertAction(title: "I need more time", style: .Default) { (action) in
-                self.performSegueWithIdentifier("More Time Segue", sender: DailyScheduleTableViewController())
-            }
-            let somethingElseAction = UIAlertAction(title: "I'd rather do something else", style: .Default) { (action) in
-                self.performSegueWithIdentifier("Choose Assignment Segue", sender: DailyScheduleTableViewController())
-            }
-            let finishedAction = UIAlertAction(title: "I've finished this assignment", style: .Default) { (action) in
-            }
-            let freeAction = UIAlertAction(title: "Free this block", style: .Default) { (action) in
+            warningController.addAction(deleteAction)
+            
+            if let temp = dsCalArray[indexPath.row] as? Assignment {
+                let didntDoAction = UIAlertAction(title: "I didn't do this", style: .Default) { (action) in
+                    // count numBlocks that should have been completed
+                    let numBlocks = self.countNumBlocksInInterval(temp.dsCalAdjustedStartLocation, end: temp.dsCalAdjustedEndLocation)
+                    
+                    // testing
+                    print ("\nnumBlocks is: \(numBlocks)\n")
+                    
+                    // add the value back to assignment in tasks array
+                    
+                    
+                    // reallocate time
+                    
+                    
+                    // save
+                    
+                    // reload data
+                    
+                    
+                    
+                }
+                let needTimeAction = UIAlertAction(title: "I need more time", style: .Default) { (action) in
+                    self.performSegueWithIdentifier("More Time Segue", sender: DailyScheduleTableViewController())
+                }
+                let somethingElseAction = UIAlertAction(title: "I'd rather do something else", style: .Default) { (action) in
+                    self.performSegueWithIdentifier("Choose Assignment Segue", sender: DailyScheduleTableViewController())
+                }
+                let finishedAction = UIAlertAction(title: "I've finished this assignment", style: .Default) { (action) in
+                }
+                let freeAction = UIAlertAction(title: "Free this block", style: .Default) { (action) in
+                }
+                
+                alertController.addAction(didntDoAction)
+                alertController.addAction(needTimeAction)
+                alertController.addAction(somethingElseAction)
+                alertController.addAction(freeAction)
+                alertController.addAction(finishedAction)
             }
             
-            alertController.addAction(didntDoAction)
-            alertController.addAction(needTimeAction)
-            alertController.addAction(somethingElseAction)
-            alertController.addAction(freeAction)
-            alertController.addAction(finishedAction)
-        }
-        
-        if let _ = dsCalArray[indexPath.row] as? Appointment {
-            let rescheduleAction = UIAlertAction(title: "Reschedule", style: .Default) { (action) in
-            }
-
-            alertController.addAction(rescheduleAction)
-            alertController.addAction(deleteAction)
-        }
-        
-        if let _ = dsCalArray[indexPath.row] as? Free {
-            let addApptAction = UIAlertAction(title: "Add appointment", style: .Default) { (action) in
+            if let _ = dsCalArray[indexPath.row] as? Appointment {
+                let rescheduleAction = UIAlertAction(title: "Reschedule", style: .Default) { (action) in
+                }
+                
+                alertController.addAction(rescheduleAction)
+                alertController.addAction(deleteAction)
             }
             
-            alertController.addAction(addApptAction)
+            if let _ = dsCalArray[indexPath.row] as? Free {
+                let addApptAction = UIAlertAction(title: "Add appointment", style: .Default) { (action) in
+                }
+                
+                alertController.addAction(addApptAction)
+            }
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
@@ -245,25 +250,13 @@ class DailyScheduleTableViewController: UITableViewController {
         // works properly
         taskManager.loadFromDisc()
         
-        // FIXME: for testing if tasks loaded
-        // taskManager.tasksDescription()
-        
         // works properly
         taskManager.allocateTime()
+        taskManager.calArrayDescriptionAtIndex(1120, day: 0)
         
-        // FIXME: for testing if allocated to correct slot in calarray
-        //taskManager.calArrayDescriptionAtIndex(900, day: 0)
+        createDSCalArray()
         
         tableView.reloadData()
-        
-        // FIXME: to add
-        // create proprietary array
-//        // FIXME:  add to viewwillappear when reload button works
-//        createDSCalArray()
-//        
-//        // for testing
-//        // taskManager.tasksDescription()
-//        dsCalArrayDescription()
         
     }
     
@@ -305,13 +298,13 @@ class DailyScheduleTableViewController: UITableViewController {
         return MINS_IN_DAY
     }
     
-    func isNextSameAsThis (row: Int, col: Int) -> Bool {
+    func isNextSameAsThis(row: Int, col: Int) -> Bool {
         if row > 0 && row < MINS_IN_DAY - 1 || row == 0 {
-            if taskManager.calendarArray[row][col] == taskManager.calendarArray[row + 1][col] {
+            if tmCopy.calendarArray[row][col] == tmCopy.calendarArray[row + 1][col] {
                return true
             }
-            if let _ = taskManager.calendarArray[row][col] as? Free {
-                if let _ = taskManager.calendarArray[row + 1][col] as? Free {
+            if let _ = tmCopy.calendarArray[row][col] as? Free {
+                if let _ = tmCopy.calendarArray[row + 1][col] as? Free {
                 return true
                 }
             }
@@ -326,7 +319,10 @@ class DailyScheduleTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         if indexPath.row < dsCalArray.count {
             let task = dsCalArray[indexPath.row]
+            cell.textLabel?.text = task.title
+            return cell
             
+            /*
             if let temp = task as? Free {
                 temp.title = "Free"
                 cell.textLabel?.text = minInHrCoord(task.dsCalAdjustedStartLocation) + " - " + minInHrCoord(task.dsCalAdjustedEndLocation + 1) + ": \(task.title)"
@@ -351,8 +347,12 @@ class DailyScheduleTableViewController: UITableViewController {
             else {
                 cell.textLabel?.text = minInHrCoord(task.dsCalAdjustedStartLocation) + " - " + minInHrCoord(task.dsCalAdjustedEndLocation + 1) + ": \(task.title)"
             }
+             */
         }
-        return cell
+        else {
+            cell.textLabel?.text = ""
+            return cell
+        }
     }
     
     
@@ -363,10 +363,21 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     func createDSCalArray() {
+        
+        // create counting variables
         var i = 0
         var cellDiff = 0
 
-        // iterate through tm.CalArray
+        // make copy of tm to avoid pointer trouble
+        tmCopy = taskManager.copy() as! TaskManager
+        tmCopy.calArrayDescriptionAtIndex(1120, day: 0)
+        // wipe dsCalArray
+        let j = dsCalArray.count
+        for var i = j; i > 0 ; --i {
+            dsCalArray.removeAtIndex(i - 1)
+        }
+        
+        // iterate through tmCopy's calArray
         while i < MINS_IN_DAY {
             // wipe for reuse in each cell
             cellDiff = 0
@@ -382,8 +393,8 @@ class DailyScheduleTableViewController: UITableViewController {
             i += cellDiff
             
             // update object in tM calArray
-            taskManager.calendarArray[i][dateLocationDay].dsCalAdjustedStartLocation = j
-            taskManager.calendarArray[i][dateLocationDay].dsCalAdjustedEndLocation = i
+            tmCopy.calendarArray[i][dateLocationDay].dsCalAdjustedStartLocation = j
+            tmCopy.calendarArray[i][dateLocationDay].dsCalAdjustedEndLocation = i
             
             addToDSCalArray(j, endCoor: i, dayCoor: dateLocationDay)
             
@@ -392,20 +403,30 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     func addToDSCalArray(startCoor: Int, endCoor: Int, dayCoor: Int) {
-        if let temp = taskManager.calendarArray[endCoor][dayCoor] as? Free {
+        
+        if let temp = tmCopy.calendarArray[endCoor][dayCoor] as? Free {
+            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation + 1) + ": Free"
             dsCalArray += [temp]
         }
         
-        if let temp = taskManager.calendarArray[endCoor][dateLocationDay] as? Assignment {
+        if let temp = tmCopy.calendarArray[endCoor][dateLocationDay] as? Assignment {
+            // save original title
+            let titleTemp = temp.title
+
+            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation + 1) + ": " + titleTemp
             dsCalArray += [temp]
         }
         
-        if let temp = taskManager.calendarArray[endCoor][dateLocationDay] as? Appointment {
+        if let temp = tmCopy.calendarArray[endCoor][dateLocationDay] as? Appointment {
+            let titleTemp = temp.title
+
+            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation + 1) + ": " + titleTemp
             dsCalArray += [temp]
         }
     }
     
     
+    /*
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -421,6 +442,7 @@ class DailyScheduleTableViewController: UITableViewController {
         tableView.reloadData()
         title = "Today"
     }
+ */
     
     
     
