@@ -509,7 +509,7 @@ class TaskManager: NSObject, NSCopying {
         var minuteOut = 0
         
         // if not enough time to allocate before working hours are up, switch to tomorrow
-        if minuteIn + WORKING_INTERVAL_SIZE > 1439 {
+        if minuteIn + WORKING_INTERVAL_SIZE > lastWorkingMinute {
             minuteOut = firstWorkingMinute
             dayOut = dayIn + 1
             return (dayOut, minuteOut)
@@ -518,7 +518,7 @@ class TaskManager: NSObject, NSCopying {
         var j = 0
 
         // iterate through today to where the last working block starts
-        for var i = minuteIn; i < 1439 - WORKING_INTERVAL_SIZE + 1; ++i {
+        for var i = minuteIn; i < lastWorkingMinute - WORKING_INTERVAL_SIZE + 1; ++i {
             // if there's a block available from this moment on (this ever increasing moment starting at minuteIn)
             if isBlockFree(i, dIn: dayIn)  {
                 // allocate to it (the next 15 cells)
