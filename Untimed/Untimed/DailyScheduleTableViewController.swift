@@ -186,22 +186,37 @@ class DailyScheduleTableViewController: UITableViewController {
                     // count numBlocks that should have been completed
                     let numBlocks = self.countNumBlocksInInterval(temp.dsCalAdjustedStartLocation, end: temp.dsCalAdjustedEndLocation)
                     
-                    // testing
-                    print ("\nnumBlocks is: \(numBlocks)\n")
-                    
                     // add the value back to assignment in tasks array
+                    var index = 0
                     
+                    for var i = 0; i < self.taskManager.tasks.count; ++i {
+                        if temp == self.taskManager.tasks[i] {
+                            index = i
+                        }
+                    }
                     
+                    if let temp = self.taskManager.tasks[index] as? Assignment {
+                        temp.numBlocksLeftToAllocate += numBlocks
+                    }
                     // reallocate time
+                    self.taskManager.allocateTime()
                     
+                    // copy to other array
+                    self.tmCopy = self.taskManager.copy() as! TaskManager
+                    
+                    // recreate dsCalArray from updated tM
+                    self.createDSCalArray()
                     
                     // save
+                    self.taskManager.save()
+                    
+                    // FIXME: make sure to loadfromdisc in tasktabletable
                     
                     // reload data
-                    
-                    
+                    tableView.reloadData()
                     
                 }
+                
                 let needTimeAction = UIAlertAction(title: "I need more time", style: .Default) { (action) in
                     self.performSegueWithIdentifier("More Time Segue", sender: DailyScheduleTableViewController())
                 }
@@ -372,8 +387,9 @@ class DailyScheduleTableViewController: UITableViewController {
         var cellDiff = 0
 
         // make copy of tm to avoid pointer trouble
+        // FIXME: this is not working
         tmCopy = taskManager.copy() as! TaskManager
-        tmCopy.calArrayDescriptionAtIndex(1120, day: 0)
+
         // wipe dsCalArray
         let j = dsCalArray.count
         for var i = j; i > 0 ; --i {
@@ -418,6 +434,7 @@ class DailyScheduleTableViewController: UITableViewController {
 
             temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation + 1) + ": " + titleTemp
             dsCalArray += [temp]
+            
         }
         
         if let temp = tmCopy.calendarArray[endCoor][dateLocationDay] as? Appointment {

@@ -45,7 +45,7 @@ class TaskManager: NSObject, NSCopying {
     */
     
     func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy = self
+        let copy = TaskManager()
         return copy
     }
     
