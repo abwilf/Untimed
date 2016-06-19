@@ -89,6 +89,7 @@ class DailyScheduleTableViewController: UITableViewController {
             
             // problem may be here?!
             taskManager.allocateTime()
+            createDSCalArray()
             tableView.reloadData()
         }
     }
@@ -100,6 +101,7 @@ class DailyScheduleTableViewController: UITableViewController {
             selectedDate = cdvc.newDate
             taskManager.loadFromDisc()
             taskManager.allocateTime()
+            createDSCalArray()
             tableView.reloadData()
         }
     }
@@ -240,6 +242,7 @@ class DailyScheduleTableViewController: UITableViewController {
         // re-allocate
         taskManager.loadFromDisc()
         taskManager.allocateTime()
+        createDSCalArray()
         tableView.reloadData()
     }
     
