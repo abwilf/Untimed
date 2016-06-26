@@ -17,7 +17,7 @@ class DailyScheduleTableViewController: UITableViewController {
     let MINS_IN_DAY = 1440
     let MINS_IN_HOUR = 60
     
-    var dsCalArray: [Task] = []
+    var dsCalArray: [[Task?]] = []
 
     // create counting variables for allocation to tableview
     var startLocation = 0
@@ -336,8 +336,8 @@ class DailyScheduleTableViewController: UITableViewController {
         // giving cell information and telling where to find it
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         if indexPath.row < dsCalArray.count {
-            let task = dsCalArray[indexPath.row]
-            cell.textLabel?.text = task.title
+            let task = dsCalArray[indexPath.row][dateLocationDay]
+            cell.textLabel?.text = task?.title
             return cell
             
             /*
@@ -374,74 +374,145 @@ class DailyScheduleTableViewController: UITableViewController {
     }
     
     
+    /*
     func dsCalArrayDescription() {
         for var i = 0; i < dsCalArray.count; ++i {
             print ("\(dsCalArray[i].title)\n")
         }
     }
+    */
     
     func createDSCalArray() {
         
         // create counting variables
-        var i = 0
         var cellDiff = 0
 
         // make copy of tm to avoid pointer trouble
-        // FIXME: this is not working
         tmCopy = taskManager.copy() as! TaskManager
 
         // wipe dsCalArray
-        let j = dsCalArray.count
-        for var i = j; i > 0 ; --i {
-            dsCalArray.removeAtIndex(i - 1)
-        }
+        dsCalArray = [[Task?]]()
         
         // iterate through tmCopy's calArray
-        while i < MINS_IN_DAY {
-            // wipe for reuse in each cell
-            cellDiff = 0
+        for var k = 0; k < 28; ++k {
+            // create otherDayCount every day you iterate through
+            var otherDayIndex = 0
             
-            // starting location
-            let j = i
-            
-            // Only deal with one block of same things.  If this element is the same as the one after it, increment counters.
-            while isNextSameAsThis(i + cellDiff, col: dateLocationDay) {
-                cellDiff += 1
+            for var i = 0; i < MINS_IN_DAY; ++i {
+                // wipe for reuse in each cell
+                cellDiff = 0
+                
+                // starting location
+                let j = i
+                
+                // Only deal with one block of same things.  If this element is the same as the one after it, increment counters.
+                while isNextSameAsThis(i + cellDiff, col: k) {
+                    cellDiff += 1
+                }
+                
+                i += cellDiff
+                
+                // update object in tM calArray
+                tmCopy.calendarArray[i][k].dsCalAdjustedStartLocation = j
+                tmCopy.calendarArray[i][k].dsCalAdjustedEndLocation = i
+                
+                addToDSCalArray(j, endCoor: i, dayCoor: k, oDRowIndex: otherDayIndex)
+                
+                // FIXME: check if dsCal is updating correctly
+                //print ("\(dsCalArray[1][1])")
+                
+                // print odRowIndex
+                print ("otherDayIndex is: \(otherDayIndex)")
+                
+                if k > 0 {
+                    otherDayIndex += 1
+                }
             }
-            
-            i += cellDiff
-            
-            // update object in tM calArray
-            tmCopy.calendarArray[i][dateLocationDay].dsCalAdjustedStartLocation = j
-            tmCopy.calendarArray[i][dateLocationDay].dsCalAdjustedEndLocation = i
-            
-            addToDSCalArray(j, endCoor: i, dayCoor: dateLocationDay)
-            
-            i += 1
         }
     }
     
-    func addToDSCalArray(startCoor: Int, endCoor: Int, dayCoor: Int) {
+   
+    
+    func addToDSCalArray(startCoor: Int, endCoor: Int, dayCoor: Int, oDRowIndex: Int) {
         
         if let temp = tmCopy.calendarArray[endCoor][dayCoor] as? Free {
+            // alter object's title
             temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation + 1) + ": Free"
-            dsCalArray += [temp]
+            addTaskToDSCal(dayCoor, taskIn: temp, oDIndexIn: oDRowIndex)
+            
         }
-        
-        if let temp = tmCopy.calendarArray[endCoor][dateLocationDay] as? Assignment {
+    
+        if let temp = tmCopy.calendarArray[endCoor][dayCoor] as? Assignment {
             // save original title
             let titleTemp = temp.title
 
             temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation + 1) + ": " + titleTemp
-            dsCalArray += [temp]
-            
+            addTaskToDSCal(dayCoor, taskIn: temp, oDIndexIn: oDRowIndex)
         }
         
-        if let temp = tmCopy.calendarArray[endCoor][dateLocationDay] as? Appointment {
+        if let temp = tmCopy.calendarArray[endCoor][dayCoor] as? Appointment {
             let titleTemp = temp.title
-
             temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation + 1) + ": " + titleTemp
-            dsCalArray += [temp]
+            addTaskToDSCal(dayCoor, taskIn: temp, oDIndexIn: oDRowIndex)
+        }
+    }
+    
+    func copyAtRow(arr: [[Task?]], row: Int) -> [Task?] {
+        var newRow = [Task?]()
+        newRow = createRowWith28Nils()
+        for var k = 0; k < 28; ++k {
+            if let temp = arr[row][k] {
+                newRow[k] = temp
+            }
+            else {
+                // is optional.  ignore!
+            }
+        }
+        return newRow
+    }
+    
+    func createRowWith28Nils() -> [Task?]{
+        // clear
+        var row = [Task?]()
+        for var i = 0; i < 28; ++i {
+            // add nils
+            row += [nil]
+        }
+        
+        return row
+    }
+    
+    func addTaskToDSCal(dayIn: Int, taskIn: Task, oDIndexIn: Int) {
+        // create row to append
+        var newRow: [Task?] = createRowWith28Nils()
+        
+        if dayIn == 0 {
+            // add to newRow and add that to dsCalArray
+            newRow[0] = taskIn
+            dsCalArray.append(newRow)
+        }
+            
+            // if another day
+        else {
+            // if the amount of rows we're allocating to is less than the amount we've already created
+            if oDIndexIn < dsCalArray.count {
+                // copy dsCalArray at that row
+                newRow = copyAtRow(dsCalArray, row: oDIndexIn)
+                
+                // add element to newRow
+                newRow[dayIn] = taskIn
+                
+                // replace dsCalArray at that row with newRow
+                for var k = 0; k < 28; ++k {
+                    dsCalArray[oDIndexIn][k] = newRow[k]
+                }
+            }
+                
+            else {
+                // add element to new row and append to dsCalArray
+                newRow[dayIn] = taskIn
+                dsCalArray.append(newRow)
+            }
         }
     }
     
