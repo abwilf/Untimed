@@ -332,7 +332,7 @@ class TaskManager: NSObject, NSCopying {
         if dayDiff == 0 {
             // if dueDate is more than a working block's time from now, and there's an opportunity for at least one block before lastWorkingMinute
             // FIXME: watch out for the <=, need to ask keenan if this is right
-            if dueDateMinuteCoordinate <= lastWorkingMinute - WORKING_INTERVAL_SIZE && dueDateMinuteCoordinate >= rightNowMinuteCoordinate + WORKING_INTERVAL_SIZE {
+            if dueDateMinuteCoordinate >= rightNowMinuteCoordinate + WORKING_INTERVAL_SIZE {
                 numBlocks = numFreeBlocksInSameDayInterval(rightNowMinuteCoordinate, minuteCoordinate2In: dueDateMinuteCoordinate, dayCoordinateIn: 0)
             }
         }
@@ -517,7 +517,7 @@ class TaskManager: NSObject, NSCopying {
         
         var j = 0
 
-        // iterate through today to where the last working block starts
+        // iterate through the day to where the last working block starts
         for var i = minuteIn; i < lastWorkingMinute - WORKING_INTERVAL_SIZE + 1; ++i {
             // if there's a block available from this moment on (this ever increasing moment starting at minuteIn)
             if isBlockFree(i, dIn: dayIn)  {
@@ -530,8 +530,10 @@ class TaskManager: NSObject, NSCopying {
                     }
                     calendarArray[j][dayIn] = assg
                 }
+                
                 // update minuteOut
                 minuteOut = j
+                dayOut = dayIn
                 return (dayOut, minuteOut)
             }
         }
@@ -541,20 +543,24 @@ class TaskManager: NSObject, NSCopying {
     func isBlockFree(minIn: Int, dIn: Int) -> Bool {
         // if 15 minutes in a row are free (1 block)
         var count = 0
-        for var i = minIn; i < minIn + WORKING_INTERVAL_SIZE - 1; ++i {
-            if calendarArray[minIn][dIn].title == "Unnamed Task" && isNextSameAsThis(i, col: dIn) {
-                count += 1
+        if minIn >= firstWorkingMinute {
+            for var i = minIn; i < minIn + WORKING_INTERVAL_SIZE - 1; ++i {
+                if calendarArray[minIn][dIn].title == "Unnamed Task" && isNextSameAsThis(i, col: dIn) {
+                    count += 1
+                }
+            }
+            
+            // is minus one because it only looks at whether the next one is the same.  Doesn't count for this one.
+            if count == WORKING_INTERVAL_SIZE - 1 {
+                return true
+            }
+            
+            else {
+                return false
             }
         }
         
-        // is minus one because it only looks at whether the next one is the same.  Doesn't count for this one.
-        if count == WORKING_INTERVAL_SIZE - 1 {
-            return true
-        }
-            
-        else {
-            return false
-        }
+        return false
     }
     
     

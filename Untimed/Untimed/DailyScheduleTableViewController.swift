@@ -265,17 +265,14 @@ class DailyScheduleTableViewController: UITableViewController {
         
         super.viewWillAppear(animated)
      
-        // works properly
         taskManager.loadFromDisc()
         
-        // works properly
         taskManager.allocateTime()
-        taskManager.calArrayDescriptionAtIndex(1120, day: 0)
         
         createDSCalArray()
         
-        tableView.reloadData()
         
+        tableView.reloadData()
     }
     
     // connecting add and single task viewer pages to this
@@ -337,7 +334,23 @@ class DailyScheduleTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         if indexPath.row < dsCalArray.count {
             let task = dsCalArray[indexPath.row][dateLocationDay]
-            cell.textLabel?.text = task?.title
+            
+            if let temp = task as? Assignment {
+                // take the minute location of end time of the previous task and the start time of the next task
+                let tempTitle = task?.title
+                
+                temp.title = minInHrCoord(dsCalArray[indexPath.row - 1][dateLocationDay]!.dsCalAdjustedEndLocation + 1) + " - " + minInHrCoord(dsCalArray[indexPath.row + 1][dateLocationDay]!.dsCalAdjustedStartLocation) + ": \(tempTitle!)"
+                
+                cell.textLabel?.text = temp.title
+                temp.title = tempTitle!
+                return cell
+            }
+            
+            
+            else {
+                cell.textLabel?.text = task?.title
+            }
+            
             return cell
             
             /*
@@ -417,13 +430,7 @@ class DailyScheduleTableViewController: UITableViewController {
                 tmCopy.calendarArray[i][k].dsCalAdjustedEndLocation = i
                 
                 addToDSCalArray(j, endCoor: i, dayCoor: k, oDRowIndex: otherDayIndex)
-                
-                // FIXME: check if dsCal is updating correctly
-                //print ("\(dsCalArray[1][1])")
-                
-                // print odRowIndex
-                print ("otherDayIndex is: \(otherDayIndex)")
-                
+
                 if k > 0 {
                     otherDayIndex += 1
                 }
@@ -444,9 +451,12 @@ class DailyScheduleTableViewController: UITableViewController {
     
         if let temp = tmCopy.calendarArray[endCoor][dayCoor] as? Assignment {
             // save original title
-            let titleTemp = temp.title
+            
+            /*let titleTemp = temp.title
 
             temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation + 1) + ": " + titleTemp
+            */
+            
             addTaskToDSCal(dayCoor, taskIn: temp, oDIndexIn: oDRowIndex)
         }
         
