@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DailyScheduleTableViewController: UITableViewController {
+class DailyScheduleTableViewController: UITableViewController{
     
     let taskManager = TaskManager()
     var tmCopy = TaskManager()
@@ -310,7 +310,7 @@ class DailyScheduleTableViewController: UITableViewController {
     
     // FIXME: change this when we have userinputted values
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MINS_IN_DAY
+        return self.dsCalArray.count
     }
     
     func isNextSameAsThis(row: Int, col: Int) -> Bool {
