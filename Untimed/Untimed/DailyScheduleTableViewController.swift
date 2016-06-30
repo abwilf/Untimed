@@ -159,11 +159,10 @@ class DailyScheduleTableViewController: UITableViewController{
         return temp
     }
     
-    
     // action sheets
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if indexPath.row <= dsCalArray.count {
+        //if indexPath.row <= dsCalArray.count {
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             let warningController = UIAlertController(title: "Are you sure you want to delete this appointment?", message: nil, preferredStyle: .Alert)
             
@@ -180,9 +179,13 @@ class DailyScheduleTableViewController: UITableViewController{
                 }
             }
             warningController.addAction(deleteAction)
-            
-            if let temp = dsCalArray[indexPath.row] as? Assignment {
-                let didntDoAction = UIAlertAction(title: "I didn't do this", style: .Default) { (action) in
+        
+        
+            if let temp = dsCalArray[indexPath.row][dateLocationDay] as? Assignment {
+                
+                
+                let didntDoAction = UIAlertAction(title: "Didn't do / don't want to", style: .Default) { (action) in
+                    
                     // count numBlocks that should have been completed
                     let numBlocks = self.countNumBlocksInInterval(temp.dsCalAdjustedStartLocation, end: temp.dsCalAdjustedEndLocation)
                     
@@ -195,11 +198,18 @@ class DailyScheduleTableViewController: UITableViewController{
                         }
                     }
                     
+                    // clear tmCalArray at that spot
+
+                    /*
                     if let temp = self.taskManager.tasks[index] as? Assignment {
                         temp.numBlocksLeftToAllocate += numBlocks
                     }
+                    */
+                    
                     // reallocate time
                     self.taskManager.allocateTime()
+                    
+                    // print (self.taskManager.calendarArray[1050][0])
                     
                     // copy to other array
                     self.tmCopy = self.taskManager.copy() as! TaskManager
@@ -209,6 +219,9 @@ class DailyScheduleTableViewController: UITableViewController{
                     
                     // save
                     self.taskManager.save()
+                    
+                    // test
+                    // print (self.dsCalArray[1])
                     
                     // FIXME: make sure to loadfromdisc in tasktabletable
                     
@@ -235,7 +248,7 @@ class DailyScheduleTableViewController: UITableViewController{
                 alertController.addAction(finishedAction)
             }
             
-            if let _ = dsCalArray[indexPath.row] as? Appointment {
+            if let _ = dsCalArray[indexPath.row][dateLocationDay] as? Appointment {
                 let rescheduleAction = UIAlertAction(title: "Reschedule", style: .Default) { (action) in
                 }
                 
@@ -243,14 +256,13 @@ class DailyScheduleTableViewController: UITableViewController{
                 alertController.addAction(deleteAction)
             }
             
-            if let _ = dsCalArray[indexPath.row] as? Free {
+            if let _ = dsCalArray[indexPath.row][dateLocationDay] as? Free {
                 let addApptAction = UIAlertAction(title: "Add appointment", style: .Default) { (action) in
                 }
                 
                 alertController.addAction(addApptAction)
             }
             self.presentViewController(alertController, animated: true, completion: nil)
-        }
     }
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
