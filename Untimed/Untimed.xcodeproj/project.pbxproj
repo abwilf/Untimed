@@ -138,9 +138,9 @@
 			isa = PBXGroup;
 			children = (
 				A2116D781CA968EC003D221D /* Main.storyboard */,
-				A21825061CC2C931008D366D /* ChangeDateViewController.swift */,
 				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
 				A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */,
+				A21825061CC2C931008D366D /* ChangeDateViewController.swift */,
 				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */,
 				A1D7D2B51CB2E08400053AE6 /* SingleTaskTableViewController.swift */,

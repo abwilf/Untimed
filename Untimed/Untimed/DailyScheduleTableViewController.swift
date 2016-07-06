@@ -192,7 +192,7 @@ class DailyScheduleTableViewController: UITableViewController{
                     // add the value back to assignment in tasks array
                     var index = 0
                     
-                    for var i = 0; i < self.taskManager.tasks.count; ++i {
+                    for i in 0..<self.taskManager.tasks.count {
                         if temp == self.taskManager.tasks[i] {
                             index = i
                         }
@@ -419,11 +419,12 @@ class DailyScheduleTableViewController: UITableViewController{
         dsCalArray = [[Task?]]()
         
         // iterate through tmCopy's calArray
-        for var k = 0; k < 28; ++k {
+        for k in 0..<28 {
             // create otherDayCount every day you iterate through
             var otherDayIndex = 0
             
-            for var i = 0; i < MINS_IN_DAY; ++i {
+            var i = 0
+            while i < MINS_IN_DAY {
                 // wipe for reuse in each cell
                 cellDiff = 0
                 
@@ -446,6 +447,8 @@ class DailyScheduleTableViewController: UITableViewController{
                 if k > 0 {
                     otherDayIndex += 1
                 }
+                
+                i = i + 1
             }
         }
     }
@@ -482,7 +485,7 @@ class DailyScheduleTableViewController: UITableViewController{
     func copyAtRow(arr: [[Task?]], row: Int) -> [Task?] {
         var newRow = [Task?]()
         newRow = createRowWith28Nils()
-        for var k = 0; k < 28; ++k {
+        for k in 0..<28 {
             if let temp = arr[row][k] {
                 newRow[k] = temp
             }
@@ -496,7 +499,7 @@ class DailyScheduleTableViewController: UITableViewController{
     func createRowWith28Nils() -> [Task?]{
         // clear
         var row = [Task?]()
-        for var i = 0; i < 28; ++i {
+        for _ in 0..<28 {
             // add nils
             row += [nil]
         }
@@ -525,7 +528,7 @@ class DailyScheduleTableViewController: UITableViewController{
                 newRow[dayIn] = taskIn
                 
                 // replace dsCalArray at that row with newRow
-                for var k = 0; k < 28; ++k {
+                for k in 0..<28 {
                     dsCalArray[oDIndexIn][k] = newRow[k]
                 }
             }

@@ -38,22 +38,24 @@ class TaskManager: NSObject, NSCopying {
     }
     
     /*
-    func setLastWorkingMinute() {
-        lastWorkingMinute -= 1
-    }
-
-    */
+     func setLastWorkingMinute() {
+     lastWorkingMinute -= 1
+     }
+     
+     */
     
     func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = TaskManager()
         return copy
     }
     
+    
     func calArrayDescriptionAtIndex(min: Int, day: Int) {
         print ("\(calendarArray[min][day].title)")
     }
+    
     func tasksDescription() {
-        for var i = 0; i < tasks.count; ++i {
+        for i in 0..<tasks.count {
             print ("\(tasks[i].title)\n")
         }
     }
@@ -92,7 +94,7 @@ class TaskManager: NSObject, NSCopying {
         return false
     }
     
-    
+    // why > 0 and not >= ??
     func isNextSameAsThis (row: Int, col: Int) -> Bool {
         if row > 0 && row < MINS_IN_DAY - 1 || row == 0 {
             if calendarArray[row][col] == calendarArray[row + 1][col] {
@@ -147,6 +149,7 @@ class TaskManager: NSObject, NSCopying {
         }
         
     }
+    
     // returns appropriate calendar coordinates
     func nsDateInCalFormat(dateIn: NSDate) ->
         (dayCoordinate: Int, minuteCoordinate: Int) {
@@ -184,14 +187,14 @@ class TaskManager: NSObject, NSCopying {
                 dayCoordinate = dueDateDay - currentDay
             }
                 
-            // if month is greater and year is same
+                // if month is greater and year is same
             else if dueDateMonth > currentMonth && dueDateYear == currentYear {
                 // from here to end of this month
                 let numDaysCurrentMonth = numDaysInMonth(currentMonth)
                 dayCoordinate += numDaysCurrentMonth - currentDay
                 
                 // adding in days from all included months (need to check all months codes)
-                for var i = 0; i < MONTHS_IN_YEAR; ++i {
+                for i in 0..<MONTHS_IN_YEAR {
                     if doesIncludeSameYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
                         dayCoordinate += numDaysInMonth(i)
                     }
@@ -201,14 +204,14 @@ class TaskManager: NSObject, NSCopying {
                 dayCoordinate += dueDateDay
             }
                 
-            // if it's next calendar year, but earlier month (november 2015 - jan 2016)
+                // if it's next calendar year, but earlier month (november 2015 - jan 2016)
             else if dueDateMonth <= currentMonth && dueDateYear == currentYear + 1 {
                 // from here to end of this month
                 let numDaysCurrentMonth = numDaysInMonth(currentMonth)
                 dayCoordinate += numDaysCurrentMonth - currentDay
                 
                 // adding in days from all included months (need to check all months codes)
-                for var i = 0; i < MONTHS_IN_YEAR; ++i {
+                for i in 0..<MONTHS_IN_YEAR {
                     if doesIncludeNextYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
                         dayCoordinate += numDaysInMonth(i)
                     }
@@ -217,8 +220,8 @@ class TaskManager: NSObject, NSCopying {
                 // add in days for dueDateMonth
                 dayCoordinate += dueDateDay
             }
-            
-            // if it's in the past            
+                
+                // if it's in the past
             else if dueDateYear < currentYear {
                 dayCoordinate = -1
             }
@@ -226,7 +229,7 @@ class TaskManager: NSObject, NSCopying {
             else if dueDateMonth < currentMonth && dueDateYear == currentYear {
                 dayCoordinate = -1
             }
-            
+                
             else if dueDateMonth == currentMonth && dueDateYear == currentYear && dueDateDay < currentDay {
                 dayCoordinate = -1
             }
@@ -280,7 +283,7 @@ class TaskManager: NSObject, NSCopying {
         var numFreeBlocks: Int = 0
         var count = 0
         
-        for var i = minuteCoordinate1In; i < minuteCoordinate2In; ++i {
+        for i in minuteCoordinate1In..<minuteCoordinate2In {
             if let _ = calendarArray[i][dayCoordinateIn] as? Free {
                 count += 1
             }
@@ -302,8 +305,8 @@ class TaskManager: NSObject, NSCopying {
     func clearCalArray() {
         
         // starting from the first cell of today to the end of the array
-        for var i = 0; i < 28; ++i {
-            for var j = 0; j < cellsPerDay; ++j {
+        for i in 0..<28 {
+            for j in 0..<cellsPerDay {
                 // create free object to assign in clearCalArray
                 let freeObj = Free()
                 self.calendarArray[j][i] = freeObj
@@ -343,7 +346,7 @@ class TaskManager: NSObject, NSCopying {
             numBlocks = numFreeBlocksInSameDayInterval(rightNowMinuteCoordinate, minuteCoordinate2In: lastWorkingMinute, dayCoordinateIn: 0)
             
             // iterate through all minutes of days that aren't today (0) or dueDateDay and add to numBlocks
-            for var j = 1; j < dueDateDayCoordinate; ++j {
+            for j in 1..<dueDateDayCoordinate {
                 numBlocks += numFreeBlocksInSameDayInterval(firstWorkingMinute, minuteCoordinate2In: lastWorkingMinute, dayCoordinateIn: j)
             }
             
@@ -353,9 +356,8 @@ class TaskManager: NSObject, NSCopying {
         return numBlocks
     }
     
-    
     func deletePastTasks() {
-        for var i = 0; i < tasks.count; ++i {
+        for i in 0..<tasks.count {
             // if the task is an appointment
             if let temp = tasks[i] as? Appointment {
                 // if the appointment happened before today, delete it
@@ -395,14 +397,14 @@ class TaskManager: NSObject, NSCopying {
         orderedAssignmentArray = assignmentArray
         
         // initialize hoursLeftToAllocate of all elements to numBlocksNeeded - numBlocksCompleted
-        for var j = 0; j < orderedAssignmentArray.count; ++j {
+        for j in 0..<orderedAssignmentArray.count {
             orderedAssignmentArray[j].numBlocksLeftToAllocate =
                 Int(orderedAssignmentArray[j].numBlocksNeeded) -
                 orderedAssignmentArray[j].numBlocksCompleted
         }
         
         // find free hours before due date for all assignments in orderedArray
-        for var i = 0; i < orderedAssignmentArray.count; ++i {
+        for i in 0..<orderedAssignmentArray.count {
             let assignment = orderedAssignmentArray[i]
             orderedAssignmentArray[i].numFreeBlocksBeforeDueDate =
                 calcFreeTimeBeforeDueDate(assignment)
@@ -411,7 +413,7 @@ class TaskManager: NSObject, NSCopying {
         // sort by urgency, which is based on hoursLeft and freehoursbeforeduedate
         orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
     }
-       func allocateTime() {
+    func allocateTime() {
         // setCellsPerDay()
         
         // clear out past tasks in task list
@@ -431,7 +433,7 @@ class TaskManager: NSObject, NSCopying {
         // use in both allocations
         var apptDayCoordinate: Int = 0
         // iterate through tasks array looking for appointments
-        for var i = 0; i < self.tasks.count; ++i {
+        for i in 0..<self.tasks.count {
             // if object is an appointment, assign to calendarArray
             if let appt = self.tasks[i] as? Appointment {
                 apptDayCoordinate = nsDateInCalFormat(appt.startTime).dayCoordinate
@@ -439,13 +441,13 @@ class TaskManager: NSObject, NSCopying {
                 let endTimeInMinCoordinates = nsDateInCalFormat(appt.endTime).minuteCoordinate
                 
                 // allocate
-                for var j = startTimeInMinCoordinates; j < endTimeInMinCoordinates; ++j {
+                for j in startTimeInMinCoordinates..<endTimeInMinCoordinates {
                     self.calendarArray[j][apptDayCoordinate] = appt
                 }
             }
         }
     }
-
+    
     
     
     func allocateAssignments() {
@@ -461,7 +463,7 @@ class TaskManager: NSObject, NSCopying {
             return
         }
             
-        // otherwise, allocate assignments
+            // otherwise, allocate assignments
         else {
             // variables for right now
             let currentDate = NSDate()
@@ -491,8 +493,8 @@ class TaskManager: NSObject, NSCopying {
                     orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
                     mostUrgentAssn = orderedAssignmentArray[0]
                 }
-                
-                // if needs to switch to tomorrow, don't decrement because it didn't allocate
+                    
+                    // if needs to switch to tomorrow, don't decrement because it didn't allocate
                 else {
                     day = temp.dayOut
                 }
@@ -516,19 +518,21 @@ class TaskManager: NSObject, NSCopying {
         }
         
         var j = 0
-
+        
         // iterate through the day to where the last working block starts
-        for var i = minuteIn; i < lastWorkingMinute - WORKING_INTERVAL_SIZE + 1; ++i {
+        for i in minuteIn..<lastWorkingMinute - WORKING_INTERVAL_SIZE + 1 {
             // if there's a block available from this moment on (this ever increasing moment starting at minuteIn)
             if isBlockFree(i, dIn: dayIn)  {
                 // allocate to it (the next 15 cells)
-                for j = i; j < i + WORKING_INTERVAL_SIZE; ++j {
+                j = i
+                while (j < i + WORKING_INTERVAL_SIZE) {
                     // safeguard
                     if let _ = calendarArray[j][dayIn] as? Assignment {
                         // print error message to developer because cal array should have been wiped
                         print("ERROR! Calendar array was not properly cleared, or this allocation did not start at the correct spot (one after the previous slot was allocated to)")
                     }
                     calendarArray[j][dayIn] = assg
+                    j += 1
                 }
                 
                 // update minuteOut
@@ -544,7 +548,7 @@ class TaskManager: NSObject, NSCopying {
         // if 15 minutes in a row are free (1 block)
         var count = 0
         if minIn >= firstWorkingMinute {
-            for var i = minIn; i < minIn + WORKING_INTERVAL_SIZE - 1; ++i {
+            for i in minIn..<(minIn + WORKING_INTERVAL_SIZE - 1) {
                 if calendarArray[minIn][dIn].title == "Unnamed Task" && isNextSameAsThis(i, col: dIn) {
                     count += 1
                 }
@@ -554,7 +558,7 @@ class TaskManager: NSObject, NSCopying {
             if count == WORKING_INTERVAL_SIZE - 1 {
                 return true
             }
-            
+                
             else {
                 return false
             }
