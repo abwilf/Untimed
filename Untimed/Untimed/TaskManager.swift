@@ -283,7 +283,8 @@ class TaskManager: NSObject, NSCopying {
         var numFreeBlocks: Int = 0
         var count = 0
         
-        for i in minuteCoordinate1In..<minuteCoordinate2In {
+        var i = minuteCoordinate1In
+        while i < minuteCoordinate2In {
             if let _ = calendarArray[i][dayCoordinateIn] as? Free {
                 count += 1
             }
@@ -297,6 +298,7 @@ class TaskManager: NSObject, NSCopying {
                 numFreeBlocks += 1
                 count = 0
             }
+            i += 1
         }
         
         return numFreeBlocks
