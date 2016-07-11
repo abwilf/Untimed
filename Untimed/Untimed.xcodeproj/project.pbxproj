@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		211EE5DF1D319FF500E322BB /* AssignmentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211EE5DE1D319FF500E322BB /* AssignmentBlock.swift */; };
 		214745F41CB8B568007BABCA /* core.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 214745F31CB8B568007BABCA /* core.pdf */; };
 		218CCE141D0C663800CB6E8A /* AddTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */; };
 		218CCE161D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */; };
@@ -54,6 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		211EE5DE1D319FF500E322BB /* AssignmentBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentBlock.swift; sourceTree = "<group>"; };
 		214745F31CB8B568007BABCA /* core.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = core.pdf; sourceTree = "<group>"; };
 		218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTimeViewController.swift; sourceTree = "<group>"; };
 		218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAssignmentViewController.swift; sourceTree = "<group>"; };
@@ -140,7 +142,11 @@
 				A2116D781CA968EC003D221D /* Main.storyboard */,
 				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
 				A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */,
+				A2116DA41CA96F22003D221D /* Assignment.swift */,
 				A21825061CC2C931008D366D /* ChangeDateViewController.swift */,
+				A2116DA21CA96DB3003D221D /* Task.swift */,
+				211EE5DE1D319FF500E322BB /* AssignmentBlock.swift */,
+				A2C519171CAB38CF0074387D /* Appointment.swift */,
 				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */,
 				A1D7D2B51CB2E08400053AE6 /* SingleTaskTableViewController.swift */,
@@ -149,10 +155,7 @@
 				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
 				218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */,
 				218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */,
-				A2116DA21CA96DB3003D221D /* Task.swift */,
 				A21F78CF1CB2DA5000517FD9 /* AddViewController.swift */,
-				A2116DA41CA96F22003D221D /* Assignment.swift */,
-				A2C519171CAB38CF0074387D /* Appointment.swift */,
 				A27989AB1CB6D5B7007BC49F /* Free.swift */,
 				214745F31CB8B568007BABCA /* core.pdf */,
 				A286B83A1CC5D993005736E4 /* documentation.pdf */,
@@ -329,6 +332,7 @@
 				A21F78D01CB2DA5000517FD9 /* AddViewController.swift in Sources */,
 				A2116DA31CA96DB3003D221D /* Task.swift in Sources */,
 				A2116D751CA968EC003D221D /* AppDelegate.swift in Sources */,
+				211EE5DF1D319FF500E322BB /* AssignmentBlock.swift in Sources */,
 				A29A9A2A1CBE98340011A5BF /* EditAssignmentTableViewController.swift in Sources */,
 				A22D22171CB6BA6100F085F4 /* DailyScheduleTableViewController.swift in Sources */,
 				A10A6A701CAC33E900DB9C5F /* TestViewController.swift in Sources */,

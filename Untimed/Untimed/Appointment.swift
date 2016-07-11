@@ -26,6 +26,10 @@ class Appointment: Task {
         }
         return adjustedEndTimeComponents.hour
     }
+        
+    func lockAppointment() {
+        lockTask()
+    }
     
     override init() {
         super.init()

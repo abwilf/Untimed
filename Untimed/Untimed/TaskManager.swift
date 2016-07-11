@@ -29,7 +29,8 @@ class TaskManager: NSObject, NSCopying {
     // let = mins in day for now
     var cellsPerDay = 1440
     
-    // FIXME: this is currently set at 8 am to 8 pm.  change to first working minute, and last working minute, make sure they're at midnight and 11:59 (1439)
+    // FIXME: this is currently set at 8 am to 8 pm.  change to first working minute, 
+    // and last working minute, make sure they're at midnight and 11:59 (1439)
     var firstWorkingMinute = 480
     var lastWorkingMinute = 1200
     var workingCellsPerDay = 0
@@ -94,9 +95,8 @@ class TaskManager: NSObject, NSCopying {
         return false
     }
     
-    // why > 0 and not >= ??
     func isNextSameAsThis (row: Int, col: Int) -> Bool {
-        if row > 0 && row < MINS_IN_DAY - 1 || row == 0 {
+        if row >= 0 && row < MINS_IN_DAY - 1 {
             if calendarArray[row][col] == calendarArray[row + 1][col] {
                 return true
             }
@@ -239,7 +239,8 @@ class TaskManager: NSObject, NSCopying {
     
     func doesIncludeNextYear (startMonth: Int, endMonth: Int, questionableMonth: Int) -> Bool {
         // if greater than start, but lsess than end
-        if (questionableMonth > startMonth && questionableMonth <= MONTHS_IN_YEAR) || (questionableMonth >= 1 && questionableMonth < endMonth) {
+        if (questionableMonth > startMonth && questionableMonth <= MONTHS_IN_YEAR) ||
+            (questionableMonth >= 1 && questionableMonth < endMonth) {
             return true
         }
         else {
@@ -249,7 +250,8 @@ class TaskManager: NSObject, NSCopying {
     
     
     func numDaysInMonth(monthIn: Int) -> Int {
-        if monthIn == 1 || monthIn == 3 || monthIn == 5 || monthIn == 7 || monthIn == 8 || monthIn == 10 || monthIn == 12 {
+        if monthIn == 1 || monthIn == 3 || monthIn == 5 || monthIn == 7
+            || monthIn == 8 || monthIn == 10 || monthIn == 12 {
             return 31
         }
             
@@ -268,7 +270,9 @@ class TaskManager: NSObject, NSCopying {
         
     }
     
-    func doesIncludeSameYear(startMonth: Int, endMonth: Int, questionableMonth: Int) -> Bool {
+    func doesIncludeSameYear(startMonth: Int,
+                             endMonth: Int,
+                             questionableMonth: Int) -> Bool {
         // if between the two
         if startMonth < questionableMonth && endMonth > questionableMonth {
             return true
@@ -279,7 +283,9 @@ class TaskManager: NSObject, NSCopying {
         }
     }
     
-    func numFreeBlocksInSameDayInterval (minuteCoordinate1In: Int, minuteCoordinate2In: Int, dayCoordinateIn: Int) -> Int {
+    func numFreeBlocksInSameDayInterval (minuteCoordinate1In: Int,
+                                         minuteCoordinate2In: Int,
+                                         dayCoordinateIn: Int) -> Int {
         var numFreeBlocks: Int = 0
         var count = 0
         
@@ -335,25 +341,34 @@ class TaskManager: NSObject, NSCopying {
         
         // if it's today
         if dayDiff == 0 {
-            // if dueDate is more than a working block's time from now, and there's an opportunity for at least one block before lastWorkingMinute
+            // if dueDate is more than a working block's time from now, and 
+            // there's an opportunity for at least one block before lastWorkingMinute
             // FIXME: watch out for the <=, need to ask keenan if this is right
             if dueDateMinuteCoordinate >= rightNowMinuteCoordinate + WORKING_INTERVAL_SIZE {
-                numBlocks = numFreeBlocksInSameDayInterval(rightNowMinuteCoordinate, minuteCoordinate2In: dueDateMinuteCoordinate, dayCoordinateIn: 0)
+                numBlocks = numFreeBlocksInSameDayInterval(rightNowMinuteCoordinate,
+                                                           minuteCoordinate2In: dueDateMinuteCoordinate,
+                                                           dayCoordinateIn: 0)
             }
         }
             
             // if it's some day in the future
         else {
             // iterate through today from right now until lastworkingminute
-            numBlocks = numFreeBlocksInSameDayInterval(rightNowMinuteCoordinate, minuteCoordinate2In: lastWorkingMinute, dayCoordinateIn: 0)
+            numBlocks = numFreeBlocksInSameDayInterval(rightNowMinuteCoordinate,
+                                                       minuteCoordinate2In: lastWorkingMinute,
+                                                       dayCoordinateIn: 0)
             
             // iterate through all minutes of days that aren't today (0) or dueDateDay and add to numBlocks
             for j in 1..<dueDateDayCoordinate {
-                numBlocks += numFreeBlocksInSameDayInterval(firstWorkingMinute, minuteCoordinate2In: lastWorkingMinute, dayCoordinateIn: j)
+                numBlocks += numFreeBlocksInSameDayInterval(firstWorkingMinute,
+                                                            minuteCoordinate2In: lastWorkingMinute,
+                                                            dayCoordinateIn: j)
             }
             
             // on the due date, iterate from firstworkingminute to dueDateMinuteCoordinate
-            numBlocks += numFreeBlocksInSameDayInterval(firstWorkingMinute, minuteCoordinate2In: dueDateMinuteCoordinate, dayCoordinateIn: dueDateDayCoordinate)
+            numBlocks += numFreeBlocksInSameDayInterval(firstWorkingMinute,
+                                                        minuteCoordinate2In: dueDateMinuteCoordinate,
+                                                        dayCoordinateIn: dueDateDayCoordinate)
         }
         return numBlocks
     }
@@ -390,9 +405,7 @@ class TaskManager: NSObject, NSCopying {
         }
     }
     
-    
     private func createOrderedArray() {
-        
         // turn tasks array  into array of Assignments
         unfilteredArray = tasks
         assignmentArray = unfilteredArray.filter(isAssignment) as! [Assignment]
@@ -415,6 +428,7 @@ class TaskManager: NSObject, NSCopying {
         // sort by urgency, which is based on hoursLeft and freehoursbeforeduedate
         orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
     }
+    
     func allocateTime() {
         // setCellsPerDay()
         
@@ -475,7 +489,8 @@ class TaskManager: NSObject, NSCopying {
             var day = currentDateInCal.dayCoordinate
             var minute = currentDateInCal.minuteCoordinate
             
-            // if not enough time to complete most urgent assignment before due date, make blockslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
+            // if not enough time to complete most urgent assignment before due date, 
+            // make blockslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
             var mostUrgentAssn = orderedAssignmentArray[0]
             if mostUrgentAssn.numBlocksLeftToAllocate > mostUrgentAssn.numFreeBlocksBeforeDueDate {
                 mostUrgentAssn.numBlocksLeftToAllocate = mostUrgentAssn.numFreeBlocksBeforeDueDate
@@ -484,7 +499,9 @@ class TaskManager: NSObject, NSCopying {
             // allocate
             while mostUrgentAssn.numBlocksLeftToAllocate > 0 {
                 // put one block of most urgent in at first available spot starting now
-                let temp = putBlockInCalArrayAtFirstFreeSpotToday(mostUrgentAssn, dayIn: day, minuteIn: minute)
+                let temp = putBlockInCalArrayAtFirstFreeSpotToday(mostUrgentAssn,
+                                                                  dayIn: day,
+                                                                  minuteIn: minute)
                 
                 // if it's still allocating to today
                 if day == temp.dayOut {
@@ -508,7 +525,8 @@ class TaskManager: NSObject, NSCopying {
         }
     }
     
-    func putBlockInCalArrayAtFirstFreeSpotToday(assg: Assignment, dayIn: Int, minuteIn: Int) -> (dayOut: Int, minuteOut: Int) {
+    func putBlockInCalArrayAtFirstFreeSpotToday(assg: Assignment, dayIn: Int,
+                                                minuteIn: Int) -> (dayOut: Int, minuteOut: Int) {
         var dayOut = 0
         var minuteOut = 0
         
