@@ -442,7 +442,7 @@ class TaskManager: NSObject, NSCopying {
         allocateAppts()
         
         // allocate Assignments
-        allocateAssignments()
+        //allocateAssignments()
     }
     
     func allocateAppts() {

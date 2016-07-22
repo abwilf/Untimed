@@ -21,24 +21,16 @@ class TaskTableTableViewController: UITableViewController {
     // unwind segue
     @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
     {
-        // add assignment created here!
+        // add assignment created
         if let aavc =
             sender.sourceViewController as? AddAssignmentTableViewController {
             taskManager.addTask(aavc.addedAssignment)
-            
-            // if amountofFreeTimebefore due is less than timeNeeded, make title 
-            // of task an error message
-            if aavc.addedAssignment.numFreeBlocksBeforeDueDate <
-                aavc.addedAssignment.numBlocksNeeded {
-                    aavc.addedAssignment.title +=
-                " -- WARNING: could not allocate all hours before due date"
-            }
             
             tableView.reloadData()
         }
         
         
-        // add appointment created here!
+        // add appointment created
         if let aapptvc = sender.sourceViewController as?
             AddAppointmentTableViewController {
             taskManager.addTask(aapptvc.addedAppointment)
