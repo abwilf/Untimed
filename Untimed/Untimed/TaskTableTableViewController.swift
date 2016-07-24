@@ -216,21 +216,17 @@ class TaskTableTableViewController: UITableViewController {
                 // correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
                 
-                // set the title of the view we're going to as that object's 
-                // title
-                segue.destinationViewController.title = task.title
+                // dealing with Nav controller in between views
+                let destinationNavigationController = segue.destinationViewController as! UINavigationController
+                let targetController = destinationNavigationController.topViewController as! SingleTaskTableViewController
                 
-                // single task view controller
-                if let stvc = segue.destinationViewController as?
-                    SingleTaskTableViewController {
-                    stvc.task = task
-                    stvc.index = index
-                }
+                targetController.task = task
+                targetController.index = index
+                targetController.title = task.title
             }
         }
         
         if (segue.identifier == "Assignment View Segue") {
-            
             // index = row number
             if let index = tableView.indexPathForSelectedRow?.row {
                 // create object of task class and reference the object in the
@@ -239,18 +235,16 @@ class TaskTableTableViewController: UITableViewController {
                 // correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
                 
-                // set the title of the view we're going to as that object's
-                // title
-                segue.destinationViewController.title = task.title
+                // dealing with Nav controller in between views
+                let destinationNavigationController = segue.destinationViewController as! UINavigationController
+                let targetController = destinationNavigationController.topViewController as! SingleTaskTableViewController
                 
-                // single task view controller
-                if let stvc = segue.destinationViewController as?
-                    SingleTaskTableViewController {
-                    stvc.task = task
-                    stvc.index = index
-                }
+                targetController.task = task
+                targetController.index = index
+                targetController.title = task.title
             }
         }
+        
         
         // if click on add task button
         if (segue.identifier == "Add Task") {
