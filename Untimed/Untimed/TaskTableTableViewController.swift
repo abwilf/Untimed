@@ -10,6 +10,9 @@ import UIKit
 
 class TaskTableTableViewController: UITableViewController {
     
+    // setting variable to know what index to edit if that happens
+    var indexVar = 0
+    
     // Creates object of TaskManager class and initializes tasks array
     
     let taskManager = TaskManager()
@@ -18,7 +21,9 @@ class TaskTableTableViewController: UITableViewController {
         taskManager.loadFromDisc()
     }
     
-    // unwind segue
+    // unwind segues
+    
+    
     @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
     {
         // add assignment created
@@ -49,6 +54,17 @@ class TaskTableTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
+    
+    @IBAction func unwindFromSingleTaskViewer(sender: UIStoryboardSegue) {
+        if let sttvc =
+            sender.sourceViewController as? SingleTaskTableViewController {
+            taskManager.tasks[indexVar] = sttvc.task
+            taskManager.save()
+            tableView.reloadData()
+        }
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,6 +231,9 @@ class TaskTableTableViewController: UITableViewController {
                 // the array and for the table will both be 0 indexed and will 
                 // correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
+                
+                // for unwind segue back
+                indexVar = index
                 
                 // dealing with Nav controller in between views
                 let destinationNavigationController = segue.destinationViewController as! UINavigationController
