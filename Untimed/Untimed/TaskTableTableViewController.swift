@@ -254,6 +254,8 @@ class TaskTableTableViewController: UITableViewController {
                 // correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
                 
+                indexVar = index
+                
                 // dealing with Nav controller in between views
                 let destinationNavigationController = segue.destinationViewController as! UINavigationController
                 let targetController = destinationNavigationController.topViewController as! SingleTaskTableViewController

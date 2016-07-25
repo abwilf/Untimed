@@ -25,7 +25,8 @@ class SingleTaskTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         if let appointment = task as? Appointment {
-            
+            self.title = appointment.title
+
             let dateFormatter = NSDateFormatter()
             let timeFormatter = NSDateFormatter()
             
@@ -196,7 +197,7 @@ class SingleTaskTableViewController: UITableViewController {
     */
     
     
-    @IBAction func unwindAndEditTask(sender: UIStoryboardSegue)
+    @IBAction func unwindFromEditTask(sender: UIStoryboardSegue)
     {
         // editappt
         if let easppttvc = sender.sourceViewController as? EditAppointmentTableViewController {

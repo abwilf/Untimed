@@ -244,7 +244,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ahu-Kd-CMv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="bfw-eO-dAU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="7314.5" y="-350.5"/>
+            <point key="canvasLocation" x="3642.5" y="-418.5"/>
         </scene>
         <!--Add Appointment-->
         <scene sceneID="y5x-iq-Wze">
@@ -410,7 +410,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MiY-i0-MOc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="v1a-8G-CEJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4276.5" y="-1026.5"/>
+            <point key="canvasLocation" x="3512.5" y="-1401.5"/>
         </scene>
         <!--Single Task Table View Controller-->
         <scene sceneID="FSw-4W-kCR">
@@ -513,10 +513,14 @@
                     <navigationItem key="navigationItem" id="ZCv-z3-Wi3">
                         <barButtonItem key="leftBarButtonItem" title="Back" id="8I2-pk-JLz">
                             <connections>
-                                <action selector="backButtonPressed:" destination="kQn-Tu-McS" id="WgJ-4H-8Ar"/>
+                                <segue destination="2Ey-tU-T7V" kind="unwind" unwindAction="unwindFromSingleTaskViewer:" id="VQj-ha-qFO"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="Wnf-bN-eyT"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="Wnf-bN-eyT">
+                            <connections>
+                                <segue destination="Ygv-Q8-Ag0" kind="presentation" id="9fQ-yd-EPS"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -529,7 +533,135 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XHz-ja-TfR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="2Ey-tU-T7V" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4374.5" y="478.5"/>
+            <point key="canvasLocation" x="4710.5" y="1254.5"/>
+        </scene>
+        <!--Edit Appointment-->
+        <scene sceneID="GiS-V6-YqU">
+            <objects>
+                <tableViewController id="TAG-wS-LGX" customClass="EditAppointmentTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Zgs-dB-P3D">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection headerTitle="Appointment Title" id="3ij-cn-How">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="37" id="5pQ-bh-eOc">
+                                        <rect key="frame" x="0.0" y="92" width="375" height="37"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5pQ-bh-eOc" id="SbJ-8T-Hik">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="36.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Appointment Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TE5-m8-rLc">
+                                                    <rect key="frame" x="15" y="7" width="234" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="234" id="Clz-mM-caM"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="didChangeEditingAssignmentTitle:" destination="T8F-bT-Ss5" eventType="editingChanged" id="GYw-14-McZ"/>
+                                                        <action selector="didStartEditing:" destination="TAG-wS-LGX" eventType="editingChanged" id="3SP-kg-bq7"/>
+                                                        <action selector="editingDidEnd:" destination="TAG-wS-LGX" eventType="editingDidEnd" id="rvl-Z1-D10"/>
+                                                        <action selector="textFieldDoneEditing:" destination="T8F-bT-Ss5" eventType="editingDidEndOnExit" id="Zy2-5E-YxD"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="TE5-m8-rLc" firstAttribute="centerY" secondItem="SbJ-8T-Hik" secondAttribute="centerY" id="K7F-T5-7yH"/>
+                                                <constraint firstItem="TE5-m8-rLc" firstAttribute="leading" secondItem="SbJ-8T-Hik" secondAttribute="leadingMargin" constant="7" id="OuE-KD-Jl5"/>
+                                                <constraint firstItem="TE5-m8-rLc" firstAttribute="top" secondItem="SbJ-8T-Hik" secondAttribute="topMargin" constant="-1" id="jZO-1o-z2u"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="5" id="EZv-GF-q9M">
+                                        <rect key="frame" x="0.0" y="129" width="375" height="5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EZv-GF-q9M" id="osE-YZ-X9n">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="4.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Starts" id="InC-Wb-7zb">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="4" id="ALF-2u-Asl">
+                                        <rect key="frame" x="0.0" y="162" width="375" height="4"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ALF-2u-Asl" id="qNg-D6-GCZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="3.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="243" id="R4R-vM-EDg">
+                                        <rect key="frame" x="0.0" y="166" width="375" height="243"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R4R-vM-EDg" id="YyM-II-K7B">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="242.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="qPZ-uU-aa5">
+                                                    <rect key="frame" x="0.0" y="11" width="375" height="216"/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="491158633.245134">
+                                                        <!--2016-07-25 16:57:13 +0000-->
+                                                    </date>
+                                                    <connections>
+                                                        <action selector="enteredStartDate:" destination="TAG-wS-LGX" eventType="valueChanged" id="Zxn-Qb-NB1"/>
+                                                    </connections>
+                                                </datePicker>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Ends" id="J1m-N5-biy">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="226" id="JUg-2t-YAe">
+                                        <rect key="frame" x="0.0" y="437" width="375" height="226"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JUg-2t-YAe" id="LAa-sU-E8z">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="225.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="9zt-91-lID">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="216"/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="491158732.421404">
+                                                        <!--2016-07-25 16:58:52 +0000-->
+                                                    </date>
+                                                    <connections>
+                                                        <action selector="enteredEndDate:" destination="TAG-wS-LGX" eventType="valueChanged" id="h9A-D3-Ioc"/>
+                                                    </connections>
+                                                </datePicker>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="TAG-wS-LGX" id="In6-Qh-xHw"/>
+                            <outlet property="delegate" destination="TAG-wS-LGX" id="rZq-xm-2p2"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Edit Appointment" id="EVh-Hj-lPC">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="TEX-Sp-eGf">
+                            <connections>
+                                <action selector="cancelPressed:" destination="TAG-wS-LGX" id="Ebv-fJ-i2J"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" systemItem="save" id="76k-RA-ybD">
+                            <connections>
+                                <segue destination="qkG-fK-X9o" kind="unwind" unwindAction="unwindFromEditTask:" id="eWe-oi-ZaC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hio-ch-SJN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="qkG-fK-X9o" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="6072.5" y="1414"/>
         </scene>
         <!--Daily Schedule-->
         <scene sceneID="7bg-4x-UqG">
@@ -765,7 +897,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a19-eD-t4n" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="xae-Xh-ZOJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3348.5" y="691.5"/>
+            <point key="canvasLocation" x="3332.5" y="1595.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="4bA-cx-dfp">
@@ -847,7 +979,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ox5-Mz-E6V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2761.5" y="691.5"/>
+            <point key="canvasLocation" x="2777.5" y="1283.5"/>
         </scene>
         <!--Edit Assignment-->
         <scene sceneID="nG5-e6-mpu">
@@ -985,7 +1117,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="tet-8f-Ydl">
                             <connections>
-                                <segue destination="WFx-O8-5nd" kind="unwind" unwindAction="unwindAndEditTask:" id="8bf-zq-kmQ"/>
+                                <segue destination="WFx-O8-5nd" kind="unwind" unwindAction="unwindFromEditTask:" id="wtP-rC-BA9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -997,7 +1129,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="80p-au-cOh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="WFx-O8-5nd" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6864.5" y="-350.5"/>
+            <point key="canvasLocation" x="8278.5" y="517.5"/>
         </scene>
         <!--Single Task Table View Controller-->
         <scene sceneID="F9y-yB-jGy">
@@ -1120,7 +1252,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jDr-MH-jRx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="I0R-8c-0KI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6191.5" y="357.5"/>
+            <point key="canvasLocation" x="6869.5" y="477.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4nP-R8-lcU">
@@ -1138,7 +1270,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x8w-eW-5Mq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3932.5" y="502.5"/>
+            <point key="canvasLocation" x="4012.5" y="1046.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JNg-Or-Bc8">
@@ -1156,7 +1288,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="egF-fy-Jm6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5604.5" y="357.5"/>
+            <point key="canvasLocation" x="6271.5" y="517.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DQg-LP-jlV">
@@ -1174,7 +1306,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x0U-CW-9l3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6277.5" y="-350.5"/>
+            <point key="canvasLocation" x="7619.5" y="545.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="nOT-Sv-J99">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ygv-Q8-Ag0" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ElJ-So-Chl">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="TAG-wS-LGX" kind="relationship" relationship="rootViewController" id="TlU-HX-Fdj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="92S-pY-RUB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5515.5" y="1234.5"/>
         </scene>
     </scenes>
 </document>
