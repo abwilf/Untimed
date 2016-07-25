@@ -11,40 +11,41 @@ import Foundation
 // superclass = Task
 class Assignment: Task {
     
+    
     // minutes
 //    var minutesNeeded: Int = 0
 //    var amountOfFreeMinutesBeforeDueDate: Int = 0
 //    var minutesLeftToAllocate: Int = 0
 //    var timeCompleted: Int = 0
     
-    var assignmentBlocks = [AssignmentBlock]()
+//    var assignmentBlocks = [AssignmentBlock]()
+//    
+//    func addAssignmentBlock(adjustedStartTime: Int, adjustedEndTime: Int, dayCoord: Int) {
+//        let asgtBlock = AssignmentBlock()
+//        asgtBlock.dsCalAdjustedStartLocation = adjustedStartTime
+//        asgtBlock.dsCalAdjustedEndLocation = adjustedEndTime
+//        asgtBlock.day = dayCoord
+//        asgtBlock.title = title
+//        if !simplifyAssignmentBlock(asgtBlock) {
+//            assignmentBlocks.append(asgtBlock)
+//        }
+//    }
+//    
+//    private func simplifyAssignmentBlock(block: AssignmentBlock) -> Bool {
+//        //assignmentBlocks.indexOf(block)
+//        for i in assignmentBlocks {
+//            // FIXME: is this +1 correct?
+//            if block.dsCalAdjustedStartLocation == i.dsCalAdjustedEndLocation! + 1 && block.day == i.day {
+//                i.dsCalAdjustedEndLocation = block.dsCalAdjustedEndLocation
+//                return true
+//            }
+//        }
+//        return false
+//    }
     
-    func addAssignmentBlock(adjustedStartTime: Int, adjustedEndTime: Int, dayCoord: Int) {
-        let asgtBlock = AssignmentBlock()
-        asgtBlock.dsCalAdjustedStartLocation = adjustedStartTime
-        asgtBlock.dsCalAdjustedEndLocation = adjustedEndTime
-        asgtBlock.day = dayCoord
-        asgtBlock.title = title
-        if !simplifyAssignmentBlock(asgtBlock) {
-            assignmentBlocks.append(asgtBlock)
-        }
-    }
-    
-    private func simplifyAssignmentBlock(block: AssignmentBlock) -> Bool {
-        //assignmentBlocks.indexOf(block)
-        for i in assignmentBlocks {
-            // FIXME: is this +1 correct?
-            if block.dsCalAdjustedStartLocation == i.dsCalAdjustedEndLocation! + 1 && block.day == i.day {
-                i.dsCalAdjustedEndLocation = block.dsCalAdjustedEndLocation
-                return true
-            }
-        }
-        return false
-    }
-    
-    func removeFirstBlock() {
-        assignmentBlocks.removeFirst()
-    }
+//    func removeFirstBlock() {
+//        assignmentBlocks.removeFirst()
+//    }
     
     // working blocks
     var numFreeBlocksBeforeDueDate: Int = 0
@@ -52,7 +53,7 @@ class Assignment: Task {
     var numBlocksLeftToAllocate: Int = 0
     var numBlocksCompleted: Int = 0
     
-    var dueDate: NSDate = NSDate()
+//    var dueDate: NSDate = NSDate()
     
     var urgency: Int {
         get {
