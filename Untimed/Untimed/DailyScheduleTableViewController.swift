@@ -181,74 +181,74 @@ class DailyScheduleTableViewController: UITableViewController{
             warningController.addAction(deleteAction)
         
         
-            if let temp = dsCalArray[indexPath.row][dateLocationDay] as? Assignment {
-                
-                
-                let didntDoAction = UIAlertAction(title: "Didn't do / don't want to", style: .Default) { (action) in
-                    
-                    // count numBlocks that should have been completed
-                    let numBlocks = self.countNumBlocksInInterval(temp.dsCalAdjustedStartLocation!,
-                                                                  end: temp.dsCalAdjustedEndLocation!)
-                    
-                    // add the value back to assignment in tasks array
-                    var index = 0
-                    
-                    for i in 0..<self.taskManager.tasks.count {
-                        if temp == self.taskManager.tasks[i] {
-                            index = i
-                        }
-                    }
-                    
-                    // clear tmCalArray at that spot
-
-                    /*
-                    if let temp = self.taskManager.tasks[index] as? Assignment {
-                        temp.numBlocksLeftToAllocate += numBlocks
-                    }
-                    */
-                    
-                    // reallocate time
-                    self.taskManager.allocateTime()
-                    
-                    // print (self.taskManager.calendarArray[1050][0])
-                    
-                    // copy to other array
-                    self.tmCopy = self.taskManager.copy() as! TaskManager
-                    
-                    // recreate dsCalArray from updated tM
-                    self.createDSCalArray()
-                    
-                    // save
-                    self.taskManager.save()
-                    
-                    // test
-                    // print (self.dsCalArray[1])
-                    
-                    // FIXME: make sure to loadfromdisc in tasktabletable
-                    
-                    // reload data
-                    tableView.reloadData()
-                    
-                }
-                
-                let needTimeAction = UIAlertAction(title: "I need more time", style: .Default) { (action) in
-                    self.performSegueWithIdentifier("More Time Segue", sender: DailyScheduleTableViewController())
-                }
-                let somethingElseAction = UIAlertAction(title: "I'd rather do something else", style: .Default) { (action) in
-                    self.performSegueWithIdentifier("Choose Assignment Segue", sender: DailyScheduleTableViewController())
-                }
-                let finishedAction = UIAlertAction(title: "I've finished this assignment", style: .Default) { (action) in
-                }
-                let freeAction = UIAlertAction(title: "Free this block", style: .Default) { (action) in
-                }
-                
-                alertController.addAction(didntDoAction)
-                alertController.addAction(needTimeAction)
-                alertController.addAction(somethingElseAction)
-                alertController.addAction(freeAction)
-                alertController.addAction(finishedAction)
-            }
-            
+//            if let temp = dsCalArray[indexPath.row][dateLocationDay] as? Assignment {
+//                
+//                
+//                let didntDoAction = UIAlertAction(title: "Didn't do / don't want to", style: .Default) { (action) in
+//                    
+//                    // count numBlocks that should have been completed
+//                    let numBlocks = self.countNumBlocksInInterval(temp.dsCalAdjustedStartLocation!,
+//                                                                  end: temp.dsCalAdjustedEndLocation!)
+//                    
+//                    // add the value back to assignment in tasks array
+//                    var index = 0
+//                    
+//                    for i in 0..<self.taskManager.tasks.count {
+//                        if temp == self.taskManager.tasks[i] {
+//                            index = i
+//                        }
+//                    }
+//                    
+//                    // clear tmCalArray at that spot
+//
+//                    /*
+//                    if let temp = self.taskManager.tasks[index] as? Assignment {
+//                        temp.numBlocksLeftToAllocate += numBlocks
+//                    }
+//                    */
+//                    
+//                    // reallocate time
+//                    self.taskManager.allocateTime()
+//                    
+//                    // print (self.taskManager.calendarArray[1050][0])
+//                    
+//                    // copy to other array
+//                    self.tmCopy = self.taskManager.copy() as! TaskManager
+//                    
+//                    // recreate dsCalArray from updated tM
+//                    self.createDSCalArray()
+//                    
+//                    // save
+//                    self.taskManager.save()
+//                    
+//                    // test
+//                    // print (self.dsCalArray[1])
+//                    
+//                    // FIXME: make sure to loadfromdisc in tasktabletable
+//                    
+//                    // reload data
+//                    tableView.reloadData()
+//                    
+//                }
+//                
+//                let needTimeAction = UIAlertAction(title: "I need more time", style: .Default) { (action) in
+//                    self.performSegueWithIdentifier("More Time Segue", sender: DailyScheduleTableViewController())
+//                }
+//                let somethingElseAction = UIAlertAction(title: "I'd rather do something else", style: .Default) { (action) in
+//                    self.performSegueWithIdentifier("Choose Assignment Segue", sender: DailyScheduleTableViewController())
+//                }
+//                let finishedAction = UIAlertAction(title: "I've finished this assignment", style: .Default) { (action) in
+//                }
+//                let freeAction = UIAlertAction(title: "Free this block", style: .Default) { (action) in
+//                }
+//                
+//                alertController.addAction(didntDoAction)
+//                alertController.addAction(needTimeAction)
+//                alertController.addAction(somethingElseAction)
+//                alertController.addAction(freeAction)
+//                alertController.addAction(finishedAction)
+//            }
+        
             if let _ = dsCalArray[indexPath.row][dateLocationDay] as? Appointment {
                 let rescheduleAction = UIAlertAction(title: "Reschedule", style: .Default) { (action) in
                 }
@@ -348,30 +348,30 @@ class DailyScheduleTableViewController: UITableViewController{
         if indexPath.row < dsCalArray.count {
             let task = dsCalArray[indexPath.row][dateLocationDay]
             
-            if let temp = task as? Assignment {
-                
-                // **FIXME
-                
-                // take the minute location of end time of the previous task and the start time of the next task
-                // let tempTitle = task?.title
-                
-                /*
-                 temp.title = minInHrCoord(dsCalArray[indexPath.row - 1][dateLocationDay]!.dsCalAdjustedEndLocation! + 1) + " - " + minInHrCoord(dsCalArray[indexPath.row + 1][dateLocationDay]!.dsCalAdjustedStartLocation!) + ": \(tempTitle!)"
-                 */
-                
-                let tempTitle = temp.title
-                
-                temp.title = minInHrCoord(dsCalArray[indexPath.row][dateLocationDay]!.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(dsCalArray[indexPath.row][dateLocationDay]!.dsCalAdjustedEndLocation!) + ": \(tempTitle)"
-                
-                cell.textLabel?.text = temp.title
-                // temp.title = tempTitle!
-                return cell
-            }
-                
-                
-            else {
+//            if let temp = task as? Assignment {
+//                
+//                // **FIXME
+//                
+//                // take the minute location of end time of the previous task and the start time of the next task
+//                // let tempTitle = task?.title
+//                
+//                /*
+//                 temp.title = minInHrCoord(dsCalArray[indexPath.row - 1][dateLocationDay]!.dsCalAdjustedEndLocation! + 1) + " - " + minInHrCoord(dsCalArray[indexPath.row + 1][dateLocationDay]!.dsCalAdjustedStartLocation!) + ": \(tempTitle!)"
+//                 */
+//                
+//                let tempTitle = temp.title
+//                
+//                temp.title = minInHrCoord(dsCalArray[indexPath.row][dateLocationDay]!.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(dsCalArray[indexPath.row][dateLocationDay]!.dsCalAdjustedEndLocation!) + ": \(tempTitle)"
+//                
+//                cell.textLabel?.text = temp.title
+//                // temp.title = tempTitle!
+//                return cell
+//            }
+//                
+//                
+//            else {
                 cell.textLabel?.text = task?.title
-            }
+//            }
             
             return cell
             
@@ -474,14 +474,14 @@ class DailyScheduleTableViewController: UITableViewController{
             
         }
     
-        if let temp = tmCopy.calendarArray[endCoor][dayCoor] as? Assignment {
+//        if let temp = tmCopy.calendarArray[endCoor][dayCoor] as? Assignment {
 
-            temp.addAssignmentBlock(startCoor, adjustedEndTime: endCoor, dayCoord: dayCoor)
-            
-            addTaskToDSCal(dayCoor, taskIn: temp.assignmentBlocks[0], oDIndexIn: oDRowIndex)
-            
-            temp.removeFirstBlock()
-        }
+//            temp.addAssignmentBlock(startCoor, adjustedEndTime: endCoor, dayCoord: dayCoor)
+//            
+//            addTaskToDSCal(dayCoor, taskIn: temp.assignmentBlocks[0], oDIndexIn: oDRowIndex)
+//            
+//            temp.removeFirstBlock()
+//        }
         
         if let temp = tmCopy.calendarArray[endCoor][dayCoor] as? Appointment {
             let titleTemp = temp.title

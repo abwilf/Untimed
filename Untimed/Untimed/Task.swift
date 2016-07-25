@@ -11,47 +11,44 @@
 import Foundation
 
 class Task: NSObject, NSCoding {
-    // nothing needed because subclasses reference (see assn and appt files)
+    
     var title: String = "Unnamed Task"
     
-    // for ds allocation
-    // moving to subclasses where appropriate
+    var dueDate: NSDate = NSDate()
+
     
+//    // for ds allocation
+//    // moving to subclasses where appropriate
+//    
     var dsCalAdjustedStartLocation: Int? = nil
     var dsCalAdjustedEndLocation: Int? = nil
-    
-    var lock: Bool = false
-    
-    func lockTask() {
-        lock = true
-    }
-    
-    func unlockTask() {
-        lock = false
-    }
-    
-    func isLocked() -> Bool {
-        if lock == true {
-            return true
-        }
-        return false
-    }
-    
-    func setdsCalAdjustedStart() {
-        // FIXME or delete
-    }
-    
-    func setdsCalAdjustedEnd() {
-        // FIXME or delete
-    }
-    
-    // returns number of blocks taken up by given task
-    // NOTE: should be used on AssignmentBlock and not Assignment objects
-    // FIXME: what factor is this value off by?
-    func getTaskLength() -> Int {
-        return (dsCalAdjustedStartLocation! - dsCalAdjustedEndLocation!)
-    }
-    
+//
+//    
+//    var lock: Bool = false
+//    
+//    func lockTask() {
+//        lock = true
+//    }
+//    
+//    func unlockTask() {
+//        lock = false
+//    }
+//    
+//    func isLocked() -> Bool {
+//        if lock == true {
+//            return true
+//        }
+//        return false
+//    }
+//
+//    
+//    // returns number of blocks taken up by given task
+//    // NOTE: should be used on AssignmentBlock and not Assignment objects
+//    // FIXME: what factor is this value off by?
+//    func getTaskLength() -> Int {
+//        return (dsCalAdjustedStartLocation! - dsCalAdjustedEndLocation!)
+//    }
+//    
     init(title: String) {
         self.title = title
     }

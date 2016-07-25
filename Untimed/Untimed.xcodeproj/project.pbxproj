@@ -11,6 +11,10 @@
 		214745F41CB8B568007BABCA /* core.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 214745F31CB8B568007BABCA /* core.pdf */; };
 		218CCE141D0C663800CB6E8A /* AddTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */; };
 		218CCE161D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */; };
+		218DA3191D42823100E269CA /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218DA3181D42823100E269CA /* Project.swift */; };
+		218DA31D1D428C5900E269CA /* RepeatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218DA31C1D428C5900E269CA /* RepeatTableViewController.swift */; };
+		218DA31F1D42915A00E269CA /* EndRepeatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218DA31E1D42915A00E269CA /* EndRepeatTableViewController.swift */; };
+		218DA3211D42940D00E269CA /* CustomRepeatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218DA3201D42940D00E269CA /* CustomRepeatTableViewController.swift */; };
 		A10A6A701CAC33E900DB9C5F /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A6A6F1CAC33E900DB9C5F /* TestViewController.swift */; };
 		A1D7D2B61CB2E08400053AE6 /* SingleTaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7D2B51CB2E08400053AE6 /* SingleTaskTableViewController.swift */; };
 		A2116D751CA968EC003D221D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116D741CA968EC003D221D /* AppDelegate.swift */; };
@@ -59,6 +63,10 @@
 		214745F31CB8B568007BABCA /* core.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = core.pdf; sourceTree = "<group>"; };
 		218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTimeViewController.swift; sourceTree = "<group>"; };
 		218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAssignmentViewController.swift; sourceTree = "<group>"; };
+		218DA3181D42823100E269CA /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		218DA31C1D428C5900E269CA /* RepeatTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatTableViewController.swift; sourceTree = "<group>"; };
+		218DA31E1D42915A00E269CA /* EndRepeatTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndRepeatTableViewController.swift; sourceTree = "<group>"; };
+		218DA3201D42940D00E269CA /* CustomRepeatTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRepeatTableViewController.swift; sourceTree = "<group>"; };
 		A10A6A6F1CAC33E900DB9C5F /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		A1D7D2B51CB2E08400053AE6 /* SingleTaskTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleTaskTableViewController.swift; sourceTree = "<group>"; };
 		A2116D711CA968EC003D221D /* Untimed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Untimed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +147,13 @@
 		A2116D731CA968EC003D221D /* Untimed */ = {
 			isa = PBXGroup;
 			children = (
+				218DA31C1D428C5900E269CA /* RepeatTableViewController.swift */,
+				218DA3201D42940D00E269CA /* CustomRepeatTableViewController.swift */,
+				218DA31E1D42915A00E269CA /* EndRepeatTableViewController.swift */,
+				A2C519171CAB38CF0074387D /* Appointment.swift */,
+				A2116DA21CA96DB3003D221D /* Task.swift */,
+				218DA3181D42823100E269CA /* Project.swift */,
+				A2116DA41CA96F22003D221D /* Assignment.swift */,
 				A2116D781CA968EC003D221D /* Main.storyboard */,
 				A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */,
 				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
@@ -148,11 +163,15 @@
 				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
 				A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */,
-				A2116DA41CA96F22003D221D /* Assignment.swift */,
 				A21825061CC2C931008D366D /* ChangeDateViewController.swift */,
-				A2116DA21CA96DB3003D221D /* Task.swift */,
 				211EE5DE1D319FF500E322BB /* AssignmentBlock.swift */,
 				A2C519171CAB38CF0074387D /* Appointment.swift */,
+				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
+				A1D7D2B51CB2E08400053AE6 /* SingleTaskTableViewController.swift */,
+				A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */,
+				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
+				A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */,
+				A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */,
 				218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */,
 				218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */,
 				A21F78CF1CB2DA5000517FD9 /* AddViewController.swift */,
@@ -323,14 +342,18 @@
 			files = (
 				218CCE161D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift in Sources */,
 				A21825071CC2C931008D366D /* ChangeDateViewController.swift in Sources */,
+				218DA3211D42940D00E269CA /* CustomRepeatTableViewController.swift in Sources */,
 				A24771591CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift in Sources */,
 				A27FAAB61CAC44FF00B1AE85 /* TaskManager.swift in Sources */,
+				218DA31D1D428C5900E269CA /* RepeatTableViewController.swift in Sources */,
 				A29A9A2C1CBE98480011A5BF /* EditAppointmentTableViewController.swift in Sources */,
 				A227C4FA1CB46AD400B3971D /* AddAppointmentTableViewController.swift in Sources */,
 				A2116DA51CA96F22003D221D /* Assignment.swift in Sources */,
+				218DA3191D42823100E269CA /* Project.swift in Sources */,
 				A2116D771CA968EC003D221D /* ViewController.swift in Sources */,
 				A21F78D01CB2DA5000517FD9 /* AddViewController.swift in Sources */,
 				A2116DA31CA96DB3003D221D /* Task.swift in Sources */,
+				218DA31F1D42915A00E269CA /* EndRepeatTableViewController.swift in Sources */,
 				A2116D751CA968EC003D221D /* AppDelegate.swift in Sources */,
 				211EE5DF1D319FF500E322BB /* AssignmentBlock.swift in Sources */,
 				A29A9A2A1CBE98340011A5BF /* EditAssignmentTableViewController.swift in Sources */,
