@@ -12,6 +12,8 @@ class SingleTaskTableViewController: UITableViewController {
     
     // FIXME: bug where if you don't go back to task list it won't save, because that's where the tmObject is.  NEED TO FIX!!
     var task = Task()
+    var taskManagerObj = TaskManager()
+    
     var index: Int = 0
 
     @IBOutlet weak var titleOneLabel: UILabel!
@@ -20,6 +22,10 @@ class SingleTaskTableViewController: UITableViewController {
     @IBOutlet weak var detailTwoLabel: UILabel!
     
     
+    
+    func updateTMObj () {
+    
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -201,17 +207,23 @@ class SingleTaskTableViewController: UITableViewController {
     {
         // editappt
         if let easppttvc = sender.sourceViewController as? EditAppointmentTableViewController {
-            
+            // pull in new task from editing page
             task = easppttvc.appt
+            
+            // update taskManagerObj
+            taskManagerObj.tasks[index] = task
+            
+            // save taskManagerObj
+            taskManagerObj.save()
         }
         
         
         // editassn
         if let eassntvc = sender.sourceViewController as? EditAssignmentTableViewController {
-            
             task = eassntvc.assn
+            taskManagerObj.tasks[index] = task
+            taskManagerObj.save()
         }
-        
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

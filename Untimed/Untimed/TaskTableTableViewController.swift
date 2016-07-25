@@ -11,7 +11,7 @@ import UIKit
 class TaskTableTableViewController: UITableViewController {
     
     // setting variable to know what index to edit if that happens
-    var indexVar = 0
+    // FIXME: DELETE var indexVar = 0
     
     // Creates object of TaskManager class and initializes tasks array
     
@@ -58,8 +58,7 @@ class TaskTableTableViewController: UITableViewController {
     @IBAction func unwindFromSingleTaskViewer(sender: UIStoryboardSegue) {
         if let sttvc =
             sender.sourceViewController as? SingleTaskTableViewController {
-            taskManager.tasks[indexVar] = sttvc.task
-            taskManager.save()
+            taskManager.loadFromDisc()
             tableView.reloadData()
         }
     }
@@ -233,13 +232,14 @@ class TaskTableTableViewController: UITableViewController {
                 let task = taskManager.tasks[index]
                 
                 // for unwind segue back
-                indexVar = index
+                //indexVar = index
                 
                 // dealing with Nav controller in between views
                 let destinationNavigationController = segue.destinationViewController as! UINavigationController
                 let targetController = destinationNavigationController.topViewController as! SingleTaskTableViewController
                 
                 targetController.task = task
+                targetController.taskManagerObj = taskManager
                 targetController.index = index
                 targetController.title = task.title
             }
@@ -254,13 +254,14 @@ class TaskTableTableViewController: UITableViewController {
                 // correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
                 
-                indexVar = index
+//               FIXME: DELETE indexVar = index
                 
                 // dealing with Nav controller in between views
                 let destinationNavigationController = segue.destinationViewController as! UINavigationController
                 let targetController = destinationNavigationController.topViewController as! SingleTaskTableViewController
                 
                 targetController.task = task
+                targetController.taskManagerObj = taskManager
                 targetController.index = index
                 targetController.title = task.title
             }
