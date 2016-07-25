@@ -10,6 +10,9 @@ import UIKit
 
 class TaskTableTableViewController: UITableViewController {
     
+    // setting variable to know what index to edit if that happens
+    var indexVar = 0
+    
     // Creates object of TaskManager class and initializes tasks array
     
     let taskManager = TaskManager()
@@ -18,27 +21,21 @@ class TaskTableTableViewController: UITableViewController {
         taskManager.loadFromDisc()
     }
     
-    // unwind segue
+    // unwind segues
+    
+    
     @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
     {
-        // add assignment created here!
+        // add assignment created
         if let aavc =
             sender.sourceViewController as? AddAssignmentTableViewController {
             taskManager.addTask(aavc.addedAssignment)
-            
-            // if amountofFreeTimebefore due is less than timeNeeded, make title 
-            // of task an error message
-            if aavc.addedAssignment.numFreeBlocksBeforeDueDate <
-                aavc.addedAssignment.numBlocksNeeded {
-                    aavc.addedAssignment.title +=
-                " -- WARNING: could not allocate all hours before due date"
-            }
             
             tableView.reloadData()
         }
         
         
-        // add appointment created here!
+        // add appointment created
         if let aapptvc = sender.sourceViewController as?
             AddAppointmentTableViewController {
             taskManager.addTask(aapptvc.addedAppointment)
@@ -57,6 +54,17 @@ class TaskTableTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
+    
+    @IBAction func unwindFromSingleTaskViewer(sender: UIStoryboardSegue) {
+        if let sttvc =
+            sender.sourceViewController as? SingleTaskTableViewController {
+            taskManager.tasks[indexVar] = sttvc.task
+            taskManager.save()
+            tableView.reloadData()
+        }
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -224,21 +232,20 @@ class TaskTableTableViewController: UITableViewController {
                 // correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
                 
-                // set the title of the view we're going to as that object's 
-                // title
-                segue.destinationViewController.title = task.title
+                // for unwind segue back
+                indexVar = index
                 
-                // single task view controller
-                if let stvc = segue.destinationViewController as?
-                    SingleTaskTableViewController {
-                    stvc.task = task
-                    stvc.index = index
-                }
+                // dealing with Nav controller in between views
+                let destinationNavigationController = segue.destinationViewController as! UINavigationController
+                let targetController = destinationNavigationController.topViewController as! SingleTaskTableViewController
+                
+                targetController.task = task
+                targetController.index = index
+                targetController.title = task.title
             }
         }
         
         if (segue.identifier == "Assignment View Segue") {
-            
             // index = row number
             if let index = tableView.indexPathForSelectedRow?.row {
                 // create object of task class and reference the object in the
@@ -247,18 +254,16 @@ class TaskTableTableViewController: UITableViewController {
                 // correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
                 
-                // set the title of the view we're going to as that object's
-                // title
-                segue.destinationViewController.title = task.title
+                // dealing with Nav controller in between views
+                let destinationNavigationController = segue.destinationViewController as! UINavigationController
+                let targetController = destinationNavigationController.topViewController as! SingleTaskTableViewController
                 
-                // single task view controller
-                if let stvc = segue.destinationViewController as?
-                    SingleTaskTableViewController {
-                    stvc.task = task
-                    stvc.index = index
-                }
+                targetController.task = task
+                targetController.index = index
+                targetController.title = task.title
             }
         }
+        
         
         // if click on add task button
         if (segue.identifier == "Add Task") {
