@@ -1215,6 +1215,9 @@
                                                     <date key="date" timeIntervalSinceReferenceDate="491227200.097256">
                                                         <!--2016-07-26 12:00:00 +0000-->
                                                     </date>
+                                                    <connections>
+                                                        <action selector="changeWorkingDayStart:" destination="FI2-9b-uYf" eventType="valueChanged" id="7FD-t3-SkV"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -1243,6 +1246,9 @@
                                                     <date key="date" timeIntervalSinceReferenceDate="491266800.43531501">
                                                         <!--2016-07-26 23:00:00 +0000-->
                                                     </date>
+                                                    <connections>
+                                                        <action selector="changedWorkingDayEnd:" destination="FI2-9b-uYf" eventType="valueChanged" id="L0u-Yf-phw"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -1261,10 +1267,15 @@
                                 <action selector="cancelPressed:" destination="FI2-9b-uYf" id="TaK-D3-4WH"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" systemItem="save" id="8Cy-ok-fci"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" systemItem="save" id="8Cy-ok-fci">
+                            <connections>
+                                <segue destination="Pvf-oV-hMi" kind="unwind" unwindAction="unwindFromSettings:" id="JIe-Mj-7E5"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KCy-yf-TVf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Pvf-oV-hMi" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3099.5" y="463.5"/>
         </scene>

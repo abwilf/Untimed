@@ -17,6 +17,11 @@ class TaskManager: NSObject, NSCopying {
     var calendarArray: [[Task]] = Array(count: 1440,
                                         repeatedValue: Array(count: 28, repeatedValue: Free()))
     
+    // in dsCalFormat; default is 8 am to 7 pm
+    var startWorkingDay = 480
+    var endWorkingDay = 1140
+    
+    
     let HOURS_IN_DAY = 12
     let MINS_IN_HOUR = 60
     let MINS_IN_DAY = 1440

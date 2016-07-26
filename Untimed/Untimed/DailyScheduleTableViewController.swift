@@ -10,7 +10,7 @@ import UIKit
 
 class DailyScheduleTableViewController: UITableViewController{
     
-    let taskManager = TaskManager()
+    var taskManager = TaskManager()
     var tmCopy = TaskManager()
     
     var dateLocationDay: Int = 0
@@ -100,6 +100,16 @@ class DailyScheduleTableViewController: UITableViewController{
         if let cdvc = sender.sourceViewController as? ChangeDateViewController {
             selectedDate = cdvc.newDate
             taskManager.loadFromDisc()
+            taskManager.allocateTime()
+            createDSCalArray()
+            tableView.reloadData()
+        }
+    }
+    
+    // update selectedDate with changed date value
+    @IBAction func unwindFromSettings(sender: UIStoryboardSegue) {
+        if let stvc = sender.sourceViewController as? SettingsTableViewController {
+            taskManager = stvc.tmObj
             taskManager.allocateTime()
             createDSCalArray()
             tableView.reloadData()
@@ -277,7 +287,7 @@ class DailyScheduleTableViewController: UITableViewController{
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-     
+           
         taskManager.loadFromDisc()
         
         taskManager.allocateTime()
@@ -620,6 +630,14 @@ class DailyScheduleTableViewController: UITableViewController{
         if (segue.identifier == "Change Date") {
             segue.destinationViewController.title = "Change Date"
         }
+        
+        if (segue.identifier == "DS To Settings") {
+            // dealing with Nav controller in between views
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! SettingsTableViewController
+            
+            // pass in tm object
+            targetController.tmObj = taskManager
+        }
     }
-    
 }
