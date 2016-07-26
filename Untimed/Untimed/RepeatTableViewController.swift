@@ -8,18 +8,18 @@
 
 import UIKit
 
-class RepeatTableViewController: UITableViewController {
+class RepeatTableViewController: AddAppointmentTableViewController {
     
     var currentCategory: NSIndexPath? = nil
     var taskCategories: NSArray? = nil
     
-    // initialize this value to addedAppointment.repeatOptionsIndex
-    var optionIndex: Int = 0
-        
+    //var appointment = Appointment()
+    
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
         
+        let optionIndex = addedAppointment.repeatOptionsIndex
         var initialIndexPath = NSIndexPath(forRow: optionIndex, inSection: 0)
         if optionIndex < 5 {
         }
@@ -31,14 +31,13 @@ class RepeatTableViewController: UITableViewController {
         
     }
     
-    
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if indexPath.section == 0 {
+            let optionIndex = addedAppointment.repeatOptionsIndex
 
             if indexPath.row == optionIndex {
-                presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                return
             }
                 
             else {
@@ -46,17 +45,16 @@ class RepeatTableViewController: UITableViewController {
                 let newCell = tableView.cellForRowAtIndexPath(indexPath)
                 if newCell!.accessoryType == UITableViewCellAccessoryType.None {
                     newCell!.accessoryType = UITableViewCellAccessoryType.Checkmark
-                    optionIndex = indexPath.row
-                    print(optionIndex)
+                    addedAppointment.repeatOptionsIndex = indexPath.row
                 }
+                
                 let oldCell = tableView.cellForRowAtIndexPath(oldIndexPath)
                 oldCell!.accessoryType = UITableViewCellAccessoryType.None
-                // FIXME: this is causing problems
-                presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
             }
         }
         
-        else if indexPath.section == 1 {
+        if indexPath.section == 1 {
+            let optionIndex = addedAppointment.repeatOptionsIndex
             if optionIndex == 5{
                 return
             }
@@ -67,7 +65,7 @@ class RepeatTableViewController: UITableViewController {
                 
                 let newCell = tableView.cellForRowAtIndexPath(indexPath)
                 newCell!.accessoryType = UITableViewCellAccessoryType.Checkmark
-                optionIndex = 5
+                addedAppointment.repeatOptionsIndex = 5
             }
         }
     }

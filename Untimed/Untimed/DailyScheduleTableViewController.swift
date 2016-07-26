@@ -284,11 +284,13 @@ class DailyScheduleTableViewController: UITableViewController{
         
         createDSCalArray()
         
+        
         tableView.reloadData()
     }
     
     // connecting add and single task viewer pages to this
-    @IBAction func unwindAndAddTask(sender: UIStoryboardSegue) {
+    @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
+    {
         // add assignment created here!
         if let aavc = sender.sourceViewController as? AddAssignmentTableViewController {
             
@@ -297,6 +299,7 @@ class DailyScheduleTableViewController: UITableViewController{
             // tableView = inherited property from UITableViewCOntroller class
             tableView.reloadData()
         }
+        
         
         // add appointment created here!
         if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {

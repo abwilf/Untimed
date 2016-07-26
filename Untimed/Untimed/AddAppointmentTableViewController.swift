@@ -11,39 +11,17 @@ import UIKit
 
 class AddAppointmentTableViewController: UITableViewController {
     
-    // created task that we will modify
-    var addedAppointment = Appointment()
-    
-    @IBAction func unwindAndUpdateAppointment(sender: UIStoryboardSegue) {
-        if let rtvc = sender.sourceViewController as? RepeatTableViewController {
-            addedAppointment.setRepeatOptionsIndex(index: rtvc.optionIndex)
-            //tableView.reloadData()
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let rtvc = segue.destinationViewController as? RepeatTableViewController {
-            rtvc.optionIndex = addedAppointment.repeatOptionsIndex
-        }
-    }
-    
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBOutlet weak var repeatDetail: UILabel!
-    
-    // FIXME: doesn't work -- repeat options index isn't persisting -- is it creating a separate addedAppointment?
-    override func viewWillAppear(animated: Bool) {
-        repeatDetail?.text = addedAppointment.repeatOptionsArray[addedAppointment.repeatOptionsIndex]
-        print(repeatDetail?.text)
-    }
 
-    // did change start date.
+    // did change start date
     
         // modifies end date minimum
     
-
+    // created task that we will modify
+    var addedAppointment = Appointment()
 
     @IBAction func didChangeEditingAssignmentTitle(sender: UITextField) {
         // if able to unwrap, set it equal
