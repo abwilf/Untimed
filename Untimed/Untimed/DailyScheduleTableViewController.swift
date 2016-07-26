@@ -16,6 +16,7 @@ class DailyScheduleTableViewController: UITableViewController{
     let MINS_IN_HOUR = 60
     
     var dsCalArray: [[Task?]] = []
+    var printedDSCalArray: [[Task?]] = []
 
     // create counting variables for allocation to tableview
     var startLocation = 0
@@ -104,7 +105,6 @@ class DailyScheduleTableViewController: UITableViewController{
         }
     }
     
-    // update selectedDate with changed date value
     @IBAction func unwindFromSettings(sender: UIStoryboardSegue) {
         if let stvc = sender.sourceViewController as? SettingsTableViewController {
             taskManager.firstWorkingMinute = stvc.fwm
@@ -290,11 +290,10 @@ class DailyScheduleTableViewController: UITableViewController{
         
         taskManager.allocateTime()
         
-        // should be free
-        print ("\(taskManager.calendarArray[520][0])")
-        
-        // TM IS CORRECT HERE
         createDSCalArray()
+        
+        // to deal with indexPath.row issues, cull tasks not within working period
+        createPrintedDSCalArray()
         
         tableView.reloadData()
     }
@@ -356,35 +355,50 @@ class DailyScheduleTableViewController: UITableViewController{
         return false
     }
     
-    func thereExistApptsOutsideWorkingDay() -> Bool {
+    func thereExistsAnApptOutsideWorkingDay() -> Bool {
         
         return false
     }
-    // allocate elements from calendar array to cells in view
+    
+    func createPrintedDSCalArray() {
+        // if task starts and ends within the working interval, add it
+        for j in 0..<28 {
+            var otherDayPCARowIndex = 0
+            for i in 0..<self.dsCalArray.count {
+                let task = dsCalArray[i][j]
+                if (task?.dsCalAdjustedStartLocation >= taskManager.firstWorkingMinute) && (task?.dsCalAdjustedEndLocation <= taskManager.lastWorkingMinute) {
+                    addToPrintedCalArray(otherDayPCARowIndex, dayCoorIn: j, taskIn: task)
+                    otherDayPCARowIndex += 1
+                }
+            }
+        }
+    }
+            // allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // giving cell information and telling where to find it
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
-        if indexPath.row < dsCalArray.count {
+        
+        if thereExistsAnApptOutsideWorkingDay() {
+            // if it's before the working day
             
-            if thereExistApptsOutsideWorkingDay() {
-                
-            }
-            
-            else {
-                
-            }
-            
-            let task = dsCalArray[indexPath.row][dateLocationDay]
-
-            cell.textLabel?.text = task?.title
-            
-            return cell
+            // if it's after the working day
         }
+            
         else {
-            cell.textLabel?.text = ""
-            return cell
+            if indexPath.row < printedDSCalArray.count {
+                let task = printedDSCalArray[indexPath.row][dateLocationDay]
+                cell.textLabel?.text = task?.title
+                return cell
+            }
+                
+            else {
+                cell.textLabel?.text = ""
+                return cell
+            }
         }
+        
+        return cell
     }
     
     
@@ -406,7 +420,7 @@ class DailyScheduleTableViewController: UITableViewController{
         
         // iterate through taskManager's calArray
         for k in 0..<28 {
-            // create otherDayCount every day you iterate through
+            // create count of what row you're at in the other day
             var otherDayIndex = 0
             
             var i = 0
@@ -428,7 +442,7 @@ class DailyScheduleTableViewController: UITableViewController{
                 taskManager.calendarArray[i][k].dsCalAdjustedStartLocation = j
                 taskManager.calendarArray[i][k].dsCalAdjustedEndLocation = i
                 
-                addToDSCalArray(j, endCoor: i, dayCoor: k, oDRowIndex: otherDayIndex)
+                addTaskToDSCal(k, taskIn: taskManager.calendarArray[i][k], oDIndexIn: otherDayIndex)
 
                 if k > 0 {
                     otherDayIndex += 1
@@ -439,34 +453,35 @@ class DailyScheduleTableViewController: UITableViewController{
         }
     }
     
-    func addToDSCalArray(startCoor: Int, endCoor: Int, dayCoor: Int, oDRowIndex: Int) {
+    func addToPrintedCalArray(printedCalRowIn: Int, dayCoorIn: Int, taskIn: Task?) {
         
-        if let temp = taskManager.calendarArray[endCoor][dayCoor] as? Free {
+        if let temp = taskIn as? Free {
             // alter object's title
             temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": Free"
-            addTaskToDSCal(dayCoor, taskIn: temp, oDIndexIn: oDRowIndex)
-            
+            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
         }
-    
-//        if let temp = taskManager.calendarArray[endCoor][dayCoor] as? Assignment {
-
-//            temp.addAssignmentBlock(startCoor, adjustedEndTime: endCoor, dayCoord: dayCoor)
-//            
-//            addTaskToDSCal(dayCoor, taskIn: temp.assignmentBlocks[0], oDIndexIn: oDRowIndex)
-//            
-//            temp.removeFirstBlock()
-//        }
         
-        if let temp = taskManager.calendarArray[endCoor][dayCoor] as? Appointment {
+        if let temp = taskIn as? Appointment {
             let titleTemp = temp.title
             temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": " + titleTemp
-            addTaskToDSCal(dayCoor, taskIn: temp, oDIndexIn: oDRowIndex)
+            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
         }
         
-        if let temp = taskManager.calendarArray[endCoor][dayCoor] as? WorkingBlock {
+        if let temp = taskIn as? WorkingBlock {
             temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": Working Block"
-            addTaskToDSCal(dayCoor, taskIn: temp, oDIndexIn: oDRowIndex)
+            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
         }
+        
+        
+        //        if let temp = taskManager.calendarArray[endCoor][dayCoor] as? Assignment {
+        
+        //            temp.addAssignmentBlock(startCoor, adjustedEndTime: endCoor, dayCoord: dayCoor)
+        //
+        //            addTaskToDSCal(dayCoor, taskIn: temp.assignmentBlocks[0], oDIndexIn: oDRowIndex)
+        //
+        //            temp.removeFirstBlock()
+        //        }
+        
     }
     
     func copyAtRow(arr: [[Task?]], row: Int) -> [Task?] {
@@ -504,7 +519,7 @@ class DailyScheduleTableViewController: UITableViewController{
             dsCalArray.append(newRow)
         }
             
-            // if another day
+        // if another day
         else {
             // if the amount of rows we're allocating to is less than the amount we've already created
             if oDIndexIn < dsCalArray.count {
@@ -528,6 +543,41 @@ class DailyScheduleTableViewController: UITableViewController{
         }
     }
     
+    
+    func addTaskToPrintedCal(oDRowIndexIn: Int, dayIn: Int, taskIn: Task) {
+        // create row to append
+        var newRow: [Task?] = createRowWith28Nils()
+        
+        if dayIn == 0 {
+            // add to newRow and add that to dsCalArray
+            newRow[0] = taskIn
+            printedDSCalArray.append(newRow)
+        }
+            
+            // if another day
+        else {
+            // if the amount of rows we're allocating to is less than the amount we've already created
+            if oDRowIndexIn < printedDSCalArray.count {
+                // copy dsCalArray at that row
+                newRow = copyAtRow(printedDSCalArray, row: oDRowIndexIn)
+                
+                // add element to newRow
+                newRow[dayIn] = taskIn
+                
+                // replace printedCalArray at that row with newRow
+                for k in 0..<28 {
+                    printedDSCalArray[oDRowIndexIn][k] = newRow[k]
+                }
+            }
+                
+            else {
+                // add element to new row and append to dsCalArray
+                newRow[dayIn] = taskIn
+                printedDSCalArray.append(newRow)
+            }
+        }
+}
+
     
     /*
     override func viewDidLoad() {
