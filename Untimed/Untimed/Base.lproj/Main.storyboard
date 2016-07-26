@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -66,16 +66,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Tasks" id="930-Q1-oKY">
-                        <barButtonItem key="leftBarButtonItem" title="Add Assn" id="Qkd-wj-66e">
-                            <connections>
-                                <segue destination="ytc-m8-s5S" kind="presentation" id="cyl-Cn-Xkd"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Add Appt" id="MZC-cs-jgM">
-                            <connections>
-                                <segue destination="JN3-bG-ly9" kind="presentation" id="jGW-zF-WyI"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3nd-Vh-zd1"/>
                     </navigationItem>
                     <connections>
                         <segue destination="rHw-PT-4vj" kind="show" identifier="Assignment View Segue" id="YUX-vF-b7h"/>
@@ -1032,11 +1023,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Daily Schedule" id="9Ph-E5-LgY">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="Vwa-Ag-8Sv">
-                            <connections>
-                                <segue destination="OOk-LW-3KP" kind="show" identifier="DS To Settings" id="2MN-dR-ffc"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="Vwa-Ag-8Sv"/>
                         <barButtonItem key="rightBarButtonItem" title="Change Date" id="Oae-Tz-9Gd">
                             <connections>
                                 <segue destination="SIy-8F-afs" kind="presentation" identifier="Change Date" id="Z9S-Rm-eQK"/>
@@ -1057,17 +1044,17 @@
             <objects>
                 <tableViewController id="FI2-9b-uYf" customClass="SettingsTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="QNf-E0-Yml">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
                             <tableViewSection headerTitle="Start Working Day" id="xBS-Kp-SRi">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="231" id="AXk-jM-hXk">
-                                        <rect key="frame" x="0.0" y="92" width="375" height="231"/>
+                                        <rect key="frame" x="0.0" y="28" width="600" height="231"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AXk-jM-hXk" id="jv7-8q-0rH">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="230.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="230.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wh1-Yy-bIb">
@@ -1083,10 +1070,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="2" id="MPm-zZ-1qQ">
-                                        <rect key="frame" x="0.0" y="323" width="375" height="2"/>
+                                        <rect key="frame" x="0.0" y="259" width="600" height="2"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MPm-zZ-1qQ" id="Eco-wR-eFa">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="1.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="1.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1095,10 +1082,10 @@
                             <tableViewSection headerTitle="End Working Day" id="fo2-L1-Wqj">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="230" id="dku-fF-l8Y">
-                                        <rect key="frame" x="0.0" y="353" width="375" height="230"/>
+                                        <rect key="frame" x="0.0" y="289" width="600" height="230"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dku-fF-l8Y" id="FcV-tf-Tv1">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="229.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="229.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0b-dG-Haa">
