@@ -17,7 +17,6 @@ class Assignment: Task {
 //    var amountOfFreeMinutesBeforeDueDate: Int = 0
 //    var minutesLeftToAllocate: Int = 0
 //    var timeCompleted: Int = 0
-    var priorityValue = 1
     
 //    var assignmentBlocks = [AssignmentBlock]()
 //    

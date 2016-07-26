@@ -10,6 +10,9 @@ import UIKit
 
 class TaskTableTableViewController: UITableViewController {
     
+    // setting variable to know what index to edit if that happens
+    // FIXME: DELETE var indexVar = 0
+    
     // Creates object of TaskManager class and initializes tasks array
     
     let taskManager = TaskManager()
@@ -78,7 +81,7 @@ class TaskTableTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView,
-                    numberOfRowsInSection section: Int) -> Int {
+                            numberOfRowsInSection section: Int) -> Int {
         //return the number of rows we want in that section
         if section == 0 {
             // return number of rows we want in this section (all tasks)
@@ -97,12 +100,12 @@ class TaskTableTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath
         indexPath: NSIndexPath) -> UITableViewCell {
         
-        // not loading 10,000 cells on ipod at once.  "Task Cell" is identifier 
+        // not loading 10,000 cells on ipod at once.  "Task Cell" is identifier
         // of the cell
         let cell = tableView.dequeueReusableCellWithIdentifier("Task Cell",
-                forIndexPath: indexPath)
+                                                               forIndexPath: indexPath)
         
-        // declare task object, and have it take the value of the array at the 
+        // declare task object, and have it take the value of the array at the
         // row specified by indexpath
         let task = taskManager.tasks[indexPath.row]
         
@@ -148,7 +151,7 @@ class TaskTableTableViewController: UITableViewController {
             
             //only gets date
             let strDate = dateFormatter.stringFromDate(assignment.dueDate)
-
+            
             //format time
             timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
             
@@ -173,44 +176,44 @@ class TaskTableTableViewController: UITableViewController {
     }
     
     /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath 
-    //indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the specified item to be editable.
-    return true
-    }
-    */
+     // Override to support conditional editing of the table view.
+     override func tableView(tableView: UITableView, canEditRowAtIndexPath
+     //indexPath: NSIndexPath) -> Bool {
+     // Return false if you do not want the specified item to be editable.
+     return true
+     }
+     */
     
     /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle 
-     // editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath 
+     // Override to support editing the table view.
+     override func tableView(tableView: UITableView, commitEditingStyle
+     // editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath
      // indexPath: NSIndexPath) { if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, 
+     // Delete the row from the data source
+     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+     } else if editingStyle == .Insert {
+     // Create a new instance of the appropriate class, insert it into the array,
      // and add a new row to the table view
-    }
-    }
-    */
+     }
+     }
+     */
     
     /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath 
-    fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
+     // Override to support rearranging the table view.
+     override func tableView(tableView: UITableView, moveRowAtIndexPath
+     fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+     
+     }
+     */
     
     /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath 
+     // Override to support conditional rearranging of the table view.
+     override func tableView(tableView: UITableView, canMoveRowAtIndexPath
      indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the item to be re-orderable.
-    return true
-    }
-    */
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
     
     // preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -222,9 +225,9 @@ class TaskTableTableViewController: UITableViewController {
             
             // index = row number
             if let index = tableView.indexPathForSelectedRow?.row {
-                // create object of task class and reference the object in the 
-                // array at row location. remember that the row locations for 
-                // the array and for the table will both be 0 indexed and will 
+                // create object of task class and reference the object in the
+                // array at row location. remember that the row locations for
+                // the array and for the table will both be 0 indexed and will
                 // correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
                 
@@ -250,6 +253,7 @@ class TaskTableTableViewController: UITableViewController {
                 // correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
                 
+                //               FIXME: DELETE indexVar = index
                 
                 // dealing with Nav controller in between views
                 let destinationNavigationController = segue.destinationViewController as! UINavigationController
@@ -272,8 +276,8 @@ class TaskTableTableViewController: UITableViewController {
     
     
     override func tableView(tableView: UITableView,
-        commitEditingStyle editingStyle: UITableViewCellEditingStyle,
-        forRowAtIndexPath indexPath: NSIndexPath){
+                            commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+                                               forRowAtIndexPath indexPath: NSIndexPath){
         if (editingStyle == UITableViewCellEditingStyle.Delete){
             taskManager.deleteTaskAtIndex(indexPath.row)
             tableView.reloadData()
