@@ -12,26 +12,30 @@ class EditAppointmentTableViewController: UITableViewController {
     var appt = Appointment()
 
    
-    @IBAction func didEditTitle(sender: UITextField) {
+    @IBAction func cancelPressed(sender: UIBarButtonItem) {
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    @IBAction func didStartEditing(sender: UITextField) {
         if let newTitle = sender.text {
             appt.title = newTitle
         }
     }
     
     
-    
-    @IBAction func didEnterStartTime(sender: UIDatePicker) {
-        var newStartDate = NSDate()
-        newStartDate = sender.date
-        appt.startTime = newStartDate
+    @IBAction func editingDidEnd(sender: UITextField) {
+        sender.resignFirstResponder()
     }
     
-    
-    @IBAction func didEnterEndTime(sender: UIDatePicker) {
-        var newEndDate = NSDate()
-        newEndDate = sender.date
-        appt.endTime = newEndDate
+    @IBAction func enteredStartDate(sender: UIDatePicker) {
+        appt.startTime = sender.date
+        sender.minimumDate = NSDate()
     }
     
+    @IBAction func enteredEndDate(sender: UIDatePicker) {
+        appt.endTime = sender.date
+        sender.minimumDate = NSDate()
+    }
     
 }

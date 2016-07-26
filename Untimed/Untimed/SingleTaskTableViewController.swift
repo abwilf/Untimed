@@ -228,7 +228,6 @@ class SingleTaskTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        
         if let _ = task as? Appointment {
             
             if (segue.identifier == "Edit Appointment") {
@@ -241,8 +240,6 @@ class SingleTaskTableViewController: UITableViewController {
             
         else if let _ = task as? Assignment {
             if (segue.identifier == "Edit Assignment") {
-                
-                segue.destinationViewController.title = task.title
                 if let eassntvc = segue.destinationViewController as? EditAssignmentTableViewController {
                     eassntvc.assn = task as! Assignment
                 }
