@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -77,7 +77,6 @@
                         <segue destination="kQn-Tu-McS" kind="show" identifier="Appointment View Segue" id="m7G-Mb-6a7"/>
                         <segue destination="ytc-m8-s5S" kind="presentation" identifier="Add Assignment Segue" id="BvP-cP-ZS0"/>
                         <segue destination="JN3-bG-ly9" kind="presentation" identifier="Add Appointment Segue" id="YyZ-ck-kgw"/>
-                        <segue destination="0pV-DT-ihN" kind="presentation" identifier="Add Project Segue" id="7jy-nh-CDz"/>
                         <segue destination="Wud-wY-xWy" kind="presentation" identifier="Add Class Segue" id="cLO-lp-0FD"/>
                     </connections>
                 </tableViewController>
@@ -1544,7 +1543,7 @@
                             <tableViewSection headerTitle="Project Title" id="NP4-y8-SPd">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="P21-ig-sJg">
-                                        <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="P21-ig-sJg" id="Otp-u2-MXY">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -1573,7 +1572,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="15" id="VFH-oJ-Gdg">
-                                        <rect key="frame" x="0.0" y="136" width="414" height="15"/>
+                                        <rect key="frame" x="0.0" y="72" width="414" height="15"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VFH-oJ-Gdg" id="ZXj-yq-MpY">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="14.5"/>
@@ -1585,7 +1584,7 @@
                             <tableViewSection headerTitle="Target Completion Date" id="dUy-Hx-17y">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="8gH-hP-5sj" detailTextLabel="brI-k4-oSk" rowHeight="2" style="IBUITableViewCellStyleValue1" id="tzg-1T-zla">
-                                        <rect key="frame" x="0.0" y="179" width="414" height="2"/>
+                                        <rect key="frame" x="0.0" y="115" width="414" height="2"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tzg-1T-zla" id="qQ9-il-7vp">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="1.5"/>
@@ -1609,7 +1608,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="234" id="8Ni-cm-uzq">
-                                        <rect key="frame" x="0.0" y="181" width="414" height="234"/>
+                                        <rect key="frame" x="0.0" y="117" width="414" height="234"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Ni-cm-uzq" id="Hez-l5-t3A">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="233.5"/>
@@ -1665,24 +1664,6 @@
                 <exit id="CBf-h1-EC3" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4070" y="-2224"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="495-3b-dru">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S2l-Sy-m5C" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7ul-kZ-FWR">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="FI2-9b-uYf" kind="relationship" relationship="rootViewController" id="IQa-cA-M6A"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="N46-vE-nHY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2556.5" y="584.5"/>
         </scene>
         <!--Add Class-->
         <scene sceneID="lws-Mz-5Qx">
