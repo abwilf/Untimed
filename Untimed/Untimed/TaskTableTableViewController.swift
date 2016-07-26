@@ -15,6 +15,33 @@ class TaskTableTableViewController: UITableViewController {
     
     // Creates object of TaskManager class and initializes tasks array
     
+    @IBAction func addButtonPressed(sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        }
+        let addTaskAction = UIAlertAction(title: "Add Assignment", style: .Default) { (action) in
+            self.performSegueWithIdentifier("Add Assignment Segue", sender: TaskTableTableViewController())
+        }
+        let addAppointmentAction = UIAlertAction(title: "Add Appointment", style: .Default) { (action) in
+            self.performSegueWithIdentifier("Add Appointment Segue", sender: TaskTableTableViewController())
+        }
+        let addProjectAction = UIAlertAction(title: "Add Project", style: .Default) { (action) in
+            self.performSegueWithIdentifier("Add Project Segue", sender: TaskTableTableViewController())
+        }
+        let addClassAction = UIAlertAction(title: "Add Class", style: .Default) { (action) in
+            self.performSegueWithIdentifier("Add Class Segue", sender: TaskTableTableViewController())
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(addTaskAction)
+        alertController.addAction(addAppointmentAction)
+//        alertController.addAction(addProjectAction)
+//        alertController.addAction(addClassAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     let taskManager = TaskManager()
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
