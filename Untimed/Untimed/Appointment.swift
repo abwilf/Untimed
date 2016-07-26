@@ -29,6 +29,15 @@ class Appointment: Task {
     // 4: custom
     var repeatOptionsIndex = 0
     
+    func setRepeatOptionsIndex(index index: Int) {
+        if index < repeatOptionsArray.count {
+            repeatOptionsIndex = index
+        }
+        else {
+            assert(false)
+        }
+    }
+    
     // 0: never
     // 1: specific date
     var endRepeatIndex = 0
@@ -40,6 +49,8 @@ class Appointment: Task {
         case Weekly
         case Custom
     }
+    
+    let repeatOptionsArray: [String] = ["Never", "Daily", "Every Weekday", "Weekly", "Custom"]
     
 //    struct RepeatDays {
 //        var Sunday = false

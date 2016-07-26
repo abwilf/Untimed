@@ -411,7 +411,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Wb7-6n-wWg" kind="show" id="uHx-7l-n8J"/>
+                                            <segue destination="ve9-Ig-bpa" kind="show" id="uHx-7l-n8J"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -468,6 +468,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="endDatePicker" destination="dzD-Ew-VF4" id="fKl-ZP-ucv"/>
+                        <outlet property="repeatDetail" destination="gKF-Dv-eNc" id="Gaa-dd-XPW"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MiY-i0-MOc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -502,6 +503,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="NMJ-tR-wHV" kind="unwind" unwindAction="unwindAndUpdateAppointment:" id="Jma-Ik-qFX"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="IuE-Ke-Pvb" style="IBUITableViewCellStyleDefault" id="V8G-18-k3i">
                                         <rect key="frame" x="0.0" y="143" width="414" height="44"/>
@@ -519,6 +523,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="NMJ-tR-wHV" kind="unwind" unwindAction="unwindAndUpdateAppointment:" id="P0r-1x-Pht"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="cg7-hM-u6I" style="IBUITableViewCellStyleDefault" id="t6W-PS-AEU">
                                         <rect key="frame" x="0.0" y="187" width="414" height="44"/>
@@ -536,6 +543,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="NMJ-tR-wHV" kind="unwind" unwindAction="unwindAndUpdateAppointment:" id="o3w-dY-dKR"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="1mt-ZI-Cuc" style="IBUITableViewCellStyleDefault" id="7Zi-oX-ASB">
                                         <rect key="frame" x="0.0" y="231" width="414" height="44"/>
@@ -553,6 +563,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="NMJ-tR-wHV" kind="unwind" unwindAction="unwindAndUpdateAppointment:" id="4iO-NW-OIm"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -586,10 +599,12 @@
                             <outlet property="delegate" destination="Wb7-6n-wWg" id="cgU-P6-MCG"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="HAK-Uh-ogM"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qT-i7-Ahc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="NMJ-tR-wHV" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4947" y="-1329"/>
+            <point key="canvasLocation" x="5965" y="-1329"/>
         </scene>
         <!--Custom Repeat-->
         <scene sceneID="TvP-nh-jr9">
@@ -784,7 +799,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ie7-42-0kN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5538" y="-1304"/>
+            <point key="canvasLocation" x="6616" y="-1276"/>
         </scene>
         <!--End Repeat Table View Controller-->
         <scene sceneID="LDX-n7-V3l">
@@ -1632,6 +1647,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x0U-CW-9l3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6277.5" y="-350.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="leU-c4-R0k">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ve9-Ig-bpa" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HWf-to-sxS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Wb7-6n-wWg" kind="relationship" relationship="rootViewController" id="XO7-Qk-Qib"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5cN-ko-b9v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5339" y="-1329"/>
         </scene>
     </scenes>
 </document>
