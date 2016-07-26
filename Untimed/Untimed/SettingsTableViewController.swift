@@ -21,10 +21,12 @@ class SettingsTableViewController: UITableViewController {
     
     @IBAction func changeWorkingDayStart(sender: UIDatePicker) {
         fwm = nsTimeInDSCalFormat(sender.date)
+       // sender.maximumDate =
     }
     
     @IBAction func changedWorkingDayEnd(sender: UIDatePicker) {
         lwm = nsTimeInDSCalFormat(sender.date)
+       // sender.minimumDate =
     }
     
     
