@@ -24,7 +24,7 @@ class SingleTaskTableViewController: UITableViewController {
     
     
     func updateTMObj () {
-        
+    
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -32,7 +32,7 @@ class SingleTaskTableViewController: UITableViewController {
         
         if let appointment = task as? Appointment {
             self.title = appointment.title
-            
+
             let dateFormatter = NSDateFormatter()
             let timeFormatter = NSDateFormatter()
             
@@ -232,13 +232,10 @@ class SingleTaskTableViewController: UITableViewController {
         if let _ = task as? Appointment {
             
             if (segue.identifier == "Edit Appointment") {
-                
-                // set title to our task's title
-                segue.destinationViewController.title = task.title
-                // single task view controller
-                if let eappttvc = segue.destinationViewController as? EditAppointmentTableViewController {
-                    eappttvc.appt = task as! Appointment
-                }
+                    // single task view controller
+                    if let eappttvc = segue.destinationViewController as? EditAppointmentTableViewController {
+                        eappttvc.appt = task as! Appointment
+                    }
             }
         }
             
