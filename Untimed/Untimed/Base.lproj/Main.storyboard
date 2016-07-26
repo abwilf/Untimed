@@ -66,11 +66,17 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Tasks" id="930-Q1-oKY">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3nd-Vh-zd1"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3nd-Vh-zd1">
+                            <connections>
+                                <action selector="addButtonPressed:" destination="bp7-Yw-ZGw" id="TOw-2Y-GZ0"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="rHw-PT-4vj" kind="show" identifier="Assignment View Segue" id="YUX-vF-b7h"/>
                         <segue destination="kQn-Tu-McS" kind="show" identifier="Appointment View Segue" id="m7G-Mb-6a7"/>
+                        <segue destination="ytc-m8-s5S" kind="presentation" identifier="Add Assignment Segue" id="BvP-cP-ZS0"/>
+                        <segue destination="JN3-bG-ly9" kind="presentation" identifier="Add Appointment Segue" id="YyZ-ck-kgw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LcI-a2-6bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
