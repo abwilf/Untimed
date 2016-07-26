@@ -42,6 +42,7 @@ class AddAssignmentTableViewController: UITableViewController {
     
     
     
+    var priorityValue = 1
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
@@ -49,11 +50,11 @@ class AddAssignmentTableViewController: UITableViewController {
         switch segmentedControl.selectedSegmentIndex
         {
         case 0:
-            addedAssignment.priorityValue = 1;
+            priorityValue = 1;
         case 1:
-            addedAssignment.priorityValue = 2;
+            priorityValue = 2;
         case 2:
-            addedAssignment.priorityValue = 3;
+            priorityValue = 3;
         default:
             break;
         }

@@ -10,7 +10,6 @@ import UIKit
 
 class SingleTaskTableViewController: UITableViewController {
     
-    // FIXME: bug where if you don't go back to task list it won't save, because that's where the tmObject is.  NEED TO FIX!!
     var task = Task()
     var index: Int = 0
 
@@ -18,65 +17,6 @@ class SingleTaskTableViewController: UITableViewController {
     @IBOutlet weak var detailOneLabel: UILabel!
     @IBOutlet weak var titleTwoLabel: UILabel!
     @IBOutlet weak var detailTwoLabel: UILabel!
-    
-    
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if let appointment = task as? Appointment {
-            
-            let dateFormatter = NSDateFormatter()
-            let timeFormatter = NSDateFormatter()
-            
-            //format date
-            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
-            
-            //only gets date
-            let strDate = dateFormatter.stringFromDate(appointment.startTime)
-            
-            //format time
-            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-            
-            //only gets time
-            let strDateStartTime = timeFormatter.stringFromDate(appointment.startTime)
-            let strDateEndTime = timeFormatter.stringFromDate(appointment.endTime)
-            
-            
-            titleOneLabel.text  = "Starts"
-            detailOneLabel.text = "\(strDate) at \(strDateStartTime)"
-            
-            titleTwoLabel.text = "Ends"
-            detailTwoLabel.text = "\(strDate) at \(strDateEndTime)"
-        }
-            
-        else if let assignment = task as? Assignment {
-            
-            self.title = assignment.title
-            
-            let dateFormatter = NSDateFormatter()
-            let timeFormatter = NSDateFormatter()
-            
-            //format date
-            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
-            
-            //only gets date
-            let strDate = dateFormatter.stringFromDate(assignment.dueDate)
-            
-            //format time
-            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-            
-            //only gets time
-            let strDueTime = timeFormatter.stringFromDate(assignment.dueDate)
-            
-            
-            titleOneLabel.text = "Due On"
-            detailOneLabel.text = "\(strDate) at \(strDueTime)"
-            
-            titleTwoLabel.text = "Time Remaining"
-            detailTwoLabel.text = "\(Double(assignment.numBlocksNeeded) / 4.0)"
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -195,20 +135,26 @@ class SingleTaskTableViewController: UITableViewController {
     }
     */
     
+    // ONE SEC
     
     @IBAction func unwindAndEditTask(sender: UIStoryboardSegue)
     {
-        // editappt
+        // add assignment created here!
         if let easppttvc = sender.sourceViewController as? EditAppointmentTableViewController {
             
             task = easppttvc.appt
+            // tableView = inherited property from UITableViewController class
+            tableView.reloadData()
         }
         
         
-        // editassn
+        // add appointment created here!
         if let eassntvc = sender.sourceViewController as? EditAssignmentTableViewController {
             
             task = eassntvc.assn
+            
+            // FIXME: reload properly?
+            tableView.reloadData()
         }
         
     }
