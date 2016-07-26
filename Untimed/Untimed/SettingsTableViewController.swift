@@ -18,11 +18,11 @@ class SettingsTableViewController: UITableViewController {
     
     
     @IBAction func changeWorkingDayStart(sender: UIDatePicker) {
-        tmObj.startWorkingDay = nsTimeInDSCalFormat(sender.date)
+        tmObj.firstWorkingMinute = nsTimeInDSCalFormat(sender.date)
     }
     
     @IBAction func changedWorkingDayEnd(sender: UIDatePicker) {
-        tmObj.endWorkingDay = nsTimeInDSCalFormat(sender.date)
+        tmObj.lastWorkingMinute = nsTimeInDSCalFormat(sender.date)
     }
     
     

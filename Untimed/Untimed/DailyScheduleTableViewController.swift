@@ -287,7 +287,9 @@ class DailyScheduleTableViewController: UITableViewController{
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-           
+        
+        print ("\(taskManager.firstWorkingMinute)")
+        
         taskManager.loadFromDisc()
         
         taskManager.allocateTime()
@@ -346,71 +348,39 @@ class DailyScheduleTableViewController: UITableViewController{
                 return true
                 }
             }
+            if let _ = tmCopy.calendarArray[row][col] as? WorkingBlock {
+                if let _ = tmCopy.calendarArray[row + 1][col] as? WorkingBlock {
+                    return true
+                }
+            }
         }
         return false
     }
     
+    func thereExistApptsOutsideWorkingDay() -> Bool {
+        
+        return false
+    }
     // allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // giving cell information and telling where to find it
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         if indexPath.row < dsCalArray.count {
-            let task = dsCalArray[indexPath.row][dateLocationDay]
             
-//            if let temp = task as? Assignment {
-//                
-//                // **FIXME
-//                
-//                // take the minute location of end time of the previous task and the start time of the next task
-//                // let tempTitle = task?.title
-//                
-//                /*
-//                 temp.title = minInHrCoord(dsCalArray[indexPath.row - 1][dateLocationDay]!.dsCalAdjustedEndLocation! + 1) + " - " + minInHrCoord(dsCalArray[indexPath.row + 1][dateLocationDay]!.dsCalAdjustedStartLocation!) + ": \(tempTitle!)"
-//                 */
-//                
-//                let tempTitle = temp.title
-//                
-//                temp.title = minInHrCoord(dsCalArray[indexPath.row][dateLocationDay]!.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(dsCalArray[indexPath.row][dateLocationDay]!.dsCalAdjustedEndLocation!) + ": \(tempTitle)"
-//                
-//                cell.textLabel?.text = temp.title
-//                // temp.title = tempTitle!
-//                return cell
-//            }
-//                
-//                
-//            else {
-                cell.textLabel?.text = task?.title
-//            }
+            if thereExistApptsOutsideWorkingDay() {
+                
+            }
+            
+            else {
+                
+            }
+            
+            let task = dsCalArray[indexPath.row][dateLocationDay]
+
+            cell.textLabel?.text = task?.title
             
             return cell
-            
-            /*
-             if let temp = task as? Free {
-             temp.title = "Free"
-             cell.textLabel?.text = minInHrCoord(task.dsCalAdjustedStartLocation) + " - " + minInHrCoord(task.dsCalAdjustedEndLocation + 1) + ": \(task.title)"
-             return cell
-             }
-             
-             // if it's an assignment, deal with different member variables
-             if let temp = task as? Assignment {
-             // take the minute location of end time of the previous task and the start time of the next task
-             let tempTitle: String = task.title
-             
-             temp.title = minInHrCoord(dsCalArray[indexPath.row - 1].dsCalAdjustedEndLocation + 1) + " - " + minInHrCoord(dsCalArray[indexPath.row + 1].dsCalAdjustedStartLocation) + ": \(task.title)"
-             print ("\(temp.title)")
-             cell.textLabel?.text = temp.title
-             
-             temp.title = tempTitle
-             return cell
-             }
-             
-             // each cell aligns with indexpath.row as it progresses down
-             
-             else {
-             cell.textLabel?.text = minInHrCoord(task.dsCalAdjustedStartLocation) + " - " + minInHrCoord(task.dsCalAdjustedEndLocation + 1) + ": \(task.title)"
-             }
-             */
         }
         else {
             cell.textLabel?.text = ""
@@ -462,8 +432,6 @@ class DailyScheduleTableViewController: UITableViewController{
                 tmCopy.calendarArray[i][k].dsCalAdjustedStartLocation = j
                 tmCopy.calendarArray[i][k].dsCalAdjustedEndLocation = i
                 
-                
-                
                 addToDSCalArray(j, endCoor: i, dayCoor: k, oDRowIndex: otherDayIndex)
 
                 if k > 0 {
@@ -496,6 +464,11 @@ class DailyScheduleTableViewController: UITableViewController{
         if let temp = tmCopy.calendarArray[endCoor][dayCoor] as? Appointment {
             let titleTemp = temp.title
             temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": " + titleTemp
+            addTaskToDSCal(dayCoor, taskIn: temp, oDIndexIn: oDRowIndex)
+        }
+        
+        if let temp = tmCopy.calendarArray[endCoor][dayCoor] as? WorkingBlock {
+            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": Working Block"
             addTaskToDSCal(dayCoor, taskIn: temp, oDIndexIn: oDRowIndex)
         }
     }
@@ -622,9 +595,6 @@ class DailyScheduleTableViewController: UITableViewController{
     
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    
-    
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     
         if (segue.identifier == "Change Date") {
