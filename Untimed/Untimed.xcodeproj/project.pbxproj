@@ -43,6 +43,7 @@
 		A29A9A2A1CBE98340011A5BF /* EditAssignmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */; };
 		A29A9A2C1CBE98480011A5BF /* EditAppointmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */; };
 		A2C519181CAB38CF0074387D /* Appointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C519171CAB38CF0074387D /* Appointment.swift */; };
+		A2E3D14F1D4804F700999F7C /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E3D14E1D4804F700999F7C /* Class.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditAssignmentTableViewController.swift; path = ../EditAssignmentTableViewController.swift; sourceTree = "<group>"; };
 		A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAppointmentTableViewController.swift; sourceTree = "<group>"; };
 		A2C519171CAB38CF0074387D /* Appointment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appointment.swift; sourceTree = "<group>"; };
+		A2E3D14E1D4804F700999F7C /* Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,10 +158,10 @@
 			isa = PBXGroup;
 			children = (
 				A2116D781CA968EC003D221D /* Main.storyboard */,
+				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				218DA32E1D47FBDC00E269CA /* AddProjectTableViewController.swift */,
 				218DA3301D48026400E269CA /* AddClassTableViewController.swift */,
 				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
-				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */,
 				A27C8D671D47AE2200D81D13 /* SettingsTableViewController.swift */,
 				218DA31C1D428C5900E269CA /* RepeatTableViewController.swift */,
@@ -168,12 +170,11 @@
 				A2116DA21CA96DB3003D221D /* Task.swift */,
 				218DA3181D42823100E269CA /* Project.swift */,
 				A2116DA41CA96F22003D221D /* Assignment.swift */,
+				A2E3D14E1D4804F700999F7C /* Class.swift */,
 				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
 				A21825061CC2C931008D366D /* ChangeDateViewController.swift */,
 				211EE5DE1D319FF500E322BB /* AssignmentBlock.swift */,
 				A23F39F61D47BAA6001D8763 /* WorkingBlock.swift */,
-				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
-				A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */,
 				A1D7D2B51CB2E08400053AE6 /* SingleTaskTableViewController.swift */,
 				A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */,
 				A2C519171CAB38CF0074387D /* Appointment.swift */,
@@ -372,6 +373,7 @@
 				A10A6A701CAC33E900DB9C5F /* TestViewController.swift in Sources */,
 				A2C519181CAB38CF0074387D /* Appointment.swift in Sources */,
 				A27FAAB21CAC38CF00B1AE85 /* TaskTableTableViewController.swift in Sources */,
+				A2E3D14F1D4804F700999F7C /* Class.swift in Sources */,
 				A27FAAB01CAC378E00B1AE85 /* TaskViewController.swift in Sources */,
 				A1D7D2B61CB2E08400053AE6 /* SingleTaskTableViewController.swift in Sources */,
 				218CCE141D0C663800CB6E8A /* AddTimeViewController.swift in Sources */,

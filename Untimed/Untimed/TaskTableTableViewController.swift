@@ -48,29 +48,44 @@ class TaskTableTableViewController: UITableViewController {
         taskManager.loadFromDisc()
     }
     
-    // unwind segues
-    
-    
     @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
     {
-        // add assignment created
+        // save from add assignment via unwind
         if let aavc =
             sender.sourceViewController as? AddAssignmentTableViewController {
             taskManager.addTask(aavc.addedAssignment)
-            
+            taskManager.save()
             tableView.reloadData()
         }
         
         
-        // add appointment created
+        // save from add appointment
         if let aapptvc = sender.sourceViewController as?
             AddAppointmentTableViewController {
             taskManager.addTask(aapptvc.addedAppointment)
-            
+            taskManager.save()
             tableView.reloadData()
         }
         
-        // Pull any data from the view controller which initiated the unwind segue.
+        // save from add project
+        if let aatvc = sender.sourceViewController as?
+            AddProjectTableViewController {
+            taskManager.addTask(aatvc.addedProject)
+            taskManager.save()
+            tableView.reloadData()
+        }
+        
+        // save from add class
+        if let actvc = sender.sourceViewController as?
+            AddClassTableViewController {
+            taskManager.addTask(actvc.addedClass)
+            taskManager.save()
+            tableView.reloadData()
+        }
+        
+        
+        
+        
     }
     
     @IBAction func unwindAndDeleteTask(sender: UIStoryboardSegue) {

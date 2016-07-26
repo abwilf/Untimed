@@ -16,5 +16,6 @@ class Project: Task {
         return hoursToWorkOn! - hoursCompleted
     }
     
+    var completionDate: NSDate? = nil
     var tasks: [Task] = []
 }

@@ -10,23 +10,19 @@ import UIKit
 
 class AddProjectTableViewController: UITableViewController {
     
-    // var addedProject = Project()
-    
-    var projectTitle: String? = nil
-    
-    var completionDate: NSDate? = nil
+    var addedProject = Project()
     
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     @IBAction func didChangeProjectTitle(sender: UITextField) {
         if let newTitle = sender.text {
-            projectTitle = newTitle
+            addedProject.title = newTitle
         }
     }
     @IBAction func didEnterCompletionDate(sender: UIDatePicker) {
         let newDueDate = sender.date
-        completionDate = newDueDate
+        addedProject.completionDate = newDueDate
         sender.minimumDate = NSDate()
     }
     
