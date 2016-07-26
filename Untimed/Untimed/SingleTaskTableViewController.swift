@@ -235,9 +235,6 @@ class SingleTaskTableViewController: UITableViewController {
         if let _ = task as? Appointment {
 
             if (segue.identifier == "Edit Appointment") {
-                
-                    // set title to our task's title
-                    segue.destinationViewController.title = task.title
                     // single task view controller
                     if let eappttvc = segue.destinationViewController as? EditAppointmentTableViewController {
                         eappttvc.appt = task as! Appointment
@@ -247,8 +244,6 @@ class SingleTaskTableViewController: UITableViewController {
         
         else if let _ = task as? Assignment {
             if (segue.identifier == "Edit Assignment") {
-                
-                segue.destinationViewController.title = task.title
                 if let eassntvc = segue.destinationViewController as? EditAssignmentTableViewController {
                         eassntvc.assn = task as! Assignment
                 }
