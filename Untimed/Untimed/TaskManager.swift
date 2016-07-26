@@ -17,11 +17,6 @@ class TaskManager: NSObject, NSCopying {
     var calendarArray: [[Task]] = Array(count: 1440,
                                         repeatedValue: Array(count: 28, repeatedValue: Free()))
     
-    // in dsCalFormat; default is 8 am to 7 pm
-    var startWorkingDay = 480
-    var endWorkingDay = 1140
-    
-    
     let HOURS_IN_DAY = 12
     let MINS_IN_HOUR = 60
     let MINS_IN_DAY = 1440
@@ -34,21 +29,13 @@ class TaskManager: NSObject, NSCopying {
     // let = mins in day for now
     var cellsPerDay = 1440
     
-    // FIXME: this is currently set at 8 am to 8 pm.  change to first working minute, 
-    // and last working minute, make sure they're at midnight and 11:59 (1439)
+    // in dsCalFormat; default is 8 am to 7 pm
     var firstWorkingMinute = 480
-    var lastWorkingMinute = 1200
+    var lastWorkingMinute = 1140
     var workingCellsPerDay = 0
     func setWorkingCellsPerDay() {
         workingCellsPerDay = lastWorkingMinute - firstWorkingMinute
     }
-    
-    /*
-     func setLastWorkingMinute() {
-     lastWorkingMinute -= 1
-     }
-     
-     */
     
     func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = TaskManager()
@@ -443,13 +430,24 @@ class TaskManager: NSObject, NSCopying {
         // make all future spots in cal array Free before allocating again from tasks list
         clearCalArray()
         
-        // put appts and free time in
+        // put appts in
         allocateAppts()
         
-        // allocate Assignments
-        allocateAssignments()
+        allocateWorkingBlocks()
+        
+        //allocateAssignments()
     }
     
+    func allocateWorkingBlocks() {
+        for j in 0..<28{
+            for i in firstWorkingMinute..<lastWorkingMinute {
+                if let _ = self.calendarArray[i][j] as? Free {
+                    self.calendarArray[i][j] = WorkingBlock()
+                }
+            }
+        }
+    }
+
     func allocateAppts() {
         // use in both allocations
         var apptDayCoordinate: Int = 0
