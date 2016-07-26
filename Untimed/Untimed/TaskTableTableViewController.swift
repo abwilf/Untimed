@@ -231,8 +231,7 @@ class TaskTableTableViewController: UITableViewController {
                 // correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
                 
-                // for unwind segue back
-                //indexVar = index
+
                 
                 // dealing with Nav controller in between views
                 let destinationNavigationController = segue.destinationViewController as! UINavigationController
