@@ -36,8 +36,8 @@ class TaskTableTableViewController: UITableViewController {
         alertController.addAction(cancelAction)
         alertController.addAction(addTaskAction)
         alertController.addAction(addAppointmentAction)
-//        alertController.addAction(addProjectAction)
-//        alertController.addAction(addClassAction)
+        alertController.addAction(addProjectAction)
+        alertController.addAction(addClassAction)
         
         self.presentViewController(alertController, animated: true, completion: nil)
     }
