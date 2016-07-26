@@ -16,6 +16,9 @@ class AddProjectTableViewController: UITableViewController {
     
     var completionDate: NSDate? = nil
     
+    @IBAction func cancelPressed(sender: UIBarButtonItem) {
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
     @IBAction func didChangeProjectTitle(sender: UITextField) {
         if let newTitle = sender.text {
             projectTitle = newTitle

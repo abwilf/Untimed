@@ -12,6 +12,9 @@ class AddClassTableViewController: UITableViewController {
     
     var className: String? = nil
     
+    @IBAction func cancelPressed(sender: UIBarButtonItem) {
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
     @IBAction func didChangeClassTitle(sender: UITextField) {
         if let name = sender.text {
             className = name

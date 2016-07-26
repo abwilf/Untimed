@@ -78,6 +78,7 @@
                         <segue destination="ytc-m8-s5S" kind="presentation" identifier="Add Assignment Segue" id="BvP-cP-ZS0"/>
                         <segue destination="JN3-bG-ly9" kind="presentation" identifier="Add Appointment Segue" id="YyZ-ck-kgw"/>
                         <segue destination="Wud-wY-xWy" kind="presentation" identifier="Add Class Segue" id="cLO-lp-0FD"/>
+                        <segue destination="T4h-IT-rWn" kind="presentation" identifier="Add Project Segue" id="aEh-J6-JwN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LcI-a2-6bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -471,7 +472,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MiY-i0-MOc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="v1a-8G-CEJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4099" y="-1402"/>
+            <point key="canvasLocation" x="4686" y="-1402"/>
         </scene>
         <!--Repeat-->
         <scene sceneID="N3g-1g-0yg">
@@ -587,7 +588,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qT-i7-Ahc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5534" y="-1329"/>
+            <point key="canvasLocation" x="6121" y="-1329"/>
         </scene>
         <!--Custom Repeat-->
         <scene sceneID="TvP-nh-jr9">
@@ -782,7 +783,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ie7-42-0kN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6125" y="-1304"/>
+            <point key="canvasLocation" x="6712" y="-1304"/>
         </scene>
         <!--End Repeat Table View Controller-->
         <scene sceneID="LDX-n7-V3l">
@@ -1357,7 +1358,7 @@
                     </connections>
                 </datePicker>
             </objects>
-            <point key="canvasLocation" x="2856.5" y="-1247.5"/>
+            <point key="canvasLocation" x="3443.5" y="-1247.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oDQ-eY-TDe">
@@ -1543,7 +1544,7 @@
                             <tableViewSection headerTitle="Project Title" id="NP4-y8-SPd">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="P21-ig-sJg">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="P21-ig-sJg" id="Otp-u2-MXY">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -1557,10 +1558,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="UserDidChangeProjectTItle:" destination="cmM-7C-vRS" eventType="editingChanged" id="SQl-aU-PXr"/>
-                                                        <action selector="didChangeEditingAssignmentTitle:" destination="cmM-7C-vRS" eventType="editingChanged" id="YZu-f7-Qpm"/>
                                                         <action selector="didChangeProjectTitle:" destination="cmM-7C-vRS" eventType="editingDidEnd" id="L5o-Dg-ONJ"/>
-                                                        <action selector="textFieldDoneEditing:" destination="cmM-7C-vRS" eventType="editingDidEndOnExit" id="m5U-h7-W5M"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -1572,7 +1570,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="15" id="VFH-oJ-Gdg">
-                                        <rect key="frame" x="0.0" y="72" width="414" height="15"/>
+                                        <rect key="frame" x="0.0" y="136" width="414" height="15"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VFH-oJ-Gdg" id="ZXj-yq-MpY">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="14.5"/>
@@ -1584,7 +1582,7 @@
                             <tableViewSection headerTitle="Target Completion Date" id="dUy-Hx-17y">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="8gH-hP-5sj" detailTextLabel="brI-k4-oSk" rowHeight="2" style="IBUITableViewCellStyleValue1" id="tzg-1T-zla">
-                                        <rect key="frame" x="0.0" y="115" width="414" height="2"/>
+                                        <rect key="frame" x="0.0" y="179" width="414" height="2"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tzg-1T-zla" id="qQ9-il-7vp">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="1.5"/>
@@ -1608,7 +1606,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="234" id="8Ni-cm-uzq">
-                                        <rect key="frame" x="0.0" y="117" width="414" height="234"/>
+                                        <rect key="frame" x="0.0" y="181" width="414" height="234"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Ni-cm-uzq" id="Hez-l5-t3A">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="233.5"/>
@@ -1621,7 +1619,6 @@
                                                     </date>
                                                     <connections>
                                                         <action selector="didEnterCompletionDate:" destination="cmM-7C-vRS" eventType="valueChanged" id="sS6-uN-MHw"/>
-                                                        <action selector="didEnterStartDate:" destination="cmM-7C-vRS" eventType="valueChanged" id="Uhx-yY-kYF"/>
                                                     </connections>
                                                 </datePicker>
                                             </subviews>
@@ -1649,21 +1646,16 @@
                     <navigationItem key="navigationItem" title="Add Project" id="ZAk-no-Lsk">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="MgT-L7-Jfs">
                             <connections>
-                                <action selector="cancelPressed:" destination="cmM-7C-vRS" id="TnO-bJ-DB9"/>
+                                <action selector="cancelPressed:" destination="cmM-7C-vRS" id="1Xm-SH-ivU"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="avZ-1Z-amq">
-                            <connections>
-                                <segue destination="CBf-h1-EC3" kind="unwind" unwindAction="unwindAndAddTask:" id="2aE-8o-Z1I"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="avZ-1Z-amq"/>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="42s-95-UpJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="CBf-h1-EC3" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4070" y="-2224"/>
+            <point key="canvasLocation" x="3405" y="-1664"/>
         </scene>
         <!--Add Class-->
         <scene sceneID="lws-Mz-5Qx">
@@ -1691,11 +1683,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="UserDidChangeProjectTItle:" destination="Ser-p5-avR" eventType="editingChanged" id="LAE-1B-uiG"/>
                                                         <action selector="didChangeClassTitle:" destination="Ser-p5-avR" eventType="editingDidEnd" id="C8C-4w-Ixe"/>
-                                                        <action selector="didChangeEditingAssignmentTitle:" destination="Ser-p5-avR" eventType="editingChanged" id="u76-rJ-ODs"/>
-                                                        <action selector="didChangeProjectTitle:" destination="Ser-p5-avR" eventType="editingDidEnd" id="2mR-ei-GbE"/>
-                                                        <action selector="textFieldDoneEditing:" destination="Ser-p5-avR" eventType="editingDidEndOnExit" id="GNU-z7-PL8"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -1723,7 +1711,7 @@
                     <navigationItem key="navigationItem" title="Add Class" id="FkE-pM-A8U">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="COg-Sp-XuG">
                             <connections>
-                                <action selector="cancelPressed:" destination="Ser-p5-avR" id="2Pu-y5-25e"/>
+                                <action selector="cancelPressed:" destination="Ser-p5-avR" id="uqi-hd-onl"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="hmv-w6-BFf">
@@ -1737,7 +1725,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jOS-mr-ziR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="0P4-dV-n4D" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2929" y="-2446"/>
+            <point key="canvasLocation" x="3516" y="-2446"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="u1p-gC-m08">
@@ -1756,6 +1744,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XY9-gS-eCH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2341.5" y="-2446.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hHO-KJ-bPk">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T4h-IT-rWn" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="BPd-cD-k16">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="cmM-7C-vRS" kind="relationship" relationship="rootViewController" id="N9S-Hb-BEo"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V2v-f2-BOw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2817.5" y="-1664.5"/>
         </scene>
     </scenes>
 </document>
