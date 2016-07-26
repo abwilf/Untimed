@@ -10,4 +10,10 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
 
+    @IBAction func cancelPressed(sender: UIBarButtonItem) {
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    
 }

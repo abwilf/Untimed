@@ -620,10 +620,6 @@ class DailyScheduleTableViewController: UITableViewController{
         if (segue.identifier == "Change Date") {
             segue.destinationViewController.title = "Change Date"
         }
-    
-        if (segue.identifier == "DS To Settings") {
-            segue.destinationViewController.title = "Settings"
-        }
     }
     
 }
