@@ -10,7 +10,9 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
 
-    var tmObj = TaskManager()
+    // first and last working minutes
+    var fwm = 0
+    var lwm = 0
     
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
@@ -18,11 +20,11 @@ class SettingsTableViewController: UITableViewController {
     
     
     @IBAction func changeWorkingDayStart(sender: UIDatePicker) {
-        tmObj.firstWorkingMinute = nsTimeInDSCalFormat(sender.date)
+        fwm = nsTimeInDSCalFormat(sender.date)
     }
     
     @IBAction func changedWorkingDayEnd(sender: UIDatePicker) {
-        tmObj.lastWorkingMinute = nsTimeInDSCalFormat(sender.date)
+        lwm = nsTimeInDSCalFormat(sender.date)
     }
     
     

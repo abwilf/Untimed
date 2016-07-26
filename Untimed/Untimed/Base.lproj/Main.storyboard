@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -963,7 +963,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XHz-ja-TfR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="2Ey-tU-T7V" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5049.5" y="482.5"/>
+            <point key="canvasLocation" x="5636.5" y="482.5"/>
         </scene>
         <!--Daily Schedule-->
         <scene sceneID="7bg-4x-UqG">
@@ -1023,7 +1023,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Daily Schedule" id="9Ph-E5-LgY">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="Vwa-Ag-8Sv"/>
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="Vwa-Ag-8Sv">
+                            <connections>
+                                <segue destination="S2l-Sy-m5C" kind="show" identifier="DS To Settings" id="J6P-7b-px3"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Change Date" id="Oae-Tz-9Gd">
                             <connections>
                                 <segue destination="SIy-8F-afs" kind="presentation" identifier="Change Date" id="Z9S-Rm-eQK"/>
@@ -1044,17 +1048,17 @@
             <objects>
                 <tableViewController id="FI2-9b-uYf" customClass="SettingsTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="QNf-E0-Yml">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
                             <tableViewSection headerTitle="Start Working Day" id="xBS-Kp-SRi">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="231" id="AXk-jM-hXk">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="231"/>
+                                        <rect key="frame" x="0.0" y="92" width="375" height="231"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AXk-jM-hXk" id="jv7-8q-0rH">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="230.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="230.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wh1-Yy-bIb">
@@ -1070,10 +1074,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="2" id="MPm-zZ-1qQ">
-                                        <rect key="frame" x="0.0" y="259" width="600" height="2"/>
+                                        <rect key="frame" x="0.0" y="323" width="375" height="2"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MPm-zZ-1qQ" id="Eco-wR-eFa">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="1.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="1.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1082,10 +1086,10 @@
                             <tableViewSection headerTitle="End Working Day" id="fo2-L1-Wqj">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="230" id="dku-fF-l8Y">
-                                        <rect key="frame" x="0.0" y="289" width="600" height="230"/>
+                                        <rect key="frame" x="0.0" y="353" width="375" height="230"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dku-fF-l8Y" id="FcV-tf-Tv1">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="229.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="229.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0b-dG-Haa">
@@ -1124,7 +1128,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KCy-yf-TVf" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Pvf-oV-hMi" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3099.5" y="463.5"/>
+            <point key="canvasLocation" x="3143.5" y="584.5"/>
         </scene>
         <!--Add Time View Controller-->
         <scene sceneID="Egb-in-942">
@@ -1364,7 +1368,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ox5-Mz-E6V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2777.5" y="1283.5"/>
+            <point key="canvasLocation" x="3364.5" y="1283.5"/>
         </scene>
         <!--Single Task Table View Controller-->
         <scene sceneID="F9y-yB-jGy">
@@ -1500,7 +1504,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jDr-MH-jRx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="I0R-8c-0KI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="7408.5" y="137.5"/>
+            <point key="canvasLocation" x="7995.5" y="137.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="495-3b-dru">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S2l-Sy-m5C" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7ul-kZ-FWR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="FI2-9b-uYf" kind="relationship" relationship="rootViewController" id="IQa-cA-M6A"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="N46-vE-nHY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2556.5" y="584.5"/>
         </scene>
     </scenes>
 </document>

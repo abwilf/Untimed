@@ -430,7 +430,7 @@ class TaskManager: NSObject, NSCopying {
         // make all future spots in cal array Free before allocating again from tasks list
         clearCalArray()
         
-        // put appts and free time in
+        // put appts in
         allocateAppts()
         
         allocateWorkingBlocks()
