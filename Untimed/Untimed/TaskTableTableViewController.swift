@@ -20,17 +20,20 @@ class TaskTableTableViewController: UITableViewController {
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
         }
-        let addTaskAction = UIAlertAction(title: "Add Assignment", style: .Default) { (action) in
+        let addTaskAction = UIAlertAction(title: "Assignment", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Assignment Segue", sender: TaskTableTableViewController())
         }
-        let addAppointmentAction = UIAlertAction(title: "Add Appointment", style: .Default) { (action) in
+        let addAppointmentAction = UIAlertAction(title: "Appointment", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Appointment Segue", sender: TaskTableTableViewController())
         }
-        let addProjectAction = UIAlertAction(title: "Add Project", style: .Default) { (action) in
+        let addProjectAction = UIAlertAction(title: "Project", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Project Segue", sender: TaskTableTableViewController())
         }
-        let addClassAction = UIAlertAction(title: "Add Class", style: .Default) { (action) in
+        let addClassAction = UIAlertAction(title: "Class", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Class Segue", sender: TaskTableTableViewController())
+        }
+        let addProjectTask = UIAlertAction(title: "Task for Project", style: .Default) { (action) in
+            self.performSegueWithIdentifier("Add Project Task Segue", sender: TaskTableTableViewController())
         }
         
         alertController.addAction(cancelAction)
@@ -155,7 +158,6 @@ class TaskTableTableViewController: UITableViewController {
         // Configure the cell
         cell.textLabel?.text = task.title
         
-        
         // This is where it splits into Appointment and Assignment
         if let appointment = task as? Appointment {
             
@@ -203,6 +205,31 @@ class TaskTableTableViewController: UITableViewController {
             // set subtitle to member variables of the assignment object
             cell.detailTextLabel?.text =
                 "\(Double(assignment.numBlocksNeeded - assignment.numBlocksCompleted) / 4.0) hours remaining; Due \(strDate), at \(strDueTime)"
+        }
+        
+        else if let project = task as? Project {
+            let dateFormatter = NSDateFormatter()
+            
+            //format date
+            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+            
+            if let compDate = project.completionDate {
+                //only gets date
+                let strDate = dateFormatter.stringFromDate(compDate)
+                
+                
+                // set subtitle to member variables of the assignment object
+                cell.detailTextLabel?.text =
+                    "Project: Target Completion Date: \(strDate)"
+            }
+            
+            else {
+                cell.detailTextLabel?.text = "Project"
+            }
+        }
+        
+        else if let classEx = task as? Class {
+            cell.detailTextLabel?.text = ""
         }
         
         return cell
@@ -295,8 +322,6 @@ class TaskTableTableViewController: UITableViewController {
                 // correspond perfectly (that's why we use the same numbers)
                 let task = taskManager.tasks[index]
                 
-                //               FIXME: DELETE indexVar = index
-                
                 // dealing with Nav controller in between views
                 let destinationNavigationController = segue.destinationViewController as! UINavigationController
                 let targetController = destinationNavigationController.topViewController as! SingleTaskTableViewController
@@ -306,6 +331,7 @@ class TaskTableTableViewController: UITableViewController {
                 targetController.index = index
                 targetController.title = task.title
             }
+            
         }
         
         

@@ -15,9 +15,15 @@ class AddClassTableViewController: UITableViewController {
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
-    @IBAction func didChangeClassTitle(sender: UITextField) {
+    
+    @IBAction func changedTitle(sender: UITextField) {
         if let name = sender.text {
             addedClass.title = name
         }
+    }
+    
+    @IBAction func editingDidEnd(sender: UITextField) {
+        // get rid of keyboard
+        sender.resignFirstResponder()
     }
 }

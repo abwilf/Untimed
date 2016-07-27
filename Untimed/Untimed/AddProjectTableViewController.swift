@@ -15,10 +15,15 @@ class AddProjectTableViewController: UITableViewController {
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
-    @IBAction func didChangeProjectTitle(sender: UITextField) {
+    
+    @IBAction func editingDidChange(sender: UITextField) {
         if let newTitle = sender.text {
             addedProject.title = newTitle
         }
+    }
+    
+    @IBAction func editingDidEnd(sender: UITextField) {
+        sender.resignFirstResponder()
     }
     @IBAction func didEnterCompletionDate(sender: UIDatePicker) {
         let newDueDate = sender.date

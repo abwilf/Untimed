@@ -1294,7 +1294,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a19-eD-t4n" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="xae-Xh-ZOJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3332.5" y="1595.5"/>
+            <point key="canvasLocation" x="3152.5" y="1971.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="4bA-cx-dfp">
@@ -1376,7 +1376,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ox5-Mz-E6V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3364.5" y="1283.5"/>
+            <point key="canvasLocation" x="4004.5" y="1419.5"/>
         </scene>
         <!--Single Task Table View Controller-->
         <scene sceneID="F9y-yB-jGy">
@@ -1558,7 +1558,8 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="didChangeProjectTitle:" destination="cmM-7C-vRS" eventType="editingDidEnd" id="L5o-Dg-ONJ"/>
+                                                        <action selector="editingDidChange:" destination="cmM-7C-vRS" eventType="editingChanged" id="o9C-J5-fJD"/>
+                                                        <action selector="editingDidEnd:" destination="cmM-7C-vRS" eventType="editingDidEnd" id="hQr-Sc-UOn"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -1688,7 +1689,8 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="didChangeClassTitle:" destination="Ser-p5-avR" eventType="editingDidEnd" id="C8C-4w-Ixe"/>
+                                                        <action selector="changedTitle:" destination="Ser-p5-avR" eventType="editingChanged" id="j81-l6-cFd"/>
+                                                        <action selector="editingDidEnd:" destination="Ser-p5-avR" eventType="editingDidEnd" id="BAi-Fx-cQ6"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
