@@ -11,6 +11,8 @@ import UIKit
 class AddProjectTableViewController: UITableViewController {
     
     var addedProject = Project()
+    var classes: [Class] = []
+    var index: Int = 0
     
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
@@ -30,5 +32,21 @@ class AddProjectTableViewController: UITableViewController {
         addedProject.completionDate = newDueDate
         sender.minimumDate = NSDate()
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // send the classes array through to the pick a class view controller
+        if (segue.identifier == "Pick A Class") {
+            let destinationViewController = segue.destinationViewController as! PickAClassTableViewController
+            destinationViewController.classArr = classes
+        }
+    }
+    
+    @IBAction func unwindFromPickAClass(sender: UIStoryboardSegue) {
+        if let pactvc =
+            sender.sourceViewController as? PickAClassTableViewController {
+            index = pactvc.index
+        }
+    }
+    
     
 }

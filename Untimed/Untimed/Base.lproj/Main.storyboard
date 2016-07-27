@@ -24,7 +24,35 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t8G-gX-dex" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1257.5" y="-430.5"/>
+            <point key="canvasLocation" x="281.5" y="-1062.5"/>
+        </scene>
+        <!--Projects And Assignments Table View Controller-->
+        <scene sceneID="n6g-RU-FGR">
+            <objects>
+                <tableViewController id="WDV-xm-zLI" customClass="ProjectsAndAssignmentsTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="4zO-GV-BWr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PandA Cell" id="vo9-0i-Itg">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vo9-0i-Itg" id="h4v-Zz-h30">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="WDV-xm-zLI" id="b9G-uk-js6"/>
+                            <outlet property="delegate" destination="WDV-xm-zLI" id="o1s-O9-fbl"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q22-Lt-HwO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1370.5" y="-2351.5"/>
         </scene>
         <!--Tasks-->
         <scene sceneID="k8G-Kw-Fu0">
@@ -58,6 +86,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="WDV-xm-zLI" kind="show" identifier="To Projects And Assignments" id="WHV-Z1-ymZ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -83,7 +114,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LcI-a2-6bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2094.5" y="-1586.5"/>
+            <point key="canvasLocation" x="894.5" y="-1710.5"/>
         </scene>
         <!--Add Assignment-->
         <scene sceneID="67k-aF-hJC">
@@ -1332,6 +1363,38 @@
             </objects>
             <point key="canvasLocation" x="2974.5" y="-418.5"/>
         </scene>
+        <!--PickA Class Table View Controller-->
+        <scene sceneID="bav-JW-jYf">
+            <objects>
+                <tableViewController id="6gr-IL-JB2" customClass="PickAClassTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WC6-14-Hu6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Class Cell" id="aOE-oZ-U2z">
+                                <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aOE-oZ-U2z" id="rI2-Pn-oe1">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="6OZ-Az-27z" kind="unwind" unwindAction="unwindFromPickAClass:" id="vQd-7C-N7S"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="6gr-IL-JB2" id="WIR-q2-LeI"/>
+                            <outlet property="delegate" destination="6gr-IL-JB2" id="UN2-tB-fPr"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Snw-2O-U1R" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="6OZ-Az-27z" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="4124" y="-1791"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="vHH-ti-rfF">
             <objects>
@@ -1358,7 +1421,7 @@
                     </connections>
                 </datePicker>
             </objects>
-            <point key="canvasLocation" x="4011.5" y="-1343.5"/>
+            <point key="canvasLocation" x="4057.5" y="-1041.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oDQ-eY-TDe">
@@ -1580,10 +1643,39 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Which Class is this a part of?" id="4qb-ao-FBr">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Je9-JA-RbI">
+                                        <rect key="frame" x="0.0" y="179" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Je9-JA-RbI" id="zB5-Eu-AT3">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vnf-em-jnJ">
+                                                    <rect key="frame" x="29" y="8" width="280" height="30"/>
+                                                    <state key="normal" title="Pick a Class"/>
+                                                    <connections>
+                                                        <segue destination="6gr-IL-JB2" kind="show" identifier="Pick A Class" id="LJk-Y8-muw"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="15" id="dj9-GE-cSf">
+                                        <rect key="frame" x="0.0" y="223" width="414" height="15"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dj9-GE-cSf" id="20q-0n-QyK">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="14.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Target Completion Date" id="dUy-Hx-17y">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="8gH-hP-5sj" detailTextLabel="brI-k4-oSk" rowHeight="2" style="IBUITableViewCellStyleValue1" id="tzg-1T-zla">
-                                        <rect key="frame" x="0.0" y="179" width="414" height="2"/>
+                                        <rect key="frame" x="0.0" y="266" width="414" height="2"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tzg-1T-zla" id="qQ9-il-7vp">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="1.5"/>
@@ -1607,7 +1699,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="234" id="8Ni-cm-uzq">
-                                        <rect key="frame" x="0.0" y="181" width="414" height="234"/>
+                                        <rect key="frame" x="0.0" y="268" width="414" height="234"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Ni-cm-uzq" id="Hez-l5-t3A">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="233.5"/>

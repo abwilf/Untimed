@@ -380,7 +380,7 @@ class DailyScheduleTableViewController: UITableViewController{
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         
         if thereExistsAnApptOutsideWorkingDay() {
-            // if it's before the working day
+            // FIXME: ADD if it's before the working day
             
             // if it's after the working day
         }
