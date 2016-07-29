@@ -86,7 +86,6 @@ class DailyScheduleTableViewController: UITableViewController{
             // re-allocate
             taskManager.loadFromDisc()
             
-            // problem may be here?!
             taskManager.allocateTime()
             createDSCalArray()
             tableView.reloadData()

@@ -11,5 +11,6 @@ import Foundation
 class Class: Task {
     // projects and assignments that fall under one class
     var projAndAssns: [Task] = []
+    var tasksIndex: Int = 0
     
 }

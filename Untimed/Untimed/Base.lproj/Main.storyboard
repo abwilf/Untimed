@@ -54,7 +54,7 @@
             </objects>
             <point key="canvasLocation" x="1370.5" y="-2351.5"/>
         </scene>
-        <!--Tasks-->
+        <!--Classes-->
         <scene sceneID="k8G-Kw-Fu0">
             <objects>
                 <tableViewController id="bp7-Yw-ZGw" customClass="TaskTableTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
@@ -96,7 +96,7 @@
                             <outlet property="delegate" destination="bp7-Yw-ZGw" id="NYF-W5-Dq0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tasks" id="930-Q1-oKY">
+                    <navigationItem key="navigationItem" title="Classes" id="930-Q1-oKY">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="3nd-Vh-zd1">
                             <connections>
                                 <action selector="addButtonPressed:" destination="bp7-Yw-ZGw" id="TOw-2Y-GZ0"/>
@@ -154,10 +154,32 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Which class is this for?" id="usb-Fl-usm">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1eb-om-bgc">
+                                        <rect key="frame" x="0.0" y="164" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1eb-om-bgc" id="6U2-D2-ZjS">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ukZ-hG-cUz">
+                                                    <rect key="frame" x="35" y="5" width="304" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <state key="normal" title="Pick a Class"/>
+                                                    <connections>
+                                                        <segue destination="6gr-IL-JB2" kind="show" identifier="Pick a Class" id="TEO-pD-LYN"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Due Date:" id="oET-YT-iad">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="228" id="SbU-EF-Pf2">
-                                        <rect key="frame" x="0.0" y="164" width="375" height="228"/>
+                                        <rect key="frame" x="0.0" y="236" width="375" height="228"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SbU-EF-Pf2" id="9Wq-vG-1ls">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="227.5"/>
@@ -185,7 +207,7 @@
                             <tableViewSection headerTitle="How long will it take to complete?" id="Iws-at-wD5">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="yEl-IY-8CK">
-                                        <rect key="frame" x="0.0" y="420" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="492" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yEl-IY-8CK" id="Yt2-xw-iSC">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -220,7 +242,7 @@
                             <tableViewSection headerTitle="What priority is it?" id="kNr-c1-wvo">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="dVk-Da-Hun">
-                                        <rect key="frame" x="0.0" y="492" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="564" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dVk-Da-Hun" id="czF-SC-AYF">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -274,7 +296,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ahu-Kd-CMv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="bfw-eO-dAU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3642.5" y="-418.5"/>
+            <point key="canvasLocation" x="3062.5" y="-906.5"/>
         </scene>
         <!--Add Appointment-->
         <scene sceneID="y5x-iq-Wze">
@@ -1361,22 +1383,22 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="70m-c0-h6Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2974.5" y="-418.5"/>
+            <point key="canvasLocation" x="2382.5" y="-434.5"/>
         </scene>
         <!--PickA Class Table View Controller-->
         <scene sceneID="bav-JW-jYf">
             <objects>
                 <tableViewController id="6gr-IL-JB2" customClass="PickAClassTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WC6-14-Hu6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Class Cell" id="aOE-oZ-U2z">
-                                <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aOE-oZ-U2z" id="rI2-Pn-oe1">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
@@ -1393,7 +1415,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Snw-2O-U1R" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="6OZ-Az-27z" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4124" y="-1791"/>
+            <point key="canvasLocation" x="3580" y="-931"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vHH-ti-rfF">
@@ -1643,7 +1665,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Which Class is this a part of?" id="4qb-ao-FBr">
+                            <tableViewSection headerTitle="Which Class is this for?" id="4qb-ao-FBr">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Je9-JA-RbI">
                                         <rect key="frame" x="0.0" y="179" width="414" height="44"/>
@@ -1863,4 +1885,7 @@
             <point key="canvasLocation" x="2817.5" y="-1664.5"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="TEO-pD-LYN"/>
+    </inferredMetricsTieBreakers>
 </document>

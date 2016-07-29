@@ -10,7 +10,7 @@ import UIKit
 
 class TaskTableTableViewController: UITableViewController {
     
-    
+    let taskManager = TaskManager()
 
     // Creates object of TaskManager class and initializes tasks array
     
@@ -49,16 +49,21 @@ class TaskTableTableViewController: UITableViewController {
     }
     
     
-    
-    let taskManager = TaskManager()
-    
     @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
     {
         // save from add assignment via unwind
         if let aavc =
             sender.sourceViewController as? AddAssignmentTableViewController {
+            
+            // FIXME: IMPORTANT: make sure when you add assignment to a class you do it first by adding it to the tasks list, then to the class within the general tasks list, and finally by recreating the class list from the general tasks list
             taskManager.addTask(aavc.addedAssignment)
-            taskManager.save()
+            let tasksIndexForClass = taskManager.classArray[aavc.index].tasksIndex
+            if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
+                tmt.projAndAssns += [aavc.addedAssignment]
+            }
+            
+            // draws from tasks array in creation and saves
+            taskManager.createClassArray()
             tableView.reloadData()
         }
         
@@ -71,17 +76,24 @@ class TaskTableTableViewController: UITableViewController {
             tableView.reloadData()
         }
         
-        // save from add project
+        // add project
         if let aatvc = sender.sourceViewController as?
             AddProjectTableViewController {
+            
+            
+            // FIXME: at this point, the math.projassn has been wiped.  Why??
+            
             // add to general tasks array
             taskManager.addTask(aatvc.addedProject)
             
-            // add to that class' projsAndAssns array
-            var classAddedTo = taskManager.classArray[aatvc.index]
-            classAddedTo.projAndAssns += [aatvc.addedProject]
+            let tasksIndexForClass = taskManager.classArray[aatvc.index].tasksIndex
+            if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
+                tmt.projAndAssns += [aatvc.addedProject]
+            }
             
-            taskManager.save()
+            // draws from tasks array in creation and saves
+            taskManager.createClassArray()
+            
             tableView.reloadData()
         }
         
@@ -89,7 +101,18 @@ class TaskTableTableViewController: UITableViewController {
         if let actvc = sender.sourceViewController as?
             AddClassTableViewController {
             taskManager.addTask(actvc.addedClass)
+            
+            // you just added this class to the last spot, so alter its member variable "tasks index" so you know where to look when making createClass
+            
+            if let addedClass = taskManager.tasks[taskManager.tasks.count - 1] as? Class {
+                addedClass.tasksIndex = taskManager.tasks.count - 1
+            }
+            
+            
+            taskManager.createClassArray()
+            
             taskManager.save()
+            
             tableView.reloadData()
         }
     }
@@ -104,32 +127,44 @@ class TaskTableTableViewController: UITableViewController {
     }
     
     @IBAction func unwindFromSingleTaskViewer(sender: UIStoryboardSegue) {
-        if let sttvc =
+        if let _ =
             sender.sourceViewController as? SingleTaskTableViewController {
             taskManager.loadFromDisc()
             tableView.reloadData()
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+// taskManager.tasks = []
+// taskManager.classArray = []
+//taskManager.save()
+        taskManager.loadFromDisc()
+        taskManager.createClassArray()
+        taskManager.save()
+        tableView.reloadData()
+    }
+    
     override func viewWillAppear(animated: Bool) {
         
         // FIXME: to manually erase when all goes south
-//        taskManager.tasks = []
-//        taskManager.save()
+//taskManager.tasks = []
+//taskManager.save()
         
         super.viewWillAppear(animated)
         
+        // FIXME: for testing
+        // taskManager.classArray = []
+        // taskManager.tasks = []
         taskManager.loadFromDisc()
         
-        taskManager.createClassArray()
+        // if you uncomment this, it will yield the wrong tasksIndex for the different classes when you try to delete
+        //taskManager.createClassArray()
         
         tableView.reloadData()
     }
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        tableView.reloadData()
-//    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -169,7 +204,8 @@ class TaskTableTableViewController: UITableViewController {
             let task = taskManager.classArray[indexPath.row]
             cell.textLabel?.text = task.title
             
-            // assignment
+           /*
+ // assignment
             if let assignment = task as? Assignment {
                 let dateFormatter = NSDateFormatter()
                 let timeFormatter = NSDateFormatter()
@@ -213,19 +249,10 @@ class TaskTableTableViewController: UITableViewController {
                 }
             }
                 
-            // class
-            else if let _ = task as? Class {
-                cell.detailTextLabel?.text = ""
-            }
-            
-            return cell
-        }
-            
-        else {
-            cell.textLabel?.text = ""
+ */
+
             cell.detailTextLabel?.text = ""
         }
-        
         return cell
         
 //        // This is where it splits into Appointment and Assignment
@@ -358,6 +385,9 @@ class TaskTableTableViewController: UITableViewController {
         // if click on add task button
         if (segue.identifier == "Add Task") {
             segue.destinationViewController.title = "Add Task"
+            
+            /* FIXME: Keenan, I don't know where the specific task segues are.  Could you please pass the information like below (in the "add project segue") to the add assignment view controller please?  Your code will probably look something like segue.destinationViewController.classes = taskManager.classArray, since there's no navigation controller.
+            */
         }
         
         
@@ -368,7 +398,7 @@ class TaskTableTableViewController: UITableViewController {
             
             if let index = tableView.indexPathForSelectedRow?.row {
                 // send projAndAssnArray to the next view controller based on which project is selected
-                destinationViewController.assnProjClassArr = taskManager.classArray[index].projAndAssns
+                destinationViewController.selectedClass = taskManager.classArray[index]
             }
         }
         
@@ -387,7 +417,16 @@ class TaskTableTableViewController: UITableViewController {
                             commitEditingStyle editingStyle: UITableViewCellEditingStyle,
                                                forRowAtIndexPath indexPath: NSIndexPath){
         if (editingStyle == UITableViewCellEditingStyle.Delete){
-            taskManager.deleteClassAtIndex(indexPath.row)
+            
+            // find the class's index in the tasks array
+            let tasksIndexForClass = taskManager.classArray[indexPath.row].tasksIndex
+            
+            // delete it from the tasks array
+            taskManager.deleteTaskAtIndex(tasksIndexForClass)
+            
+            // recreate the class array
+            taskManager.createClassArray()
+            
             tableView.reloadData()
         }
     }

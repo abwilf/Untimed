@@ -13,7 +13,6 @@ class TaskManager: NSObject, NSCopying {
     var tasks: [Task] = []
     var classArray: [Class] = []
     
-    
     // calendar array = 2d array of MINS_IN_DAY (rows) by 365 days (cols)
     // FIXME: change 28 to DAYS_IN_YEAR days everywhere
     var calendarArray: [[Task]] = Array(count: 1440,
@@ -65,6 +64,8 @@ class TaskManager: NSObject, NSCopying {
                 classArray += [task]
             }
         }
+        
+        save()
     }
     
     
@@ -80,12 +81,7 @@ class TaskManager: NSObject, NSCopying {
         allocateTime()
     }
     
-    
-    func deleteClassAtIndex (index: Int) {
-        classArray.removeAtIndex(index)
-        save()
-        allocateTime()
-    }
+   
     func deleteTaskAtIndex (index: Int) {
         tasks.removeAtIndex(index)
         save()
