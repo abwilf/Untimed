@@ -383,11 +383,13 @@ class TaskTableTableViewController: UITableViewController {
 //        }
         
         // if click on add task button
-        if (segue.identifier == "Add Task") {
-            segue.destinationViewController.title = "Add Task"
+        if (segue.identifier == "Add Assignment Segue") {
             
-            /* FIXME: Keenan, I don't know where the specific task segues are.  Could you please pass the information like below (in the "add project segue") to the add assignment view controller please?  Your code will probably look something like segue.destinationViewController.classes = taskManager.classArray, since there's no navigation controller.
-            */
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            
+            let targetController = destinationNavigationController.topViewController as! AddAssignmentTableViewController
+            
+            targetController.classes = taskManager.classArray
         }
         
         

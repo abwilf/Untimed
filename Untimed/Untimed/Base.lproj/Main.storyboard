@@ -168,7 +168,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <state key="normal" title="Pick a Class"/>
                                                     <connections>
-                                                        <segue destination="6gr-IL-JB2" kind="show" identifier="Pick a Class" id="TEO-pD-LYN"/>
+                                                        <segue destination="6gr-IL-JB2" kind="show" identifier="Find a Class" id="TEO-pD-LYN"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
