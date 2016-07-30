@@ -40,7 +40,51 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PandA Cell", forIndexPath: indexPath)
         
+        let task = selectedClass.projAndAssns[indexPath.row]
         cell.textLabel?.text = selectedClass.projAndAssns[indexPath.row].title
+
+        // format assignment cells
+        if let assignment = task as? Assignment {
+            let dateFormatter = NSDateFormatter()
+            let timeFormatter = NSDateFormatter()
+            
+            //format date
+            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+            
+            //only gets date
+            let strDate = dateFormatter.stringFromDate(assignment.dueDate)
+            
+            //format time
+            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+            
+            //only gets time
+            let strDueTime = timeFormatter.stringFromDate(assignment.dueDate)
+            
+            // set subtitle to member variables of the assignment object
+            cell.detailTextLabel?.text =
+                "\(Double(assignment.numBlocksNeeded - assignment.numBlocksCompleted) / 4.0) hours remaining; Due \(strDate), at \(strDueTime)."
+        }
+            
+        // project
+        else if let project = task as? Project {
+            let dateFormatter = NSDateFormatter()
+            
+            //format date
+            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+            
+            if let compDate = project.completionDate {
+                //only gets date
+                let strDate = dateFormatter.stringFromDate(compDate)
+                
+                // set subtitle to member variables of the assignment object
+                cell.detailTextLabel?.text =
+                    "Target Completion Date: \(strDate)."
+            }
+                
+            else {
+                cell.detailTextLabel?.text = "Project"
+            }
+        }
         
         return cell
     }

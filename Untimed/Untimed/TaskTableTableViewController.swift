@@ -12,6 +12,30 @@ class TaskTableTableViewController: UITableViewController {
     
     let taskManager = TaskManager()
 
+    func resetForTesting () {
+        taskManager.tasks = []
+        taskManager.save()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        taskManager.loadFromDisc()
+        taskManager.createArrays()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        // FIXME: use only for testing
+        // resetForTesting()
+
+        super.viewWillAppear(animated)
+        
+        taskManager.createArrays()
+        
+        tableView.reloadData()
+    }
+
+    
     // Creates object of TaskManager class and initializes tasks array
     
     @IBAction func addButtonPressed(sender: UIBarButtonItem) {
@@ -86,13 +110,14 @@ class TaskTableTableViewController: UITableViewController {
             // add to general tasks array
             taskManager.addTask(aatvc.addedProject)
             
+            // add to general tasks array within class's proj array
             let tasksIndexForClass = taskManager.classArray[aatvc.index].tasksIndex
             if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
                 tmt.projAndAssns += [aatvc.addedProject]
             }
             
-            // draws from tasks array in creation and saves
-            taskManager.createClassArray()
+            // works up to here.  doesn't save and load correctly (at least within this page)
+            taskManager.save()
             
             tableView.reloadData()
         }
@@ -133,38 +158,6 @@ class TaskTableTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-// taskManager.tasks = []
-// taskManager.classArray = []
-//taskManager.save()
-        taskManager.loadFromDisc()
-        taskManager.createClassArray()
-        taskManager.save()
-        tableView.reloadData()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        
-        // FIXME: to manually erase when all goes south
-//taskManager.tasks = []
-//taskManager.save()
-        
-        super.viewWillAppear(animated)
-        
-        // FIXME: for testing
-        // taskManager.classArray = []
-        // taskManager.tasks = []
-        taskManager.loadFromDisc()
-        
-        // if you uncomment this, it will yield the wrong tasksIndex for the different classes when you try to delete
-        //taskManager.createClassArray()
-        
-        tableView.reloadData()
-    }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

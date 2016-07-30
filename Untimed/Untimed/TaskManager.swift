@@ -54,6 +54,15 @@ class TaskManager: NSObject, NSCopying {
         }
     }
     
+    
+    func createArrays() {
+        createClassArray()
+        createProjectArray()
+    }
+    
+    func createProjectArray() {
+        
+    }
     func createClassArray() {
         // wipe
         classArray = []
@@ -147,8 +156,8 @@ class TaskManager: NSObject, NSCopying {
         // if I'm able to get a tasks array at this key, put it into tasks,
         // if not, create a blank one and put it into tasks
         let archive = defaults.objectForKey("SavedTasks") as? NSData ?? NSData()
-        // every time you open the app
         
+        // every time you open the app
         if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Task] {
             tasks = temp
         }
