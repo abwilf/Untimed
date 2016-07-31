@@ -10,6 +10,8 @@ import UIKit
 
 class RepeatTableViewController: AddAppointmentTableViewController {
     
+    var optionIndex: Int = 0
+    
     var currentCategory: NSIndexPath? = nil
     var taskCategories: NSArray? = nil
     
@@ -19,7 +21,6 @@ class RepeatTableViewController: AddAppointmentTableViewController {
         
         super.viewWillAppear(animated)
         
-        let optionIndex = addedAppointment.repeatOptionsIndex
         var initialIndexPath = NSIndexPath(forRow: optionIndex, inSection: 0)
         if optionIndex < 5 {
         }
@@ -28,16 +29,21 @@ class RepeatTableViewController: AddAppointmentTableViewController {
         }
         let initialCell = tableView.cellForRowAtIndexPath(initialIndexPath)
         initialCell?.accessoryType = UITableViewCellAccessoryType.Checkmark
-        
     }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if let rtvc = segue.destinationViewController as? AddAppointmentTableViewController {
+//            rtvc.addedAppointment.repeatOptionsIndex = optionIndex
+//            print(optionIndex)
+//        }
+//    }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if indexPath.section == 0 {
-            let optionIndex = addedAppointment.repeatOptionsIndex
 
             if indexPath.row == optionIndex {
-                return
+                 presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
             }
                 
             else {
@@ -45,16 +51,23 @@ class RepeatTableViewController: AddAppointmentTableViewController {
                 let newCell = tableView.cellForRowAtIndexPath(indexPath)
                 if newCell!.accessoryType == UITableViewCellAccessoryType.None {
                     newCell!.accessoryType = UITableViewCellAccessoryType.Checkmark
-                    addedAppointment.repeatOptionsIndex = indexPath.row
+                    optionIndex = indexPath.row
                 }
                 
+                // FIXME:! failing here when going from custom to section 0
                 let oldCell = tableView.cellForRowAtIndexPath(oldIndexPath)
                 oldCell!.accessoryType = UITableViewCellAccessoryType.None
+                
+                // unwind and updateRepeatOptionsIndex
+                
+                // FIXME: doesnt work (invalid argument)
+                // performSegueWithIdentifier("unwindAndUpdateRepeatOptionsIndex", sender: self)
+//                unwindAndUpdateRepeatOptionsIndex(RepeatTableViewController.)
+//                unwindForSegue(unwindAndUpdateRepeatOptionsIndex(unwindAndUpdateRepeatOptionsIndex(UIStoryboardSegue)), towardsViewController: AddAppointmentTableViewController)
             }
         }
         
-        if indexPath.section == 1 {
-            let optionIndex = addedAppointment.repeatOptionsIndex
+        else if indexPath.section == 1 {
             if optionIndex == 5{
                 return
             }
@@ -65,7 +78,7 @@ class RepeatTableViewController: AddAppointmentTableViewController {
                 
                 let newCell = tableView.cellForRowAtIndexPath(indexPath)
                 newCell!.accessoryType = UITableViewCellAccessoryType.Checkmark
-                addedAppointment.repeatOptionsIndex = 5
+                optionIndex = 5
             }
         }
     }

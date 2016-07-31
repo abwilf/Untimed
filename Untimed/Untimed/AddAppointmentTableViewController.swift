@@ -11,6 +11,33 @@ import UIKit
 
 class AddAppointmentTableViewController: UITableViewController {
     
+    // created task that we will modify
+    var addedAppointment = Appointment()
+    
+    @IBAction func unwindAndUpdateRepeatOptionsIndex(sender: UIStoryboardSegue) {
+        // save from add assignment via unwind
+        if let rtvc =
+            sender.sourceViewController as? RepeatTableViewController {
+            // FIXME: optionIndex is 0 when it shouldn't be
+            addedAppointment.repeatOptionsIndex = rtvc.optionIndex
+            print(addedAppointment.repeatOptionsIndex)
+        }
+    }
+    
+    @IBOutlet weak var repeatDetail: UILabel!
+    
+    override func viewWillAppear(animated: Bool) {
+        repeatDetail?.text = addedAppointment.repeatOptionsArray[addedAppointment.repeatOptionsIndex]
+        print(repeatDetail?.text)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let rtvc = segue.destinationViewController as? RepeatTableViewController {
+            rtvc.optionIndex = addedAppointment.repeatOptionsIndex
+            print(rtvc.optionIndex)
+        }
+    }
+    
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -19,9 +46,6 @@ class AddAppointmentTableViewController: UITableViewController {
     // did change start date
     
         // modifies end date minimum
-    
-    // created task that we will modify
-    var addedAppointment = Appointment()
 
     @IBAction func didChangeEditingAssignmentTitle(sender: UITextField) {
         // if able to unwrap, set it equal

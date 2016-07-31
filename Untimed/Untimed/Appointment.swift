@@ -64,6 +64,8 @@ class Appointment: Task {
         var endRepeatDate: NSDate? = nil
     }
     
+    let repeatOptionsArray: [String] = ["Never", "Daily", "Every Weekday", "Weekly", "Custom"] 
+    
     private func repeatApptSwitch() {
         if let repeatOption = repeatOptions(rawValue: repeatOptionsIndex) {
             switch repeatOption {
