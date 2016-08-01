@@ -53,20 +53,18 @@ class TaskTableTableViewController: UITableViewController {
         let addProjectAction = UIAlertAction(title: "Project", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Project Segue", sender: TaskTableTableViewController())
         }
+        let addProjectTaskAction = UIAlertAction(title: "Add Project Task", style: .Default) { (action) in
+            self.performSegueWithIdentifier("Add Project Task Segue", sender: TaskTableTableViewController())
+        }
         let addClassAction = UIAlertAction(title: "Class", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Class Segue", sender: TaskTableTableViewController())
-        }
-        
-        // FIXME: add UI for this
-        let addProjectTask = UIAlertAction(title: "Task for Project", style: .Default) { (action) in
-            self.performSegueWithIdentifier("Add Project Task Segue", sender: TaskTableTableViewController())
-            
         }
         
         alertController.addAction(cancelAction)
         alertController.addAction(addTaskAction)
         alertController.addAction(addAppointmentAction)
         alertController.addAction(addProjectAction)
+        alertController.addAction(addProjectTaskAction)
         alertController.addAction(addClassAction)
         
         self.presentViewController(alertController, animated: true, completion: nil)

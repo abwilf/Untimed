@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		211EE5DF1D319FF500E322BB /* AssignmentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211EE5DE1D319FF500E322BB /* AssignmentBlock.swift */; };
 		214745F41CB8B568007BABCA /* core.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 214745F31CB8B568007BABCA /* core.pdf */; };
+		21895A721D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21895A711D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift */; };
 		218CCE141D0C663800CB6E8A /* AddTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */; };
 		218CCE161D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */; };
 		218DA3191D42823100E269CA /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218DA3181D42823100E269CA /* Project.swift */; };
@@ -69,6 +70,7 @@
 /* Begin PBXFileReference section */
 		211EE5DE1D319FF500E322BB /* AssignmentBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentBlock.swift; sourceTree = "<group>"; };
 		214745F31CB8B568007BABCA /* core.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = core.pdf; sourceTree = "<group>"; };
+		21895A711D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProjectTaskTableViewController.swift; sourceTree = "<group>"; };
 		218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTimeViewController.swift; sourceTree = "<group>"; };
 		218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAssignmentViewController.swift; sourceTree = "<group>"; };
 		218DA3181D42823100E269CA /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
@@ -164,6 +166,8 @@
 			isa = PBXGroup;
 			children = (
 				A2116D781CA968EC003D221D /* Main.storyboard */,
+				21895A711D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift */,
+				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				A2C519171CAB38CF0074387D /* Appointment.swift */,
 				A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */,
 				218DA31C1D428C5900E269CA /* RepeatTableViewController.swift */,
@@ -174,7 +178,6 @@
 				A2A5A8D31D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift */,
 				218DA32E1D47FBDC00E269CA /* AddProjectTableViewController.swift */,
 				218DA3181D42823100E269CA /* Project.swift */,
-				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				A24255631D4C2F220002C098 /* ProjectTask.swift */,
 				218DA3301D48026400E269CA /* AddClassTableViewController.swift */,
 				A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */,
@@ -359,6 +362,7 @@
 			files = (
 				218CCE161D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift in Sources */,
 				A21825071CC2C931008D366D /* ChangeDateViewController.swift in Sources */,
+				21895A721D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift in Sources */,
 				218DA3211D42940D00E269CA /* CustomRepeatTableViewController.swift in Sources */,
 				A23F39F71D47BAA6001D8763 /* WorkingBlock.swift in Sources */,
 				A24771591CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift in Sources */,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -68,7 +68,36 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q22-Lt-HwO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1370.5" y="-2351.5"/>
+            <point key="canvasLocation" x="1957.5" y="-2351.5"/>
+        </scene>
+        <!--Add Project Task Table View Controller-->
+        <scene sceneID="Of5-DL-T3Q">
+            <objects>
+                <tableViewController id="5zx-1P-xnR" customClass="AddProjectTaskTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yFK-JF-gbn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="IlH-DE-qKd">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IlH-DE-qKd" id="N9P-Hl-3v6">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="5zx-1P-xnR" id="4mv-nZ-9JI"/>
+                            <outlet property="delegate" destination="5zx-1P-xnR" id="y6i-DE-S8q"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="beg-uc-ljf"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a86-nF-aux" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1280.5" y="-2405.5"/>
         </scene>
         <!--Classes-->
         <scene sceneID="k8G-Kw-Fu0">
@@ -126,6 +155,7 @@
                         <segue destination="JN3-bG-ly9" kind="presentation" identifier="Add Appointment Segue" id="YyZ-ck-kgw"/>
                         <segue destination="Wud-wY-xWy" kind="presentation" identifier="Add Class Segue" id="cLO-lp-0FD"/>
                         <segue destination="T4h-IT-rWn" kind="presentation" identifier="Add Project Segue" id="aEh-J6-JwN"/>
+                        <segue destination="ZRY-zS-Jtt" kind="presentation" identifier="Add Project Task Segue" id="xxf-lg-R95"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LcI-a2-6bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1806,7 +1836,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="42s-95-UpJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="qYv-XX-TQH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3361" y="-1716"/>
+            <point key="canvasLocation" x="3948" y="-1716"/>
         </scene>
         <!--Add Class-->
         <scene sceneID="lws-Mz-5Qx">
@@ -1877,7 +1907,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jOS-mr-ziR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="0P4-dV-n4D" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3516" y="-2446"/>
+            <point key="canvasLocation" x="4103" y="-2446"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="u1p-gC-m08">
@@ -1895,7 +1925,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XY9-gS-eCH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2341.5" y="-2446.5"/>
+            <point key="canvasLocation" x="2928.5" y="-2446.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hHO-KJ-bPk">
@@ -1932,6 +1962,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EyJ-wM-4KO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5277" y="-1441"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="n1h-6M-3xu">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZRY-zS-Jtt" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qyn-4b-fRC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="5zx-1P-xnR" kind="relationship" relationship="rootViewController" id="F0s-2P-GiW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tlw-Ve-jjo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="693.5" y="-2405.5"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
