@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="T93-a2-7SR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -130,7 +130,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LcI-a2-6bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="894.5" y="-1710.5"/>
+            <point key="canvasLocation" x="846.5" y="-1422.5"/>
         </scene>
         <!--Add Assignment-->
         <scene sceneID="67k-aF-hJC">
@@ -572,7 +572,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Nx6-Li-zPO" kind="unwind" unwindAction="unwindAndUpdateRepeatOptionsIndex:" id="8ip-Sc-ak9"/>
+                                            <segue destination="Nx6-Li-zPO" kind="unwind" unwindAction="unwindAndUpdateRepeatOptionsIndex:" id="C3D-fM-hzX"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="IuE-Ke-Pvb" style="IBUITableViewCellStyleDefault" id="V8G-18-k3i">
@@ -592,7 +592,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Nx6-Li-zPO" kind="unwind" unwindAction="unwindAndUpdateRepeatOptionsIndex:" id="h4o-ci-iZa"/>
+                                            <segue destination="Nx6-Li-zPO" kind="unwind" unwindAction="unwindAndUpdateRepeatOptionsIndex:" id="12s-lf-GBq"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="cg7-hM-u6I" style="IBUITableViewCellStyleDefault" id="t6W-PS-AEU">
@@ -612,7 +612,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Nx6-Li-zPO" kind="unwind" unwindAction="unwindAndUpdateRepeatOptionsIndex:" id="UGf-jP-3aK"/>
+                                            <segue destination="Nx6-Li-zPO" kind="unwind" unwindAction="unwindAndUpdateRepeatOptionsIndex:" id="3jh-41-HuA"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="1mt-ZI-Cuc" style="IBUITableViewCellStyleDefault" id="7Zi-oX-ASB">
@@ -632,7 +632,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Nx6-Li-zPO" kind="unwind" unwindAction="unwindAndUpdateRepeatOptionsIndex:" id="h7G-sR-yIo"/>
+                                            <segue destination="Nx6-Li-zPO" kind="unwind" unwindAction="unwindAndUpdateRepeatOptionsIndex:" id="3oC-ue-u78"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -1421,15 +1421,15 @@
             <objects>
                 <tableViewController id="6gr-IL-JB2" customClass="PickAClassTableViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WC6-14-Hu6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Class Cell" id="aOE-oZ-U2z">
-                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aOE-oZ-U2z" id="rI2-Pn-oe1">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
@@ -1446,7 +1446,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Snw-2O-U1R" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="6OZ-Az-27z" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3580" y="-931"/>
+            <point key="canvasLocation" x="3594" y="-899"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vHH-ti-rfF">
@@ -1806,7 +1806,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="42s-95-UpJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="qYv-XX-TQH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3405" y="-1664"/>
+            <point key="canvasLocation" x="3361" y="-1716"/>
         </scene>
         <!--Add Class-->
         <scene sceneID="lws-Mz-5Qx">
@@ -1935,6 +1935,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="TEO-pD-LYN"/>
+        <segue reference="LJk-Y8-muw"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -14,16 +14,6 @@ class AddAppointmentTableViewController: UITableViewController {
     // created task that we will modify
     var addedAppointment = Appointment()
     
-    @IBAction func unwindAndUpdateRepeatOptionsIndex(sender: UIStoryboardSegue) {
-        // save from add assignment via unwind
-        if let rtvc =
-            sender.sourceViewController as? RepeatTableViewController {
-            // FIXME: optionIndex is 0 when it shouldn't be
-            addedAppointment.repeatOptionsIndex = rtvc.optionIndex
-            print(addedAppointment.repeatOptionsIndex)
-        }
-    }
-    
     @IBOutlet weak var repeatDetail: UILabel!
     
     override func viewWillAppear(animated: Bool) {
@@ -31,13 +21,7 @@ class AddAppointmentTableViewController: UITableViewController {
         print(repeatDetail?.text)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let rtvc = segue.destinationViewController as? RepeatTableViewController {
-            rtvc.optionIndex = addedAppointment.repeatOptionsIndex
-            print(rtvc.optionIndex)
-        }
-    }
-    
+
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -152,14 +136,29 @@ class AddAppointmentTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        // send the classes array through to the pick a class view controller
+        if (segue.identifier == "Repeat Segue") {
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            
+            let targetController = destinationNavigationController.topViewController as! RepeatTableViewController
+            
+            targetController.optionIndex = addedAppointment.repeatOptionsIndex
+        }
     }
-    */
+    
+    @IBAction func unwindAndUpdateRepeatOptionsIndex(sender: UIStoryboardSegue) {
+        // save from add assignment via unwind
+        if let rtvc =
+            sender.sourceViewController as? RepeatTableViewController {
+            // FIXME: optionIndex is 0 when it shouldn't be
+            addedAppointment.repeatOptionsIndex = rtvc.optionIndex
+            print(addedAppointment.repeatOptionsIndex)
+        }
+    }
+
 
 }
