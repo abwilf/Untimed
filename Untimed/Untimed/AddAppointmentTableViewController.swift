@@ -156,9 +156,18 @@ class AddAppointmentTableViewController: UITableViewController {
             sender.sourceViewController as? RepeatTableViewController {
             // FIXME: optionIndex is 0 when it shouldn't be
             addedAppointment.repeatOptionsIndex = rtvc.optionIndex
+            addedAppointment.repeatDaysIndex = rtvc.repeatDaysArr
             print(addedAppointment.repeatOptionsIndex)
         }
     }
 
-
+    @IBAction func unwindAndUpdateCustomRepeatArray(sender: UIStoryboardSegue) {
+        // save from add assignment via unwind
+        if let crtvc =
+            sender.sourceViewController as? CustomRepeatTableViewController {
+            
+            addedAppointment.repeatOptionsIndex = 4
+            addedAppointment.repeatDaysIndex = crtvc.repeatDaysArray
+        }
+    }
 }

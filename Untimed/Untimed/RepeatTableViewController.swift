@@ -8,18 +8,20 @@
 
 import UIKit
 
-class RepeatTableViewController: AddAppointmentTableViewController {
+class RepeatTableViewController: UITableViewController {
     
     var optionIndex: Int = 0
+    
+    var repeatDaysArr = [Bool](count: 7, repeatedValue: false)
     
     var currentCategory: NSIndexPath? = nil
     var taskCategories: NSArray? = nil
     
     //var appointment = Appointment()
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         
-        super.viewWillAppear(animated)
+//        super.viewWillAppear(animated)
         
         var initialIndexPath = NSIndexPath(forRow: optionIndex, inSection: 0)
         if optionIndex < 5 {
@@ -32,23 +34,26 @@ class RepeatTableViewController: AddAppointmentTableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let indexChosen = tableView.indexPathForSelectedRow?.row {
-            // send projAndAssnArray to the next view controller based on which project is selected
-            optionIndex = indexChosen
-        }
-    }
-    
-  /*  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0 {
+        if tableView.indexPathForSelectedRow?.section == 0 {
             if let indexChosen = tableView.indexPathForSelectedRow?.row {
                 // send projAndAssnArray to the next view controller based on which project is selected
                 optionIndex = indexChosen
             }
         }
-        
-        else {
-            
+        else if tableView.indexPathForSelectedRow?.section == 1 {
+            optionIndex = 4
         }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.section == 1 {
+            optionIndex = indexPath.row
+        }
+        
+//        else {
+//            
+//        }
 //        if indexPath.section == 0 {
 //
 //            if indexPath.row == optionIndex {
@@ -137,7 +142,7 @@ class RepeatTableViewController: AddAppointmentTableViewController {
 ////    }
     }
     
- */
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
