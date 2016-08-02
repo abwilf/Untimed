@@ -27,6 +27,7 @@ class AddProjectTableViewController: UITableViewController {
     @IBAction func editingDidEnd(sender: UITextField) {
         sender.resignFirstResponder()
     }
+
     @IBAction func didEnterCompletionDate(sender: UIDatePicker) {
         let newDueDate = sender.date
         addedProject.completionDate = newDueDate

@@ -15,6 +15,10 @@ class Task: NSObject, NSCoding {
     var title: String = "Unnamed Task"
     
     var dueDate: NSDate = NSDate()
+    var tasksIndex: Int = 0
+    var indexInProjAndAssnArr: Int = 0
+
+
 
     
 //    // for ds allocation

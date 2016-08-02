@@ -20,23 +20,24 @@ class TaskTableTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         taskManager.loadFromDisc()
-        taskManager.createArrays()
+        taskManager.createClassArray()
     }
     
     override func viewWillAppear(animated: Bool) {
         
         // FIXME: use only for testing
-        // resetForTesting()
+resetForTesting()
 
         super.viewWillAppear(animated)
         
-        taskManager.createArrays()
+        // recreate the projOnly array
+        
+        taskManager.createClassArray()
+        taskManager.createProjOnlyArray()
         
         tableView.reloadData()
     }
 
-    
-    // Creates object of TaskManager class and initializes tasks array
     
     @IBAction func addButtonPressed(sender: UIBarButtonItem) {
         
@@ -53,7 +54,7 @@ class TaskTableTableViewController: UITableViewController {
         let addProjectAction = UIAlertAction(title: "Project", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Project Segue", sender: TaskTableTableViewController())
         }
-        let addProjectTaskAction = UIAlertAction(title: "Add Project Task", style: .Default) { (action) in
+        let addProjectTaskAction = UIAlertAction(title: "Project Task", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Project Task Segue", sender: TaskTableTableViewController())
         }
         let addClassAction = UIAlertAction(title: "Class", style: .Default) { (action) in
@@ -111,6 +112,24 @@ class TaskTableTableViewController: UITableViewController {
                 tmt.projAndAssns += [aatvc.addedProject]
             }
             
+            // works up to here.  doesn't save and load correctly (at least within this page)
+            taskManager.save()
+            
+            tableView.reloadData()
+        }
+        
+        // add project task
+        if let apttvc = sender.sourceViewController as?
+            AddProjectTaskTableViewController {
+            
+            // add to general tasks array
+            taskManager.addTask(apttvc.addedProjTask)
+            
+            // add to a project's projtaskarray (project is within a class' projAndAssnArray)
+            if let projObj = taskManager.classArray[apttvc.classIndex].projAndAssns[apttvc.projectAndAssnArrIndex] as? Project {
+                projObj.projTaskArr += [apttvc.addedProjTask]
+            }
+        
             // works up to here.  doesn't save and load correctly (at least within this page)
             taskManager.save()
             
@@ -400,6 +419,17 @@ class TaskTableTableViewController: UITableViewController {
 
             targetController.classes = taskManager.classArray
         }
+        
+        if (segue.identifier == "Add Project Task Segue") {
+            
+            // update all class array elements with proj only arrays
+            taskManager.createProjOnlyArray()
+            
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! AddProjectTaskTableViewController
+            targetController.classes = taskManager.classArray
+        }
+        
     }
     
     
@@ -410,9 +440,12 @@ class TaskTableTableViewController: UITableViewController {
             
             // find the class's index in the tasks array
             let tasksIndexForClass = taskManager.classArray[indexPath.row].tasksIndex
-            
+                        
             // delete it from the tasks array
             taskManager.deleteTaskAtIndex(tasksIndexForClass)
+            
+            // update all .tasksIndex values to reflect change in tasks
+            taskManager.updateTaskIndexValues()
             
             // recreate the class array
             taskManager.createClassArray()

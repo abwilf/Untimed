@@ -12,7 +12,7 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
 
     // assns and projects for this class stored here
     var selectedClass = Class()
-    
+    var indexChosen: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +89,23 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
         return cell
     }
     
+    
+    override func tableView(tableView: UITableView,
+                            commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+                                               forRowAtIndexPath indexPath: NSIndexPath){
+        if (editingStyle == UITableViewCellEditingStyle.Delete){
+            
+                // delete it from the projAndAssnArray
+                selectedClass.deleteElementFromProjAndAssns(indexPath.row)
+                
+                // update all .tasksIndex values to reflect change in tasks
+                selectedClass.updateProjAndAssnIndexValues()
+        }
+            tableView.reloadData()
+
+    }
+    
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -125,14 +142,27 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "Show Proj Tasks" {
+            
+            if let indexSelected = tableView.indexPathForSelectedRow?.row {
+                indexChosen = indexSelected
+            }
+            
+            let destinationViewController = segue.destinationViewController as! ProjTasksTableViewController
+            
+            if let proj = selectedClass.projAndAssns[indexChosen] as? Project {
+                destinationViewController.projTasksArr = proj.projTaskArr
+                
+                // set title
+                destinationViewController.title = "Tasks for \(proj.title)"
+            }
+        }
+        
+        
     }
-    */
-
 }
+    
+

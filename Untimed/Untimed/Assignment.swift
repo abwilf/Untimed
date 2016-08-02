@@ -11,7 +11,6 @@ import Foundation
 // superclass = Task
 class Assignment: Task {
     
-    
     // minutes
 //    var minutesNeeded: Int = 0
 //    var amountOfFreeMinutesBeforeDueDate: Int = 0

@@ -55,15 +55,6 @@ class TaskManager: NSObject, NSCopying {
     }
     
     
-    func createArrays() {
-        createClassArray()
-        createProjectArray()
-    }
-    
-    func createProjectArray() {
-        // FIXME: need to implement!
-    }
-    
     func createClassArray() {
         // wipe
         classArray = []
@@ -78,6 +69,11 @@ class TaskManager: NSObject, NSCopying {
         save()
     }
     
+    func updateTaskIndexValues() {
+        for i in 0..<tasks.count {
+            tasks[i].tasksIndex = i
+        }
+    }
     
     // create variables to order array later
     var unfilteredArray: [Task] = Array(count: 40, repeatedValue: Free())
@@ -90,18 +86,6 @@ class TaskManager: NSObject, NSCopying {
         save()
         allocateTime()
     }
-    
-    /*
-    func findTasksIndexForClassArrayIndex (indexIn: Int) {
-        // create object to compare
-        let obj = classArray[indexIn]
-        
-        // iterate through tasks list to find corresponding object
-        for
-        
-    }
-    
- */
     
     func deleteTaskAtIndex (index: Int) {
         tasks.removeAtIndex(index)
@@ -123,6 +107,26 @@ class TaskManager: NSObject, NSCopying {
             return true
         }
         return false
+    }
+    
+    func createProjOnlyArray() {
+        
+        // go through projAndAssnArray for all classes and create projOnly array for each
+        for j in 0..<classArray.count {
+            // wipe for each class
+            classArray[j].projOnlyArray = []
+            
+            // refill
+            for i in 0..<classArray[j].projAndAssns.count {
+                if let project = classArray[j].projAndAssns[i] as? Project {
+                    // note its position in the original array
+                    project.indexInProjAndAssnArr = i
+                    
+                    // add to projOnlyArray
+                    classArray[j].projOnlyArray += [project]
+                }
+            }
+        }
     }
     
     func isNextSameAsThis (row: Int, col: Int) -> Bool {
@@ -402,6 +406,7 @@ class TaskManager: NSObject, NSCopying {
         }
         return numBlocks
     }
+    
     
     func deletePastTasks() {
         for i in 0..<tasks.count {

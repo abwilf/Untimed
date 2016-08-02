@@ -9,5 +9,5 @@
 import Foundation
 
 class ProjectTask: Task {
-
+    var numBlocksNeeded = 0
 }

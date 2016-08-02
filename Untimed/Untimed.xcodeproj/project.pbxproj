@@ -41,6 +41,8 @@
 		A27FAAB01CAC378E00B1AE85 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */; };
 		A27FAAB21CAC38CF00B1AE85 /* TaskTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */; };
 		A27FAAB61CAC44FF00B1AE85 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */; };
+		A283E7A51D50ED8500636B09 /* PickAProjectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A283E7A41D50ED8500636B09 /* PickAProjectTableViewController.swift */; };
+		A283E7A71D5101A100636B09 /* ProjTasksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A283E7A61D5101A100636B09 /* ProjTasksTableViewController.swift */; };
 		A286B83B1CC5D993005736E4 /* documentation.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A286B83A1CC5D993005736E4 /* documentation.pdf */; };
 		A29A9A2A1CBE98340011A5BF /* EditAssignmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */; };
 		A29A9A2C1CBE98480011A5BF /* EditAppointmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */; };
@@ -108,6 +110,8 @@
 		A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableTableViewController.swift; sourceTree = "<group>"; };
 		A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
+		A283E7A41D50ED8500636B09 /* PickAProjectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickAProjectTableViewController.swift; sourceTree = "<group>"; };
+		A283E7A61D5101A100636B09 /* ProjTasksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjTasksTableViewController.swift; sourceTree = "<group>"; };
 		A286B83A1CC5D993005736E4 /* documentation.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = documentation.pdf; sourceTree = "<group>"; };
 		A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditAssignmentTableViewController.swift; path = ../EditAssignmentTableViewController.swift; sourceTree = "<group>"; };
 		A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAppointmentTableViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +170,10 @@
 			isa = PBXGroup;
 			children = (
 				A2116D781CA968EC003D221D /* Main.storyboard */,
+				A283E7A61D5101A100636B09 /* ProjTasksTableViewController.swift */,
+				A2A5A8D31D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift */,
+				A2E3D14E1D4804F700999F7C /* Class.swift */,
+				A283E7A41D50ED8500636B09 /* PickAProjectTableViewController.swift */,
 				21895A711D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift */,
 				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */,
@@ -174,7 +182,6 @@
 				218DA31E1D42915A00E269CA /* EndRepeatTableViewController.swift */,
 				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
 				A2A5A8D51D4932D200030AAE /* PickAClassTableViewController.swift */,
-				A2A5A8D31D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift */,
 				218DA32E1D47FBDC00E269CA /* AddProjectTableViewController.swift */,
 				218DA3181D42823100E269CA /* Project.swift */,
 				A24255631D4C2F220002C098 /* ProjectTask.swift */,
@@ -184,7 +191,6 @@
 				A2116DA21CA96DB3003D221D /* Task.swift */,
 				A2C519171CAB38CF0074387D /* Appointment.swift */,
 				A2116DA41CA96F22003D221D /* Assignment.swift */,
-				A2E3D14E1D4804F700999F7C /* Class.swift */,
 				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
 				A21825061CC2C931008D366D /* ChangeDateViewController.swift */,
 				211EE5DE1D319FF500E322BB /* AssignmentBlock.swift */,
@@ -373,12 +379,14 @@
 				A227C4FA1CB46AD400B3971D /* AddAppointmentTableViewController.swift in Sources */,
 				A2116DA51CA96F22003D221D /* Assignment.swift in Sources */,
 				218DA3311D48026400E269CA /* AddClassTableViewController.swift in Sources */,
+				A283E7A71D5101A100636B09 /* ProjTasksTableViewController.swift in Sources */,
 				A24255641D4C2F220002C098 /* ProjectTask.swift in Sources */,
 				218DA3191D42823100E269CA /* Project.swift in Sources */,
 				A2116D771CA968EC003D221D /* ViewController.swift in Sources */,
 				A21F78D01CB2DA5000517FD9 /* AddViewController.swift in Sources */,
 				A2116DA31CA96DB3003D221D /* Task.swift in Sources */,
 				218DA31F1D42915A00E269CA /* EndRepeatTableViewController.swift in Sources */,
+				A283E7A51D50ED8500636B09 /* PickAProjectTableViewController.swift in Sources */,
 				A27C8D681D47AE2200D81D13 /* SettingsTableViewController.swift in Sources */,
 				A2116D751CA968EC003D221D /* AppDelegate.swift in Sources */,
 				211EE5DF1D319FF500E322BB /* AssignmentBlock.swift in Sources */,

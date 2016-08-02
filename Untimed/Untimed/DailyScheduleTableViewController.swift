@@ -286,6 +286,7 @@ class DailyScheduleTableViewController: UITableViewController{
         super.viewWillAppear(animated)
         
         taskManager.loadFromDisc()
+    
         
         taskManager.allocateTime()
         
