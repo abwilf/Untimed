@@ -26,7 +26,7 @@ class TaskTableTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         
         // FIXME: use only for testing
-resetForTesting()
+        // resetForTesting()
 
         super.viewWillAppear(animated)
         
