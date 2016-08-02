@@ -28,7 +28,7 @@ class PickAClassTableViewController: UITableViewController {
     }
     
     
-    override func viewWillDisappear(animated: Bool) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let indexChosen = tableView.indexPathForSelectedRow?.row {
             // send projAndAssnArray to the next view controller based on which project is selected
             index = indexChosen

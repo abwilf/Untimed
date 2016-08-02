@@ -77,7 +77,7 @@ class TaskTableTableViewController: UITableViewController {
         if let aavc =
             sender.sourceViewController as? AddAssignmentTableViewController {
             
-            // FIXME: IMPORTANT: make sure when you add assignment to a class you do it first by adding it to the tasks list, then to the class within the general tasks list, and finally by recreating the class list from the general tasks list
+            // add first to general tasks list, then erase and rederive classArray
             taskManager.addTask(aavc.addedAssignment)
             let tasksIndexForClass = taskManager.classArray[aavc.index].tasksIndex
             if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
@@ -101,14 +101,11 @@ class TaskTableTableViewController: UITableViewController {
         // add project
         if let aatvc = sender.sourceViewController as?
             AddProjectTableViewController {
-            
-            
-            // FIXME: at this point, the math.projassn has been wiped.  Why??
-            
+                        
             // add to general tasks array
             taskManager.addTask(aatvc.addedProject)
             
-            // add to general tasks array within class's proj array
+            // find tasksIndex
             let tasksIndexForClass = taskManager.classArray[aatvc.index].tasksIndex
             if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
                 tmt.projAndAssns += [aatvc.addedProject]

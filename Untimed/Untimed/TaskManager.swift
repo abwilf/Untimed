@@ -61,8 +61,9 @@ class TaskManager: NSObject, NSCopying {
     }
     
     func createProjectArray() {
-        
+        // FIXME: need to implement!
     }
+    
     func createClassArray() {
         // wipe
         classArray = []
@@ -90,7 +91,18 @@ class TaskManager: NSObject, NSCopying {
         allocateTime()
     }
     
-   
+    /*
+    func findTasksIndexForClassArrayIndex (indexIn: Int) {
+        // create object to compare
+        let obj = classArray[indexIn]
+        
+        // iterate through tasks list to find corresponding object
+        for
+        
+    }
+    
+ */
+    
     func deleteTaskAtIndex (index: Int) {
         tasks.removeAtIndex(index)
         save()
