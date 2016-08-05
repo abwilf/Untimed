@@ -16,9 +16,20 @@ class Appointment: Task {
     // to test: var endTime = " 1 am tomorrow"
     var endTime: NSDate = NSDate()
     
-    var doesRepeat: Bool = false
+    var doesRepeat: Bool {
+        if repeatOptionsIndex == 0 {
+            return false
+        }
+        return true
+    }
     
+    var repetitions: [Appointment] = []
+    
+    // FIXME: get rid of this
     var repeatData = RepeatDataStruct()
+    
+    // repeatDaysIndex[0] corresponds to Sunday and [6] to Saturday
+    var repeatDaysIndex = [Bool](count: 7, repeatedValue: false)
     
 //    var daysToRepeat = RepeatDays()
     
@@ -27,11 +38,108 @@ class Appointment: Task {
     // 2: every weekday
     // 3: weekly
     // 4: custom
-    var repeatOptionsIndex = 0
+    var repeatOptionsIndex = 1
     
+    // FIXME: either make it a bool or make a third option for after so many repetitions
     // 0: never
     // 1: specific date
     var endRepeatIndex = 0
+    
+    var endRepeatDate: NSDate? = nil
+    
+    func allocateAppointmentRepetitions() {
+        if !doesRepeat {
+            return
+        }
+        if repeatOptionsIndex == 1 {
+            repeatDaily()
+        }
+        if repeatOptionsIndex == 2 {
+            repeatEveryWeekday()
+        }
+        if repeatOptionsIndex == 3 {
+            repeatWeekly()
+        }
+        if repeatOptionsIndex == 4 {
+            repeatCustom()
+        }
+    }
+    
+    private func repeatDaily() {
+        // FIXME: how to work without endRepeat Date
+        for i in 1..<28 {
+            let daysToAdd = i
+            
+            let calculatedStartDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: startTime, options: NSCalendarOptions.init(rawValue: 0))
+            let calculatedEndDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: endTime, options: NSCalendarOptions.init(rawValue: 0))
+            
+            let appointmentToAdd = Appointment()
+            appointmentToAdd.title = self.title
+            appointmentToAdd.startTime = calculatedStartDate!
+            appointmentToAdd.endTime = calculatedEndDate!
+            
+            repetitions.append(appointmentToAdd)
+        }
+    }
+    
+    private func repeatEveryWeekday() {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        
+        for i in 1..<28 {
+            let daysToAdd = i
+            
+            let calculatedStartDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Weekday, value: daysToAdd, toDate: startTime, options: NSCalendarOptions.init(rawValue: 0))
+            let calculatedEndDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Weekday, value: daysToAdd, toDate: endTime, options: NSCalendarOptions.init(rawValue: 0))
+            
+            let appointmentToAdd = Appointment()
+            appointmentToAdd.title = self.title
+            appointmentToAdd.startTime = calculatedStartDate!
+            appointmentToAdd.endTime = calculatedEndDate!
+            
+            repetitions.append(appointmentToAdd)
+        }
+    }
+    
+    private func repeatWeekly() {
+        for i in 1..<28 {
+            let daysToAdd = i * 7
+            
+            let calculatedStartDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: startTime, options: NSCalendarOptions.init(rawValue: 0))
+            let calculatedEndDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: endTime, options: NSCalendarOptions.init(rawValue: 0))
+            
+            let appointmentToAdd = Appointment()
+            appointmentToAdd.title = self.title
+            appointmentToAdd.startTime = calculatedStartDate!
+            appointmentToAdd.endTime = calculatedEndDate!
+            
+            repetitions.append(appointmentToAdd)
+        }
+    }
+    
+    // note: this isn't very efficient
+    private func repeatCustom() {        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        
+        for i in 1..<28 {
+            let daysToAdd = i
+            
+            let calculatedStartDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: startTime, options: NSCalendarOptions.init(rawValue: 0))
+            let calculatedEndDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: endTime, options: NSCalendarOptions.init(rawValue: 0))
+            
+            let dayOfWeek = dateFormatter.stringFromDate(calculatedStartDate!)
+            if repeatDaysIndex[dayStringToIndex[dayOfWeek]!] {
+                let appointmentToAdd = Appointment()
+                appointmentToAdd.title = self.title
+                appointmentToAdd.startTime = calculatedStartDate!
+                appointmentToAdd.endTime = calculatedEndDate!
+                
+                repetitions.append(appointmentToAdd)
+            }
+            
+        }
+    }
     
     enum repeatOptions: Int {
         case Never = 0
@@ -51,12 +159,15 @@ class Appointment: Task {
 //        var Saturday = false
 //    }
     
-    // repeatDaysIndex[0] corresponds to Sunday and [6] to Saturday
-    var repeatDaysIndex = [Bool](count: 7, repeatedValue: false)
+
     
     var dayIndexToString: [Int: String] = [0: "Sunday", 1: "Monday", 2: "Tuesday",
                                       3: "Wednesday", 4: "Thursday", 5: "Friday",
                                       6: "Saturday"]
+    
+    var dayStringToIndex: [String: Int] = ["Sunday": 0, "Monday": 1, "Tuesday": 2,
+                                           "Wednesday": 3, "Thursday": 4, "Friday": 5,
+                                           "Saturday": 6]
     
     struct RepeatDataStruct {
         var daysOfWeek: Int? = nil
@@ -79,7 +190,6 @@ class Appointment: Task {
     }
     
     private func repeatAppt(option: repeatOptions) {
-        doesRepeat = true
         if option == .Daily {
             for i in 0..<7 {
                 repeatDaysIndex[i] = true
@@ -135,15 +245,27 @@ class Appointment: Task {
         aCoder.encodeObject(startTime, forKey:"StartTime")
         aCoder.encodeObject(endTime, forKey:"EndTime")
         aCoder.encodeObject(title, forKey:"Title")
+        aCoder.encodeInteger(repeatOptionsIndex, forKey:"Repeat Options Index")
+        
+        
+        aCoder.encodeObject(repeatDaysIndex, forKey: "Repeat Days Index")
+        
+        
+        aCoder.encodeObject(endRepeatDate, forKey: "End RepeatDate")
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.startTime = aDecoder.decodeObjectForKey("StartTime") as! NSDate
         self.endTime = aDecoder.decodeObjectForKey("EndTime") as! NSDate
-        self.endTime = aDecoder.decodeObjectForKey("EndTime") as! NSDate
-        aDecoder.decodeObjectForKey("Title") as? String
+        self.repeatOptionsIndex = aDecoder.decodeIntegerForKey("Repeat Options Index")
         
+        // FIXME: this isn't loading correctly
+        self.repeatDaysIndex = aDecoder.decodeObjectForKey("Repeat Days Index") as! [Bool]
+        
+        
+        self.endRepeatDate = aDecoder.decodeObjectForKey("End Repeat Date") as? NSDate
+        aDecoder.decodeObjectForKey("Title") as? String
     }
     
 }

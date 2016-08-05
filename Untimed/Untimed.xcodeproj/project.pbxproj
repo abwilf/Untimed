@@ -146,6 +146,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		211329C31D5251270070948F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A2C519171CAB38CF0074387D /* Appointment.swift */,
+				A2116DA41CA96F22003D221D /* Assignment.swift */,
+				211EE5DE1D319FF500E322BB /* AssignmentBlock.swift */,
+				A2E3D14E1D4804F700999F7C /* Class.swift */,
+				A27989AB1CB6D5B7007BC49F /* Free.swift */,
+				218DA3181D42823100E269CA /* Project.swift */,
+				A24255631D4C2F220002C098 /* ProjectTask.swift */,
+				A2116DA21CA96DB3003D221D /* Task.swift */,
+				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
+				A23F39F61D47BAA6001D8763 /* WorkingBlock.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		211329C41D5251580070948F /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */,
+				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
+				218DA3301D48026400E269CA /* AddClassTableViewController.swift */,
+				218DA32E1D47FBDC00E269CA /* AddProjectTableViewController.swift */,
+				21895A711D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift */,
+				218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */,
+				A21F78CF1CB2DA5000517FD9 /* AddViewController.swift */,
+				A21825061CC2C931008D366D /* ChangeDateViewController.swift */,
+				218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */,
+				218DA3201D42940D00E269CA /* CustomRepeatTableViewController.swift */,
+				A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */,
+				A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */,
+				A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */,
+				218DA31E1D42915A00E269CA /* EndRepeatTableViewController.swift */,
+				A2A5A8D51D4932D200030AAE /* PickAClassTableViewController.swift */,
+				A283E7A41D50ED8500636B09 /* PickAProjectTableViewController.swift */,
+				A2A5A8D31D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift */,
+				A283E7A61D5101A100636B09 /* ProjTasksTableViewController.swift */,
+				218DA31C1D428C5900E269CA /* RepeatTableViewController.swift */,
+				A27C8D671D47AE2200D81D13 /* SettingsTableViewController.swift */,
+				A1D7D2B51CB2E08400053AE6 /* SingleTaskTableViewController.swift */,
+				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
+				A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */,
+				A2116D761CA968EC003D221D /* ViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		A2116D681CA968EC003D221D = {
 			isa = PBXGroup;
 			children = (
@@ -170,42 +218,10 @@
 			isa = PBXGroup;
 			children = (
 				A2116D781CA968EC003D221D /* Main.storyboard */,
-				A283E7A61D5101A100636B09 /* ProjTasksTableViewController.swift */,
-				A2A5A8D31D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift */,
-				A2E3D14E1D4804F700999F7C /* Class.swift */,
-				A283E7A41D50ED8500636B09 /* PickAProjectTableViewController.swift */,
-				21895A711D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift */,
-				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
-				A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */,
-				218DA31C1D428C5900E269CA /* RepeatTableViewController.swift */,
-				218DA3201D42940D00E269CA /* CustomRepeatTableViewController.swift */,
-				218DA31E1D42915A00E269CA /* EndRepeatTableViewController.swift */,
-				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
-				A2A5A8D51D4932D200030AAE /* PickAClassTableViewController.swift */,
-				218DA32E1D47FBDC00E269CA /* AddProjectTableViewController.swift */,
-				218DA3181D42823100E269CA /* Project.swift */,
-				A24255631D4C2F220002C098 /* ProjectTask.swift */,
-				218DA3301D48026400E269CA /* AddClassTableViewController.swift */,
-				A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */,
-				A27C8D671D47AE2200D81D13 /* SettingsTableViewController.swift */,
-				A2116DA21CA96DB3003D221D /* Task.swift */,
-				A2C519171CAB38CF0074387D /* Appointment.swift */,
-				A2116DA41CA96F22003D221D /* Assignment.swift */,
-				A27FAAB51CAC44FF00B1AE85 /* TaskManager.swift */,
-				A21825061CC2C931008D366D /* ChangeDateViewController.swift */,
-				211EE5DE1D319FF500E322BB /* AssignmentBlock.swift */,
-				A23F39F61D47BAA6001D8763 /* WorkingBlock.swift */,
-				A1D7D2B51CB2E08400053AE6 /* SingleTaskTableViewController.swift */,
-				A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */,
-				A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */,
-				218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */,
-				218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */,
-				A21F78CF1CB2DA5000517FD9 /* AddViewController.swift */,
-				A27989AB1CB6D5B7007BC49F /* Free.swift */,
+				211329C31D5251270070948F /* Models */,
+				211329C41D5251580070948F /* View Controllers */,
 				214745F31CB8B568007BABCA /* core.pdf */,
 				A286B83A1CC5D993005736E4 /* documentation.pdf */,
-				A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */,
-				A2116D761CA968EC003D221D /* ViewController.swift */,
 				A2116D7B1CA968EC003D221D /* Assets.xcassets */,
 				A2116D7D1CA968EC003D221D /* LaunchScreen.storyboard */,
 				A2116D741CA968EC003D221D /* AppDelegate.swift */,

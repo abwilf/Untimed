@@ -412,10 +412,20 @@ class TaskManager: NSObject, NSCopying {
         for i in 0..<tasks.count {
             // if the task is an appointment
             if let temp = tasks[i] as? Appointment {
-                // if the appointment happened before today, delete it
-                let apptDay = nsDateInCalFormat(temp.endTime).dayCoordinate
-                if apptDay < 0 {
-                    deleteTaskAtIndex(i)
+                if !temp.doesRepeat {
+                    // if the appointment happened before today, delete it
+                    let apptDay = nsDateInCalFormat(temp.endTime).dayCoordinate
+                    if apptDay < 0 {
+                        deleteTaskAtIndex(i)
+                    }
+                }
+                else {
+                    if temp.endRepeatIndex == 1 {
+                        let endDay = nsDateInCalFormat(temp.endRepeatDate!).dayCoordinate
+                        if endDay < 0 {
+                            deleteTaskAtIndex(i)
+                        }
+                    }
                 }
             }
             
@@ -502,15 +512,36 @@ class TaskManager: NSObject, NSCopying {
                 let startTimeInMinCoordinates = nsDateInCalFormat(appt.startTime).minuteCoordinate
                 let endTimeInMinCoordinates = nsDateInCalFormat(appt.endTime).minuteCoordinate
                 
-                // allocate
-                for j in startTimeInMinCoordinates..<endTimeInMinCoordinates {
-                    self.calendarArray[j][apptDayCoordinate] = appt
+                // skip if it's past
+                // FIXME: this might be inefficient, consider restructuring
+                if apptDayCoordinate >= 0 {
+                    // allocate
+                    for j in startTimeInMinCoordinates..<endTimeInMinCoordinates {
+                        self.calendarArray[j][apptDayCoordinate] = appt
+                    }
+                }
+                
+                // if appt repeats, allocate those repetions
+                if appt.doesRepeat {
+                    appt.allocateAppointmentRepetitions()
+                    for k in 0..<appt.repetitions.count {
+                        let repetition = appt.repetitions[k]
+                        apptDayCoordinate = nsDateInCalFormat(repetition.startTime).dayCoordinate
+                        let startTimeInMinCoordinates = nsDateInCalFormat(repetition.startTime).minuteCoordinate
+                        let endTimeInMinCoordinates = nsDateInCalFormat(repetition.endTime).minuteCoordinate    
+                        
+                        // FIXME: make this irrelevant by deleting past repetions
+                        if apptDayCoordinate >= 0 {
+                            // allocate
+                            for l in startTimeInMinCoordinates..<endTimeInMinCoordinates {
+                                self.calendarArray[l][apptDayCoordinate] = appt
+                            }
+                        }
+                    }
                 }
             }
         }
     }
-    
-    
     
     func allocateAssignments() {
         // setting based on user input (decreasing working minute by one b/c of dailysched format)
