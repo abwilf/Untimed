@@ -8,6 +8,20 @@
 
 import Foundation
 
+extension NSDate
+{
+    convenience
+    init(dateString:String) {
+        let dateStringFormatter = NSDateFormatter()
+        // 2 digit hour:2 digit minute
+        dateStringFormatter.dateFormat = "HH:mm"
+        // FIXME: what does this do?
+        dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        let d = dateStringFormatter.dateFromString(dateString)!
+        self.init(timeInterval:0, sinceDate:d)
+    }
+}
+
 class TaskManager: NSObject, NSCopying {
     // empty array of tasks
     var tasks: [Task] = []
@@ -15,8 +29,10 @@ class TaskManager: NSObject, NSCopying {
     
     // calendar array = 2d array of MINS_IN_DAY (rows) by 365 days (cols)
     // FIXME: change 28 to DAYS_IN_YEAR days everywhere
-    var calendarArray: [[Task]] = Array(count: 1440,
-                                        repeatedValue: Array(count: 28, repeatedValue: Free()))
+    
+    // 28 rows (days) x 0 objects to start, objects will be appended to each column as needed
+    var calendarArray: [[Task]] = Array(count: 28,
+                                        repeatedValue: Array(count: 0, repeatedValue: Free()))
     
     let HOURS_IN_DAY = 12
     let MINS_IN_HOUR = 60
@@ -37,6 +53,9 @@ class TaskManager: NSObject, NSCopying {
     func setWorkingCellsPerDay() {
         workingCellsPerDay = lastWorkingMinute - firstWorkingMinute
     }
+    
+    var firstWorkingHour = NSDate(dateString: "08:00")
+    var lastWorkingHour = NSDate(dateString: "19:00")
     
     func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = TaskManager()
@@ -186,7 +205,7 @@ class TaskManager: NSObject, NSCopying {
     
     // returns appropriate calendar coordinates
     func nsDateInCalFormat(dateIn: NSDate) ->
-        (dayCoordinate: Int, minuteCoordinate: Int) {
+        (dayCoordinate: Int, minuteCoordinate: Int, hourValue: Int, minuteValue: Int) {
             
             let currentDate = NSDate()
             
@@ -200,6 +219,10 @@ class TaskManager: NSObject, NSCopying {
             
             // finding minute coordinate.  0 is midnight of today, 1439 is 11:59 pm
             let minuteCoordinate = (dueDateComponents.hour * 60) + dueDateComponents.minute
+            
+            let hourValue = dueDateComponents.hour
+            
+            let minuteValue = dueDateComponents.minute
             
             // finding dayCoordinate first by finding day values
             let dueDateDay = dueDateComponents.day
@@ -268,7 +291,7 @@ class TaskManager: NSObject, NSCopying {
                 dayCoordinate = -1
             }
             
-            return (dayCoordinate, minuteCoordinate)
+            return (dayCoordinate, minuteCoordinate, hourValue, minuteValue)
     }
     
     func doesIncludeNextYear (startMonth: Int, endMonth: Int, questionableMonth: Int) -> Bool {
@@ -346,14 +369,16 @@ class TaskManager: NSObject, NSCopying {
     
     func clearCalArray() {
         
-        // starting from the first cell of today to the end of the array
-        for i in 0..<28 {
-            for j in 0..<cellsPerDay {
-                // create free object to assign in clearCalArray
-                let freeObj = Free()
-                self.calendarArray[j][i] = freeObj
-            }
-        }
+        calendarArray = Array(count: 28, repeatedValue: Array(count: 0, repeatedValue: Free()))
+        
+//        // starting from the first cell of today to the end of the array
+//        for i in 0..<28 {
+//            for j in 0..<calendarArray[i].count {
+//                // create free object to assign in clearCalArray
+//                let freeObj = Free()
+//                self.calendarArray[j][i] = freeObj
+//            }
+//        }
     }
     
     // return number of free 15 minute blocks before it's due
@@ -426,27 +451,28 @@ class TaskManager: NSObject, NSCopying {
                             deleteTaskAtIndex(i)
                         }
                     }
+                    // FIXME: call an update function here that deletes past repetitions and adds a correrrsponding number of repetitions to the end
                 }
             }
             
-            // if the task is an assignment
-            if let temp = tasks[i] as? Assignment {
-                // find coordinates
-                let rightNow = NSDate()
-                let rightNowMinuteCoordinate = nsDateInCalFormat(rightNow).minuteCoordinate
-                let dueDateDay = nsDateInCalFormat(temp.dueDate).dayCoordinate
-                let dueDateTime = nsDateInCalFormat(temp.dueDate).minuteCoordinate
-                
-                // if the assignment was due before today, delete it
-                if dueDateDay < 0 {
-                    deleteTaskAtIndex(i)
-                }
-                
-                // if the assignment was due earlier today, delete it
-                if dueDateDay == 0 && dueDateTime < rightNowMinuteCoordinate + WORKING_INTERVAL_SIZE {
-                    deleteTaskAtIndex(i)
-                }
-            }
+//            // if the task is an assignment
+//            if let temp = tasks[i] as? Assignment {
+//                // find coordinates
+//                let rightNow = NSDate()
+//                let rightNowMinuteCoordinate = nsDateInCalFormat(rightNow).minuteCoordinate
+//                let dueDateDay = nsDateInCalFormat(temp.dueDate).dayCoordinate
+//                let dueDateTime = nsDateInCalFormat(temp.dueDate).minuteCoordinate
+//                
+//                // if the assignment was due before today, delete it
+//                if dueDateDay < 0 {
+//                    deleteTaskAtIndex(i)
+//                }
+//                
+//                // if the assignment was due earlier today, delete it
+//                if dueDateDay == 0 && dueDateTime < rightNowMinuteCoordinate + WORKING_INTERVAL_SIZE {
+//                    deleteTaskAtIndex(i)
+//                }
+//            }
         }
     }
     
@@ -483,24 +509,135 @@ class TaskManager: NSObject, NSCopying {
         // make all future spots in cal array Free before allocating again from tasks list
         clearCalArray()
         
+        
         // put appts in
         allocateAppts()
         
-        allocateWorkingBlocks()
+//        allocateWorkingBlocks()
         
         //allocateAssignments()
     }
     
-    func allocateWorkingBlocks() {
-        for j in 0..<28{
-            for i in firstWorkingMinute..<lastWorkingMinute {
-                if let _ = self.calendarArray[i][j] as? Free {
-                    self.calendarArray[i][j] = WorkingBlock()
+    func clearWorkingBlocksAtIndex(dayIndex index: Int) {
+        var i = calendarArray[index].count - 1
+        while i >= 0 {
+            if let _ = calendarArray[index][i] as? WorkingBlock {
+                calendarArray[index].removeAtIndex(i)
+            }
+            i -= 1
+        }
+    }
+    
+    func allocateWorkingBlocksAtIndex(dayIndex index: Int) {
+        var workingIndex = 0
+        // if working day doesn't start w/ an appointment
+//            if calendarArray[i].count > 0 {
+        let numRows = calendarArray[index].count + 1
+        if calendarArray[index].isEmpty {
+            let workingBlock = WorkingBlock()
+            workingBlock.startTime = firstWorkingHour
+            workingBlock.endTime = lastWorkingHour
+            
+            calendarArray[index].append(workingBlock)
+        }
+        for _ in 0..<numRows {
+            let workingBlock = WorkingBlock()
+            workingBlock.startTime = firstWorkingHour
+            workingBlock.endTime = lastWorkingHour
+            
+            if workingIndex < numRows {
+                if let compareTask = calendarArray[index][workingIndex] as? Appointment {
+                    
+                    workingIndex += 1
+                    // if task is after &&
+                    // if the previous task ends before last working hour, fill in the rest
+                    if compareTask.endTime.compare(lastWorkingHour) == NSComparisonResult.OrderedAscending{
+                        if workingIndex > 0 {
+                            if let previousTask = calendarArray[index][workingIndex - 1] as? Appointment {
+                                if previousTask.endTime.compare(lastWorkingHour) == NSComparisonResult.OrderedDescending {
+                                    workingBlock.startTime = previousTask.endTime
+                                }
+                            }
+                        }
+                        workingBlock.endTime = lastWorkingHour
+                        calendarArray[index].insert(workingBlock, atIndex: workingIndex - 1)
+                    }
+                        
+                    else if compareTask.startTime.compare(firstWorkingHour) == NSComparisonResult.OrderedDescending {
+                        
+                        workingBlock.startTime = firstWorkingHour
+                        workingBlock.endTime = compareTask.startTime
+                        
+                        workingIndex += 1
+                        calendarArray[index].insert(workingBlock, atIndex: 0)
+                    }
                 }
             }
+            else {
+                if let compareTask = calendarArray[index][workingIndex - 1] as? Appointment {
+                    workingIndex += 1
+                    // if task is after &&
+                    // if the previous task ends before last working hour, fill in the rest
+                    if compareTask.endTime.compare(lastWorkingHour) == NSComparisonResult.OrderedDescending{
+                        if workingIndex > 0 {
+                            if let previousTask = calendarArray[index][workingIndex - 2] as? Appointment {
+                                if previousTask.endTime.compare(lastWorkingHour) == NSComparisonResult.OrderedDescending {
+                                    workingBlock.startTime = previousTask.endTime
+                                }
+                            }
+                        }
+                        workingBlock.endTime = lastWorkingHour
+                        calendarArray[index].insert(workingBlock, atIndex: workingIndex - 1)
+                    }
+                        
+                    else if compareTask.startTime.compare(firstWorkingHour) == NSComparisonResult.OrderedAscending {
+                        
+                        workingBlock.startTime = firstWorkingHour
+                        workingBlock.endTime = compareTask.startTime
+                        
+                        workingIndex += 1
+                        calendarArray[index].insert(workingBlock, atIndex: 0)
+                    }
+                }
+            }
+//        for j in 0..<28 {
+//            for i in firstWorkingMinute..<lastWorkingMinute {
+//                if let _ = self.calendarArray[i][j] as? Free {
+//            
+//                    self.calendarArray[i][j] = WorkingBlock()
+//                }
+//            }
+//        }
         }
     }
 
+    private func allocateApptInCorrectSpot(appt: Appointment, day dayIn: Int) {
+        if calendarArray[dayIn].isEmpty {
+            calendarArray[dayIn].append(appt)
+        }
+        else {
+            
+            for compareTask in calendarArray[dayIn] {
+                var rowIndex = 0
+                if let _ = compareTask as? Appointment {
+                    var compareAppt = calendarArray[dayIn][rowIndex]
+                    while appt.startTime.compare(compareAppt.startTime) == NSComparisonResult.OrderedDescending {
+                        if rowIndex < calendarArray[dayIn].count {
+                            compareAppt = calendarArray[dayIn][rowIndex]
+                            rowIndex += 1
+                        }
+                        else {
+                            break
+                        }
+                    }
+                    self.calendarArray[dayIn].insert(appt, atIndex: rowIndex)
+                }
+                
+            }
+        }
+    }
+    
+    // FIXME: make this more readable!
     func allocateAppts() {
         // use in both allocations
         var apptDayCoordinate: Int = 0
@@ -509,16 +646,13 @@ class TaskManager: NSObject, NSCopying {
             // if object is an appointment, assign to calendarArray
             if let appt = self.tasks[i] as? Appointment {
                 apptDayCoordinate = nsDateInCalFormat(appt.startTime).dayCoordinate
-                let startTimeInMinCoordinates = nsDateInCalFormat(appt.startTime).minuteCoordinate
-                let endTimeInMinCoordinates = nsDateInCalFormat(appt.endTime).minuteCoordinate
+//                let startTimeInMinCoordinates = nsDateInCalFormat(appt.startTime).minuteCoordinate
+//                let endTimeInMinCoordinates = nsDateInCalFormat(appt.endTime).minuteCoordinate
                 
                 // skip if it's past
                 // FIXME: this might be inefficient, consider restructuring
                 if apptDayCoordinate >= 0 {
-                    // allocate
-                    for j in startTimeInMinCoordinates..<endTimeInMinCoordinates {
-                        self.calendarArray[j][apptDayCoordinate] = appt
-                    }
+                    allocateApptInCorrectSpot(appt, day: apptDayCoordinate)
                 }
                 
                 // if appt repeats, allocate those repetions
@@ -527,15 +661,16 @@ class TaskManager: NSObject, NSCopying {
                     for k in 0..<appt.repetitions.count {
                         let repetition = appt.repetitions[k]
                         apptDayCoordinate = nsDateInCalFormat(repetition.startTime).dayCoordinate
-                        let startTimeInMinCoordinates = nsDateInCalFormat(repetition.startTime).minuteCoordinate
-                        let endTimeInMinCoordinates = nsDateInCalFormat(repetition.endTime).minuteCoordinate    
+//                        let startTimeInMinCoordinates = nsDateInCalFormat(repetition.startTime).minuteCoordinate
+//                        let endTimeInMinCoordinates = nsDateInCalFormat(repetition.endTime).minuteCoordinate    
                         
                         // FIXME: make this irrelevant by deleting past repetions
                         if apptDayCoordinate >= 0 {
                             // allocate
-                            for l in startTimeInMinCoordinates..<endTimeInMinCoordinates {
-                                self.calendarArray[l][apptDayCoordinate] = appt
-                            }
+                            allocateApptInCorrectSpot(repetition, day: apptDayCoordinate)
+//                            for l in startTimeInMinCoordinates..<endTimeInMinCoordinates {
+//                                self.calendarArray[l][apptDayCoordinate] = appt
+//                            }
                         }
                     }
                 }

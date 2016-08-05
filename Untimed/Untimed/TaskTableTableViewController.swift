@@ -95,6 +95,7 @@ class TaskTableTableViewController: UITableViewController {
         if let aapptvc = sender.sourceViewController as?
             AddAppointmentTableViewController {
             taskManager.addTask(aapptvc.addedAppointment)
+            taskManager.allocateAppts()
             taskManager.save()
             tableView.reloadData()
         }

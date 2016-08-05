@@ -26,6 +26,9 @@ class Task: NSObject, NSCoding {
 //    
     var dsCalAdjustedStartLocation: Int? = nil
     var dsCalAdjustedEndLocation: Int? = nil
+    
+    var startTime: NSDate = NSDate()
+    var endTime: NSDate = NSDate()
 //
 //    
 //    var lock: Bool = false

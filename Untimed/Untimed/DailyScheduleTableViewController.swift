@@ -21,6 +21,12 @@ class DailyScheduleTableViewController: UITableViewController{
     // create counting variables for allocation to tableview
     var startLocation = 0
     
+    func hourMinuteStringFromNSDate(date: NSDate) -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let string = dateFormatter.stringFromDate(date)
+        return string
+    }
     
     func minInHrCoord(minuteCoordinateIn: Int) -> String {
         var hour = 0
@@ -87,7 +93,7 @@ class DailyScheduleTableViewController: UITableViewController{
             taskManager.loadFromDisc()
             
             taskManager.allocateTime()
-            createDSCalArray()
+//            createDSCalArray()
             tableView.reloadData()
         }
     }
@@ -99,7 +105,7 @@ class DailyScheduleTableViewController: UITableViewController{
             selectedDate = cdvc.newDate
             taskManager.loadFromDisc()
             taskManager.allocateTime()
-            createDSCalArray()
+//            createDSCalArray()
             tableView.reloadData()
         }
     }
@@ -256,7 +262,7 @@ class DailyScheduleTableViewController: UITableViewController{
 //                alertController.addAction(finishedAction)
 //            }
         
-            if let _ = dsCalArray[indexPath.row][dateLocationDay] as? Appointment {
+            if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Appointment {
                 let rescheduleAction = UIAlertAction(title: "Reschedule", style: .Default) { (action) in
                 }
                 
@@ -264,7 +270,7 @@ class DailyScheduleTableViewController: UITableViewController{
                 alertController.addAction(deleteAction)
             }
             
-            if let _ = dsCalArray[indexPath.row][dateLocationDay] as? Free {
+            if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Free {
                 let addApptAction = UIAlertAction(title: "Add appointment", style: .Default) { (action) in
                 }
                 
@@ -289,13 +295,19 @@ class DailyScheduleTableViewController: UITableViewController{
     
         
         taskManager.allocateTime()
+    
+        taskManager.allocateWorkingBlocksAtIndex(dayIndex: dateLocationDay)
         
-        createDSCalArray()
+//        createDSCalArray()
         
         // to deal with indexPath.row issues, cull tasks not within working period
-        createPrintedDSCalArray()
+//        createPrintedDSCalArray()
         
         tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        taskManager.clearWorkingBlocksAtIndex(dayIndex: dateLocationDay)
     }
     
     // connecting add and single task viewer pages to this
@@ -333,7 +345,8 @@ class DailyScheduleTableViewController: UITableViewController{
     
     // FIXME: change this when we have userinputted values
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dsCalArray.count
+//        return self.dsCalArray.count
+        return taskManager.calendarArray[dateLocationDay].count
     }
     
     func isNextSameAsThis(row: Int, col: Int) -> Bool {
@@ -386,12 +399,38 @@ class DailyScheduleTableViewController: UITableViewController{
         }
             
         else {
-            if indexPath.row < printedDSCalArray.count {
-                let task = printedDSCalArray[indexPath.row][dateLocationDay]
-                cell.textLabel?.text = task?.title
+//            if indexPath.row < printedDSCalArray.count {
+//                let task = printedDSCalArray[indexPath.row][dateLocationDay]
+//                cell.textLabel?.text = task?.title
+//                return cell
+//            }
+//                
+//            else {
+//                cell.textLabel?.text = ""
+//                return cell
+//            }
+            if indexPath.row < taskManager.calendarArray[taskManager.nsDateInCalFormat(selectedDate).dayCoordinate].count {
+                let task = taskManager.calendarArray[dateLocationDay][indexPath.row]
+            
+                var label = ""
+                
+                if let temp = task as? Free {
+                    
+                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)) : Free"
+                }
+                
+                if let temp = task as? Appointment {
+                    let title = temp.title
+                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)) : \(title)"
+                }
+                
+                if let temp = task as? WorkingBlock {
+                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)) : Working Block"
+                }
+                
+                cell.textLabel?.text = label
                 return cell
             }
-                
             else {
                 cell.textLabel?.text = ""
                 return cell
@@ -456,9 +495,11 @@ class DailyScheduleTableViewController: UITableViewController{
     func addToPrintedCalArray(printedCalRowIn: Int, dayCoorIn: Int, taskIn: Task?) {
         
         if let temp = taskIn as? Free {
-            // alter object's title
-            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": Free"
-            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
+            
+            temp.title = "\(taskManager.nsDateInCalFormat(temp.startTime).hourValue): \(taskManager.nsDateInCalFormat(temp.startTime).minuteValue) - \(taskManager.nsDateInCalFormat(temp.endTime).hourValue): \(taskManager.nsDateInCalFormat(temp.endTime).minuteValue)"
+            
+//            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": Free"
+//            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
         }
         
         if let temp = taskIn as? Appointment {

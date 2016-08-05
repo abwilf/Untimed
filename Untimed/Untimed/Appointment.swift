@@ -10,11 +10,11 @@ import Foundation
 
 class Appointment: Task {
     
-    // to test: var startTime = "11.30"
-    var startTime: NSDate = NSDate()
-    
-    // to test: var endTime = " 1 am tomorrow"
-    var endTime: NSDate = NSDate()
+//    // to test: var startTime = "11.30"
+//    var startTime: NSDate = NSDate()
+//    
+//    // to test: var endTime = " 1 am tomorrow"
+//    var endTime: NSDate = NSDate()
     
     var doesRepeat: Bool {
         if repeatOptionsIndex == 0 {
@@ -51,16 +51,16 @@ class Appointment: Task {
         if !doesRepeat {
             return
         }
-        if repeatOptionsIndex == 1 {
+        else if repeatOptionsIndex == 1 {
             repeatDaily()
         }
-        if repeatOptionsIndex == 2 {
+        else if repeatOptionsIndex == 2 {
             repeatEveryWeekday()
         }
-        if repeatOptionsIndex == 3 {
+        else if repeatOptionsIndex == 3 {
             repeatWeekly()
         }
-        if repeatOptionsIndex == 4 {
+        else if repeatOptionsIndex == 4 {
             repeatCustom()
         }
     }
