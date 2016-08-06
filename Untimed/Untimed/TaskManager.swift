@@ -15,10 +15,19 @@ extension NSDate
         let dateStringFormatter = NSDateFormatter()
         // 2 digit hour:2 digit minute
         dateStringFormatter.dateFormat = "HH:mm"
-        // FIXME: what does this do?
-        dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateStringFormatter.locale = NSLocale.currentLocale()
         let d = dateStringFormatter.dateFromString(dateString)!
         self.init(timeInterval:0, sinceDate:d)
+    }
+    
+    func getTimeValForComparison() -> Int {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "HHmm"
+        formatter.timeZone = NSTimeZone.localTimeZone()
+        let stringVal = formatter.stringFromDate(self)
+        print(stringVal)
+        let intVal = Int(stringVal)
+        return intVal! //Int(formatter.stringFromDate(self))!
     }
 }
 
@@ -432,6 +441,12 @@ class TaskManager: NSObject, NSCopying {
         return numBlocks
     }
     
+    private func deleteAllTasks() {
+        for _ in tasks {
+            tasks.popLast()
+        }
+        save()
+    }
     
     func deletePastTasks() {
         for i in 0..<tasks.count {
@@ -500,10 +515,13 @@ class TaskManager: NSObject, NSCopying {
         orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
     }
     
+    // FIXME: this may be getting called redundantly
     func allocateTime() {
+        // for testing
+//        deleteAllTasks()
+
         // setCellsPerDay()
         
-        // clear out past tasks in task list
         deletePastTasks()
         
         // make all future spots in cal array Free before allocating again from tasks list
@@ -528,87 +546,91 @@ class TaskManager: NSObject, NSCopying {
         }
     }
     
-    func allocateWorkingBlocksAtIndex(dayIndex index: Int) {
-        var workingIndex = 0
-        // if working day doesn't start w/ an appointment
-//            if calendarArray[i].count > 0 {
-        let numRows = calendarArray[index].count + 1
-        if calendarArray[index].isEmpty {
-            let workingBlock = WorkingBlock()
-            workingBlock.startTime = firstWorkingHour
-            workingBlock.endTime = lastWorkingHour
-            
-            calendarArray[index].append(workingBlock)
+    private func isDate(earlier: NSDate, earlierThan later: NSDate) -> Bool {
+        let earlierVal = earlier.getTimeValForComparison()
+        let laterVal = later.getTimeValForComparison()
+        if earlierVal < laterVal {
+            return true
         }
-        for _ in 0..<numRows {
-            let workingBlock = WorkingBlock()
-            workingBlock.startTime = firstWorkingHour
-            workingBlock.endTime = lastWorkingHour
-            
-            if workingIndex < numRows {
-                if let compareTask = calendarArray[index][workingIndex] as? Appointment {
-                    
-                    workingIndex += 1
-                    // if task is after &&
-                    // if the previous task ends before last working hour, fill in the rest
-                    if compareTask.endTime.compare(lastWorkingHour) == NSComparisonResult.OrderedAscending{
-                        if workingIndex > 0 {
-                            if let previousTask = calendarArray[index][workingIndex - 1] as? Appointment {
-                                if previousTask.endTime.compare(lastWorkingHour) == NSComparisonResult.OrderedDescending {
-                                    workingBlock.startTime = previousTask.endTime
-                                }
-                            }
-                        }
-                        workingBlock.endTime = lastWorkingHour
-                        calendarArray[index].insert(workingBlock, atIndex: workingIndex - 1)
-                    }
-                        
-                    else if compareTask.startTime.compare(firstWorkingHour) == NSComparisonResult.OrderedDescending {
-                        
-                        workingBlock.startTime = firstWorkingHour
-                        workingBlock.endTime = compareTask.startTime
-                        
-                        workingIndex += 1
-                        calendarArray[index].insert(workingBlock, atIndex: 0)
-                    }
-                }
-            }
-            else {
-                if let compareTask = calendarArray[index][workingIndex - 1] as? Appointment {
-                    workingIndex += 1
-                    // if task is after &&
-                    // if the previous task ends before last working hour, fill in the rest
-                    if compareTask.endTime.compare(lastWorkingHour) == NSComparisonResult.OrderedDescending{
-                        if workingIndex > 0 {
-                            if let previousTask = calendarArray[index][workingIndex - 2] as? Appointment {
-                                if previousTask.endTime.compare(lastWorkingHour) == NSComparisonResult.OrderedDescending {
-                                    workingBlock.startTime = previousTask.endTime
-                                }
-                            }
-                        }
-                        workingBlock.endTime = lastWorkingHour
-                        calendarArray[index].insert(workingBlock, atIndex: workingIndex - 1)
-                    }
-                        
-                    else if compareTask.startTime.compare(firstWorkingHour) == NSComparisonResult.OrderedAscending {
-                        
-                        workingBlock.startTime = firstWorkingHour
-                        workingBlock.endTime = compareTask.startTime
-                        
-                        workingIndex += 1
-                        calendarArray[index].insert(workingBlock, atIndex: 0)
-                    }
-                }
-            }
-//        for j in 0..<28 {
-//            for i in firstWorkingMinute..<lastWorkingMinute {
-//                if let _ = self.calendarArray[i][j] as? Free {
-//            
-//                    self.calendarArray[i][j] = WorkingBlock()
-//                }
-//            }
+        return false
+//        if earlier.compare(later) == NSComparisonResult.OrderedAscending {
+//            return true
 //        }
+//        return false
+    }
+    
+    private func isDate(first: NSDate, sameAs second: NSDate) -> Bool {
+        let firstVal = first.getTimeValForComparison()
+        let secondVal = second.getTimeValForComparison()
+        if firstVal == secondVal {
+            return true
         }
+        return false
+//        if first.compare(second) == NSComparisonResult.OrderedSame {
+//            return true
+//        }
+//        return false
+    }
+    
+    private func firstWorkingBlockInDay(dayIndex i: Int) -> (startTime: NSDate?, endTime: NSDate?, rowIndex: Int?) {
+        var startTime: NSDate? = nil
+        var endTime: NSDate? = nil
+        var rowIndex: Int? = nil
+        
+        if calendarArray[i].isEmpty {
+            startTime = firstWorkingHour
+            endTime = lastWorkingHour
+            rowIndex = 0
+        }
+        else if isDate(firstWorkingHour, earlierThan: calendarArray[i][0].startTime) {
+            startTime = firstWorkingHour
+            endTime = calendarArray[i][0].startTime
+            rowIndex = 0
+        }
+        else {
+            for j in 1..<calendarArray[i].count {
+                if isDate(calendarArray[i][j].startTime, earlierThan: lastWorkingHour) {
+                    if !isDate(calendarArray[i][j].startTime, sameAs: calendarArray[i][j - 1].endTime) {
+                        startTime = calendarArray[i][j - 1].endTime
+                        endTime = calendarArray[i][j].startTime
+                        rowIndex = j
+                        break
+                    }
+                }
+                else if isDate(calendarArray[i][j-1].endTime, earlierThan: lastWorkingHour) {
+                    startTime = calendarArray[i][j-1].endTime
+                    endTime = lastWorkingHour
+                    rowIndex = j
+                    break
+                }
+            }
+            if isDate((calendarArray[i].last?.endTime)!, earlierThan: lastWorkingHour) {
+                startTime = calendarArray[i].last?.endTime
+                endTime = lastWorkingHour
+                rowIndex = calendarArray[i].endIndex
+            }
+        }
+        
+        return (startTime, endTime, rowIndex)
+    }
+    
+    func allocateWorkingBlocksAtIndex(dayIndex dayIndex: Int) {
+        var (startTime, endTime, rowIndex) = firstWorkingBlockInDay(dayIndex: dayIndex)
+        while (startTime != nil) {
+            let workingBlock = WorkingBlock()
+            workingBlock.startTime = startTime!
+            workingBlock.endTime = endTime!
+            calendarArray[dayIndex].insert(workingBlock, atIndex: rowIndex!)
+            (startTime, endTime, rowIndex) = firstWorkingBlockInDay(dayIndex: dayIndex)
+        }
+        //        for j in 0..<28 {
+        //            for i in firstWorkingMinute..<lastWorkingMinute {
+        //                if let _ = self.calendarArray[i][j] as? Free {
+        //
+        //                    self.calendarArray[i][j] = WorkingBlock()
+        //                }
+        //            }
+        //        }
     }
 
     private func allocateApptInCorrectSpot(appt: Appointment, day dayIn: Int) {
@@ -639,6 +661,7 @@ class TaskManager: NSObject, NSCopying {
     
     // FIXME: make this more readable!
     func allocateAppts() {
+        clearCalArray()
         // use in both allocations
         var apptDayCoordinate: Int = 0
         // iterate through tasks array looking for appointments
