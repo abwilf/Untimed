@@ -25,7 +25,7 @@ class AddAssignmentTableViewController: UITableViewController {
     @IBAction func unwindFromPickAClass(sender: UIStoryboardSegue) {
         if let pactvc =
             sender.sourceViewController as? PickAClassTableViewController {
-            index = pactvc.index
+            addedAssignment.classClassArrIndex = pactvc.index
         }
     }
     

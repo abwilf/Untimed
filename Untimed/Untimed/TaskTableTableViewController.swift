@@ -78,13 +78,18 @@ class TaskTableTableViewController: UITableViewController {
             
             // add first to general tasks list, then erase and rederive classArray
             taskManager.addTask(aavc.addedAssignment)
-            let tasksIndexForClass = taskManager.classArray[aavc.index].tasksIndex
+            let tasksIndexForClass = taskManager.classArray[aavc.addedAssignment.classClassArrIndex].tasksIndex
+            
+            // set class's index in the tasks array for later deletion
+            aavc.addedAssignment.classTaskArrIndex = tasksIndexForClass
+
             if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
                 tmt.projAndAssns += [aavc.addedAssignment]
             }
             
             // draws from tasks array in creation and saves
-            taskManager.createClassArray()
+            taskManager.save()
+            
             tableView.reloadData()
         }
         

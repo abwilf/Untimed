@@ -114,8 +114,19 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
                 }
             }
             
+            // modify the class it's a part of
             if let task = tmObj.tasks[tasksIndex] as? Assignment {
+                // find the class in the tasks array
+                let tasksIndexForClass = task.classTaskArrIndex
                 
+                // delete the task from that class' projAndAssn array
+                if let clas = tmObj.tasks[tasksIndexForClass] as? Class {
+                    // find project's index in projAndAssnArray
+                    let projAndAssnIndexForTask = tmObj.findProjAndAssnIndex(tasksIndexForClass, taskIn: task)
+                    
+                    // delete it from the class' pAndA arr
+                    clas.deleteElementFromProjAndAssns(projAndAssnIndexForTask)
+                }
             }
             
             // delete at that index
@@ -123,8 +134,6 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
             
             // update .tasksIndex values
             tmObj.updateTaskIndexValues()
-            
-            print (tmObj.tasks)
             
             // recreate array from modified tasks
             tmObj.createClassArray()

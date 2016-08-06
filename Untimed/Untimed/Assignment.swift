@@ -46,6 +46,11 @@ class Assignment: Task {
 //        assignmentBlocks.removeFirst()
 //    }
     
+    // variables for deleting / locating
+    var classClassArrIndex: Int = 0
+    var classTaskArrIndex: Int = 0
+    
+    
     // working blocks
     var numFreeBlocksBeforeDueDate: Int = 0
     var numBlocksNeeded: Int = 0
