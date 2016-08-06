@@ -12,7 +12,6 @@ class AddProjectTableViewController: UITableViewController {
     
     var addedProject = Project()
     var classes: [Class] = []
-    var index: Int = 0
     
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
@@ -45,9 +44,8 @@ class AddProjectTableViewController: UITableViewController {
     @IBAction func unwindFromPickAClass(sender: UIStoryboardSegue) {
         if let pactvc =
             sender.sourceViewController as? PickAClassTableViewController {
-            index = pactvc.index
+            addedProject.classClassArrIndex = pactvc.index
         }
     }
-    
     
 }

@@ -11,6 +11,7 @@ import UIKit
 class ProjectsAndAssignmentsTableViewController: UITableViewController {
 
     // assns and projects for this class stored here
+    var tmObj = TaskManager()
     var selectedClass = Class()
     var indexChosen: Int = 0
     
@@ -95,13 +96,44 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
                                                forRowAtIndexPath indexPath: NSIndexPath){
         if (editingStyle == UITableViewCellEditingStyle.Delete){
             
-                // delete it from the projAndAssnArray
-                selectedClass.deleteElementFromProjAndAssns(indexPath.row)
+            // find object's tasks index
+            let tasksIndex = tmObj.findTasksIndexForTask(selectedClass.projAndAssns[indexPath.row])
+            
+            // modify the class it's a part of
+            if let task = tmObj.tasks[tasksIndex] as? Project {
+                // find the class in the tasks array
+                let tasksIndexForClass = task.classTaskArrIndex
                 
-                // update all .tasksIndex values to reflect change in tasks
-                selectedClass.updateProjAndAssnIndexValues()
+                // delete the task from that class' projAndAssn array
+                if let clas = tmObj.tasks[tasksIndexForClass] as? Class {
+                    // find project's index in projAndAssnArray
+                    let projAndAssnIndexForTask = tmObj.findProjAndAssnIndex(tasksIndexForClass, taskIn: task)
+
+                    // delete it from the class' pAndA arr
+                    clas.deleteElementFromProjAndAssns(projAndAssnIndexForTask)
+                }
+            }
+            
+            if let task = tmObj.tasks[tasksIndex] as? Assignment {
+                
+            }
+            
+            // delete at that index
+            tmObj.tasks.removeAtIndex(tasksIndex)
+            
+            // update .tasksIndex values
+            tmObj.updateTaskIndexValues()
+            
+            print (tmObj.tasks)
+            
+            // recreate array from modified tasks
+            tmObj.createClassArray()
+            
+            // save tmObj to disc
+            tmObj.save()
+            
         }
-            tableView.reloadData()
+        tableView.reloadData()
 
     }
     

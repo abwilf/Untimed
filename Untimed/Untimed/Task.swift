@@ -18,8 +18,6 @@ class Task: NSObject, NSCoding {
     var tasksIndex: Int = 0
     var indexInProjAndAssnArr: Int = 0
 
-
-
     
 //    // for ds allocation
 //    // moving to subclasses where appropriate

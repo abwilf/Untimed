@@ -18,7 +18,7 @@ class AddAppointmentTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         repeatDetail?.text = addedAppointment.repeatOptionsArray[addedAppointment.repeatOptionsIndex]
-        print(repeatDetail?.text)
+        //print(repeatDetail?.text)
     }
     
 
@@ -157,7 +157,7 @@ class AddAppointmentTableViewController: UITableViewController {
             // FIXME: optionIndex is 0 when it shouldn't be
             addedAppointment.repeatOptionsIndex = rtvc.optionIndex
             addedAppointment.repeatDaysIndex = rtvc.repeatDaysArr
-            print(addedAppointment.repeatOptionsIndex)
+           // print(addedAppointment.repeatOptionsIndex)
         }
     }
 

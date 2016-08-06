@@ -9,8 +9,10 @@
 import Foundation
 
 class Project: Task {
+    var classClassArrIndex: Int = 0
+    var classTaskArrIndex: Int = 0
     
-    var projTaskArr: [ProjectTask] = []    
+    var projTaskArr: [ProjectTask] = []
     var hoursToWorkOn: Int? = nil
     var hoursCompleted: Int = 0
     var hoursLeftToWorkOn: Int {

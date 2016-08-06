@@ -71,11 +71,34 @@ class TaskManager: NSObject, NSCopying {
         return copy
     }
     
+    func findTasksIndexForTask(taskIn: Task) -> Int {
+        for i in 0..<tasks.count {
+            if taskIn == tasks[i] {
+                return i
+            }
+        }
+        // you know something's wrong
+        return 100
+    }
+    
+    func findProjAndAssnIndex(classIndexTasksIn: Int, taskIn: Task) -> Int {
+        // go to tasks list at classIndexIn
+        if let clas = tasks[classIndexTasksIn] as? Class {
+            // find taskIn within projAndAssn arr
+            for i in 0..<clas.projAndAssns.count {
+                if taskIn == clas.projAndAssns[i] {
+                    return i
+                }
+            }
+        }
+        
+        return 100
+    }
     
     func calArrayDescriptionAtIndex(min: Int, day: Int) {
         print ("\(calendarArray[min][day].title)")
     }
-    
+ 
     func tasksDescription() {
         for i in 0..<tasks.count {
             print ("\(tasks[i].title)\n")

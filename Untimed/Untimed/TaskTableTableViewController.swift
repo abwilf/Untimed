@@ -30,8 +30,6 @@ class TaskTableTableViewController: UITableViewController {
 
         super.viewWillAppear(animated)
         
-        // recreate the projOnly array
-        
         taskManager.createClassArray()
         taskManager.createProjOnlyArray()
         
@@ -108,12 +106,16 @@ class TaskTableTableViewController: UITableViewController {
             taskManager.addTask(aatvc.addedProject)
             
             // find tasksIndex
-            let tasksIndexForClass = taskManager.classArray[aatvc.index].tasksIndex
+            let tasksIndexForClass = taskManager.classArray[aatvc.addedProject.classClassArrIndex].tasksIndex
+            
+            // modify addedProject's classTasksArrIndex property
+            aatvc.addedProject.classTaskArrIndex = tasksIndexForClass
+            
             if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
+                // add to class' projAndAssns array
                 tmt.projAndAssns += [aatvc.addedProject]
             }
-            
-            // works up to here.  doesn't save and load correctly (at least within this page)
+        
             taskManager.save()
             
             tableView.reloadData()
@@ -162,6 +164,18 @@ class TaskTableTableViewController: UITableViewController {
             sender.sourceViewController as? SingleTaskTableViewController {
             let index = sttvc.index
             taskManager.deleteTaskAtIndex(index)
+            tableView.reloadData()
+        }
+    }
+    
+    @IBAction func unwindFromTaskPages(sender: UIStoryboardSegue) {
+        if let paatvc =
+            sender.sourceViewController as? ProjectsAndAssignmentsTableViewController {
+            taskManager.loadFromDisc()
+            
+            // recreate arrays
+            taskManager.createClassArray()
+            taskManager.createProjOnlyArray()
             tableView.reloadData()
         }
     }
@@ -403,12 +417,15 @@ class TaskTableTableViewController: UITableViewController {
         
         if (segue.identifier == "To Projects And Assignments") {
             
-            let destinationViewController = segue.destinationViewController as! ProjectsAndAssignmentsTableViewController
-            destinationViewController.title = "Projects and Assignments"
+            let destinationNavController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavController.topViewController as! ProjectsAndAssignmentsTableViewController
+            targetController.title = "Projects and Assignments"
             
             if let index = tableView.indexPathForSelectedRow?.row {
                 // send projAndAssnArray to the next view controller based on which project is selected
-                destinationViewController.selectedClass = taskManager.classArray[index]
+                targetController.selectedClass = taskManager.classArray[index]
+                
+                targetController.tmObj = taskManager
             }
         }
         
