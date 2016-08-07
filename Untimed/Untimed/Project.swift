@@ -19,6 +19,12 @@ class Project: Task {
         return hoursToWorkOn! - hoursCompleted
     }
     
+    
     var completionDate: NSDate? = nil
     var tasks: [Task] = []
+    
+    func deleteElementFromProjTaskArr(indexIn: Int) {
+        projTaskArr.removeAtIndex(indexIn)
+    }
+    
 }

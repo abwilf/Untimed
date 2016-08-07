@@ -9,14 +9,31 @@
 import UIKit
 
 class ProjTasksTableViewController: UITableViewController {
-
     var projTasksArr: [ProjectTask] = []
+    var selectedProject = Project()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var tmObj = TaskManager()
+    
+    // locators for PT
+    var indexInPTArray = 0
+    
+    // locators for Project
+    var parentProjectTaskIndex = 0
+    var parentProjectPAndAArrIndex = 0
+    
+    // locators for Class
+    var classIndexInTasks = 0
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setprojTasksArr()
     }
 
-   
+    func setprojTasksArr() {
+        projTasksArr = selectedProject.projTaskArr
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -50,49 +67,65 @@ class ProjTasksTableViewController: UITableViewController {
     }
  
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(tableView: UITableView,
+                            commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+                                               forRowAtIndexPath indexPath: NSIndexPath){
+        if (editingStyle == UITableViewCellEditingStyle.Delete){
+            
+            // find object's tasks index
+            let tasksIndex = tmObj.findTasksIndexForTask(selectedProject.projTaskArr[indexPath.row])
+            
+            // modify the project it's a part of
+            if let task = tmObj.tasks[tasksIndex] as? ProjectTask {
+                // find the project in the tasks array
+                let tasksIndexForProject = task.projInTaskArrIndex
+                
+                // delete the task from that project's projTask array (for the project in tasks)
+                if let proj = tmObj.tasks[tasksIndexForProject] as? Project {
+                    
+                    // find PT index in projAndAssnArray
+                    let ptIndex = tmObj.findProjTaskIndexInProj(tasksIndexForProject, taskIn: task)
+                    
+                    // delete it from the project's PT arr
+                    proj.deleteElementFromProjTaskArr(ptIndex)
+                    
+                    // modify the class that the project's a part of (in tasks) by replacing its project version with this one: first find class index in tasks
+                    let classTaskIndex = proj.classTaskArrIndex
+                    
+                    // find project index within class' projAndAssnarray
+                    let projIndexInClassArr = tmObj.findProjAndAssnIndex(classTaskIndex, taskIn: proj)
+                    
+                    // replace project in class with modified one from tasks
+                    if let clas = tmObj.tasks[classTaskIndex] as? Class {
+                        clas.projAndAssns[projIndexInClassArr] = proj
+                    }
+                    
+                    // modify selectedProject for printing
+                    selectedProject = proj
+                    
+                    // FIXME: TESTING
+                    print ("Project Name: \(tmObj.tasks[tasksIndexForProject]) \n PT Name: \(tmObj.tasks[tasksIndex]) \n Class Name: \(tmObj.tasks[classTaskIndex])")
+                    
+                }
+            }
+            
+            // delete PT at that index in tasks
+            tmObj.tasks.removeAtIndex(tasksIndex)
+            
+            // update .tasksIndex values
+            tmObj.updateTaskIndexValues()
+            
+            // recreate array from modified tasks
+            tmObj.createClassArray()
+            
+            // save tmObj to disc
+            tmObj.save()
+            
+        }
+        tableView.reloadData()
+        
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

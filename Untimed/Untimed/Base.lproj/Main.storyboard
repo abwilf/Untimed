@@ -59,7 +59,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="kNI-uS-NaX" kind="show" identifier="Show Proj Tasks" id="9Jg-Xg-7vx"/>
+                                    <segue destination="e77-on-eee" kind="show" identifier="Show Proj Tasks" id="9Jg-Xg-7vx"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -2132,7 +2132,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jOS-mr-ziR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="0P4-dV-n4D" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4690" y="-2446"/>
+            <point key="canvasLocation" x="5277" y="-2446"/>
         </scene>
         <!--Proj Tasks Table View Controller-->
         <scene sceneID="8Ov-Ea-9fP">
@@ -2173,10 +2173,18 @@
                             <outlet property="delegate" destination="kNI-uS-NaX" id="pe7-C6-cyW"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="lPb-Cb-Vdr">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="S87-oF-WMS">
+                            <connections>
+                                <segue destination="u7p-dX-TWD" kind="unwind" unwindAction="unwindFromPT:" id="fBz-sB-P6q"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Qh-wO-Uj6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="u7p-dX-TWD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3072.5" y="-2369.5"/>
+            <point key="canvasLocation" x="3659.5" y="-2369.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="u1p-gC-m08">
@@ -2194,7 +2202,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XY9-gS-eCH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3515.5" y="-2446.5"/>
+            <point key="canvasLocation" x="4102.5" y="-2446.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hHO-KJ-bPk">
@@ -2267,6 +2275,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tNg-4G-eKj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1957.5" y="-2351.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="vej-kj-rX9">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="e77-on-eee" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cIi-Ib-HQv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kNI-uS-NaX" kind="relationship" relationship="rootViewController" id="NgI-mH-31a"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mo2-6d-ca5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3072.5" y="-2369.5"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

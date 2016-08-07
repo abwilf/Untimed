@@ -73,7 +73,7 @@ class TaskManager: NSObject, NSCopying {
     
     func findTasksIndexForTask(taskIn: Task) -> Int {
         for i in 0..<tasks.count {
-            if taskIn == tasks[i] {
+            if (taskIn == tasks[i]) {
                 return i
             }
         }
@@ -87,6 +87,20 @@ class TaskManager: NSObject, NSCopying {
             // find taskIn within projAndAssn arr
             for i in 0..<clas.projAndAssns.count {
                 if taskIn == clas.projAndAssns[i] {
+                    return i
+                }
+            }
+        }
+        
+        return 100
+    }
+    
+    func findProjTaskIndexInProj(projectInTasksIndexIn: Int, taskIn: Task) -> Int {
+        // go to tasks list at classIndexIn
+        if let proj = tasks[projectInTasksIndexIn] as? Project {
+            // find taskIn within projTask arr
+            for i in 0..<proj.projTaskArr.count {
+                if taskIn == proj.projTaskArr[i] {
                     return i
                 }
             }

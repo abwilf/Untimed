@@ -192,17 +192,37 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
                 indexChosen = indexSelected
             }
             
-            let destinationViewController = segue.destinationViewController as! ProjTasksTableViewController
+            
+            
+            let destinationNavController = segue.destinationViewController as! UINavigationController
+            
+            let topViewController = destinationNavController.topViewController as! ProjTasksTableViewController
             
             if let proj = selectedClass.projAndAssns[indexChosen] as? Project {
-                destinationViewController.projTasksArr = proj.projTaskArr
+               
+                // pass in tmObj carrying taskslist
+                topViewController.tmObj = tmObj
+                
+                // pass in info for Project
+                topViewController.selectedProject = proj
+                topViewController.parentProjectPAndAArrIndex = indexChosen
+                topViewController.parentProjectTaskIndex = tmObj.findTasksIndexForTask(proj)
+                
+                // pass in locators for Class
+                topViewController.classIndexInTasks = tmObj.findTasksIndexForTask(selectedClass)
                 
                 // set title
-                destinationViewController.title = "Tasks for \(proj.title)"
+                topViewController.title = "Tasks for \(proj.title)"
             }
         }
-        
-        
+    }
+    
+    @IBAction func unwindFromPT (sender: UIStoryboardSegue) {
+        if let _ =
+            sender.sourceViewController as? ProjTasksTableViewController {
+            tmObj.loadFromDisc()
+            tableView.reloadData()
+        }
     }
 }
     
