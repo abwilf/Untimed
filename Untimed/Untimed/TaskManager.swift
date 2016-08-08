@@ -78,7 +78,8 @@ class TaskManager: NSObject, NSCopying {
             }
         }
         // you know something's wrong
-        return 100
+        assert(false, "Task not found")
+        return -1
     }
     
     func findProjAndAssnIndex(classIndexTasksIn: Int, taskIn: Task) -> Int {
@@ -91,8 +92,8 @@ class TaskManager: NSObject, NSCopying {
                 }
             }
         }
-        
-        return 100
+        assert(false, "Project/assignment not found")
+        return -1
     }
     
     func findProjTaskIndexInProj(projectInTasksIndexIn: Int, taskIn: Task) -> Int {
@@ -105,8 +106,8 @@ class TaskManager: NSObject, NSCopying {
                 }
             }
         }
-        
-        return 100
+        assert(false, "Project task not found")
+        return -1
     }
     
     func calArrayDescriptionAtIndex(min: Int, day: Int) {

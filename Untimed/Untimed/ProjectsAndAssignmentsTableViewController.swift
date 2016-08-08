@@ -90,7 +90,6 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
         return cell
     }
     
-    
     override func tableView(tableView: UITableView,
                             commitEditingStyle editingStyle: UITableViewCellEditingStyle,
                                                forRowAtIndexPath indexPath: NSIndexPath){

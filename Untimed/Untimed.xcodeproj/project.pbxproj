@@ -166,9 +166,6 @@
 		211329C41D5251580070948F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
-				A2A5A8D31D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift */,
-				A283E7A61D5101A100636B09 /* ProjTasksTableViewController.swift */,
 				A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */,
 				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
 				218DA3301D48026400E269CA /* AddClassTableViewController.swift */,
@@ -185,9 +182,12 @@
 				218DA31E1D42915A00E269CA /* EndRepeatTableViewController.swift */,
 				A2A5A8D51D4932D200030AAE /* PickAClassTableViewController.swift */,
 				A283E7A41D50ED8500636B09 /* PickAProjectTableViewController.swift */,
+				A2A5A8D31D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift */,
+				A283E7A61D5101A100636B09 /* ProjTasksTableViewController.swift */,
 				218DA31C1D428C5900E269CA /* RepeatTableViewController.swift */,
 				A27C8D671D47AE2200D81D13 /* SettingsTableViewController.swift */,
 				A1D7D2B51CB2E08400053AE6 /* SingleTaskTableViewController.swift */,
+				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				A27FAAAF1CAC378E00B1AE85 /* TaskViewController.swift */,
 				A2116D761CA968EC003D221D /* ViewController.swift */,
 			);
