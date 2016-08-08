@@ -25,7 +25,6 @@ extension NSDate
         formatter.dateFormat = "HHmm"
         formatter.timeZone = NSTimeZone.localTimeZone()
         let stringVal = formatter.stringFromDate(self)
-        print(stringVal)
         let intVal = Int(stringVal)
         return intVal! //Int(formatter.stringFromDate(self))!
     }
@@ -85,7 +84,6 @@ class TaskManager: NSObject, NSCopying {
     
     func addClass(classIn: Class) {
         classArray += [classIn]
-        save()
     }
     
     func addProject(projIn: Project, forClass classIn: Class) {
@@ -102,6 +100,66 @@ class TaskManager: NSObject, NSCopying {
     
     func addAppointment(apptIn: Appointment) {
         appointmentArray.append(apptIn)
+    }
+    
+    func deleteClass(classIn: Class) {
+        for i in 0..<classArray.count {
+            if classArray[i] == classIn {
+                classArray.removeAtIndex(i)
+                return
+            }
+        }
+    }
+    
+    func deleteClassAtIndex(classIndex index: Int) {
+        classArray.removeAtIndex(index)
+    }
+    
+    func deleteProject(projIn: Project, forClass classIn: Class) {
+        for i in 0..<classIn.projAndAssns.count {
+            if classIn.projAndAssns[i] == projIn {
+                classIn.projAndAssns.removeAtIndex(i)
+                return
+            }
+        }
+    }
+    
+
+    
+    func deleteAssignment(asgtIn: Assignment, forClass classIn: Class) {
+        for i in 0..<classIn.projAndAssns.count {
+            if classIn.projAndAssns[i] == asgtIn {
+                classIn.projAndAssns.removeAtIndex(i)
+                return
+            }
+        }
+    }
+    
+    func deleteProjectOrAssignmentAtIndex(index index: Int, forClass classIn: Class) {
+        classIn.projAndAssns.removeAtIndex(index)
+    }
+
+    
+    func deleteProjectTask(projTaskIn: ProjectTask, forProject projIn: Project) {
+        for i in 0..<projIn.projTaskArr.count {
+            if projIn.projTaskArr[i] == projTaskIn {
+                projIn.projTaskArr.removeAtIndex(i)
+                return
+            }
+        }
+    }
+    
+    func deleteProjectTaskAtIndex(projTaskIndex index: Int, forProj projIn: Project) {
+        projIn.projTaskArr.removeAtIndex(index)
+    }
+    
+    func deleteAppointment(apptIn: Appointment) {
+        for i in 0..<appointmentArray.count {
+            if appointmentArray[i] == apptIn {
+                appointmentArray.removeAtIndex(i)
+                return
+            }
+        }
     }
 //    func findProjAndAssnIndex(classIndexTasksIn: Int, taskIn: Task) -> Int {
 //        // go to tasks list at classIndexIn

@@ -208,7 +208,7 @@ class TaskTableTableViewController: UITableViewController {
             // Configure the cell
             let task = taskManager.classArray[indexPath.row]
             cell.textLabel?.text = task.title
-            
+             
            /*
  // assignment
             if let assignment = task as? Assignment {
@@ -434,25 +434,17 @@ class TaskTableTableViewController: UITableViewController {
     }
     
     
-//    override func tableView(tableView: UITableView,
-//                            commitEditingStyle editingStyle: UITableViewCellEditingStyle,
-//                                               forRowAtIndexPath indexPath: NSIndexPath){
-//        if (editingStyle == UITableViewCellEditingStyle.Delete){
-//            
-//            // find the class's index in the tasks array
-//            let tasksIndexForClass = taskManager.classArray[indexPath.row].tasksIndex
-//                        
-//            // delete it from the tasks array
-//            taskManager.deleteTaskAtIndex(tasksIndexForClass)
-//            
-//            // update all .tasksIndex values to reflect change in tasks
-//            taskManager.updateTaskIndexValues()
-//            
-//            // recreate the class array
-//            taskManager.createClassArray()
-//            
-//            tableView.reloadData()
-//        }
-//    }
+    override func tableView(tableView: UITableView,
+                            commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+                                               forRowAtIndexPath indexPath: NSIndexPath){
+        if (editingStyle == UITableViewCellEditingStyle.Delete){
+            
+            taskManager.deleteClassAtIndex(classIndex: indexPath.row)
+            
+            taskManager.save()
+            
+            tableView.reloadData()
+        }
+    }
     
 }

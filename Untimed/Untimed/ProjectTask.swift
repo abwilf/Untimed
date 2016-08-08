@@ -27,6 +27,6 @@ class ProjectTask: Task {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         aDecoder.decodeObjectForKey("Title") as! String
-        aDecoder.decodeIntForKey("numBlocksNeeded")
+        self.numBlocksNeeded = aDecoder.decodeIntegerForKey("numBlocksNeeded")
     }
 }

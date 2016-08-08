@@ -90,61 +90,20 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
         return cell
     }
     
-    // FIXME: implement delete
-//    override func tableView(tableView: UITableView,
-//                            commitEditingStyle editingStyle: UITableViewCellEditingStyle,
-//                                               forRowAtIndexPath indexPath: NSIndexPath){
-//        if (editingStyle == UITableViewCellEditingStyle.Delete){
-//            
-//            // find object's tasks index
-//            let tasksIndex = tmObj.findTasksIndexForTask(selectedClass.projAndAssns[indexPath.row])
-//            
-//            // modify the class it's a part of
-//            if let task = tmObj.tasks[tasksIndex] as? Project {
-//                // find the class in the tasks array
-//                let tasksIndexForClass = task.classTaskArrIndex
-//                
-//                // delete the task from that class' projAndAssn array
-//                if let clas = tmObj.tasks[tasksIndexForClass] as? Class {
-//                    // find project's index in projAndAssnArray
-//                    let projAndAssnIndexForTask = tmObj.findProjAndAssnIndex(tasksIndexForClass, taskIn: task)
-//
-//                    // delete it from the class' pAndA arr
-//                    clas.deleteElementFromProjAndAssns(projAndAssnIndexForTask)
-//                }
-//            }
-//            
-//            // modify the class it's a part of
-//            if let task = tmObj.tasks[tasksIndex] as? Assignment {
-//                // find the class in the tasks array
-//                let tasksIndexForClass = task.classTaskArrIndex
-//                
-//                // delete the task from that class' projAndAssn array
-//                if let clas = tmObj.tasks[tasksIndexForClass] as? Class {
-//                    // find project's index in projAndAssnArray
-//                    let projAndAssnIndexForTask = tmObj.findProjAndAssnIndex(tasksIndexForClass, taskIn: task)
-//                    
-//                    // delete it from the class' pAndA arr
-//                    clas.deleteElementFromProjAndAssns(projAndAssnIndexForTask)
-//                }
-//            }
-//            
-//            // delete at that index
-//            tmObj.tasks.removeAtIndex(tasksIndex)
-//            
-//            // update .tasksIndex values
-//            tmObj.updateTaskIndexValues()
-//            
-//            // recreate array from modified tasks
-//            tmObj.createClassArray()
-//            
-//            // save tmObj to disc
-//            tmObj.save()
-//            
-//        }
-//        tableView.reloadData()
-//
-//    }
+    // FIXME: consider combining tmObj.deleteProjectAtIndex and .deleteAssignmentAtIndex
+    override func tableView(tableView: UITableView,
+                            commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+                                               forRowAtIndexPath indexPath: NSIndexPath){
+        if (editingStyle == UITableViewCellEditingStyle.Delete){
+            
+            tmObj.deleteProjectOrAssignmentAtIndex(index: indexPath.row, forClass: selectedClass)
+                
+            tmObj.save()
+            
+            tableView.reloadData()
+
+        }
+    }
     
     
 
