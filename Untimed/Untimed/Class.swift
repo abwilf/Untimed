@@ -34,13 +34,13 @@ class Class: Task {
     override func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(title, forKey:"Title")
         aCoder.encodeObject(projAndAssns, forKey: "Projects and Assignments")
-        aCoder.encodeInteger(tasksIndex, forKey: "tasksIndex")
+//        aCoder.encodeInteger(tasksIndex, forKey: "tasksIndex")
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.projAndAssns = aDecoder.decodeObjectForKey("Projects and Assignments") as? [Task] ?? []
-        self.tasksIndex = aDecoder.decodeIntegerForKey("tasksIndex")
+//        self.tasksIndex = aDecoder.decodeIntegerForKey("tasksIndex")
         aDecoder.decodeObjectForKey("Title") as! String
     }
 

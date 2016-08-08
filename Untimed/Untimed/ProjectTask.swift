@@ -12,4 +12,21 @@ class ProjectTask: Task {
     var projInClassArrIndex: Int = 0
     var projInTaskArrIndex: Int = 0
     var numBlocksNeeded = 0
+    
+    var indexInProjAndAssnArr: Int? = nil
+
+    override init() {
+        super.init()
+    }
+    
+    override func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(title, forKey:"Title")
+        aCoder.encodeInteger(numBlocksNeeded, forKey: "numBlocksNeeded")
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        aDecoder.decodeObjectForKey("Title") as! String
+        aDecoder.decodeIntForKey("numBlocksNeeded")
+    }
 }

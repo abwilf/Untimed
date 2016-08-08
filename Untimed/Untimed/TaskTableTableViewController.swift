@@ -13,14 +13,14 @@ class TaskTableTableViewController: UITableViewController {
     let taskManager = TaskManager()
 
     func resetForTesting () {
-        taskManager.tasks = []
+        taskManager.classArray = []
         taskManager.save()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         taskManager.loadFromDisc()
-        taskManager.createClassArray()
+//        taskManager.createClassArray()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -30,8 +30,8 @@ class TaskTableTableViewController: UITableViewController {
 
         super.viewWillAppear(animated)
         
-        taskManager.createClassArray()
-        taskManager.createProjOnlyArray()
+//        taskManager.createClassArray()
+//        taskManager.createProjOnlyArray()
         
         tableView.reloadData()
     }
@@ -76,16 +76,17 @@ class TaskTableTableViewController: UITableViewController {
         if let aavc =
             sender.sourceViewController as? AddAssignmentTableViewController {
             
-            // add first to general tasks list, then erase and rederive classArray
-            taskManager.addTask(aavc.addedAssignment)
-            let tasksIndexForClass = taskManager.classArray[aavc.addedAssignment.classClassArrIndex].tasksIndex
+            let classAddedAsgtBelongsTo = taskManager.classArray[aavc.addedAssignment.classTaskArrIndex]
             
-            // set class's index in the tasks array for later deletion
-            aavc.addedAssignment.classTaskArrIndex = tasksIndexForClass
+            // add first to general tasks list, then erase and rederive classArray
+            taskManager.addAssignment(aavc.addedAssignment, forClass: classAddedAsgtBelongsTo)
+            
+//            let tasksIndexForClass = taskManager.classArray[aavc.addedAssignment.classClassArrIndex].tasksIndex
+            
 
-            if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
-                tmt.projAndAssns += [aavc.addedAssignment]
-            }
+//            if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
+//                tmt.projAndAssns += [aavc.addedAssignment]
+//            }
             
             // draws from tasks array in creation and saves
             taskManager.save()
@@ -95,9 +96,8 @@ class TaskTableTableViewController: UITableViewController {
         
         
         // save from add appointment
-        if let aapptvc = sender.sourceViewController as?
-            AddAppointmentTableViewController {
-            taskManager.addTask(aapptvc.addedAppointment)
+        if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
+            taskManager.addAppointment(aapptvc.addedAppointment)
             taskManager.allocateAppts()
             taskManager.save()
             tableView.reloadData()
@@ -106,20 +106,10 @@ class TaskTableTableViewController: UITableViewController {
         // add project
         if let aatvc = sender.sourceViewController as?
             AddProjectTableViewController {
-                        
-            // add to general tasks array
-            taskManager.addTask(aatvc.addedProject)
             
-            // find tasksIndex
-            let tasksIndexForClass = taskManager.classArray[aatvc.addedProject.classClassArrIndex].tasksIndex
+            let classProjBelongsTo = taskManager.classArray[aatvc.addedProject.classClassArrIndex]
             
-            // modify addedProject's classTasksArrIndex property
-            aatvc.addedProject.classTaskArrIndex = tasksIndexForClass
-            
-            if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
-                // add to class' projAndAssns array
-                tmt.projAndAssns += [aatvc.addedProject]
-            }
+            taskManager.addProject(aatvc.addedProject, forClass: classProjBelongsTo)
         
             taskManager.save()
             
@@ -129,15 +119,11 @@ class TaskTableTableViewController: UITableViewController {
         // add project task
         if let apttvc = sender.sourceViewController as?
             AddProjectTaskTableViewController {
+
+            let projectThatTaskBelongsTo = taskManager.classArray[apttvc.classIndex].projAndAssns[apttvc.projectAndAssnArrIndex] as! Project
             
-            // add to general tasks array
-            taskManager.addTask(apttvc.addedProjTask)
+                taskManager.addProjectTask(apttvc.addedProjTask, forProject: projectThatTaskBelongsTo)
             
-            // add to a project's projtaskarray (project is within a class' projAndAssnArray)
-            if let projObj = taskManager.classArray[apttvc.classIndex].projAndAssns[apttvc.projectAndAssnArrIndex] as? Project {
-                projObj.projTaskArr += [apttvc.addedProjTask]
-            }
-        
             // works up to here.  doesn't save and load correctly (at least within this page)
             taskManager.save()
             
@@ -147,16 +133,8 @@ class TaskTableTableViewController: UITableViewController {
         // save from add class
         if let actvc = sender.sourceViewController as?
             AddClassTableViewController {
-            taskManager.addTask(actvc.addedClass)
             
-            // you just added this class to the last spot, so alter its member variable "tasks index" so you know where to look when making createClass
-            
-            if let addedClass = taskManager.tasks[taskManager.tasks.count - 1] as? Class {
-                addedClass.tasksIndex = taskManager.tasks.count - 1
-            }
-            
-            
-            taskManager.createClassArray()
+            taskManager.addClass(actvc.addedClass)
             
             taskManager.save()
             
@@ -168,7 +146,7 @@ class TaskTableTableViewController: UITableViewController {
         if let sttvc =
             sender.sourceViewController as? SingleTaskTableViewController {
             let index = sttvc.index
-            taskManager.deleteTaskAtIndex(index)
+//            taskManager.deleteTaskAtIndex(index)
             tableView.reloadData()
         }
     }
@@ -179,8 +157,8 @@ class TaskTableTableViewController: UITableViewController {
             taskManager.loadFromDisc()
             
             // recreate arrays
-            taskManager.createClassArray()
-            taskManager.createProjOnlyArray()
+//            taskManager.createClassArray()
+//            taskManager.createProjOnlyArray()
             tableView.reloadData()
         }
     }
@@ -310,14 +288,14 @@ class TaskTableTableViewController: UITableViewController {
 //        }
 }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let _ = taskManager.tasks[indexPath.row] as? Assignment {
-            performSegueWithIdentifier("Assignment View Segue", sender: TaskTableTableViewController())
-        }
-        if let _ = taskManager.tasks[indexPath.row] as? Appointment {
-            performSegueWithIdentifier("Appointment View Segue", sender: TaskTableTableViewController())
-        }
-    }
+//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        if let _ = taskManager.tasks[indexPath.row] as? Assignment {
+//            performSegueWithIdentifier("Assignment View Segue", sender: TaskTableTableViewController())
+//        }
+//        if let _ = taskManager.tasks[indexPath.row] as? Appointment {
+//            performSegueWithIdentifier("Appointment View Segue", sender: TaskTableTableViewController())
+//        }
+//    }
     
     /*
      // Override to support conditional editing of the table view.
@@ -456,25 +434,25 @@ class TaskTableTableViewController: UITableViewController {
     }
     
     
-    override func tableView(tableView: UITableView,
-                            commitEditingStyle editingStyle: UITableViewCellEditingStyle,
-                                               forRowAtIndexPath indexPath: NSIndexPath){
-        if (editingStyle == UITableViewCellEditingStyle.Delete){
-            
-            // find the class's index in the tasks array
-            let tasksIndexForClass = taskManager.classArray[indexPath.row].tasksIndex
-                        
-            // delete it from the tasks array
-            taskManager.deleteTaskAtIndex(tasksIndexForClass)
-            
-            // update all .tasksIndex values to reflect change in tasks
-            taskManager.updateTaskIndexValues()
-            
-            // recreate the class array
-            taskManager.createClassArray()
-            
-            tableView.reloadData()
-        }
-    }
+//    override func tableView(tableView: UITableView,
+//                            commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+//                                               forRowAtIndexPath indexPath: NSIndexPath){
+//        if (editingStyle == UITableViewCellEditingStyle.Delete){
+//            
+//            // find the class's index in the tasks array
+//            let tasksIndexForClass = taskManager.classArray[indexPath.row].tasksIndex
+//                        
+//            // delete it from the tasks array
+//            taskManager.deleteTaskAtIndex(tasksIndexForClass)
+//            
+//            // update all .tasksIndex values to reflect change in tasks
+//            taskManager.updateTaskIndexValues()
+//            
+//            // recreate the class array
+//            taskManager.createClassArray()
+//            
+//            tableView.reloadData()
+//        }
+//    }
     
 }

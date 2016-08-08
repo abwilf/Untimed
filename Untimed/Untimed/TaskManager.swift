@@ -33,8 +33,9 @@ extension NSDate
 
 class TaskManager: NSObject, NSCopying {
     // empty array of tasks
-    var tasks: [Task] = []
+//    var tasks: [Task] = []
     var classArray: [Class] = []
+    var appointmentArray: [Appointment] = []
     
     // calendar array = 2d array of MINS_IN_DAY (rows) by 365 days (cols)
     // FIXME: change 28 to DAYS_IN_YEAR days everywhere
@@ -71,93 +72,113 @@ class TaskManager: NSObject, NSCopying {
         return copy
     }
     
-    func findTasksIndexForTask(taskIn: Task) -> Int {
-        for i in 0..<tasks.count {
-            if (taskIn == tasks[i]) {
-                return i
-            }
-        }
-        // you know something's wrong
-        assert(false, "Task not found")
-        return -1
+//    func findTasksIndexForTask(taskIn: Task) -> Int {
+//        for i in 0..<tasks.count {
+//            if (taskIn == tasks[i]) {
+//                return i
+//            }
+//        }
+//        // you know something's wrong
+//        assert(false, "Task not found")
+//        return -1
+//    }
+    
+    func addClass(classIn: Class) {
+        classArray += [classIn]
+        save()
     }
     
-    func findProjAndAssnIndex(classIndexTasksIn: Int, taskIn: Task) -> Int {
-        // go to tasks list at classIndexIn
-        if let clas = tasks[classIndexTasksIn] as? Class {
-            // find taskIn within projAndAssn arr
-            for i in 0..<clas.projAndAssns.count {
-                if taskIn == clas.projAndAssns[i] {
-                    return i
-                }
-            }
-        }
-        assert(false, "Project/assignment not found")
-        return -1
+    func addProject(projIn: Project, forClass classIn: Class) {
+        classIn.projAndAssns.append(projIn)
     }
     
-    func findProjTaskIndexInProj(projectInTasksIndexIn: Int, taskIn: Task) -> Int {
-        // go to tasks list at classIndexIn
-        if let proj = tasks[projectInTasksIndexIn] as? Project {
-            // find taskIn within projTask arr
-            for i in 0..<proj.projTaskArr.count {
-                if taskIn == proj.projTaskArr[i] {
-                    return i
-                }
-            }
-        }
-        assert(false, "Project task not found")
-        return -1
+    func addAssignment(asgtIn: Assignment, forClass classIn: Class) {
+        classIn.projAndAssns.append(asgtIn)
     }
+    
+    func addProjectTask(projTaskIn: ProjectTask, forProject projIn: Project) {
+        projIn.projTaskArr.append(projTaskIn)
+    }
+    
+    func addAppointment(apptIn: Appointment) {
+        appointmentArray.append(apptIn)
+    }
+//    func findProjAndAssnIndex(classIndexTasksIn: Int, taskIn: Task) -> Int {
+//        // go to tasks list at classIndexIn
+//        if let clas = tasks[classIndexTasksIn] as? Class {
+//            // find taskIn within projAndAssn arr
+//            for i in 0..<clas.projAndAssns.count {
+//                if taskIn == clas.projAndAssns[i] {
+//                    return i
+//                }
+//            }
+//        }
+//        assert(false, "Project/assignment not found")
+//        return -1
+//    }
+    
+//    func findProjTaskIndexInProj(projectInTasksIndexIn: Int, taskIn: Task) -> Int {
+//        // go to tasks list at classIndexIn
+//        if let proj = tasks[projectInTasksIndexIn] as? Project {
+//            // find taskIn within projTask arr
+//            for i in 0..<proj.projTaskArr.count {
+//                if taskIn == proj.projTaskArr[i] {
+//                    return i
+//                }
+//            }
+//        }
+//        assert(false, "Project task not found")
+//        return -1
+//    }
     
     func calArrayDescriptionAtIndex(min: Int, day: Int) {
         print ("\(calendarArray[min][day].title)")
     }
  
-    func tasksDescription() {
-        for i in 0..<tasks.count {
-            print ("\(tasks[i].title)\n")
-        }
-    }
+//    func tasksDescription() {
+//        for i in 0..<tasks.count {
+//            print ("\(tasks[i].title)\n")
+//        }
+//    }
     
     
-    func createClassArray() {
-        // wipe
-        classArray = []
-        
-        // refill
-        for i in 0..<tasks.count {
-            if let task = tasks[i] as? Class {
-                classArray += [task]
-            }
-        }
-        
-        save()
-    }
+//    func createClassArray() {
+//        // wipe
+//        classArray = []
+//        
+//        // refill
+//        for i in 0..<tasks.count {
+//            if let task = tasks[i] as? Class {
+//                classArray += [task]
+//            }
+//        }
+//        
+//        save()
+//    }
     
-    func updateTaskIndexValues() {
-        for i in 0..<tasks.count {
-            tasks[i].tasksIndex = i
-        }
-    }
+//    func updateTaskIndexValues() {
+//        for i in 0..<tasks.count {
+//            tasks[i].tasksIndex = i
+//        }
+//    }
     
     // create variables to order array later
     var unfilteredArray: [Task] = Array(count: 40, repeatedValue: Free())
     var assignmentArray = [Assignment]()
     var orderedAssignmentArray = [Assignment]()
     
-    func addTask (taskIn: Task) {
-        // add to array
-        tasks += [taskIn]
-        save()
-        allocateTime()
-    }
+//    func addTask (taskIn: Task) {
+//        // add to array
+//        tasks += [taskIn]
+//        save()
+//        allocateTime()
+//    }
     
-    func deleteTaskAtIndex (index: Int) {
-        tasks.removeAtIndex(index)
-        save()
-        allocateTime()
-    }
+//    func deleteTaskAtIndex (index: Int) {
+//        tasks.removeAtIndex(index)
+//        save()
+//        allocateTime()
+//    }
     
     // used in creating a sorted array of assignments
     func isAssignment (t: Task) -> Bool {
@@ -216,9 +237,9 @@ class TaskManager: NSObject, NSCopying {
     func save() {
         // save tasks array
         
-        let archive: NSData = NSKeyedArchiver.archivedDataWithRootObject(tasks)
+        let archive: NSData = NSKeyedArchiver.archivedDataWithRootObject(classArray)
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(archive, forKey: "SavedTasks")
+        defaults.setObject(archive, forKey: "classArray")
         defaults.synchronize()
         
         /*
@@ -237,15 +258,15 @@ class TaskManager: NSObject, NSCopying {
         
         // if I'm able to get a tasks array at this key, put it into tasks,
         // if not, create a blank one and put it into tasks
-        let archive = defaults.objectForKey("SavedTasks") as? NSData ?? NSData()
+        let archive = defaults.objectForKey("classArray") as? NSData ?? NSData()
         
         // every time you open the app
-        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Task] {
-            tasks = temp
+        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Class] {
+            classArray = temp
         }
             
         else {
-            tasks = []
+            classArray = []
         }
         
     }
@@ -479,35 +500,35 @@ class TaskManager: NSObject, NSCopying {
         return numBlocks
     }
     
-    private func deleteAllTasks() {
-        for _ in tasks {
-            tasks.popLast()
+    func clearClassArray() {
+        for _ in classArray {
+            classArray.popLast()
         }
         save()
     }
     
-    func deletePastTasks() {
-        for i in 0..<tasks.count {
-            // if the task is an appointment
-            if let temp = tasks[i] as? Appointment {
-                if !temp.doesRepeat {
-                    // if the appointment happened before today, delete it
-                    let apptDay = nsDateInCalFormat(temp.endTime).dayCoordinate
-                    if apptDay < 0 {
-                        deleteTaskAtIndex(i)
-                    }
-                }
-                else {
-                    if temp.endRepeatIndex == 1 {
-                        let endDay = nsDateInCalFormat(temp.endRepeatDate!).dayCoordinate
-                        if endDay < 0 {
-                            deleteTaskAtIndex(i)
-                        }
-                    }
-                    // FIXME: call an update function here that deletes past repetitions and adds a correrrsponding number of repetitions to the end
-                }
-            }
-            
+//    func deletePastTasks() {
+//        for i in 0..<tasks.count {
+//             if the task is an appointment
+//            if let temp = tasks[i] as? Appointment {
+//                if !temp.doesRepeat {
+//                    // if the appointment happened before today, delete it
+//                    let apptDay = nsDateInCalFormat(temp.endTime).dayCoordinate
+//                    if apptDay < 0 {
+//                        deleteTaskAtIndex(i)
+//                    }
+//                }
+//                else {
+//                    if temp.endRepeatIndex == 1 {
+//                        let endDay = nsDateInCalFormat(temp.endRepeatDate!).dayCoordinate
+//                        if endDay < 0 {
+//                            deleteTaskAtIndex(i)
+//                        }
+//                    }
+//                    // FIXME: call an update function here that deletes past repetitions and adds a correrrsponding number of repetitions to the end
+//                }
+//            }
+//            
 //            // if the task is an assignment
 //            if let temp = tasks[i] as? Assignment {
 //                // find coordinates
@@ -526,41 +547,43 @@ class TaskManager: NSObject, NSCopying {
 //                    deleteTaskAtIndex(i)
 //                }
 //            }
-        }
-    }
+//        }
+//    }
     
-    private func createOrderedArray() {
-        // turn tasks array  into array of Assignments
-        unfilteredArray = tasks
-        assignmentArray = unfilteredArray.filter(isAssignment) as! [Assignment]
-        orderedAssignmentArray = assignmentArray
-        
-        // initialize hoursLeftToAllocate of all elements to numBlocksNeeded - numBlocksCompleted
-        for j in 0..<orderedAssignmentArray.count {
-            orderedAssignmentArray[j].numBlocksLeftToAllocate =
-                Int(orderedAssignmentArray[j].numBlocksNeeded) -
-                orderedAssignmentArray[j].numBlocksCompleted
-        }
-        
-        // find free hours before due date for all assignments in orderedArray
-        for i in 0..<orderedAssignmentArray.count {
-            let assignment = orderedAssignmentArray[i]
-            orderedAssignmentArray[i].numFreeBlocksBeforeDueDate =
-                calcFreeTimeBeforeDueDate(assignment)
-        }
-        
-        // sort by urgency, which is based on hoursLeft and freehoursbeforeduedate
-        orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
-    }
-    
+//    private func createOrderedArray() {
+//        // turn tasks array  into array of Assignments
+//        unfilteredArray = tasks
+//        assignmentArray = unfilteredArray.filter(isAssignment) as! [Assignment]
+//        orderedAssignmentArray = assignmentArray
+//        
+//        // initialize hoursLeftToAllocate of all elements to numBlocksNeeded - numBlocksCompleted
+//        for j in 0..<orderedAssignmentArray.count {
+//            orderedAssignmentArray[j].numBlocksLeftToAllocate =
+//                Int(orderedAssignmentArray[j].numBlocksNeeded) -
+//                orderedAssignmentArray[j].numBlocksCompleted
+//        }
+//        
+//        // find free hours before due date for all assignments in orderedArray
+//        for i in 0..<orderedAssignmentArray.count {
+//            let assignment = orderedAssignmentArray[i]
+//            orderedAssignmentArray[i].numFreeBlocksBeforeDueDate =
+//                calcFreeTimeBeforeDueDate(assignment)
+//        }
+//        
+//        // sort by urgency, which is based on hoursLeft and freehoursbeforeduedate
+//        orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
+//    }
+
     // FIXME: this may be getting called redundantly
     func allocateTime() {
         // for testing
-//        deleteAllTasks()
+//        clearClassArray()
 
         // setCellsPerDay()
         
-        deletePastTasks()
+//        deletePastTasks()
+        
+        
         
         // make all future spots in cal array Free before allocating again from tasks list
         clearCalArray()
@@ -703,9 +726,9 @@ class TaskManager: NSObject, NSCopying {
         // use in both allocations
         var apptDayCoordinate: Int = 0
         // iterate through tasks array looking for appointments
-        for i in 0..<self.tasks.count {
+        for i in 0..<self.appointmentArray.count {
             // if object is an appointment, assign to calendarArray
-            if let appt = self.tasks[i] as? Appointment {
+            if let appt = self.appointmentArray[i] as? Appointment {
                 apptDayCoordinate = nsDateInCalFormat(appt.startTime).dayCoordinate
 //                let startTimeInMinCoordinates = nsDateInCalFormat(appt.startTime).minuteCoordinate
 //                let endTimeInMinCoordinates = nsDateInCalFormat(appt.endTime).minuteCoordinate
@@ -739,64 +762,64 @@ class TaskManager: NSObject, NSCopying {
         }
     }
     
-    func allocateAssignments() {
-        // setting based on user input (decreasing working minute by one b/c of dailysched format)
-        setWorkingCellsPerDay()
-        // setLastWorkingMinute()
-        
-        // make an assignments only array and order it by urgency (based on hoursleft)
-        createOrderedArray()
-        
-        // if there are no assignments to allocate, kick out
-        if orderedAssignmentArray.isEmpty {
-            return
-        }
-            
-            // otherwise, allocate assignments
-        else {
-            // variables for right now
-            let currentDate = NSDate()
-            let currentDateInCal = nsDateInCalFormat(currentDate)
-            
-            // variables for allocation
-            var day = currentDateInCal.dayCoordinate
-            var minute = currentDateInCal.minuteCoordinate
-            
-            // if not enough time to complete most urgent assignment before due date, 
-            // make blockslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
-            var mostUrgentAssn = orderedAssignmentArray[0]
-            if mostUrgentAssn.numBlocksLeftToAllocate > mostUrgentAssn.numFreeBlocksBeforeDueDate {
-                mostUrgentAssn.numBlocksLeftToAllocate = mostUrgentAssn.numFreeBlocksBeforeDueDate
-            }
-            
-            // allocate
-            while mostUrgentAssn.numBlocksLeftToAllocate > 0 {
-                // put one block of most urgent in at first available spot starting now
-                let temp = putBlockInCalArrayAtFirstFreeSpotToday(mostUrgentAssn,
-                                                                  dayIn: day,
-                                                                  minuteIn: minute)
-                
-                // if it's still allocating to today
-                if day == temp.dayOut {
-                    // decrement numBlocksLeftToAllocate of most urgent
-                    mostUrgentAssn.numBlocksLeftToAllocate -= 1
-                    
-                    // re-sort by urgency, restating mostUrgentAssn so it updates
-                    orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
-                    mostUrgentAssn = orderedAssignmentArray[0]
-                }
-                    
-                    // if needs to switch to tomorrow, don't decrement because it didn't allocate
-                else {
-                    day = temp.dayOut
-                }
-                
-                // either way, assign minute
-                minute = temp.minuteOut
-            }
-            return
-        }
-    }
+//    func allocateAssignments() {
+//        // setting based on user input (decreasing working minute by one b/c of dailysched format)
+//        setWorkingCellsPerDay()
+//        // setLastWorkingMinute()
+//        
+//        // make an assignments only array and order it by urgency (based on hoursleft)
+//        createOrderedArray()
+//        
+//        // if there are no assignments to allocate, kick out
+//        if orderedAssignmentArray.isEmpty {
+//            return
+//        }
+//            
+//            // otherwise, allocate assignments
+//        else {
+//            // variables for right now
+//            let currentDate = NSDate()
+//            let currentDateInCal = nsDateInCalFormat(currentDate)
+//            
+//            // variables for allocation
+//            var day = currentDateInCal.dayCoordinate
+//            var minute = currentDateInCal.minuteCoordinate
+//            
+//            // if not enough time to complete most urgent assignment before due date, 
+//            // make blockslefttoallocate = amountofFreeTime (so you use up all your time on the assignment)
+//            var mostUrgentAssn = orderedAssignmentArray[0]
+//            if mostUrgentAssn.numBlocksLeftToAllocate > mostUrgentAssn.numFreeBlocksBeforeDueDate {
+//                mostUrgentAssn.numBlocksLeftToAllocate = mostUrgentAssn.numFreeBlocksBeforeDueDate
+//            }
+//            
+//            // allocate
+//            while mostUrgentAssn.numBlocksLeftToAllocate > 0 {
+//                // put one block of most urgent in at first available spot starting now
+//                let temp = putBlockInCalArrayAtFirstFreeSpotToday(mostUrgentAssn,
+//                                                                  dayIn: day,
+//                                                                  minuteIn: minute)
+//                
+//                // if it's still allocating to today
+//                if day == temp.dayOut {
+//                    // decrement numBlocksLeftToAllocate of most urgent
+//                    mostUrgentAssn.numBlocksLeftToAllocate -= 1
+//                    
+//                    // re-sort by urgency, restating mostUrgentAssn so it updates
+//                    orderedAssignmentArray = orderedAssignmentArray.sort(isOrderedBefore)
+//                    mostUrgentAssn = orderedAssignmentArray[0]
+//                }
+//                    
+//                    // if needs to switch to tomorrow, don't decrement because it didn't allocate
+//                else {
+//                    day = temp.dayOut
+//                }
+//                
+//                // either way, assign minute
+//                minute = temp.minuteOut
+//            }
+//            return
+//        }
+//    }
     
     func putBlockInCalArrayAtFirstFreeSpotToday(assg: Assignment, dayIn: Int,
                                                 minuteIn: Int) -> (dayOut: Int, minuteOut: Int) {

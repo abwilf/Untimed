@@ -90,60 +90,61 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView,
-                            commitEditingStyle editingStyle: UITableViewCellEditingStyle,
-                                               forRowAtIndexPath indexPath: NSIndexPath){
-        if (editingStyle == UITableViewCellEditingStyle.Delete){
-            
-            // find object's tasks index
-            let tasksIndex = tmObj.findTasksIndexForTask(selectedClass.projAndAssns[indexPath.row])
-            
-            // modify the class it's a part of
-            if let task = tmObj.tasks[tasksIndex] as? Project {
-                // find the class in the tasks array
-                let tasksIndexForClass = task.classTaskArrIndex
-                
-                // delete the task from that class' projAndAssn array
-                if let clas = tmObj.tasks[tasksIndexForClass] as? Class {
-                    // find project's index in projAndAssnArray
-                    let projAndAssnIndexForTask = tmObj.findProjAndAssnIndex(tasksIndexForClass, taskIn: task)
-
-                    // delete it from the class' pAndA arr
-                    clas.deleteElementFromProjAndAssns(projAndAssnIndexForTask)
-                }
-            }
-            
-            // modify the class it's a part of
-            if let task = tmObj.tasks[tasksIndex] as? Assignment {
-                // find the class in the tasks array
-                let tasksIndexForClass = task.classTaskArrIndex
-                
-                // delete the task from that class' projAndAssn array
-                if let clas = tmObj.tasks[tasksIndexForClass] as? Class {
-                    // find project's index in projAndAssnArray
-                    let projAndAssnIndexForTask = tmObj.findProjAndAssnIndex(tasksIndexForClass, taskIn: task)
-                    
-                    // delete it from the class' pAndA arr
-                    clas.deleteElementFromProjAndAssns(projAndAssnIndexForTask)
-                }
-            }
-            
-            // delete at that index
-            tmObj.tasks.removeAtIndex(tasksIndex)
-            
-            // update .tasksIndex values
-            tmObj.updateTaskIndexValues()
-            
-            // recreate array from modified tasks
-            tmObj.createClassArray()
-            
-            // save tmObj to disc
-            tmObj.save()
-            
-        }
-        tableView.reloadData()
-
-    }
+    // FIXME: implement delete
+//    override func tableView(tableView: UITableView,
+//                            commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+//                                               forRowAtIndexPath indexPath: NSIndexPath){
+//        if (editingStyle == UITableViewCellEditingStyle.Delete){
+//            
+//            // find object's tasks index
+//            let tasksIndex = tmObj.findTasksIndexForTask(selectedClass.projAndAssns[indexPath.row])
+//            
+//            // modify the class it's a part of
+//            if let task = tmObj.tasks[tasksIndex] as? Project {
+//                // find the class in the tasks array
+//                let tasksIndexForClass = task.classTaskArrIndex
+//                
+//                // delete the task from that class' projAndAssn array
+//                if let clas = tmObj.tasks[tasksIndexForClass] as? Class {
+//                    // find project's index in projAndAssnArray
+//                    let projAndAssnIndexForTask = tmObj.findProjAndAssnIndex(tasksIndexForClass, taskIn: task)
+//
+//                    // delete it from the class' pAndA arr
+//                    clas.deleteElementFromProjAndAssns(projAndAssnIndexForTask)
+//                }
+//            }
+//            
+//            // modify the class it's a part of
+//            if let task = tmObj.tasks[tasksIndex] as? Assignment {
+//                // find the class in the tasks array
+//                let tasksIndexForClass = task.classTaskArrIndex
+//                
+//                // delete the task from that class' projAndAssn array
+//                if let clas = tmObj.tasks[tasksIndexForClass] as? Class {
+//                    // find project's index in projAndAssnArray
+//                    let projAndAssnIndexForTask = tmObj.findProjAndAssnIndex(tasksIndexForClass, taskIn: task)
+//                    
+//                    // delete it from the class' pAndA arr
+//                    clas.deleteElementFromProjAndAssns(projAndAssnIndexForTask)
+//                }
+//            }
+//            
+//            // delete at that index
+//            tmObj.tasks.removeAtIndex(tasksIndex)
+//            
+//            // update .tasksIndex values
+//            tmObj.updateTaskIndexValues()
+//            
+//            // recreate array from modified tasks
+//            tmObj.createClassArray()
+//            
+//            // save tmObj to disc
+//            tmObj.save()
+//            
+//        }
+//        tableView.reloadData()
+//
+//    }
     
     
 
@@ -192,7 +193,6 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
             }
             
             
-            
             let destinationNavController = segue.destinationViewController as! UINavigationController
             
             let topViewController = destinationNavController.topViewController as! ProjTasksTableViewController
@@ -205,10 +205,10 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
                 // pass in info for Project
                 topViewController.selectedProject = proj
                 topViewController.parentProjectPAndAArrIndex = indexChosen
-                topViewController.parentProjectTaskIndex = tmObj.findTasksIndexForTask(proj)
+//                topViewController.parentProjectTaskIndex = tmObj.findTasksIndexForTask(proj)
                 
                 // pass in locators for Class
-                topViewController.classIndexInTasks = tmObj.findTasksIndexForTask(selectedClass)
+//                topViewController.classIndexInTasks = tmObj.findTasksIndexForTask(selectedClass)
                 
                 // set title
                 topViewController.title = "Tasks for \(proj.title)"

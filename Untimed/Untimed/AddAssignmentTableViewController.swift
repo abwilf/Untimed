@@ -13,6 +13,7 @@ class AddAssignmentTableViewController: UITableViewController {
     var addedAssignment = Assignment()
     var classes: [Class] = []
     var index: Int = 0
+
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // send the classes array through to the pick a class view controller

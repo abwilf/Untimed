@@ -310,28 +310,28 @@ class DailyScheduleTableViewController: UITableViewController{
         taskManager.clearWorkingBlocksAtIndex(dayIndex: dateLocationDay)
     }
     
-    // connecting add and single task viewer pages to this
-    @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
-    {
-        // add assignment created here!
-        if let aavc = sender.sourceViewController as? AddAssignmentTableViewController {
-            
-            taskManager.addTask(aavc.addedAssignment)
-            
-            // tableView = inherited property from UITableViewCOntroller class
-            tableView.reloadData()
-        }
-        
-        
-        // add appointment created here!
-        if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
-            taskManager.addTask(aapptvc.addedAppointment)
-            
-            tableView.reloadData()
-        }
-        
-        // Pull any data from the view controller which initiated the unwind segue.
-    }
+//    // connecting add and single task viewer pages to this
+//    @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
+//    {
+//        // add assignment created here!
+//        if let aavc = sender.sourceViewController as? AddAssignmentTableViewController {
+//            
+//            taskManager.addAssignment(aavc.addedAssignment, forClass: )
+//            
+//            // tableView = inherited property from UITableViewCOntroller class
+//            tableView.reloadData()
+//        }
+//        
+//        
+//        // add appointment created here!
+//        if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
+//            taskManager.addTask(aapptvc.addedAppointment)
+//            
+//            tableView.reloadData()
+//        }
+//        
+//        // Pull any data from the view controller which initiated the unwind segue.
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

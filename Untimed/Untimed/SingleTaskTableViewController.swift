@@ -200,28 +200,28 @@ class SingleTaskTableViewController: UITableViewController {
      */
     
     
-    @IBAction func unwindFromEditTask(sender: UIStoryboardSegue)
-    {
-        // editappt
-        if let easppttvc = sender.sourceViewController as? EditAppointmentTableViewController {
-            // pull in new task from editing page
-            task = easppttvc.appt
-            
-            // update taskManagerObj
-            taskManagerObj.tasks[index] = task
-            
-            // save taskManagerObj
-            taskManagerObj.save()
-        }
-        
-        
-        // editassn
-        if let eassntvc = sender.sourceViewController as? EditAssignmentTableViewController {
-            task = eassntvc.assn
-            taskManagerObj.tasks[index] = task
-            taskManagerObj.save()
-        }
-    }
+//    @IBAction func unwindFromEditTask(sender: UIStoryboardSegue)
+//    {
+//        // editappt
+//        if let easppttvc = sender.sourceViewController as? EditAppointmentTableViewController {
+//            // pull in new task from editing page
+//            task = easppttvc.appt
+//            
+//            // update taskManagerObj
+//            taskManagerObj.tasks[index] = task
+//            
+//            // save taskManagerObj
+//            taskManagerObj.save()
+//        }
+//        
+//        
+//        // editassn
+//        if let eassntvc = sender.sourceViewController as? EditAssignmentTableViewController {
+//            task = eassntvc.assn
+//            taskManagerObj.tasks[index] = task
+//            taskManagerObj.save()
+//        }
+//    }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

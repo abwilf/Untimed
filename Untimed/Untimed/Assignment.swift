@@ -50,6 +50,7 @@ class Assignment: Task {
     var classClassArrIndex: Int = 0
     var classTaskArrIndex: Int = 0
     
+    var indexInProjAndAssnArr: Int? = nil
     
     // working blocks
     var numFreeBlocksBeforeDueDate: Int = 0

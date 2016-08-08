@@ -58,7 +58,7 @@ class AddProjectTaskTableViewController: UITableViewController {
             let projOnlyIndex = paptvc.indexChosen
             let classSelected = classes[classIndex]
             let indexInProjAndAssn = classSelected.projOnlyArray[projOnlyIndex].indexInProjAndAssnArr
-            projectAndAssnArrIndex = indexInProjAndAssn
+            projectAndAssnArrIndex = indexInProjAndAssn!
         }
     }
     
