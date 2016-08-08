@@ -40,7 +40,7 @@ class Project: Task {
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.projTaskArr = aDecoder.decodeObjectForKey("ProjTaskArr") as? [ProjectTask] ?? []
+        self.projTaskArr = aDecoder.decodeObjectForKey("ProjectsTaskArr") as? [ProjectTask] ?? []
         aDecoder.decodeObjectForKey("Title") as! String
     }
 }
