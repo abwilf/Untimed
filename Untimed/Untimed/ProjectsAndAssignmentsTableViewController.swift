@@ -173,12 +173,29 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
                 topViewController.title = "Tasks for \(proj.title)"
             }
         }
+        
+        if segue.identifier == "To Project Task Focus" {
+            // FIXME: code
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! ProjTasksTableViewController
+            
+            targetController.tmObj = tmObj
+        }
+
     }
     
     @IBAction func unwindFromPT (sender: UIStoryboardSegue) {
         if let _ =
             sender.sourceViewController as? ProjTasksTableViewController {
             tmObj.loadFromDisc()
+            tableView.reloadData()
+        }
+    }
+    
+    @IBAction func unwindFromPTFocus (sender: UIStoryboardSegue) {
+        if let pttvc =
+            sender.sourceViewController as? ProjTasksTableViewController {
+            tmObj = pttvc.tmObj
             tableView.reloadData()
         }
     }

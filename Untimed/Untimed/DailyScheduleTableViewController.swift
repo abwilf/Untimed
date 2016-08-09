@@ -9,7 +9,6 @@
 import UIKit
 
 class DailyScheduleTableViewController: UITableViewController{
-    
     var taskManager = TaskManager()
     var dateLocationDay: Int = 0
     let MINS_IN_DAY = 1440
@@ -119,6 +118,24 @@ class DailyScheduleTableViewController: UITableViewController{
         }
     }
     
+    @IBAction func unwindFromPickFocus(sender: UIStoryboardSegue) {
+        
+        if let paatvc = sender.sourceViewController as? ProjectsAndAssignmentsTableViewController {
+            
+            taskManager = paatvc.tmObj
+            
+            taskManager.save()
+            tableView.reloadData()
+        }
+        
+        if let pttvc = sender.sourceViewController as? ProjTasksTableViewController {
+            
+            taskManager = pttvc.tmObj
+            taskManager.save()
+            tableView.reloadData()
+        }
+    }
+    
     func updateTitle() {
         dateLocationDay = nsDateInCalFormat(selectedDate).dayCoordinate
         if dateLocationDay == 0 {
@@ -193,75 +210,6 @@ class DailyScheduleTableViewController: UITableViewController{
             }
             warningController.addAction(deleteAction)
         
-        
-//            if let temp = dsCalArray[indexPath.row][dateLocationDay] as? Assignment {
-//                
-//                
-//                let didntDoAction = UIAlertAction(title: "Didn't do / don't want to", style: .Default) { (action) in
-//                    
-//                    // count numBlocks that should have been completed
-//                    let numBlocks = self.countNumBlocksInInterval(temp.dsCalAdjustedStartLocation!,
-//                                                                  end: temp.dsCalAdjustedEndLocation!)
-//                    
-//                    // add the value back to assignment in tasks array
-//                    var index = 0
-//                    
-//                    for i in 0..<self.taskManager.tasks.count {
-//                        if temp == self.taskManager.tasks[i] {
-//                            index = i
-//                        }
-//                    }
-//                    
-//                    // clear tmCalArray at that spot
-//
-//                    /*
-//                    if let temp = self.taskManager.tasks[index] as? Assignment {
-//                        temp.numBlocksLeftToAllocate += numBlocks
-//                    }
-//                    */
-//                    
-//                    // reallocate time
-//                    self.taskManager.allocateTime()
-//                    
-//                    // print (self.taskManager.calendarArray[1050][0])
-//                    
-//                    // copy to other array
-//                    self.taskManager = self.taskManager.copy() as! TaskManager
-//                    
-//                    // recreate dsCalArray from updated tM
-//                    self.createDSCalArray()
-//                    
-//                    // save
-//                    self.taskManager.save()
-//                    
-//                    // test
-//                    // print (self.dsCalArray[1])
-//                    
-//                    // FIXME: make sure to loadfromdisc in tasktabletable
-//                    
-//                    // reload data
-//                    tableView.reloadData()
-//                    
-//                }
-//                
-//                let needTimeAction = UIAlertAction(title: "I need more time", style: .Default) { (action) in
-//                    self.performSegueWithIdentifier("More Time Segue", sender: DailyScheduleTableViewController())
-//                }
-//                let somethingElseAction = UIAlertAction(title: "I'd rather do something else", style: .Default) { (action) in
-//                    self.performSegueWithIdentifier("Choose Assignment Segue", sender: DailyScheduleTableViewController())
-//                }
-//                let finishedAction = UIAlertAction(title: "I've finished this assignment", style: .Default) { (action) in
-//                }
-//                let freeAction = UIAlertAction(title: "Free this block", style: .Default) { (action) in
-//                }
-//                
-//                alertController.addAction(didntDoAction)
-//                alertController.addAction(needTimeAction)
-//                alertController.addAction(somethingElseAction)
-//                alertController.addAction(freeAction)
-//                alertController.addAction(finishedAction)
-//            }
-        
             if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Appointment {
                 let rescheduleAction = UIAlertAction(title: "Reschedule", style: .Default) { (action) in
                 }
@@ -276,6 +224,14 @@ class DailyScheduleTableViewController: UITableViewController{
                 
                 alertController.addAction(addApptAction)
             }
+       
+            if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? WorkingBlock {
+                let selectFocusAction = UIAlertAction(title: "Select Focus", style: .Default) { (action) in self.performSegueWithIdentifier("Select Focus Segue", sender: self)
+                }
+                
+                alertController.addAction(selectFocusAction)
+            }
+        
             self.presentViewController(alertController, animated: true, completion: nil)
     }
     
@@ -696,6 +652,16 @@ class DailyScheduleTableViewController: UITableViewController{
             // pass in minute properties.
             targetController.fwm = taskManager.firstWorkingMinute
             targetController.lwm = taskManager.lastWorkingMinute
+        }
+        
+        if (segue.identifier == "Select Focus Segue") {
+            // dealing with Nav controller in between views
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! TaskTableTableViewController
+            
+            // pass in tmObj
+            targetController.tmObj = taskManager
+            
         }
     }
 }

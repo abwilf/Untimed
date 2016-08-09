@@ -35,6 +35,7 @@ class TaskManager: NSObject, NSCopying {
 //    var tasks: [Task] = []
     var classArray: [Class] = []
     var appointmentArray: [Appointment] = []
+    var focusTasksArr: [Task] = []
     
     // calendar array = 2d array of MINS_IN_DAY (rows) by 365 days (cols)
     // FIXME: change 28 to DAYS_IN_YEAR days everywhere

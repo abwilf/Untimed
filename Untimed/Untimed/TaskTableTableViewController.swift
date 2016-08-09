@@ -10,16 +10,16 @@ import UIKit
 
 class TaskTableTableViewController: UITableViewController {
     
-    let taskManager = TaskManager()
+    var tmObj = TaskManager()
 
     func resetForTesting () {
-        taskManager.classArray = []
-        taskManager.save()
+        tmObj.classArray = []
+        tmObj.save()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        taskManager.loadFromDisc()
+        tmObj.loadFromDisc()
 //        taskManager.createClassArray()
     }
     
@@ -36,6 +36,9 @@ class TaskTableTableViewController: UITableViewController {
         tableView.reloadData()
     }
 
+    @IBAction func cancelFocusButtonPressed(sender: UIBarButtonItem) {
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     @IBAction func addButtonPressed(sender: UIBarButtonItem) {
         
@@ -76,10 +79,10 @@ class TaskTableTableViewController: UITableViewController {
         if let aavc =
             sender.sourceViewController as? AddAssignmentTableViewController {
             
-            let classAddedAsgtBelongsTo = taskManager.classArray[aavc.addedAssignment.classTaskArrIndex]
+            let classAddedAsgtBelongsTo = tmObj.classArray[aavc.addedAssignment.classTaskArrIndex]
             
             // add first to general tasks list, then erase and rederive classArray
-            taskManager.addAssignment(aavc.addedAssignment, forClass: classAddedAsgtBelongsTo)
+            tmObj.addAssignment(aavc.addedAssignment, forClass: classAddedAsgtBelongsTo)
             
 //            let tasksIndexForClass = taskManager.classArray[aavc.addedAssignment.classClassArrIndex].tasksIndex
             
@@ -89,7 +92,7 @@ class TaskTableTableViewController: UITableViewController {
 //            }
             
             // draws from tasks array in creation and saves
-            taskManager.save()
+            tmObj.save()
             
             tableView.reloadData()
         }
@@ -97,9 +100,9 @@ class TaskTableTableViewController: UITableViewController {
         
         // save from add appointment
         if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
-            taskManager.addAppointment(aapptvc.addedAppointment)
-            taskManager.allocateAppts()
-            taskManager.save()
+            tmObj.addAppointment(aapptvc.addedAppointment)
+            tmObj.allocateAppts()
+            tmObj.save()
             tableView.reloadData()
         }
         
@@ -107,11 +110,11 @@ class TaskTableTableViewController: UITableViewController {
         if let aatvc = sender.sourceViewController as?
             AddProjectTableViewController {
             
-            let classProjBelongsTo = taskManager.classArray[aatvc.addedProject.classClassArrIndex]
+            let classProjBelongsTo = tmObj.classArray[aatvc.addedProject.classClassArrIndex]
             
-            taskManager.addProject(aatvc.addedProject, forClass: classProjBelongsTo)
+            tmObj.addProject(aatvc.addedProject, forClass: classProjBelongsTo)
         
-            taskManager.save()
+            tmObj.save()
             
             tableView.reloadData()
         }
@@ -120,12 +123,12 @@ class TaskTableTableViewController: UITableViewController {
         if let apttvc = sender.sourceViewController as?
             AddProjectTaskTableViewController {
 
-            let projectThatTaskBelongsTo = taskManager.classArray[apttvc.classIndex].projAndAssns[apttvc.projectAndAssnArrIndex] as! Project
+            let projectThatTaskBelongsTo = tmObj.classArray[apttvc.classIndex].projAndAssns[apttvc.projectAndAssnArrIndex] as! Project
             
-                taskManager.addProjectTask(apttvc.addedProjTask, forProject: projectThatTaskBelongsTo)
+                tmObj.addProjectTask(apttvc.addedProjTask, forProject: projectThatTaskBelongsTo)
             
             // works up to here.  doesn't save and load correctly (at least within this page)
-            taskManager.save()
+            tmObj.save()
             
             tableView.reloadData()
         }
@@ -134,9 +137,9 @@ class TaskTableTableViewController: UITableViewController {
         if let actvc = sender.sourceViewController as?
             AddClassTableViewController {
             
-            taskManager.addClass(actvc.addedClass)
+            tmObj.addClass(actvc.addedClass)
             
-            taskManager.save()
+            tmObj.save()
             
             tableView.reloadData()
         }
@@ -154,7 +157,7 @@ class TaskTableTableViewController: UITableViewController {
     @IBAction func unwindFromTaskPages(sender: UIStoryboardSegue) {
         if let paatvc =
             sender.sourceViewController as? ProjectsAndAssignmentsTableViewController {
-            taskManager.loadFromDisc()
+            tmObj.loadFromDisc()
             
             // recreate arrays
 //            taskManager.createClassArray()
@@ -166,10 +169,19 @@ class TaskTableTableViewController: UITableViewController {
     @IBAction func unwindFromSingleTaskViewer(sender: UIStoryboardSegue) {
         if let _ =
             sender.sourceViewController as? SingleTaskTableViewController {
-            taskManager.loadFromDisc()
+            tmObj.loadFromDisc()
             tableView.reloadData()
         }
     }
+    
+    @IBAction func unwindFromProjectFocus(sender: UIStoryboardSegue) {
+        if let paatvc =
+            sender.sourceViewController as? ProjectsAndAssignmentsTableViewController {
+            tmObj = paatvc.tmObj
+            tableView.reloadData()
+        }
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -186,7 +198,7 @@ class TaskTableTableViewController: UITableViewController {
         //return the number of rows we want in that section
         if section == 0 {
             // return number of rows we want in this section (all tasks)
-            return taskManager.classArray.count
+            return tmObj.classArray.count
             
         }
             
@@ -204,189 +216,19 @@ class TaskTableTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Task Cell",
                                                                forIndexPath: indexPath)
         
-        if indexPath.row < taskManager.classArray.count {
+        if indexPath.row < tmObj.classArray.count {
             // Configure the cell
-            let task = taskManager.classArray[indexPath.row]
+            let task = tmObj.classArray[indexPath.row]
             cell.textLabel?.text = task.title
              
-           /*
- // assignment
-            if let assignment = task as? Assignment {
-                let dateFormatter = NSDateFormatter()
-                let timeFormatter = NSDateFormatter()
-                
-                //format date
-                dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
-                
-                //only gets date
-                let strDate = dateFormatter.stringFromDate(assignment.dueDate)
-                
-                //format time
-                timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-                
-                //only gets time
-                let strDueTime = timeFormatter.stringFromDate(assignment.dueDate)
-                
-                // set subtitle to member variables of the assignment object
-                cell.detailTextLabel?.text =
-                    "\(Double(assignment.numBlocksNeeded - assignment.numBlocksCompleted) / 4.0) hours remaining; Due \(strDate), at \(strDueTime)"
-            }
-                
-            // project
-            else if let project = task as? Project {
-                let dateFormatter = NSDateFormatter()
-                
-                //format date
-                dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
-                
-                if let compDate = project.completionDate {
-                    //only gets date
-                    let strDate = dateFormatter.stringFromDate(compDate)
-                    
-                    
-                    // set subtitle to member variables of the assignment object
-                    cell.detailTextLabel?.text =
-                        "Project: Target Completion Date: \(strDate)"
-                }
-                    
-                else {
-                    cell.detailTextLabel?.text = "Project"
-                }
-            }
-                
- */
-
+   
             cell.detailTextLabel?.text = ""
         }
         return cell
-        
-//        // This is where it splits into Appointment and Assignment
-//        if let appointment = task as? Appointment {
-//            
-//            // assigning subtitle text to appropriate Appointment member
-//            let dateFormatter = NSDateFormatter()
-//            let timeFormatter = NSDateFormatter()
-//            
-//            // format date
-//            dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-//            
-//            // only gets date
-//            let strDate = dateFormatter.stringFromDate(appointment.startTime)
-//            
-//            
-//            // format time
-//            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-//            
-//            // only gets time
-//            let strDateStartTime =
-//                timeFormatter.stringFromDate(appointment.startTime)
-//            let strDateEndTime = timeFormatter.stringFromDate(appointment.endTime)
-//            
-//            // print it
-//            cell.detailTextLabel?.text =
-//                "\(strDate) - \(strDateStartTime) to \(strDateEndTime)"
-//        }
-}
+    }
+
     
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        if let _ = taskManager.tasks[indexPath.row] as? Assignment {
-//            performSegueWithIdentifier("Assignment View Segue", sender: TaskTableTableViewController())
-//        }
-//        if let _ = taskManager.tasks[indexPath.row] as? Appointment {
-//            performSegueWithIdentifier("Appointment View Segue", sender: TaskTableTableViewController())
-//        }
-//    }
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(tableView: UITableView, canEditRowAtIndexPath
-     //indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(tableView: UITableView, commitEditingStyle
-     // editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath
-     // indexPath: NSIndexPath) { if editingStyle == .Delete {
-     // Delete the row from the data source
-     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-     } else if editingStyle == .Insert {
-     // Create a new instance of the appropriate class, insert it into the array,
-     // and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(tableView: UITableView, moveRowAtIndexPath
-     fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(tableView: UITableView, canMoveRowAtIndexPath
-     indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    // preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-//        // Get the new view controller using segue.destinationViewController.
-//        // Pass the selected object to the new view controller.
-//        // if you click on a cell
-//        if (segue.identifier == "Appointment View Segue") {
-//            
-//            // index = row number
-//            if let index = tableView.indexPathForSelectedRow?.row {
-//                // create object of task class and reference the object in the
-//                // array at row location. remember that the row locations for
-//                // the array and for the table will both be 0 indexed and will
-//                // correspond perfectly (that's why we use the same numbers)
-//                let task = taskManager.tasks[index]
-//                
-//             
-//                
-//                // dealing with Nav controller in between views
-//                let destinationNavigationController = segue.destinationViewController as! UINavigationController
-//                let targetController = destinationNavigationController.topViewController as! SingleTaskTableViewController
-//                
-//                targetController.task = task
-//                targetController.taskManagerObj = taskManager
-//                targetController.index = index
-//                targetController.title = task.title
-//            }
-//        }
-//        
-//        if (segue.identifier == "Assignment View Segue") {
-//            // index = row number
-//            if let index = tableView.indexPathForSelectedRow?.row {
-//                // create object of task class and reference the object in the
-//                // array at row location. remember that the row locations for
-//                // the array and for the table will both be 0 indexed and will
-//                // correspond perfectly (that's why we use the same numbers)
-//                let task = taskManager.tasks[index]
-//                
-//                // dealing with Nav controller in between views
-//                let destinationNavigationController = segue.destinationViewController as! UINavigationController
-//                let targetController = destinationNavigationController.topViewController as! SingleTaskTableViewController
-//                
-//                targetController.task = task
-//                targetController.taskManagerObj = taskManager
-//                targetController.index = index
-//                targetController.title = task.title
-//            }
-//            
-//        }
-        
         // if click on add task button
         if (segue.identifier == "Add Assignment Segue") {
             
@@ -394,7 +236,7 @@ class TaskTableTableViewController: UITableViewController {
             
             let targetController = destinationNavigationController.topViewController as! AddAssignmentTableViewController
             
-            targetController.classes = taskManager.classArray
+            targetController.classes = tmObj.classArray
         }
         
         
@@ -406,9 +248,9 @@ class TaskTableTableViewController: UITableViewController {
             
             if let index = tableView.indexPathForSelectedRow?.row {
                 // send projAndAssnArray to the next view controller based on which project is selected
-                targetController.selectedClass = taskManager.classArray[index]
+                targetController.selectedClass = tmObj.classArray[index]
                 
-                targetController.tmObj = taskManager
+                targetController.tmObj = tmObj
             }
         }
         
@@ -418,19 +260,27 @@ class TaskTableTableViewController: UITableViewController {
            
             let targetController = destinationNavigationController.topViewController as! AddProjectTableViewController
 
-            targetController.classes = taskManager.classArray
+            targetController.classes = tmObj.classArray
         }
         
         if (segue.identifier == "Add Project Task Segue") {
             
             // update all class array elements with proj only arrays
-            taskManager.createProjOnlyArray()
+            tmObj.createProjOnlyArray()
             
             let destinationNavigationController = segue.destinationViewController as! UINavigationController
             let targetController = destinationNavigationController.topViewController as! AddProjectTaskTableViewController
-            targetController.classes = taskManager.classArray
+            targetController.classes = tmObj.classArray
         }
         
+        if (segue.identifier == "To Project Focus") {
+            
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! ProjectsAndAssignmentsTableViewController
+            
+            targetController.tmObj = tmObj
+            
+        }
     }
     
     
@@ -439,9 +289,9 @@ class TaskTableTableViewController: UITableViewController {
                                                forRowAtIndexPath indexPath: NSIndexPath){
         if (editingStyle == UITableViewCellEditingStyle.Delete){
             
-            taskManager.deleteClassAtIndex(classIndex: indexPath.row)
+            tmObj.deleteClassAtIndex(classIndex: indexPath.row)
             
-            taskManager.save()
+            tmObj.save()
             
             tableView.reloadData()
         }
