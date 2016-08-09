@@ -48,6 +48,8 @@
 		A29A9A2C1CBE98480011A5BF /* EditAppointmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */; };
 		A2A5A8D41D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A5A8D31D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift */; };
 		A2A5A8D61D4932D200030AAE /* PickAClassTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A5A8D51D4932D200030AAE /* PickAClassTableViewController.swift */; };
+		A2A7327B1D5A8ABF00285D28 /* AccountabilityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7327A1D5A8ABF00285D28 /* AccountabilityTableViewController.swift */; };
+		A2A7327F1D5A904C00285D28 /* TimeCompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A7327E1D5A904C00285D28 /* TimeCompletedViewController.swift */; };
 		A2C519181CAB38CF0074387D /* Appointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C519171CAB38CF0074387D /* Appointment.swift */; };
 		A2E3D14F1D4804F700999F7C /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E3D14E1D4804F700999F7C /* Class.swift */; };
 /* End PBXBuildFile section */
@@ -117,6 +119,8 @@
 		A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAppointmentTableViewController.swift; sourceTree = "<group>"; };
 		A2A5A8D31D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectsAndAssignmentsTableViewController.swift; sourceTree = "<group>"; };
 		A2A5A8D51D4932D200030AAE /* PickAClassTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickAClassTableViewController.swift; sourceTree = "<group>"; };
+		A2A7327A1D5A8ABF00285D28 /* AccountabilityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountabilityTableViewController.swift; sourceTree = "<group>"; };
+		A2A7327E1D5A904C00285D28 /* TimeCompletedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeCompletedViewController.swift; sourceTree = "<group>"; };
 		A2C519171CAB38CF0074387D /* Appointment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appointment.swift; sourceTree = "<group>"; };
 		A2E3D14E1D4804F700999F7C /* Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,12 +170,14 @@
 		211329C41D5251580070948F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A2A7327E1D5A904C00285D28 /* TimeCompletedViewController.swift */,
 				A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */,
+				A2A7327A1D5A8ABF00285D28 /* AccountabilityTableViewController.swift */,
+				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
 				A27FAAB11CAC38CF00B1AE85 /* TaskTableTableViewController.swift */,
 				A2A5A8D31D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift */,
 				A283E7A61D5101A100636B09 /* ProjTasksTableViewController.swift */,
 				A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */,
-				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
 				218DA3301D48026400E269CA /* AddClassTableViewController.swift */,
 				218DA32E1D47FBDC00E269CA /* AddProjectTableViewController.swift */,
 				21895A711D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift */,
@@ -394,6 +400,7 @@
 				218DA32F1D47FBDC00E269CA /* AddProjectTableViewController.swift in Sources */,
 				A227C4FA1CB46AD400B3971D /* AddAppointmentTableViewController.swift in Sources */,
 				A2116DA51CA96F22003D221D /* Assignment.swift in Sources */,
+				A2A7327B1D5A8ABF00285D28 /* AccountabilityTableViewController.swift in Sources */,
 				218DA3311D48026400E269CA /* AddClassTableViewController.swift in Sources */,
 				A283E7A71D5101A100636B09 /* ProjTasksTableViewController.swift in Sources */,
 				A24255641D4C2F220002C098 /* ProjectTask.swift in Sources */,
@@ -404,6 +411,7 @@
 				218DA31F1D42915A00E269CA /* EndRepeatTableViewController.swift in Sources */,
 				A283E7A51D50ED8500636B09 /* PickAProjectTableViewController.swift in Sources */,
 				A27C8D681D47AE2200D81D13 /* SettingsTableViewController.swift in Sources */,
+				A2A7327F1D5A904C00285D28 /* TimeCompletedViewController.swift in Sources */,
 				A2116D751CA968EC003D221D /* AppDelegate.swift in Sources */,
 				211EE5DF1D319FF500E322BB /* AssignmentBlock.swift in Sources */,
 				A29A9A2A1CBE98340011A5BF /* EditAssignmentTableViewController.swift in Sources */,

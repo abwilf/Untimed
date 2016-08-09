@@ -141,6 +141,17 @@ class DailyScheduleTableViewController: UITableViewController{
         }
     }
     
+    
+    @IBAction func unwindFromAccountability (sender: UIStoryboardSegue) {
+        if let atvc = sender.sourceViewController as? AccountabilityTableViewController {
+            // find focus tasks in the class array
+            
+            // make them equal to those in atvc.focusTasks
+            
+        }
+    }
+
+    
     func updateTitle() {
         dateLocationDay = nsDateInCalFormat(selectedDate).dayCoordinate
         if dateLocationDay == 0 {
@@ -686,6 +697,13 @@ class DailyScheduleTableViewController: UITableViewController{
                 
              
             }
+        }
+        
+        if (segue.identifier == "Accountability Segue") {
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! AccountabilityTableViewController
+            
+            targetController.focusTasks = taskManager.focusTasksArr
         }
     }
 }

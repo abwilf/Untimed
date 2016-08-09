@@ -12,6 +12,7 @@ class ProjectTask: Task {
 //    var projInClassArrIndex: Int = 0
 //    var projInTaskArrIndex: Int = 0
     var numBlocksNeeded = 0
+    var timeNeeded: Double = 0
     
     var indexInProjAndAssnArr: Int? = nil
 

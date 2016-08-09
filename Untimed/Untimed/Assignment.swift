@@ -52,6 +52,7 @@ class Assignment: Task {
     
     var indexInProjAndAssnArr: Int? = nil
     
+    var timeNeeded: Double = 0
     // working blocks
     var numFreeBlocksBeforeDueDate: Int = 0
     var numBlocksNeeded: Int = 0
