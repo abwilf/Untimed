@@ -248,11 +248,17 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
                 // pass in info for Project
                 topViewController.selectedProject = proj
                 topViewController.parentProjectPAndAArrIndex = indexChosen
-
+                
+                // set working block index
+                topViewController.wbIndex = wbIndex
+                topViewController.dateLocationDay = dateLocationDay
+                
+                // focus, not view mode
+                topViewController.focusIndicator = focusIndicator
+                
                 topViewController.title = "Tasks for \(proj.title)"
             }
         }
-
     }
     
     @IBAction func unwindFromPT (sender: UIStoryboardSegue) {

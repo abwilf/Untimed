@@ -24,15 +24,18 @@ class ProjTasksTableViewController: UITableViewController {
     // locators for Class
     var classIndexInTasks = 0
     
+    // 0 for view, 1 for focus
+    var focusIndicator: Int = 0
+    
+    // index in the cal array of the working block you're attaching the focus to
+    var wbIndex: Int = 0
+    var dateLocationDay: Int = 0
+
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-//        setprojTasksArr()
-    }
 
-//    func setprojTasksArr() {
-//        projTasksArr = selectedProject.projTaskArr
-//    }
+    }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -43,7 +46,37 @@ class ProjTasksTableViewController: UITableViewController {
         return selectedProject.projTaskArr.count
     }
 
-    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // if we're in focus mode
+        if focusIndicator == 1 {
+            if let indexSelected = tableView.indexPathForSelectedRow?.row {
+                let addedPT = selectedProject.projTaskArr[indexSelected]
+                
+                // add check mark
+                let numberOfRows = selectedProject.projTaskArr.count
+                for row in 0..<numberOfRows {
+                    if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) {
+                        cell.accessoryType = row == indexPath.row ? .Checkmark : .None
+                    }
+                }
+                
+                // add object to focus array
+                tmObj.focusTasksArr += [addedPT]
+                
+                // modify working block
+                if let wb = tmObj.calendarArray[dateLocationDay][wbIndex] as? WorkingBlock {
+                    wb.focusArr += [addedPT]
+                }
+            }
+        }
+            
+        // in view mode
+        else {
+            
+        }
+    }
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Proj Task Cell", forIndexPath: indexPath)
     
