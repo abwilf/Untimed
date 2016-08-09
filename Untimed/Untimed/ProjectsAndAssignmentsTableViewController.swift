@@ -175,11 +175,27 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
         }
         
         if segue.identifier == "To Project Task Focus" {
-            // FIXME: code
-            let destinationNavigationController = segue.destinationViewController as! UINavigationController
-            let targetController = destinationNavigationController.topViewController as! ProjTasksTableViewController
             
-            targetController.tmObj = tmObj
+            let destinationNavController = segue.destinationViewController as! UINavigationController
+            
+            let topViewController = destinationNavController.topViewController as! ProjTasksTableViewController
+            
+            // find Project picked
+            if let indexSelected = tableView.indexPathForSelectedRow?.row {
+                indexChosen = indexSelected
+            }
+            
+            if let proj = selectedClass.projAndAssns[indexChosen] as? Project {
+                
+                // pass in tmObj carrying taskslist
+                topViewController.tmObj = tmObj
+                
+                // pass in info for Project
+                topViewController.selectedProject = proj
+                topViewController.parentProjectPAndAArrIndex = indexChosen
+
+                topViewController.title = "Tasks for \(proj.title)"
+            }
         }
 
     }

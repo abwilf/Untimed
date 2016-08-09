@@ -239,21 +239,6 @@ class TaskTableTableViewController: UITableViewController {
             targetController.classes = tmObj.classArray
         }
         
-        
-        if (segue.identifier == "To Projects And Assignments") {
-            
-            let destinationNavController = segue.destinationViewController as! UINavigationController
-            let targetController = destinationNavController.topViewController as! ProjectsAndAssignmentsTableViewController
-            targetController.title = "Projects and Assignments"
-            
-            if let index = tableView.indexPathForSelectedRow?.row {
-                // send projAndAssnArray to the next view controller based on which project is selected
-                targetController.selectedClass = tmObj.classArray[index]
-                
-                targetController.tmObj = tmObj
-            }
-        }
-        
         if (segue.identifier == "Add Project Segue") {
             
             let destinationNavigationController = segue.destinationViewController as! UINavigationController
@@ -273,6 +258,21 @@ class TaskTableTableViewController: UITableViewController {
             targetController.classes = tmObj.classArray
         }
         
+        if (segue.identifier == "To Projects And Assignments") {
+            
+            let destinationNavController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavController.topViewController as! ProjectsAndAssignmentsTableViewController
+            targetController.title = "Projects and Assignments"
+            
+            if let index = tableView.indexPathForSelectedRow?.row {
+                // send projAndAssnArray to the next view controller based on which project is selected
+                targetController.selectedClass = tmObj.classArray[index]
+                
+                targetController.tmObj = tmObj
+            }
+        }
+        
+        
         if (segue.identifier == "To Project Focus") {
             
             let destinationNavigationController = segue.destinationViewController as! UINavigationController
@@ -280,6 +280,12 @@ class TaskTableTableViewController: UITableViewController {
             
             targetController.tmObj = tmObj
             
+            if let index = tableView.indexPathForSelectedRow?.row {
+                // send projAndAssnArray to the next view controller based on which project is selected
+                targetController.selectedClass = tmObj.classArray[index]
+                
+                targetController.tmObj = tmObj
+            }
         }
     }
     
