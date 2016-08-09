@@ -121,15 +121,20 @@ class DailyScheduleTableViewController: UITableViewController{
     @IBAction func unwindFromPickFocus(sender: UIStoryboardSegue) {
         
         if let paatvc = sender.sourceViewController as? ProjectsAndAssignmentsTableViewController {
-            
+            print (paatvc.tmObj.calendarArray[0][0])
             taskManager = paatvc.tmObj
-            
             taskManager.save()
             tableView.reloadData()
         }
         
         if let pttvc = sender.sourceViewController as? ProjTasksTableViewController {
             
+            taskManager = pttvc.tmObj
+            taskManager.save()
+            tableView.reloadData()
+        }
+        
+        if let pttvc = sender.sourceViewController as? TaskTableTableViewController {
             taskManager = pttvc.tmObj
             taskManager.save()
             tableView.reloadData()
@@ -192,47 +197,50 @@ class DailyScheduleTableViewController: UITableViewController{
     // action sheets
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        //if indexPath.row <= dsCalArray.count {
-            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-            let warningController = UIAlertController(title: "Are you sure you want to delete this appointment?", message: nil, preferredStyle: .Alert)
-            
-            // cancel action
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            }
-            alertController.addAction(cancelAction)
-            warningController.addAction(cancelAction)
-            
-            // delete action
-            let deleteAction = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
-                // delete warning
-                self.presentViewController(warningController, animated: true) {
-                }
-            }
-            warningController.addAction(deleteAction)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let warningController = UIAlertController(title: "Are you sure you want to delete this appointment?", message: nil, preferredStyle: .Alert)
         
-            if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Appointment {
-                let rescheduleAction = UIAlertAction(title: "Reschedule", style: .Default) { (action) in
-                }
-                
-                alertController.addAction(rescheduleAction)
-                alertController.addAction(deleteAction)
+        // cancel action
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        }
+    
+        alertController.addAction(cancelAction)
+        warningController.addAction(cancelAction)
+        
+        // delete action
+        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
+            // delete warning
+            self.presentViewController(warningController, animated: true) {
+            }
+        }
+        warningController.addAction(deleteAction)
+    
+        if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Appointment {
+            let rescheduleAction = UIAlertAction(title: "Reschedule", style: .Default) { (action) in
             }
             
-            if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Free {
-                let addApptAction = UIAlertAction(title: "Add appointment", style: .Default) { (action) in
-                }
-                
-                alertController.addAction(addApptAction)
-            }
-       
-            if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? WorkingBlock {
-                let selectFocusAction = UIAlertAction(title: "Select Focus", style: .Default) { (action) in self.performSegueWithIdentifier("Select Focus Segue", sender: self)
-                }
-                
-                alertController.addAction(selectFocusAction)
-            }
+            alertController.addAction(rescheduleAction)
+            alertController.addAction(deleteAction)
+        }
         
-            self.presentViewController(alertController, animated: true, completion: nil)
+        if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Free {
+            let addApptAction = UIAlertAction(title: "Add appointment", style: .Default) { (action) in
+            }
+            
+            alertController.addAction(addApptAction)
+        }
+   
+        if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? WorkingBlock {
+            let selectFocusAction = UIAlertAction(title: "Select Focus", style: .Default) { (action) in self.performSegueWithIdentifier("Select Focus Segue", sender: self)
+            }
+            
+            alertController.addAction(selectFocusAction)
+        }
+    
+        self.presentViewController(alertController, animated: true, completion: nil)
+    
+        
+        
     }
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
@@ -248,9 +256,7 @@ class DailyScheduleTableViewController: UITableViewController{
         super.viewWillAppear(animated)
         
         taskManager.loadFromDisc()
-    
-        
-        taskManager.allocateTime()
+       // taskManager.allocateTime()
     
         taskManager.allocateWorkingBlocksAtIndex(dayIndex: dateLocationDay)
         
@@ -263,7 +269,7 @@ class DailyScheduleTableViewController: UITableViewController{
     }
     
     override func viewWillDisappear(animated: Bool) {
-        taskManager.clearWorkingBlocksAtIndex(dayIndex: dateLocationDay)
+        //taskManager.clearWorkingBlocksAtIndex(dayIndex: dateLocationDay)
     }
     
 //    // connecting add and single task viewer pages to this
@@ -355,36 +361,47 @@ class DailyScheduleTableViewController: UITableViewController{
         }
             
         else {
-//            if indexPath.row < printedDSCalArray.count {
-//                let task = printedDSCalArray[indexPath.row][dateLocationDay]
-//                cell.textLabel?.text = task?.title
-//                return cell
-//            }
-//                
-//            else {
-//                cell.textLabel?.text = ""
-//                return cell
-//            }
             if indexPath.row < taskManager.calendarArray[taskManager.nsDateInCalFormat(selectedDate).dayCoordinate].count {
                 let task = taskManager.calendarArray[dateLocationDay][indexPath.row]
             
                 var label = ""
+                var subLabel = ""
                 
                 if let temp = task as? Free {
                     
-                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)) : Free"
+                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): Free"
                 }
                 
                 if let temp = task as? Appointment {
                     let title = temp.title
-                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)) : \(title)"
+                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): \(title)"
                 }
                 
                 if let temp = task as? WorkingBlock {
-                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)) : Working Block"
+                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): Working Block"
+                    for i in 0..<temp.focusArr.count {
+                        subLabel = "Focus: "
+                        
+                        // if only one focus
+                        if temp.focusArr.count == 1 {
+                            subLabel += (temp.focusArr[i].title)
+                        }
+                        
+                        // if more than one, but not the last one
+                        else if i < temp.focusArr.count - 1 {
+                            subLabel += (temp.focusArr[i].title) + ", "
+                        }
+                        
+                        // the last one in the chain
+                        else {
+                            subLabel += (temp.focusArr[i].title)
+                        }
+                    }
                 }
                 
                 cell.textLabel?.text = label
+                cell.detailTextLabel?.text = subLabel
+
                 return cell
             }
             else {
@@ -662,6 +679,13 @@ class DailyScheduleTableViewController: UITableViewController{
             // pass in tmObj
             targetController.tmObj = taskManager
             
+            if let indexSelected = tableView.indexPathForSelectedRow?.row {
+                targetController.wbIndex = indexSelected
+                targetController.dateLocationDay = dateLocationDay
+                targetController.focusIndicator = 1
+                
+             
+            }
         }
     }
 }

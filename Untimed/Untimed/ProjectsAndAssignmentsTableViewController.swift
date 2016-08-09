@@ -15,6 +15,13 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
     var selectedClass = Class()
     var indexChosen: Int = 0
     
+    // 0 for view, 1 for focus
+    var focusIndicator: Int = 0
+    
+    // index in the cal array of the working block you're attaching the focus to
+    var wbIndex: Int = 0
+    var dateLocationDay: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -88,6 +95,54 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
         }
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+            
+        // if we're in focus, not view mode
+        if focusIndicator == 1 {
+            if let indexSelected = tableView.indexPathForSelectedRow?.row {
+                // if it's an assignment
+                if let assnObj = selectedClass.projAndAssns[indexSelected] as? Assignment {
+                    
+                    // add check mark
+                    let numberOfRows = selectedClass.projAndAssns.count
+                    for row in 0..<numberOfRows {
+                        if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) {
+                            cell.accessoryType = row == indexPath.row ? .Checkmark : .None
+                        }
+                    }
+                    
+                    // add object to focus array
+                    tmObj.focusTasksArr += [assnObj]
+                    
+                    // modify working block
+                    if let wb = tmObj.calendarArray[dateLocationDay][wbIndex] as? WorkingBlock {
+                        wb.focusArr += [assnObj]
+                    }
+                }
+                
+                // else if project segue away
+                else {
+                    performSegueWithIdentifier("To Project Task Focus", sender: self)
+                }
+            }
+        }
+        
+        // in view mode
+        else {
+            if let indexSelected = tableView.indexPathForSelectedRow?.row {
+                // if it's an assignment
+                if let assnObj = selectedClass.projAndAssns[indexSelected] as? Assignment {
+                    // FIXME: segue to single task viewer
+                }
+                    
+                // if project use project task segue
+                else {
+                    performSegueWithIdentifier("Show Proj Tasks", sender: self)
+                }
+            }
+        }
     }
     
     // FIXME: consider combining tmObj.deleteProjectAtIndex and .deleteAssignmentAtIndex

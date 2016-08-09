@@ -9,5 +9,5 @@
 import Foundation
 
 class WorkingBlock: Task {
-    
+    var focusArr: [Task] = []
 }

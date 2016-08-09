@@ -11,15 +11,27 @@ import UIKit
 class TaskTableTableViewController: UITableViewController {
     
     var tmObj = TaskManager()
-
+    
+    // whether in focus or view mode
+    var focusIndicator = 0
+    
+    // index in the cal array of the working block you're attaching the focus to
+    var wbIndex: Int = 0
+    var dateLocationDay: Int = 0
+    
     func resetForTesting () {
         tmObj.classArray = []
         tmObj.save()
+        assert(false, "Resetting tmObj in TaskTable")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tmObj.loadFromDisc()
+        
+        if focusIndicator == 0 {
+            tmObj.loadFromDisc()
+        }
+        
 //        taskManager.createClassArray()
     }
     
@@ -27,12 +39,9 @@ class TaskTableTableViewController: UITableViewController {
         
         // FIXME: use only for testing
         // resetForTesting()
-
+        
         super.viewWillAppear(animated)
-        
-//        taskManager.createClassArray()
-//        taskManager.createProjOnlyArray()
-        
+
         tableView.reloadData()
     }
 
@@ -178,6 +187,7 @@ class TaskTableTableViewController: UITableViewController {
         if let paatvc =
             sender.sourceViewController as? ProjectsAndAssignmentsTableViewController {
             tmObj = paatvc.tmObj
+            
             tableView.reloadData()
         }
     }
@@ -278,13 +288,19 @@ class TaskTableTableViewController: UITableViewController {
             let destinationNavigationController = segue.destinationViewController as! UINavigationController
             let targetController = destinationNavigationController.topViewController as! ProjectsAndAssignmentsTableViewController
             
-            targetController.tmObj = tmObj
-            
             if let index = tableView.indexPathForSelectedRow?.row {
                 // send projAndAssnArray to the next view controller based on which project is selected
                 targetController.selectedClass = tmObj.classArray[index]
                 
                 targetController.tmObj = tmObj
+                
+                // focus, not view mode
+                targetController.focusIndicator = focusIndicator
+                
+                // set working block index
+                targetController.wbIndex = wbIndex
+                targetController.dateLocationDay = dateLocationDay
+                
             }
         }
     }

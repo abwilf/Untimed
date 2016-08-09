@@ -58,9 +58,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="e77-on-eee" kind="show" identifier="Show Proj Tasks" id="9Jg-Xg-7vx"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -75,6 +72,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="e77-on-eee" kind="show" identifier="Show Proj Tasks" id="bj4-Gx-D2s"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q22-Lt-HwO" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="NH5-sa-0Mq" userLabel="Exit" sceneMemberID="exit"/>
@@ -1341,23 +1341,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Daily Schedule Cell" id="zEg-VE-49U">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Daily Schedule Cell" textLabel="Abo-Tu-KhS" detailTextLabel="ckd-JT-AxX" style="IBUITableViewCellStyleSubtitle" id="zEg-VE-49U">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zEg-VE-49U" id="laY-TT-vYd">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0hM-iV-TNx">
-                                            <rect key="frame" x="17" y="11" width="31.5" height="19.5"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Abo-Tu-KhS">
+                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6x-lA-hBc">
-                                            <rect key="frame" x="11" y="11" width="353" height="19.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ckd-JT-AxX">
+                                            <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -1978,9 +1980,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="BvY-rU-8Fd" kind="show" identifier="To Project Task Focus" id="NBB-pG-UB7"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -2000,6 +1999,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="QsN-Qo-XTi" kind="show" identifier="To Project Task Focus" id="lN5-Do-ceK"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RPR-Do-IHc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="u9Y-6r-Nrq" userLabel="Exit" sceneMemberID="exit"/>
@@ -2061,7 +2063,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RBw-KM-zG2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="A2O-WD-n3d" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3818.5" y="1947.5"/>
+            <point key="canvasLocation" x="3863.5" y="1912.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="495-3b-dru">
@@ -2509,22 +2511,22 @@
             <point key="canvasLocation" x="2128.5" y="1902.5"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="AU0-qS-Soq">
+        <scene sceneID="veT-b1-0mH">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BvY-rU-8Fd" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QsN-Qo-XTi" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="iAM-fX-gyG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wTr-hz-hFC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Erz-N7-l1r" kind="relationship" relationship="rootViewController" id="Xeb-jf-TqP"/>
+                        <segue destination="Erz-N7-l1r" kind="relationship" relationship="rootViewController" id="yxT-4W-yMp"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bUW-l4-Plh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KtB-G4-ws5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3231.5" y="1947.5"/>
+            <point key="canvasLocation" x="3276.5" y="1912.5"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
