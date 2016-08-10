@@ -291,45 +291,6 @@ class TaskManager: NSObject, NSCopying {
         return false
     }
     
-    
-    // add save method
-    func save() {
-        // save tasks array
-        
-        let archive: NSData = NSKeyedArchiver.archivedDataWithRootObject(classArray)
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(archive, forKey: "classArray")
-        defaults.synchronize()
-        
-        /*
-         // save cal array
-         let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject(calendarArray)
-         let defaultsCal = NSUserDefaults.standardUserDefaults()
-         defaultsCal.setObject(archiveCal, forKey: "SavedCalendarArray")
-         defaultsCal.synchronize()
-         */
-    }
-    
-    func loadFromDisc() {
-        
-        // tasksarray
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
-        // if I'm able to get a tasks array at this key, put it into tasks,
-        // if not, create a blank one and put it into tasks
-        let archive = defaults.objectForKey("classArray") as? NSData ?? NSData()
-        
-        // every time you open the app
-        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Class] {
-            classArray = temp
-        }
-            
-        else {
-            classArray = []
-        }
-        
-    }
-    
     // returns appropriate calendar coordinates
     func nsDateInCalFormat(dateIn: NSDate) ->
         (dayCoordinate: Int, minuteCoordinate: Int, hourValue: Int, minuteValue: Int) {
@@ -948,5 +909,49 @@ class TaskManager: NSObject, NSCopying {
         super.init()
         self.loadFromDisc()
         self.allocateTime()
+    }
+    
+    // add save method
+    func save() {
+        // save tasks array
+        
+        let archive: NSData = NSKeyedArchiver.archivedDataWithRootObject(classArray)
+        let archiveAppt: NSData = NSKeyedArchiver.archivedDataWithRootObject(appointmentArray)
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(archive, forKey: "classArray")
+        defaults.setObject(archiveAppt, forKey: "appointmentArray")
+        defaults.synchronize()
+        
+        /*
+         // save cal array
+         let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject(calendarArray)
+         let defaultsCal = NSUserDefaults.standardUserDefaults()
+         defaultsCal.setObject(archiveCal, forKey: "SavedCalendarArray")
+         defaultsCal.synchronize()
+         */
+    }
+    
+    func loadFromDisc() {
+        
+        // tasksarray
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        // if I'm able to get a tasks array at this key, put it into tasks,
+        // if not, create a blank one and put it into tasks
+        let archive = defaults.objectForKey("classArray") as? NSData ?? NSData()
+        
+        let archiveAppt = defaults.objectForKey("appointmentArray") as? NSData ?? NSData()
+        
+        // every time you open the app
+        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Class] {
+            classArray = temp
+        }
+            
+        else {
+            classArray = []
+        }
+        
+        appointmentArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveAppt) as? [Appointment] ?? []
     }
 }
