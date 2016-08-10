@@ -20,6 +20,8 @@ class DailyScheduleTableViewController: UITableViewController{
     // create counting variables for allocation to tableview
     var startLocation = 0
     
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
+    
     func hourMinuteStringFromNSDate(date: NSDate) -> String {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "HH:mm"
@@ -128,7 +130,7 @@ class DailyScheduleTableViewController: UITableViewController{
         }
         
         if let pttvc = sender.sourceViewController as? ProjTasksTableViewController {
-            
+            pttvc.updateFocusTasks()
             taskManager = pttvc.tmObj
             taskManager.save()
             tableView.reloadData()
@@ -265,6 +267,14 @@ class DailyScheduleTableViewController: UITableViewController{
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
+
+        // FIXME: doesn't account for case in which user doesn't check dscal before the day is over and after lastWorkingHour
+        let now = NSDate()
+        let nowValForComparison = now.getTimeValForComparison()
+        let lastWorkingValForComparison = taskManager.lastWorkingHour.getTimeValForComparison()
+        if nowValForComparison > lastWorkingValForComparison {
+            self.performSegueWithIdentifier("Accountability Segue", sender: self)
+        }
         
         taskManager.loadFromDisc()
        // taskManager.allocateTime()
@@ -604,24 +614,15 @@ class DailyScheduleTableViewController: UITableViewController{
 }
 
     
-    /*
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //taskManager.tasksDescription()
-
-        // create proprietary array
-        createDSCalArray()
-        
-        // for testing
-        dsCalArrayDescription()
-        
-        
-        tableView.reloadData()
-        title = "Today"
+        self.settingsButton.title = NSString(string: "\u{2699}") as String
+        if let font = UIFont(name: "Helvetica", size: 18.0) {
+            self.settingsButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+        }
     }
- */
-    
+ 
     
     
     /*
@@ -693,7 +694,7 @@ class DailyScheduleTableViewController: UITableViewController{
             if let indexSelected = tableView.indexPathForSelectedRow?.row {
                 targetController.wbIndex = indexSelected
                 targetController.dateLocationDay = dateLocationDay
-                targetController.focusIndicator = 1
+                targetController.focusIndicator = true
                 
              
             }

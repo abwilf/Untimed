@@ -36,6 +36,9 @@ class AccountabilityTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Accountability Cell", forIndexPath: indexPath)
 
+        let task = focusTasks[indexPath.row]
+        
+        cell.textLabel?.text = task.title
         // Configure the cell...
 
         return cell

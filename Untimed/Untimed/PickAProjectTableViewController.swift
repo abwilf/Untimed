@@ -13,6 +13,8 @@ class PickAProjectTableViewController: UITableViewController {
     var classObj = Class()
     var indexChosen = 0
     
+    var focusIndicator: Bool = false
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
     }

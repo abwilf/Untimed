@@ -13,7 +13,7 @@ class TaskTableTableViewController: UITableViewController {
     var tmObj = TaskManager()
     
     // whether in focus or view mode
-    var focusIndicator = 0
+    var focusIndicator = false
     
     // index in the cal array of the working block you're attaching the focus to
     var wbIndex: Int = 0
@@ -28,7 +28,7 @@ class TaskTableTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if focusIndicator == 0 {
+        if focusIndicator == false {
             tmObj.loadFromDisc()
         }
         

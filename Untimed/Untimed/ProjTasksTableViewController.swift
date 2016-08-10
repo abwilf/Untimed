@@ -11,8 +11,11 @@ import UIKit
 class ProjTasksTableViewController: UITableViewController {
 //    var projTasksArr: [ProjectTask] = []
     var selectedProject = Project()
+
     
     var tmObj = TaskManager()
+    
+    var checked: [Bool]? = nil
     
     // locators for PT
     var indexInPTArray = 0
@@ -24,8 +27,7 @@ class ProjTasksTableViewController: UITableViewController {
     // locators for Class
     var classIndexInTasks = 0
     
-    // 0 for view, 1 for focus
-    var focusIndicator: Int = 0
+    var focusIndicator: Bool = false
     
     // index in the cal array of the working block you're attaching the focus to
     var wbIndex: Int = 0
@@ -49,31 +51,64 @@ class ProjTasksTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         // if we're in focus mode
-        if focusIndicator == 1 {
-            if let indexSelected = tableView.indexPathForSelectedRow?.row {
-                let addedPT = selectedProject.projTaskArr[indexSelected]
+        if focusIndicator == true {
+            if checked == nil {
+                checked = Array(count: selectedProject.projTaskArr.count, repeatedValue: false)
+            }
+            
+//                let addedPT = selectedProject.projTaskArr[indexSelected]
                 
-                // add check mark
-                let numberOfRows = selectedProject.projTaskArr.count
-                for row in 0..<numberOfRows {
-                    if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) {
-                        cell.accessoryType = row == indexPath.row ? .Checkmark : .None
+                if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPath.row,
+                                                                          inSection: 0)) {
+                    if cell.accessoryType == .Checkmark {
+                        cell.accessoryType = .None
+                        checked![indexPath.row] = false
+                    }
+                    else {
+                        cell.accessoryType = .Checkmark
+                        checked![indexPath.row] = true
                     }
                 }
                 
-                // add object to focus array
-                tmObj.focusTasksArr += [addedPT]
+//                // add check mark
+//                let numberOfRows = selectedProject.projTaskArr.count
+//                for row in 0..<numberOfRows {
+//                    if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) {
+//                        if cell.accessoryType == .Checkmark {
+//                            cell.accessoryType = .None
+//                            checked[indexPath.row] = false
+//                        } else {
+//                            cell.accessoryType = .Checkmark
+//                            checked[indexPath.row] = true
+//                        }
+//                    }
+//                }
                 
-                // modify working block
-                if let wb = tmObj.calendarArray[dateLocationDay][wbIndex] as? WorkingBlock {
-                    wb.focusArr += [addedPT]
-                }
-            }
+//                // add object to focus array
+//                tmObj.focusTasksArr += [addedPT]
+//                
+//                // modify working block
+//                if let wb = tmObj.calendarArray[dateLocationDay][wbIndex] as? WorkingBlock {
+//                    wb.focusArr += [addedPT]
+//                }
         }
             
         // in view mode
         else {
             
+        }
+    }
+    
+    func updateFocusTasks() {
+        if checked != nil {
+            for ptIndex in 0..<checked!.count {
+                if checked![ptIndex] {
+                    tmObj.focusTasksArr += [selectedProject.projTaskArr[ptIndex]]
+                    if let wb = tmObj.calendarArray[dateLocationDay][wbIndex] as? WorkingBlock {
+                        wb.focusArr += [selectedProject.projTaskArr[ptIndex]]
+                    }
+                }
+            }
         }
     }
 
@@ -112,5 +147,6 @@ class ProjTasksTableViewController: UITableViewController {
         }
     }
 
+    
 
 }

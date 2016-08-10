@@ -520,11 +520,19 @@ class TaskManager: NSObject, NSCopying {
         return numBlocks
     }
     
-    func clearClassArray() {
+    // for testing
+    private func clearClassArray() {
         for _ in classArray {
             classArray.popLast()
         }
         save()
+    }
+    
+    // for testing
+    private func clearAppointmentArray() {
+        for _ in appointmentArray {
+            appointmentArray.popLast()
+        }
     }
     
 //    func deletePastTasks() {
@@ -598,6 +606,9 @@ class TaskManager: NSObject, NSCopying {
     func allocateTime() {
         // for testing
 //        clearClassArray()
+        // for testing
+//        clearAppointmentArray()
+//        save()
 
         // setCellsPerDay()
         
@@ -627,7 +638,7 @@ class TaskManager: NSObject, NSCopying {
         }
     }
     
-    private func isDate(earlier: NSDate, earlierThan later: NSDate) -> Bool {
+    func isDate(earlier: NSDate, earlierThan later: NSDate) -> Bool {
         let earlierVal = earlier.getTimeValForComparison()
         let laterVal = later.getTimeValForComparison()
         if earlierVal < laterVal {

@@ -13,6 +13,8 @@ class PickAClassTableViewController: UITableViewController {
     var classArr: [Class] = []
     var index: Int = 0
     
+    var focusIndicator: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
