@@ -99,6 +99,15 @@ class DailyScheduleTableViewController: UITableViewController{
         }
     }
     
+    // save from add appointment
+    @IBAction func unwindAndAddAppt(sender: UIStoryboardSegue) {
+        if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
+            taskManager.addAppointment(aapptvc.addedAppointment)
+            taskManager.allocateAppts()
+            taskManager.save()
+            tableView.reloadData()
+        }
+    }
     
     // update selectedDate with changed date value
     @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {

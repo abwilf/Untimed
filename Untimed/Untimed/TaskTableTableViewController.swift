@@ -49,88 +49,61 @@ class TaskTableTableViewController: UITableViewController {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func addButtonPressed(sender: UIBarButtonItem) {
-        
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-        }
-        let addAppointmentAction = UIAlertAction(title: "Appointment", style: .Default) { (action) in
-            self.performSegueWithIdentifier("Add Appointment Segue", sender: TaskTableTableViewController())
-        }
-        
-        let addClassAction = UIAlertAction(title: "Class", style: .Default) { (action) in
-            self.performSegueWithIdentifier("Add Class Segue", sender: TaskTableTableViewController())
-        }
-        
-        alertController.addAction(cancelAction)
-        
-        alertController.addAction(addAppointmentAction)
-        alertController.addAction(addClassAction)
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
-    }
     
     
     @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
     {
-        // save from add assignment via unwind
-        if let aavc =
-            sender.sourceViewController as? AddAssignmentTableViewController {
-            
-            let classAddedAsgtBelongsTo = tmObj.classArray[aavc.addedAssignment.classTaskArrIndex]
-            
-            // add first to general tasks list, then erase and rederive classArray
-            tmObj.addAssignment(aavc.addedAssignment, forClass: classAddedAsgtBelongsTo)
-            
-//            let tasksIndexForClass = taskManager.classArray[aavc.addedAssignment.classClassArrIndex].tasksIndex
-            
-
-//            if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
-//                tmt.projAndAssns += [aavc.addedAssignment]
-//            }
-            
-            // draws from tasks array in creation and saves
-            tmObj.save()
-            
-            tableView.reloadData()
-        }
+//        // save from add assignment via unwind
+//        if let aavc =
+//            sender.sourceViewController as? AddAssignmentTableViewController {
+//            
+//            let classAddedAsgtBelongsTo = tmObj.classArray[aavc.addedAssignment.classTaskArrIndex]
+//            
+//            // add first to general tasks list, then erase and rederive classArray
+//            tmObj.addAssignment(aavc.addedAssignment, forClass: classAddedAsgtBelongsTo)
+//            
+////            let tasksIndexForClass = taskManager.classArray[aavc.addedAssignment.classClassArrIndex].tasksIndex
+//            
+//
+////            if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
+////                tmt.projAndAssns += [aavc.addedAssignment]
+////            }
+//            
+//            // draws from tasks array in creation and saves
+//            tmObj.save()
+//            
+//            tableView.reloadData()
+//        }
         
         
-        // save from add appointment
-        if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
-            tmObj.addAppointment(aapptvc.addedAppointment)
-            tmObj.allocateAppts()
-            tmObj.save()
-            tableView.reloadData()
-        }
         
-        // add project
-        if let aatvc = sender.sourceViewController as?
-            AddProjectTableViewController {
-            
-            let classProjBelongsTo = tmObj.classArray[aatvc.addedProject.classClassArrIndex]
-            
-            tmObj.addProject(aatvc.addedProject, forClass: classProjBelongsTo)
-        
-            tmObj.save()
-            
-            tableView.reloadData()
-        }
-        
-        // add project task
-        if let apttvc = sender.sourceViewController as?
-            AddProjectTaskTableViewController {
-
-            let projectThatTaskBelongsTo = tmObj.classArray[apttvc.classIndex].projAndAssns[apttvc.projectAndAssnArrIndex] as! Project
-            
-                tmObj.addProjectTask(apttvc.addedProjTask, forProject: projectThatTaskBelongsTo)
-            
-            // works up to here.  doesn't save and load correctly (at least within this page)
-            tmObj.save()
-            
-            tableView.reloadData()
-        }
+//        
+//        // add project
+//        if let aatvc = sender.sourceViewController as?
+//            AddProjectTableViewController {
+//            
+//            let classProjBelongsTo = tmObj.classArray[aatvc.addedProject.classClassArrIndex]
+//            
+//            tmObj.addProject(aatvc.addedProject, forClass: classProjBelongsTo)
+//        
+//            tmObj.save()
+//            
+//            tableView.reloadData()
+//        }
+//        
+//        // add project task
+//        if let apttvc = sender.sourceViewController as?
+//            AddProjectTaskTableViewController {
+//
+//            let projectThatTaskBelongsTo = tmObj.classArray[apttvc.classIndex].projAndAssns[apttvc.projectAndAssnArrIndex] as! Project
+//            
+//                tmObj.addProjectTask(apttvc.addedProjTask, forProject: projectThatTaskBelongsTo)
+//            
+//            // works up to here.  doesn't save and load correctly (at least within this page)
+//            tmObj.save()
+//            
+//            tableView.reloadData()
+//        }
         
         // save from add class
         if let actvc = sender.sourceViewController as?

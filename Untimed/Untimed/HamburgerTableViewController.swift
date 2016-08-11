@@ -28,17 +28,12 @@ class HamburgerTableViewController: UITableViewController {
             tmObj.lastWorkingMinute = stvc.lwm
             tmObj.save()
             
-            // FIXME: delete after testing
-            assert(tmObj.settingsArray.count == 2, "save and load settingsArray from disc failed")
-
-            // FIXME: RIGHT HERE IS THE PROBLEM!!!
+            assert(tmObj.settingsArray.count == 2, "\n\n\nsave and load settingsArray from disc failed\n\n")
             
             // test if saving is working alright
             tmObj.loadFromDisc()
             assert(tmObj.settingsArray.count == 2, "\n\n\nsave and load settingsArray from disc failed\n\n")
             
-            
-            // FIXME: it's not!
             tableView.reloadData()
         }
     }

@@ -70,9 +70,7 @@ class TaskManager: NSObject, NSCopying {
         settingsArray += [firstWorkingMinute]
         
         settingsArray += [lastWorkingMinute]
-        
-        print (settingsArray)
-    }
+}
     
     var workingCellsPerDay = 0
     func setWorkingCellsPerDay() {
@@ -950,7 +948,7 @@ class TaskManager: NSObject, NSCopying {
         defaults.setObject(archiveAppt, forKey: "appointmentArray")
         
         setSettingsArray()
-        print (settingsArray)
+        assert(settingsArray.count == 2, "setSettingsArray func failed")
         
         defaults.setObject(archiveSettings, forKey: "settingsArray")
         defaults.synchronize()
