@@ -61,9 +61,9 @@ class TaskTableTableViewController: UITableViewController {
         let addAppointmentAction = UIAlertAction(title: "Appointment", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Appointment Segue", sender: TaskTableTableViewController())
         }
-        let addProjectAction = UIAlertAction(title: "Project", style: .Default) { (action) in
-            self.performSegueWithIdentifier("Add Project Segue", sender: TaskTableTableViewController())
-        }
+//        let addProjectAction = UIAlertAction(title: "Project", style: .Default) { (action) in
+//            self.performSegueWithIdentifier("Add Project Segue", sender: TaskTableTableViewController())
+//        }
         let addProjectTaskAction = UIAlertAction(title: "Project Task", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Project Task Segue", sender: TaskTableTableViewController())
         }
@@ -74,7 +74,7 @@ class TaskTableTableViewController: UITableViewController {
         alertController.addAction(cancelAction)
         alertController.addAction(addTaskAction)
         alertController.addAction(addAppointmentAction)
-        alertController.addAction(addProjectAction)
+//        alertController.addAction(addProjectAction)
         alertController.addAction(addProjectTaskAction)
         alertController.addAction(addClassAction)
         
@@ -163,14 +163,16 @@ class TaskTableTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func unwindFromTaskPages(sender: UIStoryboardSegue) {
+    @IBAction func unwindFromPAndA(sender: UIStoryboardSegue) {
         if let paatvc =
             sender.sourceViewController as? ProjectsAndAssignmentsTableViewController {
-            tmObj.loadFromDisc()
             
-            // recreate arrays
-//            taskManager.createClassArray()
-//            taskManager.createProjOnlyArray()
+            // replace class array object with modified one
+            tmObj.classArray[paatvc.classArrOrigIndex] = paatvc.selectedClass
+            
+            // save
+            tmObj.save()
+            
             tableView.reloadData()
         }
     }
@@ -277,7 +279,7 @@ class TaskTableTableViewController: UITableViewController {
             if let index = tableView.indexPathForSelectedRow?.row {
                 // send projAndAssnArray to the next view controller based on which project is selected
                 targetController.selectedClass = tmObj.classArray[index]
-                
+                targetController.classArrOrigIndex = index
                 targetController.tmObj = tmObj
             }
         }

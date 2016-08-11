@@ -13,6 +13,7 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
     // assns and projects for this class stored here
     var tmObj = TaskManager()
     var selectedClass = Class()
+    var classArrOrigIndex = 0
     var indexChosen: Int = 0
     
     var focusIndicator: Bool = false
@@ -26,6 +27,28 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
 
     }
 
+    @IBAction func addButtonPressed(sender: UIBarButtonItem) {
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        }
+        let addTaskAction = UIAlertAction(title: "Assignment", style: .Default) { (action) in
+            self.performSegueWithIdentifier("Add Assignment Segue", sender: TaskTableTableViewController())
+        }
+        
+        let addProjectAction = UIAlertAction(title: "Project", style: .Default) { (action) in
+        self.performSegueWithIdentifier("Add Project Segue", sender: TaskTableTableViewController())
+        }
+        
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(addTaskAction)
+        alertController.addAction(addProjectAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -275,6 +298,17 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
+    
+    @IBAction func unwindFromAddProj (sender: UIStoryboardSegue) {
+        if let aptvc =
+            sender.sourceViewController as? AddProjectTableViewController {
+            
+            selectedClass.projAndAssns += [aptvc.addedProject]
+            
+            tableView.reloadData()
+        }
+    }
+
 }
     
 
