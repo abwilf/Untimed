@@ -147,6 +147,14 @@ class ProjTasksTableViewController: UITableViewController {
         }
     }
 
-    
+    @IBAction func unwindFromAddPT (sender: UIStoryboardSegue) {
+        if let aptvc =
+            sender.sourceViewController as? AddProjectTaskTableViewController {
+            
+            selectedProject.projTaskArr += [aptvc.addedProjTask]
+            
+            tableView.reloadData()
+        }
+    }
 
 }

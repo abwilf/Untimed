@@ -225,29 +225,22 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
         if segue.identifier == "Show Proj Tasks" {
             
             if let indexSelected = tableView.indexPathForSelectedRow?.row {
-                indexChosen = indexSelected
-            }
-            
-            
-            let destinationNavController = segue.destinationViewController as! UINavigationController
-            
-            let topViewController = destinationNavController.topViewController as! ProjTasksTableViewController
-            
-            if let proj = selectedClass.projAndAssns[indexChosen] as? Project {
-               
-                // pass in tmObj carrying taskslist
-                topViewController.tmObj = tmObj
+                let destinationNavController = segue.destinationViewController as! UINavigationController
                 
-                // pass in info for Project
-                topViewController.selectedProject = proj
-                topViewController.parentProjectPAndAArrIndex = indexChosen
-//                topViewController.parentProjectTaskIndex = tmObj.findTasksIndexForTask(proj)
+                let topViewController = destinationNavController.topViewController as! ProjTasksTableViewController
                 
-                // pass in locators for Class
-//                topViewController.classIndexInTasks = tmObj.findTasksIndexForTask(selectedClass)
-                
-                // set title
-                topViewController.title = "Tasks for \(proj.title)"
+                if let proj = selectedClass.projAndAssns[indexChosen] as? Project {
+                    
+                    // pass in tmObj carrying taskslist
+                    topViewController.tmObj = tmObj
+                    
+                    // pass in info for Project
+                    topViewController.selectedProject = proj
+                    topViewController.parentProjectPAndAArrIndex = indexSelected
+                    
+                    // set title
+                    topViewController.title = "Tasks for \(proj.title)"
+                }
             }
         }
         
@@ -284,13 +277,15 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
     }
     
     @IBAction func unwindFromPT (sender: UIStoryboardSegue) {
-        if let _ =
+        if let pttvc =
             sender.sourceViewController as? ProjTasksTableViewController {
-            tmObj.loadFromDisc()
+            
+            // replace project object with new one (modified or not)
+            selectedClass.projAndAssns[pttvc.parentProjectPAndAArrIndex] = pttvc.selectedProject
+            
             tableView.reloadData()
         }
     }
-    
     @IBAction func unwindFromPTFocus (sender: UIStoryboardSegue) {
         if let pttvc =
             sender.sourceViewController as? ProjTasksTableViewController {
