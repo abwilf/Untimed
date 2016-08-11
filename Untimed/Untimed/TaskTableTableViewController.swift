@@ -58,10 +58,7 @@ class TaskTableTableViewController: UITableViewController {
         let addAppointmentAction = UIAlertAction(title: "Appointment", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Appointment Segue", sender: TaskTableTableViewController())
         }
-
-        let addProjectTaskAction = UIAlertAction(title: "Project Task", style: .Default) { (action) in
-            self.performSegueWithIdentifier("Add Project Task Segue", sender: TaskTableTableViewController())
-        }
+        
         let addClassAction = UIAlertAction(title: "Class", style: .Default) { (action) in
             self.performSegueWithIdentifier("Add Class Segue", sender: TaskTableTableViewController())
         }
@@ -69,7 +66,6 @@ class TaskTableTableViewController: UITableViewController {
         alertController.addAction(cancelAction)
         
         alertController.addAction(addAppointmentAction)
-        alertController.addAction(addProjectTaskAction)
         alertController.addAction(addClassAction)
         
         self.presentViewController(alertController, animated: true, completion: nil)

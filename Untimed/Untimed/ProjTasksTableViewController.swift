@@ -55,42 +55,17 @@ class ProjTasksTableViewController: UITableViewController {
             if checked == nil {
                 checked = Array(count: selectedProject.projTaskArr.count, repeatedValue: false)
             }
-            
-//                let addedPT = selectedProject.projTaskArr[indexSelected]
-                
-                if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPath.row,
-                                                                          inSection: 0)) {
-                    if cell.accessoryType == .Checkmark {
-                        cell.accessoryType = .None
-                        checked![indexPath.row] = false
-                    }
-                    else {
-                        cell.accessoryType = .Checkmark
-                        checked![indexPath.row] = true
-                    }
+            if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPath.row,
+                                                                      inSection: 0)) {
+                if cell.accessoryType == .Checkmark {
+                    cell.accessoryType = .None
+                    checked![indexPath.row] = false
                 }
-                
-//                // add check mark
-//                let numberOfRows = selectedProject.projTaskArr.count
-//                for row in 0..<numberOfRows {
-//                    if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) {
-//                        if cell.accessoryType == .Checkmark {
-//                            cell.accessoryType = .None
-//                            checked[indexPath.row] = false
-//                        } else {
-//                            cell.accessoryType = .Checkmark
-//                            checked[indexPath.row] = true
-//                        }
-//                    }
-//                }
-                
-//                // add object to focus array
-//                tmObj.focusTasksArr += [addedPT]
-//                
-//                // modify working block
-//                if let wb = tmObj.calendarArray[dateLocationDay][wbIndex] as? WorkingBlock {
-//                    wb.focusArr += [addedPT]
-//                }
+                else {
+                    cell.accessoryType = .Checkmark
+                    checked![indexPath.row] = true
+                }
+            }
         }
             
         // in view mode
