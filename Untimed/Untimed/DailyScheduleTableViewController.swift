@@ -1,3 +1,4 @@
+
 //
 //  DailyScheduleTableViewController.swift
 //  Untimed
@@ -94,7 +95,6 @@ class DailyScheduleTableViewController: UITableViewController{
             taskManager.loadFromDisc()
             
             taskManager.allocateTime()
-//            createDSCalArray()
             tableView.reloadData()
         }
     }
@@ -106,16 +106,6 @@ class DailyScheduleTableViewController: UITableViewController{
             selectedDate = cdvc.newDate
             taskManager.loadFromDisc()
             taskManager.allocateTime()
-//            createDSCalArray()
-            tableView.reloadData()
-        }
-    }
-    
-    @IBAction func unwindFromSettings(sender: UIStoryboardSegue) {
-        if let stvc = sender.sourceViewController as? SettingsTableViewController {
-            taskManager.firstWorkingMinute = stvc.fwm
-            taskManager.lastWorkingMinute = stvc.lwm
-            taskManager.save()
             tableView.reloadData()
         }
     }
@@ -261,6 +251,9 @@ class DailyScheduleTableViewController: UITableViewController{
         tableView.reloadData()
     }
     
+    
+    @IBOutlet weak var menuButton: UIBarButtonItem!
+    
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
@@ -275,18 +268,32 @@ class DailyScheduleTableViewController: UITableViewController{
         }
         
         taskManager.loadFromDisc()
-       // taskManager.allocateTime()
     
+        // set working minutes from saved settings array
+        setWorkingMinutes()
+        
         taskManager.allocateWorkingBlocksAtIndex(dayIndex: dateLocationDay)
-        
-//        createDSCalArray()
-        
-        // to deal with indexPath.row issues, cull tasks not within working period
-//        createPrintedDSCalArray()
-        
+
+        // for hambuger icon
+        if self.revealViewController() != nil {
+            menuButton.target = self.revealViewController()
+            menuButton.action = "revealToggle:"
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
         tableView.reloadData()
     }
     
+    func setWorkingMinutes() {
+        if taskManager.settingsArray.count == 2 {
+            taskManager.firstWorkingMinute = taskManager.settingsArray[0]
+            taskManager.lastWorkingMinute = taskManager.settingsArray[1]
+        }
+        
+        else {
+            taskManager.firstWorkingMinute = 480
+            taskManager.lastWorkingMinute = 1140
+        }
+    }
     override func viewWillDisappear(animated: Bool) {
         //taskManager.clearWorkingBlocksAtIndex(dayIndex: dateLocationDay)
     }
@@ -614,11 +621,12 @@ class DailyScheduleTableViewController: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.settingsButton.title = NSString(string: "\u{2699}") as String
+        
+        /*self.settingsButton.title = NSString(string: "\u{2699}") as String
         if let font = UIFont(name: "Helvetica", size: 18.0) {
             self.settingsButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-        }
+        }*/
+ 
     }
  
     

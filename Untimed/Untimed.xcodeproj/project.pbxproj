@@ -30,6 +30,9 @@
 		A2116DA31CA96DB3003D221D /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116DA21CA96DB3003D221D /* Task.swift */; };
 		A2116DA51CA96F22003D221D /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2116DA41CA96F22003D221D /* Assignment.swift */; };
 		A21825071CC2C931008D366D /* ChangeDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21825061CC2C931008D366D /* ChangeDateViewController.swift */; };
+		A21977861D5CF8BF00D1CE30 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A21977851D5CF8BF00D1CE30 /* SWRevealViewController.m */; };
+		A21977881D5CFC8100D1CE30 /* HamburgerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21977871D5CFC8100D1CE30 /* HamburgerTableViewController.swift */; };
+		A219778F1D5CFEC800D1CE30 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A219778E1D5CFEC800D1CE30 /* Images.xcassets */; };
 		A21F78D01CB2DA5000517FD9 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21F78CF1CB2DA5000517FD9 /* AddViewController.swift */; };
 		A227C4FA1CB46AD400B3971D /* AddAppointmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */; };
 		A22D22171CB6BA6100F085F4 /* DailyScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */; };
@@ -101,6 +104,11 @@
 		A2116DA21CA96DB3003D221D /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		A2116DA41CA96F22003D221D /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
 		A21825061CC2C931008D366D /* ChangeDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeDateViewController.swift; sourceTree = "<group>"; };
+		A21977831D5CF8BE00D1CE30 /* Untimed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Untimed-Bridging-Header.h"; sourceTree = "<group>"; };
+		A21977841D5CF8BF00D1CE30 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		A21977851D5CF8BF00D1CE30 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		A21977871D5CFC8100D1CE30 /* HamburgerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerTableViewController.swift; sourceTree = "<group>"; };
+		A219778E1D5CFEC800D1CE30 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A21F78CF1CB2DA5000517FD9 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAppointmentTableViewController.swift; sourceTree = "<group>"; };
 		A22D22161CB6BA6100F085F4 /* DailyScheduleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyScheduleTableViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +178,7 @@
 		211329C41D5251580070948F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A21977871D5CFC8100D1CE30 /* HamburgerTableViewController.swift */,
 				A2A7327A1D5A8ABF00285D28 /* AccountabilityTableViewController.swift */,
 				A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */,
 				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
@@ -226,9 +235,11 @@
 				A2116D781CA968EC003D221D /* Main.storyboard */,
 				211329C31D5251270070948F /* Models */,
 				211329C41D5251580070948F /* View Controllers */,
-				214745F31CB8B568007BABCA /* core.pdf */,
+				A21977821D5CF86700D1CE30 /* SWRevealController */,
 				A286B83A1CC5D993005736E4 /* documentation.pdf */,
+				214745F31CB8B568007BABCA /* core.pdf */,
 				A2116D7B1CA968EC003D221D /* Assets.xcassets */,
+				A219778E1D5CFEC800D1CE30 /* Images.xcassets */,
 				A2116D7D1CA968EC003D221D /* LaunchScreen.storyboard */,
 				A2116D741CA968EC003D221D /* AppDelegate.swift */,
 				A2116D801CA968EC003D221D /* Info.plist */,
@@ -252,6 +263,16 @@
 				A2116D961CA968EC003D221D /* Info.plist */,
 			);
 			path = UntimedUITests;
+			sourceTree = "<group>";
+		};
+		A21977821D5CF86700D1CE30 /* SWRevealController */ = {
+			isa = PBXGroup;
+			children = (
+				A21977841D5CF8BF00D1CE30 /* SWRevealViewController.h */,
+				A21977851D5CF8BF00D1CE30 /* SWRevealViewController.m */,
+				A21977831D5CF8BE00D1CE30 /* Untimed-Bridging-Header.h */,
+			);
+			name = SWRevealController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,7 +337,7 @@
 		A2116D691CA968EC003D221D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "EECS-ellent";
 				TargetAttributes = {
@@ -362,6 +383,7 @@
 				A2116D7F1CA968EC003D221D /* LaunchScreen.storyboard in Resources */,
 				214745F41CB8B568007BABCA /* core.pdf in Resources */,
 				A2116D7C1CA968EC003D221D /* Assets.xcassets in Resources */,
+				A219778F1D5CFEC800D1CE30 /* Images.xcassets in Resources */,
 				A2116D7A1CA968EC003D221D /* Main.storyboard in Resources */,
 				A286B83B1CC5D993005736E4 /* documentation.pdf in Resources */,
 			);
@@ -409,11 +431,13 @@
 				A21F78D01CB2DA5000517FD9 /* AddViewController.swift in Sources */,
 				A2116DA31CA96DB3003D221D /* Task.swift in Sources */,
 				218DA31F1D42915A00E269CA /* EndRepeatTableViewController.swift in Sources */,
+				A21977881D5CFC8100D1CE30 /* HamburgerTableViewController.swift in Sources */,
 				A283E7A51D50ED8500636B09 /* PickAProjectTableViewController.swift in Sources */,
 				A27C8D681D47AE2200D81D13 /* SettingsTableViewController.swift in Sources */,
 				A2A7327F1D5A904C00285D28 /* TimeCompletedViewController.swift in Sources */,
 				A2116D751CA968EC003D221D /* AppDelegate.swift in Sources */,
 				211EE5DF1D319FF500E322BB /* AssignmentBlock.swift in Sources */,
+				A21977861D5CF8BF00D1CE30 /* SWRevealViewController.m in Sources */,
 				A29A9A2A1CBE98340011A5BF /* EditAssignmentTableViewController.swift in Sources */,
 				A22D22171CB6BA6100F085F4 /* DailyScheduleTableViewController.swift in Sources */,
 				A10A6A701CAC33E900DB9C5F /* TestViewController.swift in Sources */,
@@ -567,6 +591,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Untimed/Info.plist;
@@ -574,6 +599,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.hello1.Untimed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Untimed/Untimed-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -581,6 +608,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Untimed/Info.plist;
@@ -588,6 +616,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.umich.hello1.Untimed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Untimed/Untimed-Bridging-Header.h";
 			};
 			name = Release;
 		};

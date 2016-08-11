@@ -59,6 +59,21 @@ class TaskManager: NSObject, NSCopying {
     // in dsCalFormat; default is 8 am to 7 pm
     var firstWorkingMinute = 480
     var lastWorkingMinute = 1140
+    
+    var settingsArray: [Int] = []
+    
+    func setSettingsArray() {
+        // clear
+        settingsArray = []
+        
+        // refill
+        settingsArray += [firstWorkingMinute]
+        
+        settingsArray += [lastWorkingMinute]
+        
+        print (settingsArray)
+    }
+    
     var workingCellsPerDay = 0
     func setWorkingCellsPerDay() {
         workingCellsPerDay = lastWorkingMinute - firstWorkingMinute
@@ -928,33 +943,33 @@ class TaskManager: NSObject, NSCopying {
         
         let archive: NSData = NSKeyedArchiver.archivedDataWithRootObject(classArray)
         let archiveAppt: NSData = NSKeyedArchiver.archivedDataWithRootObject(appointmentArray)
-        
+        let archiveSettings: NSData = NSKeyedArchiver.archivedDataWithRootObject(settingsArray)
+
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(archive, forKey: "classArray")
         defaults.setObject(archiveAppt, forKey: "appointmentArray")
+        
+        setSettingsArray()
+        print (settingsArray)
+        
+        defaults.setObject(archiveSettings, forKey: "settingsArray")
         defaults.synchronize()
         
-        /*
-         // save cal array
-         let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject(calendarArray)
-         let defaultsCal = NSUserDefaults.standardUserDefaults()
-         defaultsCal.setObject(archiveCal, forKey: "SavedCalendarArray")
-         defaultsCal.synchronize()
-         */
+        
     }
     
     func loadFromDisc() {
         
-        // tasksarray
+        
         let defaults = NSUserDefaults.standardUserDefaults()
         
-        // if I'm able to get a tasks array at this key, put it into tasks,
-        // if not, create a blank one and put it into tasks
         let archive = defaults.objectForKey("classArray") as? NSData ?? NSData()
         
         let archiveAppt = defaults.objectForKey("appointmentArray") as? NSData ?? NSData()
         
-        // every time you open the app
+        let archiveSettings = defaults.objectForKey("settingsArray") as? NSData ?? NSData()
+        
+        // every time you open the app; class array
         if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Class] {
             classArray = temp
         }
@@ -963,6 +978,16 @@ class TaskManager: NSObject, NSCopying {
             classArray = []
         }
         
+        // appt array
         appointmentArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveAppt) as? [Appointment] ?? []
+        
+        // settings array
+        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [Int] {
+            settingsArray = temp
+        }
+            
+        else {
+            settingsArray = []
+        }
     }
 }

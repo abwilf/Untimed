@@ -11,8 +11,8 @@ import UIKit
 class SettingsTableViewController: UITableViewController {
 
     // first and last working minutes
-    var fwm = 0
-    var lwm = 0
+    var fwm = 480
+    var lwm = 1140
     
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
@@ -44,6 +44,4 @@ class SettingsTableViewController: UITableViewController {
 
             return minuteCoordinate
     }
-
-    
 }

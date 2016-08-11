@@ -1,0 +1,47 @@
+//
+//  HamburgerTableViewController.swift
+//  Untimed
+//
+//  Created by Alex Wilf on 8/11/16.
+//  Copyright © 2016 EECS-ellent. All rights reserved.
+//
+
+import UIKit
+
+class HamburgerTableViewController: UITableViewController {
+
+    var tmObj = TaskManager()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+
+    
+    @IBAction func unwindFromSettings(sender: UIStoryboardSegue) {
+        if let stvc = sender.sourceViewController as? SettingsTableViewController {
+            tmObj.firstWorkingMinute = stvc.fwm
+            tmObj.lastWorkingMinute = stvc.lwm
+            tmObj.save()
+            
+            // FIXME: delete after testing
+            assert(tmObj.settingsArray.count == 2, "save and load settingsArray from disc failed")
+
+            // FIXME: RIGHT HERE IS THE PROBLEM!!!
+            
+            // test if saving is working alright
+            tmObj.loadFromDisc()
+            assert(tmObj.settingsArray.count == 2, "\n\n\nsave and load settingsArray from disc failed\n\n")
+            
+            
+            // FIXME: it's not!
+            tableView.reloadData()
+        }
+    }
+    
+    
+}
