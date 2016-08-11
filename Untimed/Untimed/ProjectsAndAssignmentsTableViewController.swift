@@ -308,6 +308,16 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
+    
+    @IBAction func unwindFromAddAssn (sender: UIStoryboardSegue) {
+        if let aatvc =
+            sender.sourceViewController as? AddAssignmentTableViewController {
+            
+            selectedClass.projAndAssns += [aatvc.addedAssignment]
+            
+            tableView.reloadData()
+        }
+    }
 
 }
     
