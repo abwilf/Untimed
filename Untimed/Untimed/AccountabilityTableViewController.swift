@@ -36,19 +36,44 @@ class AccountabilityTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Accountability Cell", forIndexPath: indexPath)
 
-        let task = focusTasks[indexPath.row]
-        
-        cell.textLabel?.text = task.title
-        // Configure the cell...
+        if let task = focusTasks[indexPath.row] as? ProjectTask {
+            cell.textLabel?.text = task.title
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+            
+            let strDate = dateFormatter.stringFromDate(task.dueDate)
+            
+            cell.detailTextLabel?.text = "\(Double(task.timeNeeded)) hours remaining; Due \(strDate)."
+        }
+        else if let task = focusTasks[indexPath.row] as? Assignment {
+            cell.textLabel?.text = task.title
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+            
+            let strDate = dateFormatter.stringFromDate(task.dueDate)
+            
+            cell.detailTextLabel?.text = "\(Double(task.timeNeeded)) hours remaining; Due \(strDate)."
+        }
 
         return cell
+            
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "Time Completed Segue" {
+            if let targetController = segue.destinationViewController as? TimeCompletedViewController {
+                targetController.task = focusTasks[indexSelected]
+            }
+        }
     }
     
     @IBAction func unwindAndModifyHoursCompleted(sender: UIStoryboardSegue)
     {
         if let tcvc = sender.sourceViewController as? TimeCompletedViewController {
+            
             // find object in focusArray using indexSelected
-            let objectToModify = focusTasks[indexSelected]
+//            let objectToModify = focusTasks[indexSelected]
+            let objectToModify = tcvc.task
             
             // modify hours completed 
             if let temp = objectToModify as? Assignment {
@@ -59,7 +84,7 @@ class AccountabilityTableViewController: UITableViewController {
                 }
             }
             
-            if let temp = objectToModify as? ProjectTask {
+            else if let temp = objectToModify as? ProjectTask {
                 temp.timeNeeded -= tcvc.hoursCompleted
                 
                 if temp.timeNeeded < 0 {
@@ -67,6 +92,7 @@ class AccountabilityTableViewController: UITableViewController {
                 }
             }
         }
+        tableView.reloadData()
     }
 
 }

@@ -129,7 +129,7 @@ class ProjTasksTableViewController: UITableViewController {
         
         // set subtitle to member variables of the assignment object
         cell.detailTextLabel?.text =
-            "\(Double(projTaskObj.numBlocksNeeded) / 4.0) hours remaining; Due \(strDate)."
+            "\(Double(projTaskObj.timeNeeded)) hours remaining; Due \(strDate)."
         
         return cell
     }

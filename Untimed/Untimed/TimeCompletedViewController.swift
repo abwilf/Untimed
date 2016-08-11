@@ -9,6 +9,8 @@
 import UIKit
 
 class TimeCompletedViewController: UIViewController {
+    
+    var task: Task? = nil
 
     var hoursCompleted: Double = 0
     

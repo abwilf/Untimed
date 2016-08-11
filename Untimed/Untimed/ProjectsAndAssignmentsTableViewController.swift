@@ -69,7 +69,7 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
             
             // set subtitle to member variables of the assignment object
             cell.detailTextLabel?.text =
-                "\(Double(assignment.numBlocksNeeded - assignment.numBlocksCompleted) / 4.0) hours remaining; Due \(strDate), at \(strDueTime)."
+                "\(Double(assignment.timeNeeded)) hours remaining; Due \(strDate), at \(strDueTime)."
         }
             
         // project
