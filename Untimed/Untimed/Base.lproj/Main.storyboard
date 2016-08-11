@@ -2527,10 +2527,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Today's Tasks" id="5vj-3F-3nc">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="rWr-wz-geX"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="rWr-wz-geX">
+                            <connections>
+                                <segue destination="PTf-cz-Idc" kind="unwind" unwindAction="unwindFromAccountability:" id="Rv0-VY-fOe"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TES-rF-eNd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="PTf-cz-Idc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1012.5" y="2540.5"/>
         </scene>

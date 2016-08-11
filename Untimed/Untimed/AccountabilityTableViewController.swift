@@ -8,6 +8,7 @@
 
 import UIKit
 
+// FIXME: include a button to check off tasks that you haven't specified as a focus
 class AccountabilityTableViewController: UITableViewController {
     var focusTasks: [Task] = []
     var indexSelected: Int = 0

@@ -146,10 +146,7 @@ class DailyScheduleTableViewController: UITableViewController{
     
     @IBAction func unwindFromAccountability (sender: UIStoryboardSegue) {
         if let atvc = sender.sourceViewController as? AccountabilityTableViewController {
-            // find focus tasks in the class array
-            
-            // make them equal to those in atvc.focusTasks
-            
+            // maybe get rid of tasks
         }
     }
 
@@ -269,6 +266,7 @@ class DailyScheduleTableViewController: UITableViewController{
         super.viewWillAppear(animated)
 
         // FIXME: doesn't account for case in which user doesn't check dscal before the day is over and after lastWorkingHour
+        // FIXME: only do this if tm.focusTaskAr != empty 
         let now = NSDate()
         let nowValForComparison = now.getTimeValForComparison()
         let lastWorkingValForComparison = taskManager.lastWorkingHour.getTimeValForComparison()
