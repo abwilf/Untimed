@@ -24,8 +24,12 @@ class HamburgerTableViewController: UITableViewController {
     
     @IBAction func unwindFromSettings(sender: UIStoryboardSegue) {
         if let stvc = sender.sourceViewController as? SettingsTableViewController {
-            tmObj.firstWorkingMinute = stvc.fwm
-            tmObj.lastWorkingMinute = stvc.lwm
+            tmObj.firstWorkingHour = stvc.fwh
+            tmObj.lastWorkingHour = stvc.lwh
+            
+            // this is what was missing
+            tmObj.setSettingsArray()
+            
             tmObj.save()
             
             assert(tmObj.settingsArray.count == 2, "\n\n\nsave and load settingsArray from disc failed\n\n")

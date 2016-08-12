@@ -60,16 +60,16 @@ class TaskManager: NSObject, NSCopying {
     var firstWorkingMinute = 480
     var lastWorkingMinute = 1140
     
-    var settingsArray: [Int] = []
+    var settingsArray: [NSDate] = []
     
     func setSettingsArray() {
         // clear
         settingsArray = []
         
         // refill
-        settingsArray += [firstWorkingMinute]
+        settingsArray += [firstWorkingHour]
         
-        settingsArray += [lastWorkingMinute]
+        settingsArray += [lastWorkingHour]
 }
     
     var workingCellsPerDay = 0
@@ -78,7 +78,7 @@ class TaskManager: NSObject, NSCopying {
     }
     
     var firstWorkingHour = NSDate(dateString: "08:00")
-    var lastWorkingHour = NSDate(dateString: "19:00")
+    var lastWorkingHour = NSDate(dateString: "23:00")
     
     func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = TaskManager()
@@ -937,7 +937,6 @@ class TaskManager: NSObject, NSCopying {
     
     // add save method
     func save() {
-        // save tasks array
         
         let archive: NSData = NSKeyedArchiver.archivedDataWithRootObject(classArray)
         let archiveAppt: NSData = NSKeyedArchiver.archivedDataWithRootObject(appointmentArray)
@@ -957,7 +956,6 @@ class TaskManager: NSObject, NSCopying {
     }
     
     func loadFromDisc() {
-        
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
@@ -979,8 +977,8 @@ class TaskManager: NSObject, NSCopying {
         // appt array
         appointmentArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveAppt) as? [Appointment] ?? []
         
-        // settings array
-        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [Int] {
+//        settingsArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] ?? []
+        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] {
             settingsArray = temp
         }
             

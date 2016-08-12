@@ -25,7 +25,11 @@ class DailyScheduleTableViewController: UITableViewController{
     
     func hourMinuteStringFromNSDate(date: NSDate) -> String {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
+        dateFormatter.timeStyle = .MediumStyle
+
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "h:mma"
+
         let string = dateFormatter.stringFromDate(date)
         return string
     }
@@ -294,13 +298,13 @@ class DailyScheduleTableViewController: UITableViewController{
     
     func setWorkingMinutes() {
         if taskManager.settingsArray.count == 2 {
-            taskManager.firstWorkingMinute = taskManager.settingsArray[0]
-            taskManager.lastWorkingMinute = taskManager.settingsArray[1]
+            taskManager.firstWorkingHour = taskManager.settingsArray[0]
+            taskManager.lastWorkingHour = taskManager.settingsArray[1]
         }
         
         else {
-            taskManager.firstWorkingMinute = 480
-            taskManager.lastWorkingMinute = 1140
+//            taskManager.firstWorkingMinute = 480
+//            taskManager.lastWorkingMinute = 1140
         }
     }
     override func viewWillDisappear(animated: Bool) {
@@ -694,8 +698,8 @@ class DailyScheduleTableViewController: UITableViewController{
             let targetController = destinationNavigationController.topViewController as! SettingsTableViewController
             
             // pass in minute properties.
-            targetController.fwm = taskManager.firstWorkingMinute
-            targetController.lwm = taskManager.lastWorkingMinute
+            targetController.fwh = taskManager.firstWorkingHour
+            targetController.lwh = taskManager.lastWorkingHour
         }
         
         if (segue.identifier == "Select Focus Segue") {
