@@ -57,8 +57,8 @@ class TaskManager: NSObject, NSCopying {
     var cellsPerDay = 1440
     
     // in dsCalFormat; default is 8 am to 7 pm
-    var firstWorkingMinute = 480
-    var lastWorkingMinute = 1140
+//    var firstWorkingMinute = 480
+//    var lastWorkingMinute = 1140
     
     var settingsArray: [NSDate] = []
     
@@ -73,9 +73,9 @@ class TaskManager: NSObject, NSCopying {
 }
     
     var workingCellsPerDay = 0
-    func setWorkingCellsPerDay() {
-        workingCellsPerDay = lastWorkingMinute - firstWorkingMinute
-    }
+//    func setWorkingCellsPerDay() {
+//        workingCellsPerDay = lastWorkingMinute - firstWorkingMinute
+//    }
     
     var firstWorkingHour = NSDate(dateString: "08:00")
     var lastWorkingHour = NSDate(dateString: "23:00")
@@ -483,55 +483,55 @@ class TaskManager: NSObject, NSCopying {
     }
     
     // return number of free 15 minute blocks before it's due
-    func calcFreeTimeBeforeDueDate (assignmentIn: Assignment) -> Int {
-        // variable that will store amount of free 15 minute blocks before due date
-        var numBlocks = 0
-        
-        // find due date coordinates
-        let dueDateDayCoordinate = nsDateInCalFormat(assignmentIn.dueDate).dayCoordinate
-        let dueDateMinuteCoordinate = nsDateInCalFormat(assignmentIn.dueDate).minuteCoordinate
-        
-        // find current coordinates
-        let rightNow = NSDate()
-        let rightNowDayCoordinate = nsDateInCalFormat(rightNow).dayCoordinate
-        let rightNowMinuteCoordinate = nsDateInCalFormat(rightNow).minuteCoordinate
-        
-        // compare day coordinates
-        let dayDiff = dueDateDayCoordinate - rightNowDayCoordinate
-        
-        // if it's today
-        if dayDiff == 0 {
-            // if dueDate is more than a working block's time from now, and 
-            // there's an opportunity for at least one block before lastWorkingMinute
-            // FIXME: watch out for the <=, need to ask keenan if this is right
-            if dueDateMinuteCoordinate >= rightNowMinuteCoordinate + WORKING_INTERVAL_SIZE {
-                numBlocks = numFreeBlocksInSameDayInterval(rightNowMinuteCoordinate,
-                                                           minuteCoordinate2In: dueDateMinuteCoordinate,
-                                                           dayCoordinateIn: 0)
-            }
-        }
-            
-            // if it's some day in the future
-        else {
-            // iterate through today from right now until lastworkingminute
-            numBlocks = numFreeBlocksInSameDayInterval(rightNowMinuteCoordinate,
-                                                       minuteCoordinate2In: lastWorkingMinute,
-                                                       dayCoordinateIn: 0)
-            
-            // iterate through all minutes of days that aren't today (0) or dueDateDay and add to numBlocks
-            for j in 1..<dueDateDayCoordinate {
-                numBlocks += numFreeBlocksInSameDayInterval(firstWorkingMinute,
-                                                            minuteCoordinate2In: lastWorkingMinute,
-                                                            dayCoordinateIn: j)
-            }
-            
-            // on the due date, iterate from firstworkingminute to dueDateMinuteCoordinate
-            numBlocks += numFreeBlocksInSameDayInterval(firstWorkingMinute,
-                                                        minuteCoordinate2In: dueDateMinuteCoordinate,
-                                                        dayCoordinateIn: dueDateDayCoordinate)
-        }
-        return numBlocks
-    }
+//    func calcFreeTimeBeforeDueDate (assignmentIn: Assignment) -> Int {
+//        // variable that will store amount of free 15 minute blocks before due date
+//        var numBlocks = 0
+//        
+//        // find due date coordinates
+//        let dueDateDayCoordinate = nsDateInCalFormat(assignmentIn.dueDate).dayCoordinate
+//        let dueDateMinuteCoordinate = nsDateInCalFormat(assignmentIn.dueDate).minuteCoordinate
+//        
+//        // find current coordinates
+//        let rightNow = NSDate()
+//        let rightNowDayCoordinate = nsDateInCalFormat(rightNow).dayCoordinate
+//        let rightNowMinuteCoordinate = nsDateInCalFormat(rightNow).minuteCoordinate
+//        
+//        // compare day coordinates
+//        let dayDiff = dueDateDayCoordinate - rightNowDayCoordinate
+//        
+//        // if it's today
+//        if dayDiff == 0 {
+//            // if dueDate is more than a working block's time from now, and 
+//            // there's an opportunity for at least one block before lastWorkingMinute
+//            // FIXME: watch out for the <=, need to ask keenan if this is right
+//            if dueDateMinuteCoordinate >= rightNowMinuteCoordinate + WORKING_INTERVAL_SIZE {
+//                numBlocks = numFreeBlocksInSameDayInterval(rightNowMinuteCoordinate,
+//                                                           minuteCoordinate2In: dueDateMinuteCoordinate,
+//                                                           dayCoordinateIn: 0)
+//            }
+//        }
+//            
+//            // if it's some day in the future
+//        else {
+//            // iterate through today from right now until lastworkingminute
+//            numBlocks = numFreeBlocksInSameDayInterval(rightNowMinuteCoordinate,
+//                                                       minuteCoordinate2In: lastWorkingMinute,
+//                                                       dayCoordinateIn: 0)
+//            
+//            // iterate through all minutes of days that aren't today (0) or dueDateDay and add to numBlocks
+//            for j in 1..<dueDateDayCoordinate {
+//                numBlocks += numFreeBlocksInSameDayInterval(firstWorkingMinute,
+//                                                            minuteCoordinate2In: lastWorkingMinute,
+//                                                            dayCoordinateIn: j)
+//            }
+//            
+//            // on the due date, iterate from firstworkingminute to dueDateMinuteCoordinate
+//            numBlocks += numFreeBlocksInSameDayInterval(firstWorkingMinute,
+//                                                        minuteCoordinate2In: dueDateMinuteCoordinate,
+//                                                        dayCoordinateIn: dueDateDayCoordinate)
+//        }
+//        return numBlocks
+//    }
     
     // for testing
     private func clearClassArray() {
@@ -865,68 +865,67 @@ class TaskManager: NSObject, NSCopying {
 //        }
 //    }
     
-    func putBlockInCalArrayAtFirstFreeSpotToday(assg: Assignment, dayIn: Int,
-                                                minuteIn: Int) -> (dayOut: Int, minuteOut: Int) {
-        var dayOut = 0
-        var minuteOut = 0
-        
-        // if not enough time to allocate before working hours are up, switch to tomorrow
-        if minuteIn + WORKING_INTERVAL_SIZE > lastWorkingMinute {
-            minuteOut = firstWorkingMinute
-            dayOut = dayIn + 1
-            return (dayOut, minuteOut)
-        }
-        
-        var j = 0
-        
-        // iterate through the day to where the last working block starts
-        for i in minuteIn..<lastWorkingMinute - WORKING_INTERVAL_SIZE + 1 {
-            // if there's a block available from this moment on (this ever increasing moment starting at minuteIn)
-            if isBlockFree(i, dIn: dayIn)  {
-                // allocate to it (the next 15 cells)
-                j = i
-                while (j < i + WORKING_INTERVAL_SIZE) {
-                    // safeguard
-                    if let _ = calendarArray[j][dayIn] as? Assignment {
-                        // print error message to developer because cal array should have been wiped
-                        print("ERROR! Calendar array was not properly cleared, or this allocation did not start at the correct spot (one after the previous slot was allocated to)")
-                    }
-                    calendarArray[j][dayIn] = assg
-                    j += 1
-                }
-                
-                // update minuteOut
-                minuteOut = j
-                dayOut = dayIn
-                return (dayOut, minuteOut)
-            }
-        }
-        return (dayOut, minuteOut)
-    }
+//    func putBlockInCalArrayAtFirstFreeSpotToday(assg: Assignment, dayIn: Int,
+//                                                minuteIn: Int) -> (dayOut: Int, minuteOut: Int) {
+//        var dayOut = 0
+//        var minuteOut = 0
+//        
+//        // if not enough time to allocate before working hours are up, switch to tomorrow
+//        if minuteIn + WORKING_INTERVAL_SIZE > lastWorkingMinute {
+//            minuteOut = firstWorkingMinute
+//            dayOut = dayIn + 1
+//            return (dayOut, minuteOut)
+//        }
+//        
+//        var j = 0
+//        
+//        // iterate through the day to where the last working block starts
+//        for i in minuteIn..<lastWorkingMinute - WORKING_INTERVAL_SIZE + 1 {
+//            // if there's a block available from this moment on (this ever increasing moment starting at minuteIn)
+//            if isBlockFree(i, dIn: dayIn)  {
+//                // allocate to it (the next 15 cells)
+//                j = i
+//                while (j < i + WORKING_INTERVAL_SIZE) {
+//                    // safeguard
+//                    if let _ = calendarArray[j][dayIn] as? Assignment {
+//                        // print error message to developer because cal array should have been wiped
+//                        print("ERROR! Calendar array was not properly cleared, or this allocation did not start at the correct spot (one after the previous slot was allocated to)")
+//                    }
+//                    calendarArray[j][dayIn] = assg
+//                    j += 1
+//                }
+//                
+//                // update minuteOut
+//                minuteOut = j
+//                dayOut = dayIn
+//                return (dayOut, minuteOut)
+//            }
+//        }
+//        return (dayOut, minuteOut)
+//    }
     
-    func isBlockFree(minIn: Int, dIn: Int) -> Bool {
-        // if 15 minutes in a row are free (1 block)
-        var count = 0
-        if minIn >= firstWorkingMinute {
-            for i in minIn..<(minIn + WORKING_INTERVAL_SIZE - 1) {
-                if calendarArray[minIn][dIn].title == "Unnamed Task" && isNextSameAsThis(i, col: dIn) {
-                    count += 1
-                }
-            }
-            
-            // is minus one because it only looks at whether the next one is the same.  Doesn't count for this one.
-            if count == WORKING_INTERVAL_SIZE - 1 {
-                return true
-            }
-                
-            else {
-                return false
-            }
-        }
-        
-        return false
-    }
-    
+//    func isBlockFree(minIn: Int, dIn: Int) -> Bool {
+//        // if 15 minutes in a row are free (1 block)
+//        var count = 0
+//        if minIn >= firstWorkingMinute {
+//            for i in minIn..<(minIn + WORKING_INTERVAL_SIZE - 1) {
+//                if calendarArray[minIn][dIn].title == "Unnamed Task" && isNextSameAsThis(i, col: dIn) {
+//                    count += 1
+//                }
+//            }
+//            
+//            // is minus one because it only looks at whether the next one is the same.  Doesn't count for this one.
+//            if count == WORKING_INTERVAL_SIZE - 1 {
+//                return true
+//            }
+//                
+//            else {
+//                return false
+//            }
+//        }
+//        
+//        return false
+//    }
     
     override init () {
         // also initializes member variables (tasks array)

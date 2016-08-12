@@ -374,19 +374,19 @@ class DailyScheduleTableViewController: UITableViewController{
         return false
     }
     
-    func createPrintedDSCalArray() {
-        // if task starts and ends within the working interval, add it
-        for j in 0..<28 {
-            var otherDayPCARowIndex = 0
-            for i in 0..<self.dsCalArray.count {
-                let task = dsCalArray[i][j]
-                if (task?.dsCalAdjustedStartLocation >= taskManager.firstWorkingMinute) && (task?.dsCalAdjustedEndLocation <= taskManager.lastWorkingMinute) {
-                    addToPrintedCalArray(otherDayPCARowIndex, dayCoorIn: j, taskIn: task)
-                    otherDayPCARowIndex += 1
-                }
-            }
-        }
-    }
+//    func createPrintedDSCalArray() {
+//        // if task starts and ends within the working interval, add it
+//        for j in 0..<28 {
+//            var otherDayPCARowIndex = 0
+//            for i in 0..<self.dsCalArray.count {
+//                let task = dsCalArray[i][j]
+//                if (task?.dsCalAdjustedStartLocation >= taskManager.firstWorkingMinute) && (task?.dsCalAdjustedEndLocation <= taskManager.lastWorkingMinute) {
+//                    addToPrintedCalArray(otherDayPCARowIndex, dayCoorIn: j, taskIn: task)
+//                    otherDayPCARowIndex += 1
+//                }
+//            }
+//        }
+//    }
             // allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
