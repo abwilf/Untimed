@@ -11,7 +11,6 @@ import UIKit
 class ChangeDateViewController: UIViewController {
     
     var newDate = NSDate()
-    
 
     @IBAction func changedDate(sender: UIDatePicker) {
         // min date = now        

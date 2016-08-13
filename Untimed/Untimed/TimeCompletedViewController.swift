@@ -10,6 +10,9 @@ import UIKit
 
 class TimeCompletedViewController: UIViewController {
     
+    // 0 = cal, 1 = hamburger
+    var sendingViewControllerIndicator: Int = 0
+    
     var task: Task? = nil
 
     var hoursCompleted: Double = 0
@@ -25,9 +28,15 @@ class TimeCompletedViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBOutlet weak var switchLabelFromHamburger: UILabel!
 
     @IBOutlet weak var switchLabel: UILabel!
- 
+    
+    @IBAction func stepperClickedFromHamburger(sender: UIStepper) {
+        switchLabelFromHamburger.text = "\(String(sender.value)) hours"
+        hoursCompleted = sender.value
+    }
     @IBAction func stepperClicked(sender: UIStepper) {
         switchLabel.text = "\(String(sender.value)) hours"
         hoursCompleted = sender.value

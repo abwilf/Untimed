@@ -21,6 +21,15 @@ class HamburgerTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    
+    @IBAction func tasksButtonPressed(sender: UIButton) {
+        self.performSegueWithIdentifier("To Tasks", sender: sender)
+    }
+    
+    @IBAction func calButtonpressed(sender: UIButton) {
+        self.performSegueWithIdentifier("To Cal", sender: sender)
+    }
+    
     @IBAction func markCompletePressed(sender: UIButton) {
         self.performSegueWithIdentifier("Accountability Segue", sender: sender)
     }
@@ -53,6 +62,13 @@ class HamburgerTableViewController: UITableViewController {
         }
     }
     
+    @IBAction func unwindFromAccountabilityToHamburger (sender: UIStoryboardSegue) {
+        if let atvc = sender.sourceViewController as? AccountabilityTableViewController {
+            // maybe get rid of tasks
+            tableView.reloadData()
+        }
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "Accountability Segue") {
             let destinationNavigationController = segue.destinationViewController as! UINavigationController
@@ -60,6 +76,21 @@ class HamburgerTableViewController: UITableViewController {
             
             targetController.focusTasks = tmObj.focusTasksArr
         }
+        
+        if (segue.identifier == "To Cal") {
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! DailyScheduleTableViewController
+            
+            targetController.taskManager = tmObj
+        }
+        
+        if (segue.identifier == "To Tasks") {
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! TaskTableTableViewController
+            
+            targetController.tmObj = tmObj
+        }
+        
     }
     
 }
