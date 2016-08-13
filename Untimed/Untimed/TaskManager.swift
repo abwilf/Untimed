@@ -63,6 +63,8 @@ class TaskManager: NSObject, NSCopying {
     let DAYS_IN_YEAR = 365
     let MONTHS_IN_YEAR = 12
     
+    var captureListText: String = ""
+    
     // 15 min intervals
     let WORKING_INTERVAL_SIZE = 15
     
@@ -965,12 +967,16 @@ class TaskManager: NSObject, NSCopying {
         let archiveAppt: NSData = NSKeyedArchiver.archivedDataWithRootObject(appointmentArray)
         let archiveSettings: NSData = NSKeyedArchiver.archivedDataWithRootObject(settingsArray)
         let archiveSelectedDate: NSData = NSKeyedArchiver.archivedDataWithRootObject(selectedDate)
+        let archiveCaptureListText: NSData = NSKeyedArchiver.archivedDataWithRootObject(captureListText)
+
 //        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject
         
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(archive, forKey: "classArray")
         defaults.setObject(archiveAppt, forKey: "appointmentArray")
         defaults.setObject(archiveSelectedDate, forKey: "selectedDate")
+        defaults.setObject(archiveCaptureListText, forKey: "captureListText")
+
 //        defaults.setObject(archiveCal, forKey: "calendarArray")
         
         setSettingsArray()
@@ -995,13 +1001,27 @@ class TaskManager: NSObject, NSCopying {
         
         let archiveSelectedDate = defaults.objectForKey("selectedDate") as? NSData ?? NSData()
         
+        let archiveCaptureListText = defaults.objectForKey("captureListText") as? NSData ?? NSData()
+
 //        let archiveCal = defaults.objectForKey("calendarArray") as? NSData ?? NSData()
         
+        // unarchive all objects
         classArray = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Class] ?? []
         
         appointmentArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveAppt) as? [Appointment] ?? []
         
         settingsArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] ?? []
+        
+        // captureListText
+        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCaptureListText) as? String {
+            captureListText = temp
+        }
+            
+        else {
+            captureListText = ""
+            assert(false, "save and load failed for selectedDate")
+        }
+        
         
 //        if let calArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? [[Task]] {
 //            calendarArray = calArray
@@ -1017,7 +1037,10 @@ class TaskManager: NSObject, NSCopying {
             
         else {
             selectedDate = NSDate()
-            //assert(false, "save and load failed for selectedDate")
+            assert(false, "save and load failed for selectedDate")
         }
+        
+        
+        
     }
 }

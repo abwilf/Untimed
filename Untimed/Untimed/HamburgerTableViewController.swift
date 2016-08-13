@@ -62,6 +62,17 @@ class HamburgerTableViewController: UITableViewController {
         }
     }
     
+    @IBAction func unwindFromCaptureList(sender: UIStoryboardSegue) {
+        if let clvc = sender.sourceViewController as? CaptureListViewController {
+            tmObj.captureListText = clvc.storedText
+            print (tmObj.captureListText)
+            
+            tmObj.save()
+            
+            tableView.reloadData()
+        }
+    }
+    
     @IBAction func unwindFromAccountabilityToHamburger (sender: UIStoryboardSegue) {
         if let atvc = sender.sourceViewController as? AccountabilityTableViewController {
             // maybe get rid of tasks
@@ -91,6 +102,12 @@ class HamburgerTableViewController: UITableViewController {
             targetController.tmObj = tmObj
         }
         
+        if (segue.identifier == "To Capture List") {
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! CaptureListViewController
+            
+            targetController.storedText = tmObj.captureListText
+        }
     }
     
 }
