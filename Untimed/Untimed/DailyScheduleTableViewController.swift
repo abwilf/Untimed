@@ -284,7 +284,6 @@ class DailyScheduleTableViewController: UITableViewController{
     
         // set selectedDate
         selectedDate = taskManager.selectedDate
-        print (selectedDate)
         
         // set working minutes from saved settings array
         setWorkingHours()
