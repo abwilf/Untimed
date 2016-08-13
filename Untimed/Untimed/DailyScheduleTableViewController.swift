@@ -14,6 +14,7 @@ class DailyScheduleTableViewController: UITableViewController{
     var dateLocationDay: Int = 0
     let MINS_IN_DAY = 1440
     let MINS_IN_HOUR = 60
+    let MONTHS_IN_YEAR = 12
     
     var dsCalArray: [[Task?]] = []
     var printedDSCalArray: [[Task?]] = []
@@ -174,11 +175,10 @@ class DailyScheduleTableViewController: UITableViewController{
         
     }
     
-    
     // returns appropriate calendar coordinates
     func nsDateInCalFormat(dateIn: NSDate) ->
-        (dayCoordinate: Int, minuteCoordinate: Int) {
-            // declare variable we'll need to compare with dateIn
+        (dayCoordinate: Int, minuteCoordinate: Int, hourValue: Int, minuteValue: Int) {
+            
             let currentDate = NSDate()
             
             // converting from NSCal to Integer forms
@@ -189,16 +189,131 @@ class DailyScheduleTableViewController: UITableViewController{
             let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags,
                                                                             fromDate: dateIn)
             
-            // finding day values to get dayCoordinate
+            // finding minute coordinate.  0 is midnight of today, 1439 is 11:59 pm
+            let minuteCoordinate = (dueDateComponents.hour * 60) + dueDateComponents.minute
+            
+            let hourValue = dueDateComponents.hour
+            
+            let minuteValue = dueDateComponents.minute
+            
+            // finding dayCoordinate first by finding day values
             let dueDateDay = dueDateComponents.day
             let currentDay = currentDateComponents.day
             
-            // column location in array
-            let dayCoordinate = dueDateDay - currentDay
+            // finding month values
+            let dueDateMonth = dueDateComponents.month
+            let currentMonth = currentDateComponents.month
             
-            // finding minute coordinate.  0 is midnight of today, 1439 is 11:59 pm
-            let minuteCoordinate = (dueDateComponents.hour * MINS_IN_HOUR) + dueDateComponents.minute
-            return (dayCoordinate, minuteCoordinate)
+            // finding year values
+            let dueDateYear = dueDateComponents.year
+            let currentYear = currentDateComponents.year
+            
+            // calculate column location in array
+            var dayCoordinate = 0
+            
+            // if year and month are the same, calculate only based on day coordinates
+            if dueDateYear == currentYear && dueDateMonth == currentMonth {
+                dayCoordinate = dueDateDay - currentDay
+            }
+                
+                // if month is greater and year is same
+            else if dueDateMonth > currentMonth && dueDateYear == currentYear {
+                // from here to end of this month
+                let numDaysCurrentMonth = numDaysInMonth(currentMonth)
+                dayCoordinate += numDaysCurrentMonth - currentDay
+                
+                // adding in days from all included months (need to check all months codes)
+                for i in 0..<MONTHS_IN_YEAR {
+                    if doesIncludeSameYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
+                        dayCoordinate += numDaysInMonth(i)
+                    }
+                }
+                
+                // add in days for dueDateMonth
+                dayCoordinate += dueDateDay
+            }
+                
+                // if it's next calendar year, but earlier month (november 2015 - jan 2016)
+            else if dueDateMonth <= currentMonth && dueDateYear == currentYear + 1 {
+                // from here to end of this month
+                let numDaysCurrentMonth = numDaysInMonth(currentMonth)
+                dayCoordinate += numDaysCurrentMonth - currentDay
+                
+                // adding in days from all included months (need to check all months codes)
+                for i in 0..<MONTHS_IN_YEAR {
+                    if doesIncludeNextYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
+                        dayCoordinate += numDaysInMonth(i)
+                    }
+                }
+                
+                // add in days for dueDateMonth
+                dayCoordinate += dueDateDay
+            }
+                
+                // if it's in the past
+            else if dueDateYear < currentYear {
+                dayCoordinate = -1
+                assert(false, "date appears to be in the past")
+            }
+                
+            else if dueDateMonth < currentMonth && dueDateYear == currentYear {
+                dayCoordinate = -1
+                assert(false, "date appears to be in the past")
+                
+            }
+                
+            else if dueDateMonth == currentMonth && dueDateYear == currentYear && dueDateDay < currentDay {
+                dayCoordinate = -1
+                assert(false, "date appears to be in the past")
+            }
+            
+            return (dayCoordinate, minuteCoordinate, hourValue, minuteValue)
+    }
+    
+    func doesIncludeNextYear (startMonth: Int, endMonth: Int, questionableMonth: Int) -> Bool {
+        // if greater than start, but lsess than end
+        if (questionableMonth > startMonth && questionableMonth <= MONTHS_IN_YEAR) ||
+            (questionableMonth >= 1 && questionableMonth < endMonth) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    
+    func numDaysInMonth(monthIn: Int) -> Int {
+        if monthIn == 1 || monthIn == 3 || monthIn == 5 || monthIn == 7
+            || monthIn == 8 || monthIn == 10 || monthIn == 12 {
+            return 31
+        }
+            
+        else if monthIn == 9 || monthIn == 4 || monthIn == 6 || monthIn == 11 {
+            return 30
+        }
+            
+        else if monthIn == 2 {
+            return 28
+        }
+            
+        else {
+            print ("ERROR! monthIn is incorrect in nsDateInCal function.")
+            return 0
+        }
+        
+    }
+    
+    func doesIncludeSameYear(startMonth: Int,
+                             endMonth: Int,
+                             questionableMonth: Int) -> Bool {
+        // if between the two
+        if startMonth < questionableMonth && endMonth > questionableMonth {
+            return true
+        }
+            
+        else {
+            return false
+        }
     }
     
     // supporting function
@@ -282,8 +397,17 @@ class DailyScheduleTableViewController: UITableViewController{
         
         taskManager.loadFromDisc()
     
+////         FIXME: delete
+//                taskManager.selectedDate = NSDate()
+//                taskManager.save()
+//                dateLocationDay = 0
+
         // set selectedDate
         selectedDate = taskManager.selectedDate
+        
+        // FIXME: delete
+        print (selectedDate)
+        
         
         // set working minutes from saved settings array
         setWorkingHours()

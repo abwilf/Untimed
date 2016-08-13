@@ -17,12 +17,16 @@ class ChangeDateViewController: UIViewController {
         // min date = now        
         let currentDate = NSDate()
         sender.minimumDate = currentDate
-        newDate = sender.date
-       
-        // max date = 28 days from now (where our cal array goes up to)
-        let daysToAdd: Int = 28;
+        
+        // max date = 28 - 1 days from now (where our cal array goes up to)
+        let daysToAdd: Int = 28 - 1
         let futureDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: currentDate, options: NSCalendarOptions.init(rawValue: 0))
         sender.maximumDate = futureDate
+        
+        newDate = sender.date
+        print (newDate)
+       
+        
     }
     
     

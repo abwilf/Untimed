@@ -42,6 +42,7 @@ class HamburgerTableViewController: UITableViewController {
     @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
         if let cdvc = sender.sourceViewController as? ChangeDateViewController {
             tmObj.selectedDate = cdvc.newDate
+            print (tmObj.selectedDate)
             
             tmObj.save()
             
