@@ -127,7 +127,7 @@ class DailyScheduleTableViewController: UITableViewController{
     @IBAction func unwindFromPickFocus(sender: UIStoryboardSegue) {
         
         if let paatvc = sender.sourceViewController as? ProjectsAndAssignmentsTableViewController {
-            print (paatvc.tmObj.calendarArray[0][0])
+
             taskManager = paatvc.tmObj
             taskManager.save()
             tableView.reloadData()
@@ -343,22 +343,18 @@ class DailyScheduleTableViewController: UITableViewController{
         }
         warningController.addAction(deleteAction)
     
-        if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Appointment {
-            let rescheduleAction = UIAlertAction(title: "Reschedule", style: .Default) { (action) in
-            }
-            
-            alertController.addAction(rescheduleAction)
+        if let _ = taskManager.calendarArray[dateLocationDay][indexPath.row] as? Appointment {
             alertController.addAction(deleteAction)
         }
         
-        if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? Free {
+        if let _ = taskManager.calendarArray[dateLocationDay][indexPath.row] as? Free {
             let addApptAction = UIAlertAction(title: "Add appointment", style: .Default) { (action) in
             }
             
             alertController.addAction(addApptAction)
         }
    
-        if let _ = taskManager.calendarArray[indexPath.row][dateLocationDay] as? WorkingBlock {
+        if let _ = taskManager.calendarArray[dateLocationDay][indexPath.row] as? WorkingBlock {
             let selectFocusAction = UIAlertAction(title: "Select Focus", style: .Default) { (action) in self.performSegueWithIdentifier("Select Focus Segue", sender: self)
             }
             
@@ -382,6 +378,13 @@ class DailyScheduleTableViewController: UITableViewController{
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
+    // for testing only
+    func clearSelectedDate() {
+        taskManager.selectedDate = NSDate()
+        taskManager.save()
+        dateLocationDay = 0
+    }
+    
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
@@ -397,17 +400,11 @@ class DailyScheduleTableViewController: UITableViewController{
         
         taskManager.loadFromDisc()
     
-////         FIXME: delete
-//                taskManager.selectedDate = NSDate()
-//                taskManager.save()
-//                dateLocationDay = 0
+        // FIXME: for testing only
+//        clearSelectedDate()
 
         // set selectedDate
         selectedDate = taskManager.selectedDate
-        
-        // FIXME: delete
-        print (selectedDate)
-        
         
         // set working minutes from saved settings array
         setWorkingHours()
@@ -420,6 +417,7 @@ class DailyScheduleTableViewController: UITableViewController{
             menuButton.action = "revealToggle:"
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+        
         tableView.reloadData()
     }
     

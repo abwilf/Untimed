@@ -23,10 +23,7 @@ class ChangeDateViewController: UIViewController {
         let futureDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: currentDate, options: NSCalendarOptions.init(rawValue: 0))
         sender.maximumDate = futureDate
         
-        newDate = sender.date
-        print (newDate)
-       
-        
+        newDate = sender.date        
     }
     
     

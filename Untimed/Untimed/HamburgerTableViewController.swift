@@ -21,6 +21,10 @@ class HamburgerTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    @IBAction func markCompletePressed(sender: UIButton) {
+        self.performSegueWithIdentifier("Accountability Segue", sender: sender)
+    }
+    
     @IBAction func unwindFromSettings(sender: UIStoryboardSegue) {
         if let stvc = sender.sourceViewController as? SettingsTableViewController {
             tmObj.firstWorkingHour = stvc.fwh
@@ -42,11 +46,19 @@ class HamburgerTableViewController: UITableViewController {
     @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
         if let cdvc = sender.sourceViewController as? ChangeDateViewController {
             tmObj.selectedDate = cdvc.newDate
-            print (tmObj.selectedDate)
             
             tmObj.save()
             
             tableView.reloadData()
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "Accountability Segue") {
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! AccountabilityTableViewController
+            
+            targetController.focusTasks = tmObj.focusTasksArr
         }
     }
     
