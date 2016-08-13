@@ -113,15 +113,15 @@ class DailyScheduleTableViewController: UITableViewController{
         }
     }
     
-    // update selectedDate with changed date value
-    @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
-        if let cdvc = sender.sourceViewController as? ChangeDateViewController {
-            selectedDate = cdvc.newDate
-            taskManager.loadFromDisc()
-            taskManager.allocateTime()
-            tableView.reloadData()
-        }
-    }
+//    // update selectedDate with changed date value
+//    @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
+//        if let cdvc = sender.sourceViewController as? ChangeDateViewController {
+//            selectedDate = cdvc.newDate
+//            taskManager.loadFromDisc()
+//            taskManager.allocateTime()
+//            tableView.reloadData()
+//        }
+//    }
     
     @IBAction func unwindFromPickFocus(sender: UIStoryboardSegue) {
         
@@ -282,8 +282,12 @@ class DailyScheduleTableViewController: UITableViewController{
         
         taskManager.loadFromDisc()
     
+        // set selectedDate
+        selectedDate = taskManager.selectedDate
+        print (selectedDate)
+        
         // set working minutes from saved settings array
-        setWorkingMinutes()
+        setWorkingHours()
         
         taskManager.allocateWorkingBlocksAtIndex(dayIndex: dateLocationDay)
 
@@ -296,16 +300,11 @@ class DailyScheduleTableViewController: UITableViewController{
         tableView.reloadData()
     }
     
-    func setWorkingMinutes() {
-        if taskManager.settingsArray.count == 2 {
-            taskManager.firstWorkingHour = taskManager.settingsArray[0]
-            taskManager.lastWorkingHour = taskManager.settingsArray[1]
-        }
+    func setWorkingHours() {
+        assert(taskManager.settingsArray.count == 2, "tm settings arr is wrong")
         
-        else {
-//            taskManager.firstWorkingMinute = 480
-//            taskManager.lastWorkingMinute = 1140
-        }
+        taskManager.firstWorkingHour = taskManager.settingsArray[0]
+        taskManager.lastWorkingHour = taskManager.settingsArray[1]
     }
     override func viewWillDisappear(animated: Bool) {
         //taskManager.clearWorkingBlocksAtIndex(dayIndex: dateLocationDay)

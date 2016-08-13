@@ -27,20 +27,27 @@ class HamburgerTableViewController: UITableViewController {
             tmObj.firstWorkingHour = stvc.fwh
             tmObj.lastWorkingHour = stvc.lwh
             
-            // this is what was missing
             tmObj.setSettingsArray()
+            
+            // FIXME: delete
+            print (tmObj.settingsArray)
             
             tmObj.save()
             
-            assert(tmObj.settingsArray.count == 2, "\n\n\nsave and load settingsArray from disc failed\n\n")
-            
-            // test if saving is working alright
-            tmObj.loadFromDisc()
             assert(tmObj.settingsArray.count == 2, "\n\n\nsave and load settingsArray from disc failed\n\n")
             
             tableView.reloadData()
         }
     }
     
+    @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
+        if let cdvc = sender.sourceViewController as? ChangeDateViewController {
+            tmObj.selectedDate = cdvc.newDate
+            
+            tmObj.save()
+            
+            tableView.reloadData()
+        }
+    }
     
 }

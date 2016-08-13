@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="m4n-Hk-5nz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="m4n-Hk-5nz">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -1222,7 +1222,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Untimed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HAH-k1-DSF">
                                                     <rect key="frame" x="14" y="51" width="93" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1238,6 +1238,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJG-oR-Dw1">
                                                     <rect key="frame" x="15" y="8" width="90" height="30"/>
                                                     <state key="normal" title="Change Date"/>
+                                                    <connections>
+                                                        <segue destination="SIy-8F-afs" kind="presentation" id="uh3-iL-CKt"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -1600,7 +1603,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="t6S-hw-gGi">
                             <connections>
-                                <segue destination="xae-Xh-ZOJ" kind="unwind" unwindAction="unwindAndChangeDate:" id="fxC-yo-to3"/>
+                                <segue destination="xae-Xh-ZOJ" kind="unwind" unwindAction="unwindAndChangeDate:" id="P5c-xt-EWJ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1608,7 +1611,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a19-eD-t4n" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="xae-Xh-ZOJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1414" y="526"/>
+            <point key="canvasLocation" x="-1610" y="1462"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="4bA-cx-dfp">
@@ -1644,7 +1647,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ox5-Mz-E6V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1924" y="1100"/>
+            <point key="canvasLocation" x="-1610" y="698"/>
         </scene>
         <!--Single Task Table View Controller-->
         <scene sceneID="F9y-yB-jGy">

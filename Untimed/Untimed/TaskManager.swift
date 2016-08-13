@@ -36,6 +36,7 @@ class TaskManager: NSObject, NSCopying {
     var classArray: [Class] = []
     var appointmentArray: [Appointment] = []
     var focusTasksArr: [Task] = []
+    var selectedDate: NSDate = NSDate()
     
     // calendar array = 2d array of MINS_IN_DAY (rows) by 365 days (cols)
     // FIXME: change 28 to DAYS_IN_YEAR days everywhere
@@ -940,15 +941,20 @@ class TaskManager: NSObject, NSCopying {
         let archive: NSData = NSKeyedArchiver.archivedDataWithRootObject(classArray)
         let archiveAppt: NSData = NSKeyedArchiver.archivedDataWithRootObject(appointmentArray)
         let archiveSettings: NSData = NSKeyedArchiver.archivedDataWithRootObject(settingsArray)
-
+        let archiveSelectedDate: NSData = NSKeyedArchiver.archivedDataWithRootObject(selectedDate)
+        
+        
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(archive, forKey: "classArray")
         defaults.setObject(archiveAppt, forKey: "appointmentArray")
+        defaults.setObject(archiveSelectedDate, forKey: "selectedDate")
+
         
         setSettingsArray()
         assert(settingsArray.count == 2, "setSettingsArray func failed")
-        
         defaults.setObject(archiveSettings, forKey: "settingsArray")
+        
+        
         defaults.synchronize()
         
         
@@ -964,6 +970,8 @@ class TaskManager: NSObject, NSCopying {
         
         let archiveSettings = defaults.objectForKey("settingsArray") as? NSData ?? NSData()
         
+        let archiveSelectedDate = defaults.objectForKey("selectedDate") as? NSData ?? NSData()
+        
         // every time you open the app; class array
         if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Class] {
             classArray = temp
@@ -977,12 +985,24 @@ class TaskManager: NSObject, NSCopying {
         appointmentArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveAppt) as? [Appointment] ?? []
         
 //        settingsArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] ?? []
+        
         if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] {
             settingsArray = temp
         }
             
         else {
             settingsArray = []
+        }
+        
+        
+        // selectedDate
+        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSelectedDate) as? NSDate {
+            selectedDate = temp
+        }
+            
+        else {
+            selectedDate = NSDate()
+            //assert(false, "save and load failed for selectedDate")
         }
     }
 }

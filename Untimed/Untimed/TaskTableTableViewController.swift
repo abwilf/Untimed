@@ -21,6 +21,7 @@ class TaskTableTableViewController: UITableViewController {
     
     func resetForTesting () {
         tmObj.classArray = []
+        tmObj.appointmentArray = []
         tmObj.save()
         assert(false, "Resetting tmObj in TaskTable")
     }
@@ -38,7 +39,7 @@ class TaskTableTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         
         // FIXME: use only for testing
-        // resetForTesting()
+//        resetForTesting()
         
         super.viewWillAppear(animated)
 
