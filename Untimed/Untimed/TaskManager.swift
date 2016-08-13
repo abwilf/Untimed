@@ -28,6 +28,18 @@ extension NSDate
         let intVal = Int(stringVal)
         return intVal! //Int(formatter.stringFromDate(self))!
     }
+    
+    func calendarDayIndex() -> Int {
+        let calendar = NSCalendar.currentCalendar()
+        
+        var fromDate: NSDate?, toDate: NSDate?
+        
+        calendar.rangeOfUnit(.Day, startDate: &fromDate, interval: nil, forDate: NSDate())
+        calendar.rangeOfUnit(.Day, startDate: &toDate, interval: nil, forDate: self)
+        
+        let difference = calendar.components(.Day, fromDate: fromDate!, toDate: toDate!, options: [])
+        return difference.day
+    }
 }
 
 class TaskManager: NSObject, NSCopying {
@@ -305,96 +317,96 @@ class TaskManager: NSObject, NSCopying {
         return false
     }
     
-    // returns appropriate calendar coordinates
-    func nsDateInCalFormat(dateIn: NSDate) ->
-        (dayCoordinate: Int, minuteCoordinate: Int, hourValue: Int, minuteValue: Int) {
-            
-            let currentDate = NSDate()
-            
-            // converting from NSCal to Integer forms
-            let unitFlags: NSCalendarUnit = [.Hour, .Day, .Minute, .Month, .Year]
-            
-            let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags,
-                                                                                fromDate: currentDate)
-            let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags,
-                                                                            fromDate: dateIn)
-            
-            // finding minute coordinate.  0 is midnight of today, 1439 is 11:59 pm
-            let minuteCoordinate = (dueDateComponents.hour * 60) + dueDateComponents.minute
-            
-            let hourValue = dueDateComponents.hour
-            
-            let minuteValue = dueDateComponents.minute
-            
-            // finding dayCoordinate first by finding day values
-            let dueDateDay = dueDateComponents.day
-            let currentDay = currentDateComponents.day
-            
-            // finding month values
-            let dueDateMonth = dueDateComponents.month
-            let currentMonth = currentDateComponents.month
-            
-            // finding year values
-            let dueDateYear = dueDateComponents.year
-            let currentYear = currentDateComponents.year
-            
-            // calculate column location in array
-            var dayCoordinate = 0
-            
-            // if year and month are the same, calculate only based on day coordinates
-            if dueDateYear == currentYear && dueDateMonth == currentMonth {
-                dayCoordinate = dueDateDay - currentDay
-            }
-                
-                // if month is greater and year is same
-            else if dueDateMonth > currentMonth && dueDateYear == currentYear {
-                // from here to end of this month
-                let numDaysCurrentMonth = numDaysInMonth(currentMonth)
-                dayCoordinate += numDaysCurrentMonth - currentDay
-                
-                // adding in days from all included months (need to check all months codes)
-                for i in 0..<MONTHS_IN_YEAR {
-                    if doesIncludeSameYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
-                        dayCoordinate += numDaysInMonth(i)
-                    }
-                }
-                
-                // add in days for dueDateMonth
-                dayCoordinate += dueDateDay
-            }
-                
-                // if it's next calendar year, but earlier month (november 2015 - jan 2016)
-            else if dueDateMonth <= currentMonth && dueDateYear == currentYear + 1 {
-                // from here to end of this month
-                let numDaysCurrentMonth = numDaysInMonth(currentMonth)
-                dayCoordinate += numDaysCurrentMonth - currentDay
-                
-                // adding in days from all included months (need to check all months codes)
-                for i in 0..<MONTHS_IN_YEAR {
-                    if doesIncludeNextYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
-                        dayCoordinate += numDaysInMonth(i)
-                    }
-                }
-                
-                // add in days for dueDateMonth
-                dayCoordinate += dueDateDay
-            }
-                
-                // if it's in the past
-            else if dueDateYear < currentYear {
-                dayCoordinate = -1
-            }
-                
-            else if dueDateMonth < currentMonth && dueDateYear == currentYear {
-                dayCoordinate = -1
-            }
-                
-            else if dueDateMonth == currentMonth && dueDateYear == currentYear && dueDateDay < currentDay {
-                dayCoordinate = -1
-            }
-            
-            return (dayCoordinate, minuteCoordinate, hourValue, minuteValue)
-    }
+//    // returns appropriate calendar coordinates
+//    func nsDateInCalFormat(dateIn: NSDate) ->
+//        (dayCoordinate: Int, minuteCoordinate: Int, hourValue: Int, minuteValue: Int) {
+//            
+//            let currentDate = NSDate()
+//            
+//            // converting from NSCal to Integer forms
+//            let unitFlags: NSCalendarUnit = [.Hour, .Day, .Minute, .Month, .Year]
+//            
+//            let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags,
+//                                                                                fromDate: currentDate)
+//            let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags,
+//                                                                            fromDate: dateIn)
+//            
+//            // finding minute coordinate.  0 is midnight of today, 1439 is 11:59 pm
+//            let minuteCoordinate = (dueDateComponents.hour * 60) + dueDateComponents.minute
+//            
+//            let hourValue = dueDateComponents.hour
+//            
+//            let minuteValue = dueDateComponents.minute
+//            
+//            // finding dayCoordinate first by finding day values
+//            let dueDateDay = dueDateComponents.day
+//            let currentDay = currentDateComponents.day
+//            
+//            // finding month values
+//            let dueDateMonth = dueDateComponents.month
+//            let currentMonth = currentDateComponents.month
+//            
+//            // finding year values
+//            let dueDateYear = dueDateComponents.year
+//            let currentYear = currentDateComponents.year
+//            
+//            // calculate column location in array
+//            var dayCoordinate = 0
+//            
+//            // if year and month are the same, calculate only based on day coordinates
+//            if dueDateYear == currentYear && dueDateMonth == currentMonth {
+//                dayCoordinate = dueDateDay - currentDay
+//            }
+//                
+//                // if month is greater and year is same
+//            else if dueDateMonth > currentMonth && dueDateYear == currentYear {
+//                // from here to end of this month
+//                let numDaysCurrentMonth = numDaysInMonth(currentMonth)
+//                dayCoordinate += numDaysCurrentMonth - currentDay
+//                
+//                // adding in days from all included months (need to check all months codes)
+//                for i in 0..<MONTHS_IN_YEAR {
+//                    if doesIncludeSameYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
+//                        dayCoordinate += numDaysInMonth(i)
+//                    }
+//                }
+//                
+//                // add in days for dueDateMonth
+//                dayCoordinate += dueDateDay
+//            }
+//                
+//                // if it's next calendar year, but earlier month (november 2015 - jan 2016)
+//            else if dueDateMonth <= currentMonth && dueDateYear == currentYear + 1 {
+//                // from here to end of this month
+//                let numDaysCurrentMonth = numDaysInMonth(currentMonth)
+//                dayCoordinate += numDaysCurrentMonth - currentDay
+//                
+//                // adding in days from all included months (need to check all months codes)
+//                for i in 0..<MONTHS_IN_YEAR {
+//                    if doesIncludeNextYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
+//                        dayCoordinate += numDaysInMonth(i)
+//                    }
+//                }
+//                
+//                // add in days for dueDateMonth
+//                dayCoordinate += dueDateDay
+//            }
+//                
+//                // if it's in the past
+//            else if dueDateYear < currentYear {
+//                dayCoordinate = -1
+//            }
+//                
+//            else if dueDateMonth < currentMonth && dueDateYear == currentYear {
+//                dayCoordinate = -1
+//            }
+//                
+//            else if dueDateMonth == currentMonth && dueDateYear == currentYear && dueDateDay < currentDay {
+//                dayCoordinate = -1
+//            }
+//            
+//            return (dayCoordinate, minuteCoordinate, hourValue, minuteValue)
+//    }
     
     func doesIncludeNextYear (startMonth: Int, endMonth: Int, questionableMonth: Int) -> Bool {
         // if greater than start, but lsess than end
@@ -628,8 +640,6 @@ class TaskManager: NSObject, NSCopying {
         
 //        deletePastTasks()
         
-        
-        
         // make all future spots in cal array Free before allocating again from tasks list
         clearCalArray()
         
@@ -637,9 +647,15 @@ class TaskManager: NSObject, NSCopying {
         // put appts in
         allocateAppts()
         
+        // updateCalArray()
+        
 //        allocateWorkingBlocks()
         
         //allocateAssignments()
+    }
+    
+    func updateCalArray() {
+        // FIXME: implement
     }
     
     func clearWorkingBlocksAtIndex(dayIndex index: Int) {
@@ -774,7 +790,7 @@ class TaskManager: NSObject, NSCopying {
         for i in 0..<self.appointmentArray.count {
             // if object is an appointment, assign to calendarArray
             if let appt = self.appointmentArray[i] as? Appointment {
-                apptDayCoordinate = nsDateInCalFormat(appt.startTime).dayCoordinate
+                apptDayCoordinate = appt.startTime.calendarDayIndex()
 //                let startTimeInMinCoordinates = nsDateInCalFormat(appt.startTime).minuteCoordinate
 //                let endTimeInMinCoordinates = nsDateInCalFormat(appt.endTime).minuteCoordinate
                 
@@ -786,15 +802,22 @@ class TaskManager: NSObject, NSCopying {
                 
                 // if appt repeats, allocate those repetions
                 if appt.doesRepeat {
-                    appt.allocateAppointmentRepetitions()
+                    if appt.repetitions.isEmpty {
+                        appt.allocateAppointmentRepetitions()
+                    }
+                    else {
+                         appt.updateRepetitions()
+                    }
                     for k in 0..<appt.repetitions.count {
                         let repetition = appt.repetitions[k]
-                        apptDayCoordinate = nsDateInCalFormat(repetition.startTime).dayCoordinate
+                        apptDayCoordinate = repetition.startTime.calendarDayIndex()
+//                        apptDayCoordinate = nsDateInCalFormat(repetition.startTime).dayCoordinate
 //                        let startTimeInMinCoordinates = nsDateInCalFormat(repetition.startTime).minuteCoordinate
 //                        let endTimeInMinCoordinates = nsDateInCalFormat(repetition.endTime).minuteCoordinate    
                         
                         // FIXME: make this irrelevant by deleting past repetions
                         if apptDayCoordinate >= 0 {
+                            assert(false, "/n/n past repetitions should have been removed already /n/n")
                             // allocate
                             allocateApptInCorrectSpot(repetition, day: apptDayCoordinate)
 //                            for l in startTimeInMinCoordinates..<endTimeInMinCoordinates {
@@ -942,13 +965,13 @@ class TaskManager: NSObject, NSCopying {
         let archiveAppt: NSData = NSKeyedArchiver.archivedDataWithRootObject(appointmentArray)
         let archiveSettings: NSData = NSKeyedArchiver.archivedDataWithRootObject(settingsArray)
         let archiveSelectedDate: NSData = NSKeyedArchiver.archivedDataWithRootObject(selectedDate)
-        
+//        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject
         
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(archive, forKey: "classArray")
         defaults.setObject(archiveAppt, forKey: "appointmentArray")
         defaults.setObject(archiveSelectedDate, forKey: "selectedDate")
-
+//        defaults.setObject(archiveCal, forKey: "calendarArray")
         
         setSettingsArray()
         assert(settingsArray.count == 2, "setSettingsArray func failed")
@@ -972,28 +995,20 @@ class TaskManager: NSObject, NSCopying {
         
         let archiveSelectedDate = defaults.objectForKey("selectedDate") as? NSData ?? NSData()
         
-        // every time you open the app; class array
-        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Class] {
-            classArray = temp
-        }
-            
-        else {
-            classArray = []
-        }
+//        let archiveCal = defaults.objectForKey("calendarArray") as? NSData ?? NSData()
         
-        // appt array
+        classArray = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Class] ?? []
+        
         appointmentArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveAppt) as? [Appointment] ?? []
         
-//        settingsArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] ?? []
+        settingsArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] ?? []
         
-        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] {
-            settingsArray = temp
-        }
-            
-        else {
-            settingsArray = []
-        }
-        
+//        if let calArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? [[Task]] {
+//            calendarArray = calArray
+//        }
+//        else {
+//            calendarArray = Array(count: 28, repeatedValue: Array(count: 0, repeatedValue: Free()))
+//        }
         
         // selectedDate
         if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSelectedDate) as? NSDate {

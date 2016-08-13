@@ -10,6 +10,20 @@
 
 import Foundation
 
+//extension NSDate {
+//    func calendarDayIndex() -> Int {
+//        let calendar = NSCalendar.currentCalendar()
+//        
+//        var fromDate: NSDate?, toDate: NSDate?
+//        
+//        calendar.rangeOfUnit(.Day, startDate: &fromDate, interval: nil, forDate: NSDate())
+//        calendar.rangeOfUnit(.Day, startDate: &toDate, interval: nil, forDate: self)
+//        
+//        let difference = calendar.components(.Day, fromDate: fromDate!, toDate: toDate!, options: [])
+//        return difference.day
+//    }
+//}
+
 class Task: NSObject, NSCoding {
     
     var title: String = "Unnamed Task"
@@ -26,8 +40,7 @@ class Task: NSObject, NSCoding {
     
     var startTime: NSDate = NSDate()
     var endTime: NSDate = NSDate()
-//
-//    
+    
 //    var lock: Bool = false
 //    
 //    func lockTask() {
@@ -52,7 +65,7 @@ class Task: NSObject, NSCoding {
 //    func getTaskLength() -> Int {
 //        return (dsCalAdjustedStartLocation! - dsCalAdjustedEndLocation!)
 //    }
-//    
+    
     init(title: String) {
         self.title = title
     }

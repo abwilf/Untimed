@@ -14,7 +14,7 @@ class SettingsTableViewController: UITableViewController {
 //    var fwm = 480
 //    var lwm = 1140
     var fwh = NSDate(dateString: "08:00")
-    var lwh = NSDate(dateString: "23:00")
+    var lwh = NSDate(dateString: "19:00")
     
     @IBAction func cancelPressed(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)

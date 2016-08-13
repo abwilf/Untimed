@@ -21,7 +21,6 @@ class HamburgerTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
-    
     @IBAction func unwindFromSettings(sender: UIStoryboardSegue) {
         if let stvc = sender.sourceViewController as? SettingsTableViewController {
             tmObj.firstWorkingHour = stvc.fwh

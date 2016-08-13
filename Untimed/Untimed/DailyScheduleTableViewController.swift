@@ -271,13 +271,13 @@ class DailyScheduleTableViewController: UITableViewController{
         
         super.viewWillAppear(animated)
 
-        // FIXME: doesn't account for case in which user doesn't check dscal before the day is over and after lastWorkingHour
-        // FIXME: only do this if tm.focusTaskAr != empty 
         let now = NSDate()
         let nowValForComparison = now.getTimeValForComparison()
         let lastWorkingValForComparison = taskManager.lastWorkingHour.getTimeValForComparison()
         if nowValForComparison > lastWorkingValForComparison {
-            self.performSegueWithIdentifier("Accountability Segue", sender: self)
+            if !(taskManager.focusTasksArr.isEmpty) {
+                self.performSegueWithIdentifier("Accountability Segue", sender: self)
+            }
         }
         
         taskManager.loadFromDisc()
@@ -398,7 +398,7 @@ class DailyScheduleTableViewController: UITableViewController{
         }
             
         else {
-            if indexPath.row < taskManager.calendarArray[taskManager.nsDateInCalFormat(selectedDate).dayCoordinate].count {
+            if indexPath.row < taskManager.calendarArray[selectedDate.calendarDayIndex()].count {
                 let task = taskManager.calendarArray[dateLocationDay][indexPath.row]
             
                 var label = ""
@@ -502,38 +502,40 @@ class DailyScheduleTableViewController: UITableViewController{
         }
     }
     
-    func addToPrintedCalArray(printedCalRowIn: Int, dayCoorIn: Int, taskIn: Task?) {
-        
-        if let temp = taskIn as? Free {
-            
-            temp.title = "\(taskManager.nsDateInCalFormat(temp.startTime).hourValue): \(taskManager.nsDateInCalFormat(temp.startTime).minuteValue) - \(taskManager.nsDateInCalFormat(temp.endTime).hourValue): \(taskManager.nsDateInCalFormat(temp.endTime).minuteValue)"
-            
-//            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": Free"
+//    func addToPrintedCalArray(printedCalRowIn: Int, dayCoorIn: Int, taskIn: Task?) {
+//        
+//        if let temp = taskIn as? Free {
+//            
+//            temp.title = "\(temp.startTime.cal)
+//            
+//            temp.title = "\(taskManager.nsDateInCalFormat(temp.startTime).hourValue): \(taskManager.nsDateInCalFormat(temp.startTime).minuteValue) - \(taskManager.nsDateInCalFormat(temp.endTime).hourValue): \(taskManager.nsDateInCalFormat(temp.endTime).minuteValue)"
+//            
+////            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": Free"
+////            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
+//        }
+//        
+//        if let temp = taskIn as? Appointment {
+//            let titleTemp = temp.title
+//            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": " + titleTemp
 //            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
-        }
-        
-        if let temp = taskIn as? Appointment {
-            let titleTemp = temp.title
-            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": " + titleTemp
-            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
-        }
-        
-        if let temp = taskIn as? WorkingBlock {
-            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": Working Block"
-            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
-        }
-        
-        
-        //        if let temp = taskManager.calendarArray[endCoor][dayCoor] as? Assignment {
-        
-        //            temp.addAssignmentBlock(startCoor, adjustedEndTime: endCoor, dayCoord: dayCoor)
-        //
-        //            addTaskToDSCal(dayCoor, taskIn: temp.assignmentBlocks[0], oDIndexIn: oDRowIndex)
-        //
-        //            temp.removeFirstBlock()
-        //        }
-        
-    }
+//        }
+//        
+//        if let temp = taskIn as? WorkingBlock {
+//            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": Working Block"
+//            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
+//        }
+//        
+//        
+//        //        if let temp = taskManager.calendarArray[endCoor][dayCoor] as? Assignment {
+//        
+//        //            temp.addAssignmentBlock(startCoor, adjustedEndTime: endCoor, dayCoord: dayCoor)
+//        //
+//        //            addTaskToDSCal(dayCoor, taskIn: temp.assignmentBlocks[0], oDIndexIn: oDRowIndex)
+//        //
+//        //            temp.removeFirstBlock()
+//        //        }
+//        
+//    }
     
     func copyAtRow(arr: [[Task?]], row: Int) -> [Task?] {
         var newRow = [Task?]()

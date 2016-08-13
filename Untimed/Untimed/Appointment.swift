@@ -38,7 +38,7 @@ class Appointment: Task {
     // 2: every weekday
     // 3: weekly
     // 4: custom
-    var repeatOptionsIndex = 1
+    var repeatOptionsIndex = 0
     
     // FIXME: either make it a bool or make a third option for after so many repetitions
     // 0: never
@@ -65,20 +65,64 @@ class Appointment: Task {
         }
     }
     
+    func updateRepetitions() {
+        if !doesRepeat {
+            return
+        }
+        else if repeatOptionsIndex == 1 {
+             updateRepeatDaily()
+        }
+        else if repeatOptionsIndex == 2 {
+             updateRepeatEveryWeekday()
+        }
+        else if repeatOptionsIndex == 3 {
+             updateRepeatWeekly()
+        }
+        else if repeatOptionsIndex == 4 {
+             updateRepeatCustom()
+        }
+    }
+    
     private func repeatDaily() {
         // FIXME: how to work without endRepeat Date
-        for i in 1..<28 {
+        for i in 1..<26 {
             let daysToAdd = i
             
             let calculatedStartDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: startTime, options: NSCalendarOptions.init(rawValue: 0))
             let calculatedEndDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: endTime, options: NSCalendarOptions.init(rawValue: 0))
             
-            let appointmentToAdd = Appointment()
-            appointmentToAdd.title = self.title
-            appointmentToAdd.startTime = calculatedStartDate!
-            appointmentToAdd.endTime = calculatedEndDate!
+            if calculatedStartDate?.calendarDayIndex() < 28 {
+                let appointmentToAdd = Appointment()
+                appointmentToAdd.title = self.title
+                appointmentToAdd.startTime = calculatedStartDate!
+                appointmentToAdd.endTime = calculatedEndDate!
+                
+                repetitions.append(appointmentToAdd)
+            }
+            else {
+                return
+            }
+        }
+    }
+    
+    private func updateRepeatDaily() {
+        assert(!repetitions.isEmpty, "\n\n Can't update an empty repetitions array \n\n")
+        while repetitions[0].startTime.calendarDayIndex() < 0 {
+            repetitions.removeFirst()
+            let lastRep = repetitions.last!
+            let calculatedStartDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: 1, toDate: lastRep.startTime, options: NSCalendarOptions.init(rawValue: 0))
+            let calculatedEndDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: 1, toDate: lastRep.endTime, options: NSCalendarOptions.init(rawValue: 0))
             
-            repetitions.append(appointmentToAdd)
+            if calculatedStartDate?.calendarDayIndex() < 28 {
+                let appointmentToAdd = Appointment()
+                appointmentToAdd.title = self.title
+                appointmentToAdd.startTime = calculatedStartDate!
+                appointmentToAdd.endTime = calculatedEndDate!
+                repetitions.append(appointmentToAdd)
+            }
+            else {
+                return
+            }
         }
     }
     
@@ -86,18 +130,43 @@ class Appointment: Task {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EEEE"
         
-        for i in 1..<28 {
+        for i in 1..<19 {
             let daysToAdd = i
             
             let calculatedStartDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Weekday, value: daysToAdd, toDate: startTime, options: NSCalendarOptions.init(rawValue: 0))
             let calculatedEndDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Weekday, value: daysToAdd, toDate: endTime, options: NSCalendarOptions.init(rawValue: 0))
             
-            let appointmentToAdd = Appointment()
-            appointmentToAdd.title = self.title
-            appointmentToAdd.startTime = calculatedStartDate!
-            appointmentToAdd.endTime = calculatedEndDate!
+            if calculatedStartDate?.calendarDayIndex() < 28 {
+                let appointmentToAdd = Appointment()
+                appointmentToAdd.title = self.title
+                appointmentToAdd.startTime = calculatedStartDate!
+                appointmentToAdd.endTime = calculatedEndDate!
+                repetitions.append(appointmentToAdd)
+            }
+            else {
+                return
+            }
+        }
+    }
+    
+    private func updateRepeatEveryWeekday() {
+        assert(!repetitions.isEmpty, "\n\n Can't update an empty repetitions array \n\n")
+        while repetitions[0].startTime.calendarDayIndex() < 0 {
+            repetitions.removeFirst()
+            let lastRep = repetitions.last!
+            let calculatedStartDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Weekday, value: 1, toDate: lastRep.startTime, options: NSCalendarOptions.init(rawValue: 0))
+            let calculatedEndDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Weekday, value: 1, toDate: lastRep.endTime, options: NSCalendarOptions.init(rawValue: 0))
             
-            repetitions.append(appointmentToAdd)
+            if calculatedStartDate?.calendarDayIndex() < 28 {
+                let appointmentToAdd = Appointment()
+                appointmentToAdd.title = self.title
+                appointmentToAdd.startTime = calculatedStartDate!
+                appointmentToAdd.endTime = calculatedEndDate!
+                repetitions.append(appointmentToAdd)
+            }
+            else {
+                return
+            }
         }
     }
     
@@ -108,12 +177,38 @@ class Appointment: Task {
             let calculatedStartDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: startTime, options: NSCalendarOptions.init(rawValue: 0))
             let calculatedEndDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: daysToAdd, toDate: endTime, options: NSCalendarOptions.init(rawValue: 0))
             
-            let appointmentToAdd = Appointment()
-            appointmentToAdd.title = self.title
-            appointmentToAdd.startTime = calculatedStartDate!
-            appointmentToAdd.endTime = calculatedEndDate!
+            if calculatedStartDate?.calendarDayIndex() < 28 {
+                let appointmentToAdd = Appointment()
+                appointmentToAdd.title = self.title
+                appointmentToAdd.startTime = calculatedStartDate!
+                appointmentToAdd.endTime = calculatedEndDate!
+                
+                repetitions.append(appointmentToAdd)
+            }
+            else {
+                return
+            }
+        }
+    }
+    
+    private func updateRepeatWeekly() {
+        assert(!repetitions.isEmpty, "\n\n Can't update an empty repetitions array \n\n")
+        while repetitions[0].startTime.calendarDayIndex() < 0 {
+            repetitions.removeFirst()
+            let lastRep = repetitions.last!
+            let calculatedStartDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Weekday, value: 7, toDate: lastRep.startTime, options: NSCalendarOptions.init(rawValue: 0))
+            let calculatedEndDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Weekday, value: 7, toDate: lastRep.endTime, options: NSCalendarOptions.init(rawValue: 0))
             
-            repetitions.append(appointmentToAdd)
+            if calculatedStartDate?.calendarDayIndex() < 28 {
+                let appointmentToAdd = Appointment()
+                appointmentToAdd.title = self.title
+                appointmentToAdd.startTime = calculatedStartDate!
+                appointmentToAdd.endTime = calculatedEndDate!
+                repetitions.append(appointmentToAdd)
+            }
+            else {
+                return
+            }
         }
     }
     
@@ -137,7 +232,35 @@ class Appointment: Task {
                 
                 repetitions.append(appointmentToAdd)
             }
+        }
+    }
+    
+    private func updateRepeatCustom() {
+        assert(!repetitions.isEmpty, "\n\n Can't update an empty repetitions array \n\n")
+        while repetitions[0].startTime.calendarDayIndex() < 0 {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "EEEE"
             
+            repetitions.removeFirst()
+            let lastRep = repetitions.last!
+            
+            let calculatedStartDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Weekday, value: 1, toDate: lastRep.startTime, options: NSCalendarOptions.init(rawValue: 0))
+            let calculatedEndDate = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Weekday, value: 1, toDate: lastRep.endTime, options: NSCalendarOptions.init(rawValue: 0))
+            
+            if calculatedStartDate?.calendarDayIndex() < 28 {
+                let dayOfWeek = dateFormatter.stringFromDate(calculatedStartDate!)
+                if repeatDaysIndex[dayStringToIndex[dayOfWeek]!] {
+                    let appointmentToAdd = Appointment()
+                    appointmentToAdd.title = self.title
+                    appointmentToAdd.startTime = calculatedStartDate!
+                    appointmentToAdd.endTime = calculatedEndDate!
+                    
+                    repetitions.append(appointmentToAdd)
+                }
+            }
+            else {
+                return
+            }
         }
     }
     
@@ -247,11 +370,12 @@ class Appointment: Task {
         aCoder.encodeObject(title, forKey:"Title")
         aCoder.encodeInteger(repeatOptionsIndex, forKey:"Repeat Options Index")
         
-        
         aCoder.encodeObject(repeatDaysIndex, forKey: "Repeat Days Index")
         
         
         aCoder.encodeObject(endRepeatDate, forKey: "End RepeatDate")
+        
+        aCoder.encodeObject(repetitions, forKey: "repetitions")
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -266,6 +390,8 @@ class Appointment: Task {
         
         self.endRepeatDate = aDecoder.decodeObjectForKey("End Repeat Date") as? NSDate
         aDecoder.decodeObjectForKey("Title") as? String
+        
+        self.repetitions = aDecoder.decodeObjectForKey("repetitions") as? [Appointment] ?? []
     }
     
 }
