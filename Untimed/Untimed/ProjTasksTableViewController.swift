@@ -39,6 +39,10 @@ class ProjTasksTableViewController: UITableViewController {
 
     }
     
+//    override func viewWillDisappear(animated: Bool) {
+//        updateFocusTasks()
+//    }
+//    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1

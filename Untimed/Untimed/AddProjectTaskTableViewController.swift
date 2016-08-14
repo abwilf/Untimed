@@ -18,7 +18,7 @@ class AddProjectTaskTableViewController: UITableViewController {
     @IBOutlet weak var switchLabel: UILabel!
     
     @IBAction func stepperPressed(sender: UIStepper) {
-        addedProjTask.numBlocksNeeded = Int(sender.value * 4)
+        addedProjTask.timeNeeded = Double(sender.value)
         switchLabel.text = "\(String(sender.value)) hours"
     }
     

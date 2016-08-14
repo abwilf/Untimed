@@ -11,7 +11,6 @@ import Foundation
 class ProjectTask: Task {
 //    var projInClassArrIndex: Int = 0
 //    var projInTaskArrIndex: Int = 0
-    var numBlocksNeeded = 0
     var timeNeeded: Double = 0
     
     var indexInProjAndAssnArr: Int? = nil
@@ -22,12 +21,12 @@ class ProjectTask: Task {
     
     override func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(title, forKey:"Title")
-        aCoder.encodeInteger(numBlocksNeeded, forKey: "numBlocksNeeded")
+        aCoder.encodeDouble(timeNeeded, forKey: "timeNeeded")
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         aDecoder.decodeObjectForKey("Title") as! String
-        self.numBlocksNeeded = aDecoder.decodeIntegerForKey("numBlocksNeeded")
+        self.timeNeeded = aDecoder.decodeDoubleForKey("timeNeeded")
     }
 }

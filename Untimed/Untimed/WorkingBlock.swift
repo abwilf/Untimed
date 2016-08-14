@@ -10,4 +10,19 @@ import Foundation
 
 class WorkingBlock: Task {
     var focusArr: [Task] = []
+    
+    override init() {
+        super.init()
+    }
+    
+    override func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(title, forKey:"Title")
+        aCoder.encodeObject(focusArr, forKey: "focusArr")
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        aDecoder.decodeObjectForKey("Title") as! String
+        self.focusArr = aDecoder.decodeObjectForKey("focusArr") as? [Task] ?? []
+    }
 }

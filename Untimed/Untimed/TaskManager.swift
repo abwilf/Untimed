@@ -1019,7 +1019,8 @@ class TaskManager: NSObject, NSCopying {
             
         else {
             captureListText = ""
-            assert(false, "save and load failed for selectedDate")
+            // FIXME: this will fail for user's first run
+//            assert(false, "save and load failed for selectedDate")
         }
         
         
@@ -1031,14 +1032,15 @@ class TaskManager: NSObject, NSCopying {
 //        }
         
         // selectedDate
-        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSelectedDate) as? NSDate {
-            selectedDate = temp
-        }
-            
-        else {
+//        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSelectedDate) as? NSDate {
+//            selectedDate = temp
+//        }
+//            
+//        else {
             selectedDate = NSDate()
-            assert(false, "save and load failed for selectedDate")
-        }
+        // FIXME: this is just for testing
+//            assert(false, "save and load failed for selectedDate")
+//        }
         
         
         
