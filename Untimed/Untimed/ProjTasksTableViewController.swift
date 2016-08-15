@@ -85,6 +85,7 @@ class ProjTasksTableViewController: UITableViewController {
                     tmObj.focusTasksArr += [selectedProject.projTaskArr[ptIndex]]
                     if let wb = tmObj.calendarArray[dateLocationDay][wbIndex] as? WorkingBlock {
                         wb.focusArr += [selectedProject.projTaskArr[ptIndex]]
+                        wb.hasFocus = true
                     }
                 }
             }

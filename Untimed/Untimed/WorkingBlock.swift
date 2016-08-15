@@ -10,6 +10,8 @@ import Foundation
 
 class WorkingBlock: Task {
     var focusArr: [Task] = []
+    // should be saved if it contains a focus
+    var hasFocus = false
     
     override init() {
         super.init()
