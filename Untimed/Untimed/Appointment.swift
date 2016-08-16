@@ -346,9 +346,6 @@ class Appointment: Task {
         return dayIndexToString[dateComponents.day]!
     }
     
-//    var dsCalAdjustedStartLocation: Int? = nil
-//    var dsCalAdjustedEndLocation: Int? = nil
-    
     func adjustEndTime() -> Int {
         let unitFlags: NSCalendarUnit = [.Minute, .Hour, .Day, .Month, .Year]
         

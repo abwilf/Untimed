@@ -26,7 +26,7 @@ class AddAssignmentTableViewController: UITableViewController {
     @IBAction func unwindFromPickAClass(sender: UIStoryboardSegue) {
         if let pactvc =
             sender.sourceViewController as? PickAClassTableViewController {
-            addedAssignment.classClassArrIndex = pactvc.index
+//            addedAssignment.classClassArrIndex = pactvc.index
         }
     }
     
@@ -53,7 +53,7 @@ class AddAssignmentTableViewController: UITableViewController {
     @IBOutlet weak var switchLabel: UILabel!
     
     @IBAction func addButtonPressed(sender: UIStepper) {
-        addedAssignment.numBlocksNeeded = Int(sender.value * 4)
+        addedAssignment.timeNeeded = Double(sender.value)
         switchLabel.text = "\(String(sender.value)) hours"
     }
     

@@ -23,18 +23,18 @@ class PickAProjectTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return classObj.projOnlyArray.count
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Project Cell", forIndexPath: indexPath)
-
-        cell.textLabel?.text = classObj.projOnlyArray[indexPath.row].title
-
-        return cell
-    }
+//
+//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return classObj.projOnlyArray.count
+//    }
+//    
+//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCellWithIdentifier("Project Cell", forIndexPath: indexPath)
+//
+//        cell.textLabel?.text = classObj.projOnlyArray[indexPath.row].title
+//
+//        return cell
+//    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let indexSelected = tableView.indexPathForSelectedRow?.row {

@@ -81,7 +81,7 @@ class SingleTaskTableViewController: UITableViewController {
             detailOneLabel.text = "\(strDate) at \(strDueTime)"
             
             titleTwoLabel.text = "Time Remaining"
-            detailTwoLabel.text = "\(Double(assignment.numBlocksNeeded) / 4.0)"
+            detailTwoLabel.text = "\(Double(assignment.timeNeeded))"
         }
     }
     
@@ -144,7 +144,7 @@ class SingleTaskTableViewController: UITableViewController {
             detailOneLabel.text = "\(strDate) at \(strDueTime)"
             
             titleTwoLabel.text = "Time Remaining"
-            detailTwoLabel.text = "\(Double(assignment.numBlocksNeeded) / 4.0)"
+            detailTwoLabel.text = "\(Double(assignment.timeNeeded))"
         }
     }
     

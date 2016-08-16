@@ -161,26 +161,6 @@ class TaskManager: NSObject {
     var assignmentArray = [Assignment]()
     var orderedAssignmentArray = [Assignment]()
     
-    // FIXME: where is this used?
-    func createProjOnlyArray() {
-        // go through projAndAssnArray for all classes and create projOnly array for each
-        for j in 0..<classArray.count {
-            // wipe for each class
-            classArray[j].projOnlyArray = []
-            
-            // refill
-            for i in 0..<classArray[j].projAndAssns.count {
-                if let project = classArray[j].projAndAssns[i] as? Project {
-                    // note its position in the original array
-                    project.indexInProjAndAssnArr = i
-                    
-                    // add to projOnlyArray
-                    classArray[j].projOnlyArray += [project]
-                }
-            }
-        }
-    }
-    
     func numDaysInMonth(monthIn: Int) -> Int {
         if monthIn == 1 || monthIn == 3 || monthIn == 5 || monthIn == 7
             || monthIn == 8 || monthIn == 10 || monthIn == 12 {
@@ -234,14 +214,14 @@ class TaskManager: NSObject {
 //        deletePastTasks()
         
         // make all future spots in cal array Free before allocating again from tasks list
-//        clearCalArray()
+        clearCalArray()
         
         // updateCalArr()
         
         // put appts in
-//        allocateAppts()
+        allocateAppts()
         
-         updateCalArray()
+//         updateCalArray()
         
 //        allocateWorkingBlocks()
         
@@ -414,7 +394,7 @@ class TaskManager: NSObject {
                         
                         // FIXME: make this irrelevant by deleting past repetions
                         if apptDayCoordinate >= 0 {
-                            assert(false, "/n/n past repetitions should have been removed already /n/n")
+//                            assert(false, "/n/n past repetitions should have been removed already /n/n")
                             // allocate
                             allocateApptInCorrectSpot(repetition, day: apptDayCoordinate)
 //                            for l in startTimeInMinCoordinates..<endTimeInMinCoordinates {
@@ -442,7 +422,7 @@ class TaskManager: NSObject {
         let archiveSettings: NSData = NSKeyedArchiver.archivedDataWithRootObject(settingsArray)
         let archiveSelectedDate: NSData = NSKeyedArchiver.archivedDataWithRootObject(selectedDate)
         let archiveCaptureListText: NSData = NSKeyedArchiver.archivedDataWithRootObject(captureListText)
-        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject(calendarArray)
+//        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject(calendarArray)
         let archiveDateLastUsed: NSData = NSKeyedArchiver.archivedDataWithRootObject(dateLastUsed)
 
 //        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject
@@ -452,7 +432,7 @@ class TaskManager: NSObject {
         defaults.setObject(archiveAppt, forKey: "appointmentArray")
         defaults.setObject(archiveSelectedDate, forKey: "selectedDate")
         defaults.setObject(archiveCaptureListText, forKey: "captureListText")
-        defaults.setObject(archiveCal, forKey: "calendarArray")
+//        defaults.setObject(archiveCal, forKey: "calendarArray")
         defaults.setObject(archiveDateLastUsed, forKey: "dateLastUsed")
         
         setSettingsArray()
@@ -479,7 +459,7 @@ class TaskManager: NSObject {
         
         let archiveCaptureListText = defaults.objectForKey("captureListText") as? NSData ?? NSData()
 
-        let archiveCal = defaults.objectForKey("calendarArray") as? NSData ?? NSData()
+//        let archiveCal = defaults.objectForKey("calendarArray") as? NSData ?? NSData()
         
         // unarchive all objects
         classArray = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Class] ?? []
@@ -500,14 +480,14 @@ class TaskManager: NSObject {
         }
         
         
-        if let calArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? [[Task]] {
-            calendarArray = calArray
-        }
-        else {
-            calendarArray = Array(count: 28, repeatedValue: Array(count: 0, repeatedValue: Free()))
-        }
-        
-        dateLastUsed = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? NSDate ?? NSDate()
+//        if let calArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? [[Task]] {
+//            calendarArray = calArray
+//        }
+//        else {
+//            calendarArray = Array(count: 28, repeatedValue: Array(count: 0, repeatedValue: Free()))
+//        }
+//        
+//        dateLastUsed = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? NSDate ?? NSDate()
         
         // selectedDate
 //        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSelectedDate) as? NSDate {

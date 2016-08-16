@@ -238,7 +238,7 @@ class TaskTableTableViewController: UITableViewController {
         if (segue.identifier == "Add Project Task Segue") {
             
             // update all class array elements with proj only arrays
-            tmObj.createProjOnlyArray()
+//            tmObj.createProjOnlyArray()
             
             let destinationNavigationController = segue.destinationViewController as! UINavigationController
             let targetController = destinationNavigationController.topViewController as! AddProjectTaskTableViewController

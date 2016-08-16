@@ -326,25 +326,54 @@ class DailyScheduleTableViewController: UITableViewController{
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        let warningController = UIAlertController(title: "Are you sure you want to delete this appointment?", message: nil, preferredStyle: .Alert)
+        
+        // for non-repeating appointments
+        let warningControllerSingle = UIAlertController(title: nil, message: "Are you sure you want to delete this appointment?", preferredStyle: .Alert)
+        
+        // for repeating appointments
+        let warningControllerRepeating = UIAlertController(title: nil, message: "Would you like to delete only this appointment, or all future instances of this appointment?", preferredStyle: .Alert)
         
         // cancel action
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
         }
     
         alertController.addAction(cancelAction)
-        warningController.addAction(cancelAction)
+        warningControllerSingle.addAction(cancelAction)
+        warningControllerRepeating.addAction(cancelAction)
+        
+        
         
         // delete action
-        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
+        let deleteActionSingle = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
             // delete warning
-            self.presentViewController(warningController, animated: true) {
+            self.presentViewController(warningControllerSingle, animated: true) {
             }
         }
-        warningController.addAction(deleteAction)
+        let deleteActionRepeating = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
+            // delete warning
+            self.presentViewController(warningControllerRepeating, animated: true) {
+            }
+        }
+        let deleteActionSingleInstance = UIAlertAction(title: "Only this instance", style: .Destructive) { (action) in
+//            self.presentViewController(warningControllerRepeating, animated: true) {
+//            }
+        }
+        let deleteActionAllInstances = UIAlertAction(title: "All instances of this appointment", style: .Destructive) { (action) in
+//            self.presentViewController(warningControllerRepeating, animated: true) {
+//            }
+        }
+        
+        warningControllerSingle.addAction(deleteActionSingle)
+        warningControllerRepeating.addAction(deleteActionSingleInstance)
+        warningControllerRepeating.addAction(deleteActionAllInstances)
     
-        if let _ = taskManager.calendarArray[dateLocationDay][indexPath.row] as? Appointment {
-            alertController.addAction(deleteAction)
+        if let appt = taskManager.calendarArray[dateLocationDay][indexPath.row] as? Appointment {
+            if appt.doesRepeat {
+                alertController.addAction(deleteActionRepeating)
+            }
+            else {
+                alertController.addAction(deleteActionSingle)
+            }
         }
         
         if let _ = taskManager.calendarArray[dateLocationDay][indexPath.row] as? Free {
