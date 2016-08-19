@@ -92,6 +92,7 @@ class TaskManager: NSObject {
     
     func addAppointment(apptIn: Appointment) {
         appointmentArray.append(apptIn)
+        save()
     }
     
     func deleteClass(classIn: Class) {
@@ -143,13 +144,17 @@ class TaskManager: NSObject {
         projIn.projTaskArr.removeAtIndex(index)
     }
     
-    func deleteAppointment(apptIn: Appointment) {
+    func deleteAllInstancesOf(appointment apptIn: Appointment) {
         for i in 0..<appointmentArray.count {
             if appointmentArray[i] == apptIn {
                 appointmentArray.removeAtIndex(i)
                 return
             }
         }
+    }
+    
+    func deleteSingleInstance(dayIndex col: Int, rowIndex row: Int) {
+        calendarArray[col].removeAtIndex(row)
     }
     
     func calArrayDescriptionAtIndex(min: Int, day: Int) {
@@ -208,12 +213,7 @@ class TaskManager: NSObject {
         // for testing
 //        clearAppointmentArray()
 //        save()
-
-        // setCellsPerDay()
         
-//        deletePastTasks()
-        
-        // make all future spots in cal array Free before allocating again from tasks list
         clearCalArray()
         
         // updateCalArr()
@@ -224,8 +224,6 @@ class TaskManager: NSObject {
 //         updateCalArray()
         
 //        allocateWorkingBlocks()
-        
-        //allocateAssignments()
     }
     
     func updateCalArray() {
@@ -455,7 +453,7 @@ class TaskManager: NSObject {
         
         let archiveSettings = defaults.objectForKey("settingsArray") as? NSData ?? NSData()
         
-//        let archiveSelectedDate = defaults.objectForKey("selectedDate") as? NSData ?? NSData()
+        let archiveSelectedDate = defaults.objectForKey("selectedDate") as? NSData ?? NSData()
         
         let archiveCaptureListText = defaults.objectForKey("captureListText") as? NSData ?? NSData()
 
@@ -490,15 +488,17 @@ class TaskManager: NSObject {
 //        dateLastUsed = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? NSDate ?? NSDate()
         
         // selectedDate
-//        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSelectedDate) as? NSDate {
-//            selectedDate = temp
-//        }
-//            
-//        else {
+        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSelectedDate) as? NSDate {
+            selectedDate = temp
+            if selectedDate.calendarDayIndex() < 0 {
+                selectedDate = NSDate()
+            }
+        }
+        else {
             selectedDate = NSDate()
         // FIXME: this is just for testing
 //            assert(false, "save and load failed for selectedDate")
-//        }
+        }
         
         
         

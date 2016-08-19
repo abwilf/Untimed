@@ -12,9 +12,6 @@ import UIKit
 class DailyScheduleTableViewController: UITableViewController{
     var taskManager = TaskManager()
     var dateLocationDay: Int = 0
-    let MINS_IN_DAY = 1440
-    let MINS_IN_HOUR = 60
-    let MONTHS_IN_YEAR = 12
     
     var dsCalArray: [[Task?]] = []
     var printedDSCalArray: [[Task?]] = []
@@ -33,63 +30,6 @@ class DailyScheduleTableViewController: UITableViewController{
 
         let string = dateFormatter.stringFromDate(date)
         return string
-    }
-    
-    func minInHrCoord(minuteCoordinateIn: Int) -> String {
-        var hour = 0
-        var minute = 0
-        
-        // start at a.m.
-        var whichTime = 0
-        
-        // calculate hour
-        hour = minuteCoordinateIn / 60
-        
-        // decide if a.m. (0) or p.m. (1)
-        if hour < 12 {
-            whichTime = 0
-        }
-        
-        else {
-            whichTime = 1
-        }
-        
-        // midnight of the following day is in a.m.
-        if hour == 24 && minute == 0 {
-            whichTime = 0
-        }
-        
-        // convert from 24 hour time to 12 hour time
-        if hour > 12 {
-            hour -= 12
-        }
-        
-        if hour == 0 {
-            hour = 12
-        }
-        // calculate minute
-        minute = minuteCoordinateIn % 60
-        
-        // fix the 10:00 problem
-        if minute < 10 {
-            if whichTime == 0 {
-                return "\(hour):0\(minute) am"
-            }
-                
-            else {
-                return "\(hour):0\(minute) pm"
-            }
-        }
-        
-        else {
-            if whichTime == 0 {
-                return "\(hour):\(minute) am"
-            }
-                
-            else {
-                return "\(hour):\(minute) pm"
-            }
-        }
     }
     
     var selectedDate = NSDate() {
@@ -114,15 +54,16 @@ class DailyScheduleTableViewController: UITableViewController{
         }
     }
     
-//    // update selectedDate with changed date value
-//    @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
-//        if let cdvc = sender.sourceViewController as? ChangeDateViewController {
-//            selectedDate = cdvc.newDate
-//            taskManager.loadFromDisc()
-//            taskManager.allocateTime()
-//            tableView.reloadData()
-//        }
-//    }
+    // update selectedDate with changed date value
+    @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
+        if let cdvc = sender.sourceViewController as? ChangeDateViewController {
+            selectedDate = cdvc.newDate
+            taskManager.save()
+            taskManager.loadFromDisc()
+            taskManager.allocateTime()
+            tableView.reloadData()
+        }
+    }
     
     @IBAction func unwindFromPickFocus(sender: UIStoryboardSegue) {
         
@@ -154,9 +95,8 @@ class DailyScheduleTableViewController: UITableViewController{
         }
     }
 
-    
     func updateTitle() {
-        dateLocationDay = nsDateInCalFormat(selectedDate).dayCoordinate
+        dateLocationDay = selectedDate.calendarDayIndex()
         if dateLocationDay == 0 {
             title = "Today"
         }
@@ -172,154 +112,6 @@ class DailyScheduleTableViewController: UITableViewController{
             let printedDate = dateFormatter.stringFromDate(selectedDate)
             title = "\(printedDate)"
         }
-        
-    }
-    
-    // returns appropriate calendar coordinates
-    func nsDateInCalFormat(dateIn: NSDate) ->
-        (dayCoordinate: Int, minuteCoordinate: Int, hourValue: Int, minuteValue: Int) {
-            
-            let currentDate = NSDate()
-            
-            // converting from NSCal to Integer forms
-            let unitFlags: NSCalendarUnit = [.Hour, .Day, .Minute, .Month, .Year]
-            
-            let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags,
-                                                                                fromDate: currentDate)
-            let dueDateComponents = NSCalendar.currentCalendar().components(unitFlags,
-                                                                            fromDate: dateIn)
-            
-            // finding minute coordinate.  0 is midnight of today, 1439 is 11:59 pm
-            let minuteCoordinate = (dueDateComponents.hour * 60) + dueDateComponents.minute
-            
-            let hourValue = dueDateComponents.hour
-            
-            let minuteValue = dueDateComponents.minute
-            
-            // finding dayCoordinate first by finding day values
-            let dueDateDay = dueDateComponents.day
-            let currentDay = currentDateComponents.day
-            
-            // finding month values
-            let dueDateMonth = dueDateComponents.month
-            let currentMonth = currentDateComponents.month
-            
-            // finding year values
-            let dueDateYear = dueDateComponents.year
-            let currentYear = currentDateComponents.year
-            
-            // calculate column location in array
-            var dayCoordinate = 0
-            
-            // if year and month are the same, calculate only based on day coordinates
-            if dueDateYear == currentYear && dueDateMonth == currentMonth {
-                dayCoordinate = dueDateDay - currentDay
-            }
-                
-                // if month is greater and year is same
-            else if dueDateMonth > currentMonth && dueDateYear == currentYear {
-                // from here to end of this month
-                let numDaysCurrentMonth = numDaysInMonth(currentMonth)
-                dayCoordinate += numDaysCurrentMonth - currentDay
-                
-                // adding in days from all included months (need to check all months codes)
-                for i in 0..<MONTHS_IN_YEAR {
-                    if doesIncludeSameYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
-                        dayCoordinate += numDaysInMonth(i)
-                    }
-                }
-                
-                // add in days for dueDateMonth
-                dayCoordinate += dueDateDay
-            }
-                
-                // if it's next calendar year, but earlier month (november 2015 - jan 2016)
-            else if dueDateMonth <= currentMonth && dueDateYear == currentYear + 1 {
-                // from here to end of this month
-                let numDaysCurrentMonth = numDaysInMonth(currentMonth)
-                dayCoordinate += numDaysCurrentMonth - currentDay
-                
-                // adding in days from all included months (need to check all months codes)
-                for i in 0..<MONTHS_IN_YEAR {
-                    if doesIncludeNextYear(currentMonth, endMonth: dueDateMonth, questionableMonth: i) {
-                        dayCoordinate += numDaysInMonth(i)
-                    }
-                }
-                
-                // add in days for dueDateMonth
-                dayCoordinate += dueDateDay
-            }
-                
-                // if it's in the past
-            else if dueDateYear < currentYear {
-                dayCoordinate = -1
-                assert(false, "date appears to be in the past")
-            }
-                
-            else if dueDateMonth < currentMonth && dueDateYear == currentYear {
-                dayCoordinate = -1
-                assert(false, "date appears to be in the past")
-                
-            }
-                
-            else if dueDateMonth == currentMonth && dueDateYear == currentYear && dueDateDay < currentDay {
-                dayCoordinate = -1
-                assert(false, "date appears to be in the past")
-            }
-            
-            return (dayCoordinate, minuteCoordinate, hourValue, minuteValue)
-    }
-    
-    func doesIncludeNextYear (startMonth: Int, endMonth: Int, questionableMonth: Int) -> Bool {
-        // if greater than start, but lsess than end
-        if (questionableMonth > startMonth && questionableMonth <= MONTHS_IN_YEAR) ||
-            (questionableMonth >= 1 && questionableMonth < endMonth) {
-            return true
-        }
-        else {
-            return false
-        }
-    }
-    
-    
-    func numDaysInMonth(monthIn: Int) -> Int {
-        if monthIn == 1 || monthIn == 3 || monthIn == 5 || monthIn == 7
-            || monthIn == 8 || monthIn == 10 || monthIn == 12 {
-            return 31
-        }
-            
-        else if monthIn == 9 || monthIn == 4 || monthIn == 6 || monthIn == 11 {
-            return 30
-        }
-            
-        else if monthIn == 2 {
-            return 28
-        }
-            
-        else {
-            print ("ERROR! monthIn is incorrect in nsDateInCal function.")
-            return 0
-        }
-        
-    }
-    
-    func doesIncludeSameYear(startMonth: Int,
-                             endMonth: Int,
-                             questionableMonth: Int) -> Bool {
-        // if between the two
-        if startMonth < questionableMonth && endMonth > questionableMonth {
-            return true
-        }
-            
-        else {
-            return false
-        }
-    }
-    
-    // supporting function
-    func countNumBlocksInInterval(start: Int, end: Int) -> Int {
-        let temp = ((end - start) / 15) + 1
-        return temp
     }
     
     // action sheets
@@ -341,8 +133,6 @@ class DailyScheduleTableViewController: UITableViewController{
         warningControllerSingle.addAction(cancelAction)
         warningControllerRepeating.addAction(cancelAction)
         
-        
-        
         // delete action
         let deleteActionSingle = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
             // delete warning
@@ -355,12 +145,13 @@ class DailyScheduleTableViewController: UITableViewController{
             }
         }
         let deleteActionSingleInstance = UIAlertAction(title: "Only this instance", style: .Destructive) { (action) in
-//            self.presentViewController(warningControllerRepeating, animated: true) {
-//            }
+            self.taskManager.deleteSingleInstance(dayIndex: self.dateLocationDay, rowIndex: indexPath.row)
         }
         let deleteActionAllInstances = UIAlertAction(title: "All instances of this appointment", style: .Destructive) { (action) in
-//            self.presentViewController(warningControllerRepeating, animated: true) {
-//            }
+            if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
+                // make sure this is working properly
+                self.taskManager.deleteAllInstancesOf(appointment: appt)
+            }
         }
         
         warningControllerSingle.addAction(deleteActionSingle)
@@ -369,6 +160,9 @@ class DailyScheduleTableViewController: UITableViewController{
     
         if let appt = taskManager.calendarArray[dateLocationDay][indexPath.row] as? Appointment {
             if appt.doesRepeat {
+                alertController.addAction(deleteActionRepeating)
+            }
+            else if appt.isRepetition {
                 alertController.addAction(deleteActionRepeating)
             }
             else {
@@ -391,16 +185,12 @@ class DailyScheduleTableViewController: UITableViewController{
         }
     
         self.presentViewController(alertController, animated: true, completion: nil)
-    
-        
-        
     }
     
     @IBAction func reloadPressed(sender: UIBarButtonItem) {
         // re-allocate
         taskManager.loadFromDisc()
         taskManager.allocateTime()
-        createDSCalArray()
         tableView.reloadData()
     }
     
@@ -492,30 +282,10 @@ class DailyScheduleTableViewController: UITableViewController{
         return 1
     }
     
-    
     // FIXME: change this when we have userinputted values
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return self.dsCalArray.count
         return taskManager.calendarArray[dateLocationDay].count
-    }
-    
-    func isNextSameAsThis(row: Int, col: Int) -> Bool {
-        if row > 0 && row < MINS_IN_DAY - 1 || row == 0 {
-            if taskManager.calendarArray[row][col] == taskManager.calendarArray[row + 1][col] {
-               return true
-            }
-            if let _ = taskManager.calendarArray[row][col] as? Free {
-                if let _ = taskManager.calendarArray[row + 1][col] as? Free {
-                return true
-                }
-            }
-            if let _ = taskManager.calendarArray[row][col] as? WorkingBlock {
-                if let _ = taskManager.calendarArray[row + 1][col] as? WorkingBlock {
-                    return true
-                }
-            }
-        }
-        return false
     }
     
     func thereExistsAnApptOutsideWorkingDay() -> Bool {
@@ -523,20 +293,7 @@ class DailyScheduleTableViewController: UITableViewController{
         return false
     }
     
-//    func createPrintedDSCalArray() {
-//        // if task starts and ends within the working interval, add it
-//        for j in 0..<28 {
-//            var otherDayPCARowIndex = 0
-//            for i in 0..<self.dsCalArray.count {
-//                let task = dsCalArray[i][j]
-//                if (task?.dsCalAdjustedStartLocation >= taskManager.firstWorkingMinute) && (task?.dsCalAdjustedEndLocation <= taskManager.lastWorkingMinute) {
-//                    addToPrintedCalArray(otherDayPCARowIndex, dayCoorIn: j, taskIn: task)
-//                    otherDayPCARowIndex += 1
-//                }
-//            }
-//        }
-//    }
-            // allocate elements from calendar array to cells in view
+    // allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // giving cell information and telling where to find it
@@ -601,188 +358,6 @@ class DailyScheduleTableViewController: UITableViewController{
         return cell
     }
     
-    
-    /*
-    func dsCalArrayDescription() {
-        for var i = 0; i < dsCalArray.count; ++i {
-            print ("\(dsCalArray[i].title)\n")
-        }
-    }
-    */
-    
-    func createDSCalArray() {
-        
-        // create counting variables
-        var cellDiff = 0
-
-        // wipe dsCalArray
-        dsCalArray = [[Task?]]()
-        
-        // iterate through taskManager's calArray
-        for k in 0..<28 {
-            // create count of what row you're at in the other day
-            var otherDayIndex = 0
-            
-            var i = 0
-            while i < MINS_IN_DAY {
-                // wipe for reuse in each cell
-                cellDiff = 0
-                
-                // starting location
-                let j = i
-                
-                // Only deal with one block of same things.  If this element is the same as the one after it, increment counters.
-                while isNextSameAsThis(i + cellDiff, col: k) {
-                    cellDiff += 1
-                }
-                
-                i += cellDiff
-                
-                // update object in tM calArray
-                taskManager.calendarArray[i][k].dsCalAdjustedStartLocation = j
-                taskManager.calendarArray[i][k].dsCalAdjustedEndLocation = i
-                
-                addTaskToDSCal(k, taskIn: taskManager.calendarArray[i][k], oDIndexIn: otherDayIndex)
-
-                if k > 0 {
-                    otherDayIndex += 1
-                }
-                
-                i = i + 1
-            }
-        }
-    }
-    
-//    func addToPrintedCalArray(printedCalRowIn: Int, dayCoorIn: Int, taskIn: Task?) {
-//        
-//        if let temp = taskIn as? Free {
-//            
-//            temp.title = "\(temp.startTime.cal)
-//            
-//            temp.title = "\(taskManager.nsDateInCalFormat(temp.startTime).hourValue): \(taskManager.nsDateInCalFormat(temp.startTime).minuteValue) - \(taskManager.nsDateInCalFormat(temp.endTime).hourValue): \(taskManager.nsDateInCalFormat(temp.endTime).minuteValue)"
-//            
-////            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": Free"
-////            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
-//        }
-//        
-//        if let temp = taskIn as? Appointment {
-//            let titleTemp = temp.title
-//            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": " + titleTemp
-//            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
-//        }
-//        
-//        if let temp = taskIn as? WorkingBlock {
-//            temp.title = minInHrCoord(temp.dsCalAdjustedStartLocation!) + " - " + minInHrCoord(temp.dsCalAdjustedEndLocation! + 1) + ": Working Block"
-//            addTaskToPrintedCal(printedCalRowIn, dayIn: dayCoorIn, taskIn: temp)
-//        }
-//        
-//        
-//        //        if let temp = taskManager.calendarArray[endCoor][dayCoor] as? Assignment {
-//        
-//        //            temp.addAssignmentBlock(startCoor, adjustedEndTime: endCoor, dayCoord: dayCoor)
-//        //
-//        //            addTaskToDSCal(dayCoor, taskIn: temp.assignmentBlocks[0], oDIndexIn: oDRowIndex)
-//        //
-//        //            temp.removeFirstBlock()
-//        //        }
-//        
-//    }
-    
-    func copyAtRow(arr: [[Task?]], row: Int) -> [Task?] {
-        var newRow = [Task?]()
-        newRow = createRowWith28Nils()
-        for k in 0..<28 {
-            if let temp = arr[row][k] {
-                newRow[k] = temp
-            }
-            else {
-                // is optional.  ignore!
-            }
-        }
-        return newRow
-    }
-    
-    func createRowWith28Nils() -> [Task?]{
-        // clear
-        var row = [Task?]()
-        for _ in 0..<28 {
-            // add nils
-            row += [nil]
-        }
-        
-        return row
-    }
-    
-    func addTaskToDSCal(dayIn: Int, taskIn: Task, oDIndexIn: Int) {
-        // create row to append
-        var newRow: [Task?] = createRowWith28Nils()
-        
-        if dayIn == 0 {
-            // add to newRow and add that to dsCalArray
-            newRow[0] = taskIn
-            dsCalArray.append(newRow)
-        }
-            
-        // if another day
-        else {
-            // if the amount of rows we're allocating to is less than the amount we've already created
-            if oDIndexIn < dsCalArray.count {
-                // copy dsCalArray at that row
-                newRow = copyAtRow(dsCalArray, row: oDIndexIn)
-                
-                // add element to newRow
-                newRow[dayIn] = taskIn
-                
-                // replace dsCalArray at that row with newRow
-                for k in 0..<28 {
-                    dsCalArray[oDIndexIn][k] = newRow[k]
-                }
-            }
-                
-            else {
-                // add element to new row and append to dsCalArray
-                newRow[dayIn] = taskIn
-                dsCalArray.append(newRow)
-            }
-        }
-    }
-    
-    
-    func addTaskToPrintedCal(oDRowIndexIn: Int, dayIn: Int, taskIn: Task) {
-        // create row to append
-        var newRow: [Task?] = createRowWith28Nils()
-        
-        if dayIn == 0 {
-            // add to newRow and add that to dsCalArray
-            newRow[0] = taskIn
-            printedDSCalArray.append(newRow)
-        }
-            
-            // if another day
-        else {
-            // if the amount of rows we're allocating to is less than the amount we've already created
-            if oDRowIndexIn < printedDSCalArray.count {
-                // copy dsCalArray at that row
-                newRow = copyAtRow(printedDSCalArray, row: oDRowIndexIn)
-                
-                // add element to newRow
-                newRow[dayIn] = taskIn
-                
-                // replace printedCalArray at that row with newRow
-                for k in 0..<28 {
-                    printedDSCalArray[oDRowIndexIn][k] = newRow[k]
-                }
-            }
-                
-            else {
-                // add element to new row and append to dsCalArray
-                newRow[dayIn] = taskIn
-                printedDSCalArray.append(newRow)
-            }
-        }
-}
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -792,8 +367,6 @@ class DailyScheduleTableViewController: UITableViewController{
         }*/
  
     }
- 
-    
     
     /*
     // Override to support conditional editing of the table view.
@@ -817,7 +390,6 @@ class DailyScheduleTableViewController: UITableViewController{
     
     }
     */
-    
     
     /*
     // Override to support rearranging the table view.

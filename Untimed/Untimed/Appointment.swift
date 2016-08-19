@@ -17,11 +17,15 @@ class Appointment: Task {
 //    var endTime: NSDate = NSDate()
     
     var doesRepeat: Bool {
-        if repeatOptionsIndex == 0 {
-            return false
+        get {
+            if repeatOptionsIndex == 0 {
+                return false
+            }
+            return true
         }
-        return true
     }
+    
+    var isRepetition: Bool = false
     
     var repetitions: [Appointment] = []
     
@@ -96,7 +100,7 @@ class Appointment: Task {
                 appointmentToAdd.title = self.title
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
-                
+                appointmentToAdd.isRepetition = true
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -118,6 +122,7 @@ class Appointment: Task {
                 appointmentToAdd.title = self.title
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
+                appointmentToAdd.isRepetition = true
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -141,6 +146,7 @@ class Appointment: Task {
                 appointmentToAdd.title = self.title
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
+                appointmentToAdd.isRepetition = true
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -162,6 +168,7 @@ class Appointment: Task {
                 appointmentToAdd.title = self.title
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
+                appointmentToAdd.isRepetition = true
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -182,7 +189,7 @@ class Appointment: Task {
                 appointmentToAdd.title = self.title
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
-                
+                appointmentToAdd.isRepetition = true
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -204,6 +211,7 @@ class Appointment: Task {
                 appointmentToAdd.title = self.title
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
+                appointmentToAdd.isRepetition = true
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -229,7 +237,7 @@ class Appointment: Task {
                 appointmentToAdd.title = self.title
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
-                
+                appointmentToAdd.isRepetition = true
                 repetitions.append(appointmentToAdd)
             }
         }
@@ -254,7 +262,7 @@ class Appointment: Task {
                     appointmentToAdd.title = self.title
                     appointmentToAdd.startTime = calculatedStartDate!
                     appointmentToAdd.endTime = calculatedEndDate!
-                    
+                    appointmentToAdd.isRepetition = true
                     repetitions.append(appointmentToAdd)
                 }
             }
@@ -366,13 +374,10 @@ class Appointment: Task {
         aCoder.encodeObject(endTime, forKey:"EndTime")
         aCoder.encodeObject(title, forKey:"Title")
         aCoder.encodeInteger(repeatOptionsIndex, forKey:"Repeat Options Index")
-        
         aCoder.encodeObject(repeatDaysIndex, forKey: "Repeat Days Index")
-        
-        
         aCoder.encodeObject(endRepeatDate, forKey: "End RepeatDate")
-        
         aCoder.encodeObject(repetitions, forKey: "repetitions")
+        aCoder.encodeBool(isRepetition, forKey: "isRepetition")
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -380,7 +385,7 @@ class Appointment: Task {
         self.startTime = aDecoder.decodeObjectForKey("StartTime") as! NSDate
         self.endTime = aDecoder.decodeObjectForKey("EndTime") as! NSDate
         self.repeatOptionsIndex = aDecoder.decodeIntegerForKey("Repeat Options Index")
-        
+        self.isRepetition = aDecoder.decodeBoolForKey("isRepetition")
         // FIXME: this isn't loading correctly
         self.repeatDaysIndex = aDecoder.decodeObjectForKey("Repeat Days Index") as! [Bool]
         
