@@ -439,8 +439,6 @@ class DailyScheduleTableViewController: UITableViewController{
                 targetController.wbIndex = indexSelected
                 targetController.dateLocationDay = dateLocationDay
                 targetController.focusIndicator = true
-                
-             
             }
         }
         
