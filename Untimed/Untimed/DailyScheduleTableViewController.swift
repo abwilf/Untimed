@@ -146,11 +146,13 @@ class DailyScheduleTableViewController: UITableViewController{
         }
         let deleteActionSingleInstance = UIAlertAction(title: "Only this instance", style: .Destructive) { (action) in
             self.taskManager.deleteSingleInstance(dayIndex: self.dateLocationDay, rowIndex: indexPath.row)
+            tableView.reloadData()
         }
         let deleteActionAllInstances = UIAlertAction(title: "All instances of this appointment", style: .Destructive) { (action) in
             if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
                 // make sure this is working properly
                 self.taskManager.deleteAllInstancesOf(appointment: appt)
+                tableView.reloadData()
             }
         }
         

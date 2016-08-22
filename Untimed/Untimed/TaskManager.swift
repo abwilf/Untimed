@@ -10,6 +10,7 @@ import Foundation
 
 extension NSDate
 {
+    // initializer using argument format: HH:mm (eg 02:30, 17:15)
     convenience
     init(dateString:String) {
         let dateStringFormatter = NSDateFormatter()
@@ -20,6 +21,8 @@ extension NSDate
         self.init(timeInterval:0, sinceDate:d)
     }
     
+    // returns an Int for time comparison within the same day
+    // eg 14:15 returns 1415 and 03:00 returns 300
     func getTimeValForComparison() -> Int {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "HHmm"
@@ -29,6 +32,7 @@ extension NSDate
         return intVal! //Int(formatter.stringFromDate(self))!
     }
     
+    // returns the difference between today and the specified day, giving the correct day unit for calendarArray
     func calendarDayIndex() -> Int {
         let calendar = NSCalendar.currentCalendar()
         
@@ -51,8 +55,8 @@ class TaskManager: NSObject {
     
     var captureListText: String = ""
     
-    // 28 rows (days) x 0 objects to start, objects will be appended to each column as needed
-    var calendarArray: [[Task]] = Array(count: 28,
+    // 365 rows (days) x 0 objects to start, objects will be appended to each column as needed
+    var calendarArray: [[Task]] = Array(count: 365,
                                         repeatedValue: Array(count: 0, repeatedValue: Free()))
     
     var calendarArrayHasChanged = false
@@ -148,6 +152,7 @@ class TaskManager: NSObject {
         for i in 0..<appointmentArray.count {
             if appointmentArray[i] == apptIn {
                 appointmentArray.removeAtIndex(i)
+                save()
                 return
             }
         }
@@ -155,6 +160,7 @@ class TaskManager: NSObject {
     
     func deleteSingleInstance(dayIndex col: Int, rowIndex row: Int) {
         calendarArray[col].removeAtIndex(row)
+        save()
     }
     
     func calArrayDescriptionAtIndex(min: Int, day: Int) {
@@ -188,7 +194,7 @@ class TaskManager: NSObject {
     }
     
     func clearCalArray() {
-        calendarArray = Array(count: 28, repeatedValue: Array(count: 0, repeatedValue: Free()))
+        calendarArray = Array(count: 365, repeatedValue: Array(count: 0, repeatedValue: Free()))
     }
     
     // for testing

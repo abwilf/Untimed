@@ -386,7 +386,6 @@ class Appointment: Task {
         self.endTime = aDecoder.decodeObjectForKey("EndTime") as! NSDate
         self.repeatOptionsIndex = aDecoder.decodeIntegerForKey("Repeat Options Index")
         self.isRepetition = aDecoder.decodeBoolForKey("isRepetition")
-        // FIXME: this isn't loading correctly
         self.repeatDaysIndex = aDecoder.decodeObjectForKey("Repeat Days Index") as! [Bool]
         
         
