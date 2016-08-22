@@ -301,13 +301,13 @@ class DailyScheduleTableViewController: UITableViewController{
         // giving cell information and telling where to find it
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         
-        if thereExistsAnApptOutsideWorkingDay() {
-            // FIXME: ADD if it's before the working day
-            
-            // if it's after the working day
-        }
-            
-        else {
+//        if thereExistsAnApptOutsideWorkingDay() {
+//            // FIXME: ADD if it's before the working day
+//            
+//            // if it's after the working day
+//        }
+        
+//        else {
             if indexPath.row < taskManager.calendarArray[selectedDate.calendarDayIndex()].count {
                 let task = taskManager.calendarArray[dateLocationDay][indexPath.row]
             
@@ -355,9 +355,9 @@ class DailyScheduleTableViewController: UITableViewController{
                 cell.textLabel?.text = ""
                 return cell
             }
-        }
+//        }
         
-        return cell
+//        return cell
     }
     
     override func viewDidLoad() {

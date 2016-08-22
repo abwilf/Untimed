@@ -153,6 +153,7 @@ class TaskManager: NSObject {
             if appointmentArray[i] == apptIn {
                 appointmentArray.removeAtIndex(i)
                 save()
+                allocateTime()
                 return
             }
         }
