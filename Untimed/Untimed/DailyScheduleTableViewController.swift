@@ -48,7 +48,6 @@ class DailyScheduleTableViewController: UITableViewController{
     @IBAction func unwindAndAddAppt(sender: UIStoryboardSegue) {
         if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
             taskManager.addAppointment(aapptvc.addedAppointment)
-            taskManager.allocateAppts()
             taskManager.save()
             tableView.reloadData()
         }
@@ -145,8 +144,10 @@ class DailyScheduleTableViewController: UITableViewController{
             }
         }
         let deleteActionSingleInstance = UIAlertAction(title: "Only this instance", style: .Destructive) { (action) in
-            self.taskManager.deleteSingleInstance(dayIndex: self.dateLocationDay, rowIndex: indexPath.row)
-            tableView.reloadData()
+            if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
+                self.taskManager.deleteSingleInstanceOf(appointment: appt)
+                tableView.reloadData()
+            }
         }
         let deleteActionAllInstances = UIAlertAction(title: "All instances of this appointment", style: .Destructive) { (action) in
             if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
@@ -219,6 +220,7 @@ class DailyScheduleTableViewController: UITableViewController{
             }
         }
         
+        // FIXME: calendar clearing here
         taskManager.loadFromDisc()
     
         // FIXME: for testing only

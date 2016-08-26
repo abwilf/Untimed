@@ -96,7 +96,7 @@ class TaskManager: NSObject {
     
     func addAppointment(apptIn: Appointment) {
         appointmentArray.append(apptIn)
-        save()
+        allocateSingleApptAndItsRepetitions(appointment: apptIn)
     }
     
     func deleteClass(classIn: Class) {
@@ -149,20 +149,25 @@ class TaskManager: NSObject {
     }
     
     func deleteAllInstancesOf(appointment apptIn: Appointment) {
-        for i in 0..<appointmentArray.count {
-            if appointmentArray[i] == apptIn {
-                appointmentArray.removeAtIndex(i)
-                save()
-                allocateTime()
-                return
-            }
-        }
+        removeSingleApptInstanceAndItsRepetitionsFromCalArray(appointment: apptIn)
+//        for i in 0..<appointmentArray.count {
+//            if appointmentArray[i] == apptIn {
+//                appointmentArray.removeAtIndex(i)
+//                save()
+//                allocateTime()
+//                return
+//            }
+//        }
     }
     
-    func deleteSingleInstance(dayIndex col: Int, rowIndex row: Int) {
-        calendarArray[col].removeAtIndex(row)
-        save()
+    func deleteSingleInstanceOf(appointment apptIn: Appointment) {
+        removeSingleApptInstanceFromCalArray(appointment: apptIn)
     }
+    
+//    func deleteSingleInstance(dayIndex col: Int, rowIndex row: Int) {
+//        calendarArray[col].removeAtIndex(row)
+//        save()
+//    }
     
     func calArrayDescriptionAtIndex(min: Int, day: Int) {
         print ("\(calendarArray[min][day].title)")
@@ -220,24 +225,124 @@ class TaskManager: NSObject {
         // for testing
 //        clearAppointmentArray()
 //        save()
-        
-        clearCalArray()
-        
-        // updateCalArr()
+//        
+//        clearCalArray()
+//        save()
         
         // put appts in
-        allocateAppts()
+//        allocateAppts()
         
-//         updateCalArray()
+         updateCalArray()
         
 //        allocateWorkingBlocks()
     }
     
-    func updateCalArray() {
-        if calendarArrayHasChanged {
-            clearCalArray()
-            allocateAppts()
+    // use this when an appt is added
+    func allocateSingleApptAndItsRepetitions(appointment appt: Appointment) {
+        // allocate first instance
+        var apptDayIndex = appt.startTime.calendarDayIndex()
+        clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex: apptDayIndex)
+        allocateApptInCorrectSpot(appt, day: apptDayIndex)
+        
+        // allocate others if appropriate
+        if appt.doesRepeat {
+            if appt.repetitions.isEmpty {
+                appt.allocateAppointmentRepetitions()
+            }
+            else {
+                appt.updateRepetitions()
+            }
+            for k in 0..<appt.repetitions.count {
+                let repetition = appt.repetitions[k]
+                apptDayIndex = repetition.startTime.calendarDayIndex()
+                
+                assert(apptDayIndex >= 0, "\n\npast repetitions should have been removed\n\n")
+                allocateApptInCorrectSpot(repetition, day: apptDayIndex)
+            }
         }
+        save()
+    }
+    
+    // use this when an appointment is deleted -- either an appt w/out reps or a single instance of a repeating appt
+    func removeSingleApptInstanceFromCalArray(appointment appt: Appointment) {
+        let apptDayIndex = appt.startTime.calendarDayIndex()
+        for i in 0..<calendarArray[apptDayIndex].count {
+            if calendarArray[apptDayIndex][i] == appt {
+                calendarArray[apptDayIndex].removeAtIndex(i)
+                return
+            }
+        }
+    }
+    
+    func removeSingleApptInstanceAndItsRepetitionsFromCalArray(appointment appt: Appointment) {
+        var apptDayIndex = appt.startTime.calendarDayIndex()
+        
+        if appt.doesRepeat {
+            var numReps = appt.repetitions.count
+            while numReps > 0 {
+                let apptRep = appt.repetitions[0]
+                apptDayIndex = apptRep.startTime.calendarDayIndex()
+                for i in 0..<calendarArray[apptDayIndex].count {
+                    // REQUIRES: appt is allocated in correct day
+                    if calendarArray[apptDayIndex][i] == apptRep {
+                        calendarArray[apptDayIndex].removeAtIndex(i)
+                        break
+                    }
+                }
+                numReps -= 1
+            }
+            for i in 0..<appointmentArray.count {
+                if appointmentArray[i] == appt {
+                    appointmentArray.removeAtIndex(i)
+                }
+            }
+        }
+        else {
+            for i in 0..<calendarArray[apptDayIndex].count {
+                if calendarArray[apptDayIndex][i] == appt {
+                    calendarArray[apptDayIndex].removeAtIndex(i)
+                    return
+                }
+            }
+            assert(false, "\n\nAppt not found\n\n")
+        }
+    }
+    
+    // do this before saving
+    func clearAllWorkingBlocksThatDoNotHaveFocuses() {
+        for i in 0..<calendarArray.count {
+            clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex: i)
+        }
+    }
+    
+    // use this before allocating appointments at dayIndex
+    func clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex index: Int) {
+        var size = calendarArray[index].count
+        var i = 0
+        while i < size {
+            if let wb = calendarArray[index][i] as? WorkingBlock {
+                if !wb.hasFocus {
+                    calendarArray[index].removeAtIndex(i)
+                    size -= 1
+                    i -= 1
+                }
+            }
+            i += 1
+        }
+    }
+    
+    // REQUIRES dateLastUsed is correct
+    func updateCalArray() {
+        let dateLastUsedDayIndex = dateLastUsed.calendarDayIndex()
+        if dateLastUsedDayIndex < 0 {
+            var difference = dateLastUsed.calendarDayIndex()
+            while difference < 0 {
+                calendarArray.removeFirst()
+                calendarArray.append(Array(count: 0, repeatedValue: Free()))
+                difference += 1
+            }
+        }
+        dateLastUsed = NSDate()
     }
     
     func clearWorkingBlocksAtIndex(dayIndex index: Int) {
@@ -358,55 +463,18 @@ class TaskManager: NSObject {
                     }
                     self.calendarArray[dayIn].insert(appt, atIndex: rowIndex)
                 }
-                
-            }
-        }
-    }
-    
-    // FIXME: make this more readable!
-    func allocateAppts() {
-        clearCalArray()
-        // use in both allocations
-        var apptDayCoordinate: Int = 0
-        // iterate through tasks array looking for appointments
-        for i in 0..<self.appointmentArray.count {
-            // if object is an appointment, assign to calendarArray
-            if let appt = self.appointmentArray[i] as? Appointment {
-                apptDayCoordinate = appt.startTime.calendarDayIndex()
-//                let startTimeInMinCoordinates = nsDateInCalFormat(appt.startTime).minuteCoordinate
-//                let endTimeInMinCoordinates = nsDateInCalFormat(appt.endTime).minuteCoordinate
-                
-                // skip if it's past
-                // FIXME: this might be inefficient, consider restructuring
-                if apptDayCoordinate >= 0 {
-                    allocateApptInCorrectSpot(appt, day: apptDayCoordinate)
-                }
-                
-                // if appt repeats, allocate those repetions
-                if appt.doesRepeat {
-                    if appt.repetitions.isEmpty {
-                        appt.allocateAppointmentRepetitions()
-                    }
-                    else {
-                         appt.updateRepetitions()
-                    }
-                    for k in 0..<appt.repetitions.count {
-                        let repetition = appt.repetitions[k]
-                        apptDayCoordinate = repetition.startTime.calendarDayIndex()
-//                        apptDayCoordinate = nsDateInCalFormat(repetition.startTime).dayCoordinate
-//                        let startTimeInMinCoordinates = nsDateInCalFormat(repetition.startTime).minuteCoordinate
-//                        let endTimeInMinCoordinates = nsDateInCalFormat(repetition.endTime).minuteCoordinate    
-                        
-                        // FIXME: make this irrelevant by deleting past repetions
-                        if apptDayCoordinate >= 0 {
-//                            assert(false, "/n/n past repetitions should have been removed already /n/n")
-                            // allocate
-                            allocateApptInCorrectSpot(repetition, day: apptDayCoordinate)
-//                            for l in startTimeInMinCoordinates..<endTimeInMinCoordinates {
-//                                self.calendarArray[l][apptDayCoordinate] = appt
-//                            }
+                if let _ = compareTask as? WorkingBlock {
+                    var compareWB = calendarArray[dayIn][rowIndex]
+                    while appt.startTime.compare(compareWB.startTime) == NSComparisonResult.OrderedDescending {
+                        if rowIndex < calendarArray[dayIn].count {
+                            compareWB = calendarArray[dayIn][rowIndex]
+                            rowIndex += 1
+                        }
+                        else {
+                            break
                         }
                     }
+                    self.calendarArray[dayIn].insert(appt, atIndex: rowIndex)
                 }
             }
         }
@@ -422,12 +490,14 @@ class TaskManager: NSObject {
     // add save method
     func save() {
         
+        clearAllWorkingBlocksThatDoNotHaveFocuses()
+        
         let archiveClass: NSData = NSKeyedArchiver.archivedDataWithRootObject(classArray)
         let archiveAppt: NSData = NSKeyedArchiver.archivedDataWithRootObject(appointmentArray)
         let archiveSettings: NSData = NSKeyedArchiver.archivedDataWithRootObject(settingsArray)
         let archiveSelectedDate: NSData = NSKeyedArchiver.archivedDataWithRootObject(selectedDate)
         let archiveCaptureListText: NSData = NSKeyedArchiver.archivedDataWithRootObject(captureListText)
-//        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject(calendarArray)
+        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject(calendarArray)
         let archiveDateLastUsed: NSData = NSKeyedArchiver.archivedDataWithRootObject(dateLastUsed)
 
 //        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject
@@ -437,7 +507,7 @@ class TaskManager: NSObject {
         defaults.setObject(archiveAppt, forKey: "appointmentArray")
         defaults.setObject(archiveSelectedDate, forKey: "selectedDate")
         defaults.setObject(archiveCaptureListText, forKey: "captureListText")
-//        defaults.setObject(archiveCal, forKey: "calendarArray")
+        defaults.setObject(archiveCal, forKey: "calendarArray")
         defaults.setObject(archiveDateLastUsed, forKey: "dateLastUsed")
         
         setSettingsArray()
@@ -464,7 +534,7 @@ class TaskManager: NSObject {
         
         let archiveCaptureListText = defaults.objectForKey("captureListText") as? NSData ?? NSData()
 
-//        let archiveCal = defaults.objectForKey("calendarArray") as? NSData ?? NSData()
+        let archiveCal = defaults.objectForKey("calendarArray") as? NSData ?? NSData()
         
         // unarchive all objects
         classArray = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Class] ?? []
@@ -485,14 +555,18 @@ class TaskManager: NSObject {
         }
         
         
-//        if let calArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? [[Task]] {
-//            calendarArray = calArray
-//        }
-//        else {
-//            calendarArray = Array(count: 28, repeatedValue: Array(count: 0, repeatedValue: Free()))
-//        }
-//        
-//        dateLastUsed = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? NSDate ?? NSDate()
+        if let calArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? [[Task]] {
+            calendarArray = calArray
+        }
+        else {
+            calendarArray = Array(count: 365, repeatedValue: Array(count: 0, repeatedValue: Free()))
+        }
+//
+        dateLastUsed = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? NSDate ?? NSDate()
+        
+        if dateLastUsed.calendarDayIndex() < 0 {
+            calendarArrayHasChanged = true
+        }
         
         // selectedDate
         if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSelectedDate) as? NSDate {

@@ -88,6 +88,7 @@ class Appointment: Task {
     }
     
     private func repeatDaily() {
+        repetitions.append(self)
         // FIXME: how to work without endRepeat Date
         for i in 1..<26 {
             let daysToAdd = i
@@ -132,6 +133,8 @@ class Appointment: Task {
     }
     
     private func repeatEveryWeekday() {
+        repetitions.append(self)
+
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EEEE"
         
@@ -178,6 +181,8 @@ class Appointment: Task {
     }
     
     private func repeatWeekly() {
+        repetitions.append(self)
+
         for i in 1..<28 {
             let daysToAdd = i * 7
             
@@ -221,7 +226,9 @@ class Appointment: Task {
     }
     
     // note: this isn't very efficient
-    private func repeatCustom() {        
+    private func repeatCustom() {
+        repetitions.append(self)
+
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EEEE"
         

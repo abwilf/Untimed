@@ -10,6 +10,7 @@ import Foundation
 
 class WorkingBlock: Task {
     var focusArr: [Task] = []
+    
     // should be saved if it contains a focus
     var hasFocus = false
     
@@ -20,11 +21,16 @@ class WorkingBlock: Task {
     override func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(title, forKey:"Title")
         aCoder.encodeObject(focusArr, forKey: "focusArr")
+        aCoder.encodeObject(startTime, forKey:"StartTime")
+        aCoder.encodeObject(endTime, forKey:"EndTime")
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         aDecoder.decodeObjectForKey("Title") as! String
         self.focusArr = aDecoder.decodeObjectForKey("focusArr") as? [Task] ?? []
+        self.startTime = aDecoder.decodeObjectForKey("StartTime") as? NSDate ?? NSDate()
+        self.endTime = aDecoder.decodeObjectForKey("EndTime") as? NSDate ?? NSDate()
+
     }
 }

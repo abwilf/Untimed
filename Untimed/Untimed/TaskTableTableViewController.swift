@@ -44,7 +44,6 @@ class TaskTableTableViewController: UITableViewController {
 //        resetForTesting()
         
         super.viewWillAppear(animated)
-        tmObj.loadFromDisc()
         
         // for hambuger icon
         if self.revealViewController() != nil {

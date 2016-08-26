@@ -71,7 +71,6 @@ class ProjTasksTableViewController: UITableViewController {
                 }
             }
         }
-            
         // in view mode
         else {
             
@@ -90,6 +89,7 @@ class ProjTasksTableViewController: UITableViewController {
                 }
             }
         }
+        tmObj.save()
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
