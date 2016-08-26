@@ -98,7 +98,7 @@
                         <sections>
                             <tableViewSection id="vgU-QY-b9a">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="101" id="McI-Sx-1Z1">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="101" id="McI-Sx-1Z1">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="101"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="McI-Sx-1Z1" id="fwm-rh-Irm">
@@ -554,6 +554,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="9fv-Vn-xha"/>
+        <segue reference="c5g-i7-y21"/>
     </inferredMetricsTieBreakers>
 </document>

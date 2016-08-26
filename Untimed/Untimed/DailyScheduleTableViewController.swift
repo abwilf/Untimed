@@ -234,7 +234,7 @@ class DailyScheduleTableViewController: UITableViewController{
         
         taskManager.allocateWorkingBlocksAtIndex(dayIndex: dateLocationDay)
 
-        // for hambuger icon
+        // for hamburger icon
         if self.revealViewController() != nil {
             menuButton.target = self.revealViewController()
             menuButton.action = "revealToggle:"
@@ -410,9 +410,6 @@ class DailyScheduleTableViewController: UITableViewController{
     }
     */
     
-    
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     
         if (segue.identifier == "Change Date") {

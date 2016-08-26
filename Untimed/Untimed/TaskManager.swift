@@ -218,7 +218,6 @@ class TaskManager: NSObject {
         }
     }
 
-    // FIXME: this may be getting called redundantly
     func allocateTime() {
         // for testing
 //        clearClassArray()
@@ -252,7 +251,7 @@ class TaskManager: NSObject {
             else {
                 appt.updateRepetitions()
             }
-            for k in 0..<appt.repetitions.count {
+            for k in 1..<appt.repetitions.count {
                 let repetition = appt.repetitions[k]
                 apptDayIndex = repetition.startTime.calendarDayIndex()
                 
