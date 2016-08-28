@@ -183,11 +183,44 @@ class DailyScheduleTableViewController: UITableViewController{
             alertController.addAction(addApptAction)
         }
    
-        if let _ = taskManager.calendarArray[dateLocationDay][indexPath.row] as? WorkingBlock {
+        if let wbObj = taskManager.calendarArray[dateLocationDay][indexPath.row] as? WorkingBlock {
             let selectFocusAction = UIAlertAction(title: "Select Focus", style: .Default) { (action) in self.performSegueWithIdentifier("Select Focus Segue", sender: self)
             }
             
+            let writeInFocusAction = UIAlertAction(title: "Write In Focus", style: .Default) { (action) in
+                // Create the alert controller.
+                var alert = UIAlertController(title: "Write In Focus", message: "Enter Task Name", preferredStyle: .Alert)
+                
+                // Add the text field. You can configure it however you need.
+                alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+                    textField.text = ""
+                })
+                
+                // Grab the value from the text field, and print it when the user clicks OK.
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+                    let textField = alert.textFields![0] as UITextField
+                    
+                    //print("Text field: \(textField.text)")
+                    
+                    // FIXME: temporary until we get the task list sorted out!
+                    
+                    // create a task with that name to put in the wbObj's focus array
+                    var newTaskObj = Task()
+                    
+                    newTaskObj.title = textField.text! as String
+                    
+                    wbObj.focusArr += [newTaskObj]
+                    print (wbObj.focusArr[0].title)
+                    self.taskManager.save()
+                }))
+                
+                // Present the alert.
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+       
             alertController.addAction(selectFocusAction)
+            alertController.addAction(writeInFocusAction)
+            
         }
     
         self.presentViewController(alertController, animated: true, completion: nil)

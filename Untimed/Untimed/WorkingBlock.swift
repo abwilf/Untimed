@@ -14,8 +14,10 @@ class WorkingBlock: Task {
     // should be saved if it contains a focus
     var hasFocus = false
     
+    
     override init() {
         super.init()
+        title = "Working Block"
     }
     
     override func encodeWithCoder(aCoder: NSCoder) {
