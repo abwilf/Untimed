@@ -73,7 +73,7 @@ class TaskManager: NSObject {
         settingsArray += [firstWorkingHour]
         
         settingsArray += [lastWorkingHour]
-}
+    }
     
     var firstWorkingHour = NSDate(dateString: "08:00")
     var lastWorkingHour = NSDate(dateString: "23:00")
@@ -108,6 +108,16 @@ class TaskManager: NSObject {
         }
     }
     
+    func calArrayDescriptionForDay(dayIn: Int) {
+        let dayArray: [Task] = self.calendarArray[dayIn]
+        
+        let objectCount = dayArray.count
+        
+        for i in 0..<objectCount {
+            print ("\(self.calendarArray[dayIn][i].title)\n")
+        }
+        
+    }
     func deleteClassAtIndex(classIndex index: Int) {
         classArray.removeAtIndex(index)
     }

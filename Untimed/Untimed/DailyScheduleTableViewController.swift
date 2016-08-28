@@ -135,8 +135,11 @@ class DailyScheduleTableViewController: UITableViewController{
         // delete action
         let deleteActionSingle = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
             // delete warning
+            self.taskManager.calArrayDescriptionForDay(0)
+            
             self.presentViewController(warningControllerSingle, animated: true) {
             }
+            
         }
         let deleteActionRepeating = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
             // delete warning

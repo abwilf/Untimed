@@ -22,7 +22,10 @@ class HamburgerTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
-    
+    override func viewWillAppear(animated: Bool) {
+        tmObj.loadFromDisc()
+        
+    }
     @IBAction func tasksButtonPressed(sender: UIButton) {
         self.performSegueWithIdentifier("To Tasks", sender: sender)
     }
@@ -41,9 +44,6 @@ class HamburgerTableViewController: UITableViewController {
             tmObj.lastWorkingHour = stvc.lwh
             
             tmObj.setSettingsArray()
-            
-            // FIXME: delete
-            print (tmObj.settingsArray)
             
             tmObj.save()
             
