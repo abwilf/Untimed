@@ -13,7 +13,8 @@ class HamburgerTableViewController: UITableViewController {
     var tmObj = TaskManager()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        tmObj.loadFromDisc()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

@@ -208,7 +208,6 @@ class DailyScheduleTableViewController: UITableViewController{
     }
     
     override func viewWillAppear(animated: Bool) {
-        
         super.viewWillAppear(animated)
 
         let now = NSDate()
@@ -250,8 +249,9 @@ class DailyScheduleTableViewController: UITableViewController{
         taskManager.firstWorkingHour = taskManager.settingsArray[0]
         taskManager.lastWorkingHour = taskManager.settingsArray[1]
     }
+    
     override func viewWillDisappear(animated: Bool) {
-        //taskManager.clearWorkingBlocksAtIndex(dayIndex: dateLocationDay)
+       // print (taskManager.calendarArray[0][0].title)
     }
     
 //    // connecting add and single task viewer pages to this
