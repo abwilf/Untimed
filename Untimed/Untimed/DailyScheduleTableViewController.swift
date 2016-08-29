@@ -209,9 +209,14 @@ class DailyScheduleTableViewController: UITableViewController{
                     
                     newTaskObj.title = textField.text! as String
                     
+                    wbObj.focusArr = []
+                    
                     wbObj.focusArr += [newTaskObj]
+                    wbObj.hasFocus = true
+
                     print (wbObj.focusArr[0].title)
                     self.taskManager.save()
+                    tableView.reloadData()
                 }))
                 
                 // Present the alert.
