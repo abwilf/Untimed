@@ -116,39 +116,14 @@ class DailyScheduleTableViewController: UITableViewController{
     // action sheets
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        
-        // for non-repeating appointments
-        let warningControllerSingle = UIAlertController(title: nil, message: "Are you sure you want to delete this appointment?", preferredStyle: .Alert)
-        
-        // for repeating appointments
-        let warningControllerRepeating = UIAlertController(title: nil, message: "Would you like to delete only this appointment, or all future instances of this appointment?", preferredStyle: .Alert)
-        
-        // cancel action
+        // final actions
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-        }
-    
-        alertController.addAction(cancelAction)
-        warningControllerSingle.addAction(cancelAction)
-        warningControllerRepeating.addAction(cancelAction)
-        
-        // delete action
-        let deleteActionSingle = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
-            // delete warning
-            self.taskManager.calArrayDescriptionForDay(0)
-            
-            self.presentViewController(warningControllerSingle, animated: true) {
-            }
-        }
-        let deleteActionRepeating = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
-            // delete warning
-            self.presentViewController(warningControllerRepeating, animated: true) {
-            }
         }
         let deleteActionSingleInstance = UIAlertAction(title: "Only this instance", style: .Destructive) { (action) in
             if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
                 self.taskManager.deleteSingleInstanceOf(appointment: appt)
-                self.taskManager.allocateWorkingBlocksAtIndex(dayIndex: self.dateLocationDay)
+                self.taskManager.clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex: self.dateLocationDay)
+                self.taskManager.save()
                 tableView.reloadData()
             }
         }
@@ -156,7 +131,8 @@ class DailyScheduleTableViewController: UITableViewController{
             if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
                 // make sure this is working properly
                 self.taskManager.deleteAllInstancesOf(appointment: appt)
-                self.taskManager.allocateWorkingBlocksAtIndex(dayIndex: self.dateLocationDay)
+                self.taskManager.clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex: self.dateLocationDay)
+                self.taskManager.save()
                 tableView.reloadData()
             }
         }
@@ -165,10 +141,38 @@ class DailyScheduleTableViewController: UITableViewController{
                 // make sure this is working properly
                 self.taskManager.removeSingleApptInstanceFromCalArray(appointment: appt)
                 self.taskManager.removeApptFromApptArr(appointment: appt)
-                self.taskManager.allocateWorkingBlocksAtIndex(dayIndex: self.dateLocationDay)
+                self.taskManager.clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex: self.dateLocationDay)
+                self.taskManager.save()
                 tableView.reloadData()
             }
         }
+        
+        // alert controllers
+        // action sheet
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        // for non-repeating appointments
+        let warningControllerSingle = UIAlertController(title: nil, message: "Are you sure you want to delete this appointment?", preferredStyle: .Alert)
+        
+        // for repeating appointments
+        let warningControllerRepeating = UIAlertController(title: nil, message: "Would you like to delete only this appointment, or all future instances of this appointment?", preferredStyle: .Alert)
+        
+        let deleteActionSingle = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
+            self.taskManager.calArrayDescriptionForDay(0)
+            // delete warning
+            self.presentViewController(warningControllerSingle, animated: true) {
+            }
+        }
+        
+        let deleteActionRepeating = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
+            // delete warning
+            self.presentViewController(warningControllerRepeating, animated: true) {
+            }
+        }
+
+        alertController.addAction(cancelAction)
+        warningControllerSingle.addAction(cancelAction)
+        warningControllerRepeating.addAction(cancelAction)
         
         warningControllerSingle.addAction(deleteAppointment)
         warningControllerRepeating.addAction(deleteActionSingleInstance)
@@ -270,7 +274,6 @@ class DailyScheduleTableViewController: UITableViewController{
             }
         }
         
-        // FIXME: calendar clearing here
         taskManager.loadFromDisc()
     
         // FIXME: for testing only
@@ -282,8 +285,6 @@ class DailyScheduleTableViewController: UITableViewController{
         // set working minutes from saved settings array
         setWorkingHours()
         
-        taskManager.allocateWorkingBlocksAtIndex(dayIndex: dateLocationDay)
-
         // for hamburger icon
         if self.revealViewController() != nil {
             menuButton.target = self.revealViewController()
@@ -339,7 +340,7 @@ class DailyScheduleTableViewController: UITableViewController{
     
     // FIXME: change this when we have userinputted values
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return self.dsCalArray.count
+        taskManager.allocateWorkingBlocksAtIndex(dayIndex: dateLocationDay)
         return taskManager.calendarArray[dateLocationDay].count
     }
     

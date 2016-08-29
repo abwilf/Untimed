@@ -27,6 +27,8 @@ class Appointment: Task {
     
     var isRepetition: Bool = false
     
+    var superAppt: Appointment? = nil
+    
     var repetitions: [Appointment] = []
     
     // FIXME: get rid of this
@@ -102,6 +104,7 @@ class Appointment: Task {
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
                 appointmentToAdd.isRepetition = true
+                appointmentToAdd.superAppt = self
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -124,6 +127,7 @@ class Appointment: Task {
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
                 appointmentToAdd.isRepetition = true
+                appointmentToAdd.superAppt = self
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -150,6 +154,7 @@ class Appointment: Task {
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
                 appointmentToAdd.isRepetition = true
+                appointmentToAdd.superAppt = self
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -172,6 +177,7 @@ class Appointment: Task {
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
                 appointmentToAdd.isRepetition = true
+                appointmentToAdd.superAppt = self
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -195,6 +201,7 @@ class Appointment: Task {
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
                 appointmentToAdd.isRepetition = true
+                appointmentToAdd.superAppt = self
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -217,6 +224,7 @@ class Appointment: Task {
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
                 appointmentToAdd.isRepetition = true
+                appointmentToAdd.superAppt = self
                 repetitions.append(appointmentToAdd)
             }
             else {
@@ -245,6 +253,7 @@ class Appointment: Task {
                 appointmentToAdd.startTime = calculatedStartDate!
                 appointmentToAdd.endTime = calculatedEndDate!
                 appointmentToAdd.isRepetition = true
+                appointmentToAdd.superAppt = self
                 repetitions.append(appointmentToAdd)
             }
         }
@@ -270,6 +279,7 @@ class Appointment: Task {
                     appointmentToAdd.startTime = calculatedStartDate!
                     appointmentToAdd.endTime = calculatedEndDate!
                     appointmentToAdd.isRepetition = true
+                    appointmentToAdd.superAppt = self
                     repetitions.append(appointmentToAdd)
                 }
             }
@@ -385,6 +395,7 @@ class Appointment: Task {
         aCoder.encodeObject(endRepeatDate, forKey: "End RepeatDate")
         aCoder.encodeObject(repetitions, forKey: "repetitions")
         aCoder.encodeBool(isRepetition, forKey: "isRepetition")
+        aCoder.encodeObject(superAppt, forKey: "superAppt")
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -394,7 +405,7 @@ class Appointment: Task {
         self.repeatOptionsIndex = aDecoder.decodeIntegerForKey("Repeat Options Index")
         self.isRepetition = aDecoder.decodeBoolForKey("isRepetition")
         self.repeatDaysIndex = aDecoder.decodeObjectForKey("Repeat Days Index") as! [Bool]
-        
+        self.superAppt = aDecoder.decodeObjectForKey("superAppt") as? Appointment
         
         self.endRepeatDate = aDecoder.decodeObjectForKey("End Repeat Date") as? NSDate
         aDecoder.decodeObjectForKey("Title") as? String

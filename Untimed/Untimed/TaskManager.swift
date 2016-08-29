@@ -234,13 +234,14 @@ class TaskManager: NSObject {
     func allocateTime() {
         // for testing
 //        clearClassArray()
+        
         // for testing
 //        clearAppointmentArray()
 //        save()
 //        
 //        clearCalArray()
 //        save()
-        
+
         // put appts in
 //        allocateAppts()
         
@@ -298,6 +299,7 @@ class TaskManager: NSObject {
                     // REQUIRES: appt is allocated in correct day
                     if calendarArray[apptDayIndex][i] == apptRep {
                         calendarArray[apptDayIndex].removeAtIndex(i)
+                        appt.repetitions.removeFirst()
                         break
                     }
                 }
@@ -308,11 +310,36 @@ class TaskManager: NSObject {
                     appointmentArray.removeAtIndex(i)
                 }
             }
+            save()
+        }
+        else if appt.isRepetition {
+            let superAppointment = appt.superAppt!
+            var numReps = superAppointment.repetitions.count
+            while numReps > 0 {
+                let apptRep = superAppointment.repetitions[0]
+                apptDayIndex = apptRep.startTime.calendarDayIndex()
+                for i in 0..<calendarArray[apptDayIndex].count {
+                    // REQUIRES: appt is allocated in correct day
+                    if calendarArray[apptDayIndex][i] == apptRep {
+                        calendarArray[apptDayIndex].removeAtIndex(i)
+                        superAppointment.repetitions.removeFirst()
+                        break
+                    }
+                }
+                numReps -= 1
+            }
+            for i in 0..<appointmentArray.count {
+                if appointmentArray[i] == appt.superAppt {
+                    appointmentArray.removeAtIndex(i)
+                }
+            }
+            save()
         }
         else {
             for i in 0..<calendarArray[apptDayIndex].count {
                 if calendarArray[apptDayIndex][i] == appt {
                     calendarArray[apptDayIndex].removeAtIndex(i)
+                    save()
                     return
                 }
             }
