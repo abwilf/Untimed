@@ -160,18 +160,21 @@ class TaskManager: NSObject {
     
     func deleteAllInstancesOf(appointment apptIn: Appointment) {
         removeSingleApptInstanceAndItsRepetitionsFromCalArray(appointment: apptIn)
-//        for i in 0..<appointmentArray.count {
-//            if appointmentArray[i] == apptIn {
-//                appointmentArray.removeAtIndex(i)
-//                save()
-//                allocateTime()
-//                return
-//            }
-//        }
     }
     
     func deleteSingleInstanceOf(appointment apptIn: Appointment) {
         removeSingleApptInstanceFromCalArray(appointment: apptIn)
+    }
+    
+    func removeApptFromApptArr(appointment apptIn: Appointment) {
+        for i in 0..<appointmentArray.count {
+            if appointmentArray[i] == apptIn {
+                appointmentArray.removeAtIndex(i)
+                save()
+                allocateTime()
+                return
+            }
+        }
     }
     
 //    func deleteSingleInstance(dayIndex col: Int, rowIndex row: Int) {

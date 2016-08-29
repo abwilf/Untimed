@@ -139,7 +139,6 @@ class DailyScheduleTableViewController: UITableViewController{
             
             self.presentViewController(warningControllerSingle, animated: true) {
             }
-            
         }
         let deleteActionRepeating = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
             // delete warning
@@ -149,6 +148,7 @@ class DailyScheduleTableViewController: UITableViewController{
         let deleteActionSingleInstance = UIAlertAction(title: "Only this instance", style: .Destructive) { (action) in
             if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
                 self.taskManager.deleteSingleInstanceOf(appointment: appt)
+                self.taskManager.allocateWorkingBlocksAtIndex(dayIndex: self.dateLocationDay)
                 tableView.reloadData()
             }
         }
@@ -156,11 +156,21 @@ class DailyScheduleTableViewController: UITableViewController{
             if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
                 // make sure this is working properly
                 self.taskManager.deleteAllInstancesOf(appointment: appt)
+                self.taskManager.allocateWorkingBlocksAtIndex(dayIndex: self.dateLocationDay)
+                tableView.reloadData()
+            }
+        }
+        let deleteAppointment = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
+            if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
+                // make sure this is working properly
+                self.taskManager.removeSingleApptInstanceFromCalArray(appointment: appt)
+                self.taskManager.removeApptFromApptArr(appointment: appt)
+                self.taskManager.allocateWorkingBlocksAtIndex(dayIndex: self.dateLocationDay)
                 tableView.reloadData()
             }
         }
         
-        warningControllerSingle.addAction(deleteActionSingle)
+        warningControllerSingle.addAction(deleteAppointment)
         warningControllerRepeating.addAction(deleteActionSingleInstance)
         warningControllerRepeating.addAction(deleteActionAllInstances)
     
