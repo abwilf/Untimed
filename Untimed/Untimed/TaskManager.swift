@@ -544,7 +544,7 @@ class TaskManager: NSObject {
         let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject(calendarArray)
         let archiveDateLastUsed: NSData = NSKeyedArchiver.archivedDataWithRootObject(dateLastUsed)
         
-        let archiveDailyList: NSData? = NSKeyedArchiver.archivedDataWithRootObject(dailyListArray)
+       // let archiveDailyList: NSData? = NSKeyedArchiver.archivedDataWithRootObject(dailyListArray)
 
 //        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject
         
@@ -555,7 +555,7 @@ class TaskManager: NSObject {
         defaults.setObject(archiveCaptureListText, forKey: "captureListText")
         defaults.setObject(archiveCal, forKey: "calendarArray")
         defaults.setObject(archiveDateLastUsed, forKey: "dateLastUsed")
-        defaults.setObject(archiveDailyList, forKey: "dailyListArray")
+      //  defaults.setObject(archiveDailyList, forKey: "dailyListArray")
         
         setSettingsArray()
         assert(settingsArray.count == 2, "setSettingsArray func failed")
@@ -593,7 +593,7 @@ class TaskManager: NSObject {
         
         if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveDailyList) as? [String] {
             
-            dailyListArray = temp
+       //     dailyListArray = temp
             
             print (dailyListArray)
         }
