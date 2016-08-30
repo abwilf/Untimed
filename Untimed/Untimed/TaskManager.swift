@@ -65,6 +65,11 @@ class TaskManager: NSObject {
     
     var settingsArray: [NSDate] = []
     
+    var dailyListArray: [String?] = Array(count: 365, repeatedValue: " ")
+    
+    var dateLocationDay: Int = 0
+    
+    
     func setSettingsArray() {
         // clear
         settingsArray = []
@@ -538,6 +543,8 @@ class TaskManager: NSObject {
         let archiveCaptureListText: NSData = NSKeyedArchiver.archivedDataWithRootObject(captureListText)
         let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject(calendarArray)
         let archiveDateLastUsed: NSData = NSKeyedArchiver.archivedDataWithRootObject(dateLastUsed)
+        
+        let archiveDailyList: NSData? = NSKeyedArchiver.archivedDataWithRootObject(dailyListArray)
 
 //        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject
         
@@ -548,6 +555,7 @@ class TaskManager: NSObject {
         defaults.setObject(archiveCaptureListText, forKey: "captureListText")
         defaults.setObject(archiveCal, forKey: "calendarArray")
         defaults.setObject(archiveDateLastUsed, forKey: "dateLastUsed")
+        defaults.setObject(archiveDailyList, forKey: "dailyListArray")
         
         setSettingsArray()
         assert(settingsArray.count == 2, "setSettingsArray func failed")
@@ -555,8 +563,6 @@ class TaskManager: NSObject {
         
         
         defaults.synchronize()
-        
-        
     }
     
     func loadFromDisc() {
@@ -575,12 +581,26 @@ class TaskManager: NSObject {
 
         let archiveCal = defaults.objectForKey("calendarArray") as? NSData ?? NSData()
         
+        let archiveDailyList = defaults.objectForKey("dailyListArray") as? NSData ?? NSData()
+
         // unarchive all objects
         classArray = NSKeyedUnarchiver.unarchiveObjectWithData(archive) as? [Class] ?? []
         
         appointmentArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveAppt) as? [Appointment] ?? []
         
         settingsArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] ?? []
+        
+        
+        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveDailyList) as? [String] {
+            
+            dailyListArray = temp
+            
+            print (dailyListArray)
+        }
+        
+        else {
+            assert(false, "dailyListArray not loading from disc!")
+        }
         
         // captureListText
         if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCaptureListText) as? String {

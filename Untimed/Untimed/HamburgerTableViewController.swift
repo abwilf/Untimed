@@ -23,8 +23,10 @@ class HamburgerTableViewController: UITableViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
+        tmObj = TaskManager()
+      //  assert(tmObj.dailyListArray.count != 0, "")
         tmObj.loadFromDisc()
-        
+        //assert(tmObj.dailyListArray.count != 0, "")
     }
     @IBAction func tasksButtonPressed(sender: UIButton) {
         self.performSegueWithIdentifier("To Tasks", sender: sender)
@@ -56,7 +58,7 @@ class HamburgerTableViewController: UITableViewController {
     @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
         if let cdvc = sender.sourceViewController as? ChangeDateViewController {
             tmObj.selectedDate = cdvc.newDate
-            
+            tmObj.dateLocationDay = tmObj.selectedDate.calendarDayIndex()
             tmObj.save()
             
             tableView.reloadData()
@@ -66,7 +68,6 @@ class HamburgerTableViewController: UITableViewController {
     @IBAction func unwindFromCaptureList(sender: UIStoryboardSegue) {
         if let clvc = sender.sourceViewController as? CaptureListViewController {
             tmObj.captureListText = clvc.storedText
-            print (tmObj.captureListText)
             
             tmObj.save()
             
@@ -77,6 +78,15 @@ class HamburgerTableViewController: UITableViewController {
     @IBAction func unwindFromAccountabilityToHamburger (sender: UIStoryboardSegue) {
         if let atvc = sender.sourceViewController as? AccountabilityTableViewController {
             // maybe get rid of tasks
+            tableView.reloadData()
+        }
+    }
+    
+    @IBAction func unwindFromDailyListToHamburger(sender: UIStoryboardSegue) {
+        if let dlvc = sender.sourceViewController as? DailyListViewController {
+            
+            tmObj.dailyListArray[tmObj.dateLocationDay] = dlvc.dailyList
+            
             tableView.reloadData()
         }
     }
@@ -108,6 +118,21 @@ class HamburgerTableViewController: UITableViewController {
             let targetController = destinationNavigationController.topViewController as! CaptureListViewController
             
             targetController.storedText = tmObj.captureListText
+        }
+        
+        if (segue.identifier == "To Daily List") {
+            let destinationNavigationController = segue.destinationViewController as! UINavigationController
+            let targetController = destinationNavigationController.topViewController as! DailyListViewController
+            
+            // modify dailyList var based on datelocation day
+            
+            if let temp = tmObj.dailyListArray[tmObj.dateLocationDay] {
+                targetController.dailyList = temp
+            }
+            
+            else {
+                targetController.dailyList = ""
+            }
         }
     }
     

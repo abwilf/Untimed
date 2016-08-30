@@ -11,7 +11,6 @@ import UIKit
 
 class DailyScheduleTableViewController: UITableViewController{
     var taskManager = TaskManager()
-    var dateLocationDay: Int = 0
     
     var dsCalArray: [[Task?]] = []
     var printedDSCalArray: [[Task?]] = []
@@ -35,7 +34,6 @@ class DailyScheduleTableViewController: UITableViewController{
     var selectedDate = NSDate() {
         didSet {
             updateTitle()
-            
             // re-allocate
             taskManager.loadFromDisc()
             
@@ -57,6 +55,8 @@ class DailyScheduleTableViewController: UITableViewController{
     @IBAction func unwindAndChangeDate(sender: UIStoryboardSegue) {
         if let cdvc = sender.sourceViewController as? ChangeDateViewController {
             selectedDate = cdvc.newDate
+            taskManager.dateLocationDay = selectedDate.calendarDayIndex()
+            print (taskManager.dateLocationDay)
             taskManager.save()
             taskManager.loadFromDisc()
             taskManager.allocateTime()
@@ -95,16 +95,19 @@ class DailyScheduleTableViewController: UITableViewController{
     }
 
     func updateTitle() {
-        dateLocationDay = selectedDate.calendarDayIndex()
-        if dateLocationDay == 0 {
+        taskManager.dateLocationDay = selectedDate.calendarDayIndex()
+        
+        taskManager.save()
+        
+        if taskManager.dateLocationDay == 0 {
             title = "Today"
         }
         
-        if dateLocationDay == 1 {
+        if taskManager.dateLocationDay == 1 {
             title = "Tomorrow"
         }
         
-        if dateLocationDay > 1 {
+        if taskManager.dateLocationDay > 1 {
             
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
@@ -120,28 +123,28 @@ class DailyScheduleTableViewController: UITableViewController{
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
         }
         let deleteActionSingleInstance = UIAlertAction(title: "Only this instance", style: .Destructive) { (action) in
-            if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
+            if let appt = self.taskManager.calendarArray[self.taskManager.dateLocationDay][indexPath.row] as? Appointment {
                 self.taskManager.deleteSingleInstanceOf(appointment: appt)
-                self.taskManager.clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex: self.dateLocationDay)
+                self.taskManager.clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex: self.taskManager.dateLocationDay)
                 self.taskManager.save()
                 tableView.reloadData()
             }
         }
         let deleteActionAllInstances = UIAlertAction(title: "All instances of this appointment", style: .Destructive) { (action) in
-            if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
+            if let appt = self.taskManager.calendarArray[self.taskManager.dateLocationDay][indexPath.row] as? Appointment {
                 // make sure this is working properly
                 self.taskManager.deleteAllInstancesOf(appointment: appt)
-                self.taskManager.clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex: self.dateLocationDay)
+                self.taskManager.clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex: self.taskManager.dateLocationDay)
                 self.taskManager.save()
                 tableView.reloadData()
             }
         }
         let deleteAppointment = UIAlertAction(title: "Delete", style: .Destructive) { (action) in
-            if let appt = self.taskManager.calendarArray[self.dateLocationDay][indexPath.row] as? Appointment {
+            if let appt = self.taskManager.calendarArray[self.taskManager.dateLocationDay][indexPath.row] as? Appointment {
                 // make sure this is working properly
                 self.taskManager.removeSingleApptInstanceFromCalArray(appointment: appt)
                 self.taskManager.removeApptFromApptArr(appointment: appt)
-                self.taskManager.clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex: self.dateLocationDay)
+                self.taskManager.clearWorkingBlocksThatDoNotHaveFocusesAtDayIndex(dayIndex: self.taskManager.dateLocationDay)
                 self.taskManager.save()
                 tableView.reloadData()
             }
@@ -178,7 +181,7 @@ class DailyScheduleTableViewController: UITableViewController{
         warningControllerRepeating.addAction(deleteActionSingleInstance)
         warningControllerRepeating.addAction(deleteActionAllInstances)
     
-        if let appt = taskManager.calendarArray[dateLocationDay][indexPath.row] as? Appointment {
+        if let appt = taskManager.calendarArray[taskManager.dateLocationDay][indexPath.row] as? Appointment {
             if appt.doesRepeat {
                 alertController.addAction(deleteActionRepeating)
             }
@@ -190,14 +193,14 @@ class DailyScheduleTableViewController: UITableViewController{
             }
         }
         
-        if let _ = taskManager.calendarArray[dateLocationDay][indexPath.row] as? Free {
+        if let _ = taskManager.calendarArray[taskManager.dateLocationDay][indexPath.row] as? Free {
             let addApptAction = UIAlertAction(title: "Add appointment", style: .Default) { (action) in
             }
             
             alertController.addAction(addApptAction)
         }
    
-        if let wbObj = taskManager.calendarArray[dateLocationDay][indexPath.row] as? WorkingBlock {
+        if let wbObj = taskManager.calendarArray[taskManager.dateLocationDay][indexPath.row] as? WorkingBlock {
             let selectFocusAction = UIAlertAction(title: "Select Focus", style: .Default) { (action) in self.performSegueWithIdentifier("Select Focus Segue", sender: self)
             }
             
@@ -259,7 +262,7 @@ class DailyScheduleTableViewController: UITableViewController{
     func clearSelectedDate() {
         taskManager.selectedDate = NSDate()
         taskManager.save()
-        dateLocationDay = 0
+        taskManager.dateLocationDay = 0
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -340,8 +343,8 @@ class DailyScheduleTableViewController: UITableViewController{
     
     // FIXME: change this when we have userinputted values
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        taskManager.allocateWorkingBlocksAtIndex(dayIndex: dateLocationDay)
-        return taskManager.calendarArray[dateLocationDay].count
+        taskManager.allocateWorkingBlocksAtIndex(dayIndex: taskManager.dateLocationDay)
+        return taskManager.calendarArray[taskManager.dateLocationDay].count
     }
     
     func thereExistsAnApptOutsideWorkingDay() -> Bool {
@@ -363,7 +366,7 @@ class DailyScheduleTableViewController: UITableViewController{
         
 //        else {
             if indexPath.row < taskManager.calendarArray[selectedDate.calendarDayIndex()].count {
-                let task = taskManager.calendarArray[dateLocationDay][indexPath.row]
+                let task = taskManager.calendarArray[taskManager.dateLocationDay][indexPath.row]
             
                 var label = ""
                 var subLabel = ""
@@ -488,7 +491,7 @@ class DailyScheduleTableViewController: UITableViewController{
             
             if let indexSelected = tableView.indexPathForSelectedRow?.row {
                 targetController.wbIndex = indexSelected
-                targetController.dateLocationDay = dateLocationDay
+                targetController.dateLocationDay = taskManager.dateLocationDay
                 targetController.focusIndicator = true
             }
         }

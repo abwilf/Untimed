@@ -5,6 +5,33 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
+        <!--Daily List-->
+        <scene sceneID="1sf-bH-tUT">
+            <objects>
+                <viewController id="7Mj-9J-ObC" customClass="DailyListViewController" customModule="Untimed" customModuleProvider="target" sceneMemberID="viewController">
+                    <textView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="mXl-SI-7gX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                    <navigationItem key="navigationItem" title="Daily List" id="Mwx-NS-J97">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="0Md-fa-Ydj">
+                            <connections>
+                                <segue destination="nkz-L5-yJ0" kind="unwind" unwindAction="unwindFromDailyListToHamburger:" id="EUY-vz-d0H"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="textView" destination="mXl-SI-7gX" id="X9n-pP-3qy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1q3-aE-9m6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="nkz-L5-yJ0" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-228" y="-1054"/>
+        </scene>
         <!--Capture List-->
         <scene sceneID="wqd-od-q41">
             <objects>
@@ -30,7 +57,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJW-dp-yWY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ZEG-EN-ZMu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-326" y="-900"/>
+            <point key="canvasLocation" x="-228" y="-392"/>
         </scene>
         <!--Today's Tasks-->
         <scene sceneID="HMZ-sw-FQk">
@@ -85,7 +112,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6uv-HX-bIC" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="T2O-qX-m0y" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-295" y="-66"/>
+            <point key="canvasLocation" x="-295" y="444"/>
         </scene>
         <!--Hamburger Table View Controller-->
         <scene sceneID="V5V-Zh-IJD">
@@ -217,6 +244,23 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="49" id="7LI-Mr-Ec0">
+                                        <rect key="frame" x="0.0" y="385" width="600" height="49"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7LI-Mr-Ec0" id="IrI-8a-a5S">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="48.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yXh-Qy-eAp">
+                                                    <rect key="frame" x="-186" y="10" width="477" height="30"/>
+                                                    <state key="normal" title="Daily List"/>
+                                                    <connections>
+                                                        <segue destination="x9e-0X-bF1" kind="show" identifier="To Daily List" id="RQ2-n8-WCb"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -319,7 +363,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KCy-yf-TVf" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Pvf-oV-hMi" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-295" y="1460"/>
+            <point key="canvasLocation" x="-326" y="1964"/>
         </scene>
         <!--Change Date-->
         <scene sceneID="dJh-ig-KwE">
@@ -367,7 +411,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a19-eD-t4n" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="xae-Xh-ZOJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-295" y="754"/>
+            <point key="canvasLocation" x="-295" y="1194"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oDQ-eY-TDe">
@@ -385,7 +429,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ox5-Mz-E6V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1098" y="741"/>
+            <point key="canvasLocation" x="-1092" y="1194"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="495-3b-dru">
@@ -403,7 +447,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N46-vE-nHY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1092" y="1460"/>
+            <point key="canvasLocation" x="-1092" y="1964"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="Q7g-WE-KrT">
@@ -493,7 +537,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jJw-2f-3Zz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="IYg-aA-wGH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="464" y="-72"/>
+            <point key="canvasLocation" x="444" y="444"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gx4-Ea-iAZ">
@@ -511,7 +555,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PFP-W8-x36" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1092" y="-72"/>
+            <point key="canvasLocation" x="-1092" y="444"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="M2L-wM-SKI">
@@ -534,7 +578,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="-1082" y="-900"/>
+            <point key="canvasLocation" x="-1092" y="-392"/>
         </scene>
         <!--TaskSequence-->
         <scene sceneID="sx4-YM-H69">
@@ -551,6 +595,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k53-t2-A92" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1075.5" y="-1998"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="WRd-Ox-tiD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="x9e-0X-bF1" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NpV-c6-jrb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="7Mj-9J-ObC" kind="relationship" relationship="rootViewController" id="NKO-RZ-9lf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8dO-cA-rOR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1092" y="-1054"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
