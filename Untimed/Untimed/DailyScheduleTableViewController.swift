@@ -243,6 +243,7 @@ class DailyScheduleTableViewController: UITableViewController{
             
             let clearFocusAction = UIAlertAction(title: "Clear Focus", style: .Destructive) { (action) in
                 wbObj.focusArr = [];
+                self.taskManager.save();
                 tableView.reloadData()
             }
 
