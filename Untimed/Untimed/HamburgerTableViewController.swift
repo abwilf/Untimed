@@ -81,16 +81,7 @@ class HamburgerTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
-    
-    @IBAction func unwindFromDailyListToHamburger(sender: UIStoryboardSegue) {
-        if let dlvc = sender.sourceViewController as? DailyListViewController {
-            
-            tmObj.dailyListArray[tmObj.dateLocationDay] = dlvc.dailyList
-            
-            tableView.reloadData()
-        }
-    }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "Accountability Segue") {
             let destinationNavigationController = segue.destinationViewController as! UINavigationController
@@ -120,20 +111,6 @@ class HamburgerTableViewController: UITableViewController {
             targetController.storedText = tmObj.captureListText
         }
         
-        if (segue.identifier == "To Daily List") {
-            let destinationNavigationController = segue.destinationViewController as! UINavigationController
-            let targetController = destinationNavigationController.topViewController as! DailyListViewController
-            
-            // modify dailyList var based on datelocation day
-            
-            if let temp = tmObj.dailyListArray[tmObj.dateLocationDay] {
-                targetController.dailyList = temp
-            }
-            
-            else {
-                targetController.dailyList = ""
-            }
-        }
     }
     
 }

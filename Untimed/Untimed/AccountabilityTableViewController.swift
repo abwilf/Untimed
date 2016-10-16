@@ -60,40 +60,4 @@ class AccountabilityTableViewController: UITableViewController {
             
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "Time Completed Segue" {
-            if let targetController = segue.destinationViewController as? TimeCompletedViewController {
-                targetController.task = focusTasks[indexSelected]
-            }
-        }
-    }
-    
-    @IBAction func unwindAndModifyHoursCompleted(sender: UIStoryboardSegue)
-    {
-        if let tcvc = sender.sourceViewController as? TimeCompletedViewController {
-            
-            // find object in focusArray using indexSelected
-//            let objectToModify = focusTasks[indexSelected]
-            let objectToModify = tcvc.task
-            
-            // modify hours completed 
-            if let temp = objectToModify as? Assignment {
-                temp.timeNeeded -= tcvc.hoursCompleted
-                
-                if temp.timeNeeded < 0 {
-                    temp.timeNeeded = 0
-                }
-            }
-            
-            else if let temp = objectToModify as? ProjectTask {
-                temp.timeNeeded -= tcvc.hoursCompleted
-                
-                if temp.timeNeeded < 0 {
-                    temp.timeNeeded = 0
-                }
-            }
-        }
-        tableView.reloadData()
-    }
-
 }

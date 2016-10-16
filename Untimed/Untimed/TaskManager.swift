@@ -599,7 +599,7 @@ class TaskManager: NSObject {
         }
         
         else {
-            assert(false, "dailyListArray not loading from disc!")
+//            assert(false, "dailyListArray not loading from disc!")
         }
         
         // captureListText
