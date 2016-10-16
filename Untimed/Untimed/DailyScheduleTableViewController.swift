@@ -377,22 +377,24 @@ class DailyScheduleTableViewController: UITableViewController{
             
             if let temp = task as? WorkingBlock {
                 label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): Working Block"
-                for i in 0..<temp.focusArr.count {
+                if temp.focusArr.count != 0 {
                     subLabel = "Focus: "
-                    
-                    // if only one focus
-                    if temp.focusArr.count == 1 {
-                        subLabel += (temp.focusArr[i].title)
-                    }
-                    
-                    // if more than one, but not the last one
-                    else if i < temp.focusArr.count - 1 {
-                        subLabel += (temp.focusArr[i].title) + ", "
-                    }
-                    
-                    // the last one in the chain
-                    else {
-                        subLabel += (temp.focusArr[i].title)
+                    for i in 0..<temp.focusArr.count {
+                        
+                        // if only one focus
+                        if temp.focusArr.count == 1 {
+                            subLabel += (temp.focusArr[i].title)
+                        }
+                        
+                        // if more than one, but not the last one
+                        else if i < temp.focusArr.count - 1 {
+                            subLabel += (temp.focusArr[i].title) + ", "
+                        }
+                        
+                        // the last one in the chain
+                        else {
+                            subLabel += (temp.focusArr[i].title)
+                        }
                     }
                 }
             }
