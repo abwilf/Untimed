@@ -541,7 +541,19 @@ class TaskManager: NSObject {
         let archiveSettings: NSData = NSKeyedArchiver.archivedDataWithRootObject(settingsArray)
         let archiveSelectedDate: NSData = NSKeyedArchiver.archivedDataWithRootObject(selectedDate)
         let archiveCaptureListText: NSData = NSKeyedArchiver.archivedDataWithRootObject(captureListText)
+        
+        if !calendarArray[0].isEmpty {
+            if let wb = calendarArray[0][0] as? WorkingBlock {
+                print(wb.hasFocus)
+            }
+        }
         let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject(calendarArray)
+        if !calendarArray[0].isEmpty {
+            if let wb = calendarArray[0][0] as? WorkingBlock {
+                print(wb.hasFocus)
+            }
+        }
+        
         let archiveDateLastUsed: NSData = NSKeyedArchiver.archivedDataWithRootObject(dateLastUsed)
         
        // let archiveDailyList: NSData? = NSKeyedArchiver.archivedDataWithRootObject(dailyListArray)
@@ -590,14 +602,12 @@ class TaskManager: NSObject {
         
         settingsArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] ?? []
         
-        
         if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveDailyList) as? [String] {
             
        //     dailyListArray = temp
             
             print (dailyListArray)
         }
-        
         else {
 //            assert(false, "dailyListArray not loading from disc!")
         }
@@ -606,7 +616,6 @@ class TaskManager: NSObject {
         if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCaptureListText) as? String {
             captureListText = temp
         }
-            
         else {
             captureListText = ""
             // FIXME: this will fail for user's first run

@@ -77,6 +77,7 @@ class DailyScheduleTableViewController: UITableViewController{
             pttvc.updateFocusTasks()
             taskManager = pttvc.tmObj
             taskManager.save()
+            taskManager.loadFromDisc()
             tableView.reloadData()
         }
         
@@ -358,63 +359,55 @@ class DailyScheduleTableViewController: UITableViewController{
         // giving cell information and telling where to find it
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         
-//        if thereExistsAnApptOutsideWorkingDay() {
-//            // FIXME: ADD if it's before the working day
-//            
-//            // if it's after the working day
-//        }
+        if indexPath.row < taskManager.calendarArray[selectedDate.calendarDayIndex()].count {
+            let task = taskManager.calendarArray[taskManager.dateLocationDay][indexPath.row]
         
-//        else {
-            if indexPath.row < taskManager.calendarArray[selectedDate.calendarDayIndex()].count {
-                let task = taskManager.calendarArray[taskManager.dateLocationDay][indexPath.row]
+            var label = ""
+            var subLabel = ""
             
-                var label = ""
-                var subLabel = ""
+            if let temp = task as? Free {
                 
-                if let temp = task as? Free {
+                label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): Free"
+            }
+            
+            if let temp = task as? Appointment {
+                let title = temp.title
+                label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): \(title)"
+            }
+            
+            if let temp = task as? WorkingBlock {
+                label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): Working Block"
+                for i in 0..<temp.focusArr.count {
+                    subLabel = "Focus: "
                     
-                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): Free"
-                }
-                
-                if let temp = task as? Appointment {
-                    let title = temp.title
-                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): \(title)"
-                }
-                
-                if let temp = task as? WorkingBlock {
-                    label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): Working Block"
-                    for i in 0..<temp.focusArr.count {
-                        subLabel = "Focus: "
-                        
-                        // if only one focus
-                        if temp.focusArr.count == 1 {
-                            subLabel += (temp.focusArr[i].title)
-                        }
-                        
-                        // if more than one, but not the last one
-                        else if i < temp.focusArr.count - 1 {
-                            subLabel += (temp.focusArr[i].title) + ", "
-                        }
-                        
-                        // the last one in the chain
-                        else {
-                            subLabel += (temp.focusArr[i].title)
-                        }
+                    // if only one focus
+                    if temp.focusArr.count == 1 {
+                        subLabel += (temp.focusArr[i].title)
+                    }
+                    
+                    // if more than one, but not the last one
+                    else if i < temp.focusArr.count - 1 {
+                        subLabel += (temp.focusArr[i].title) + ", "
+                    }
+                    
+                    // the last one in the chain
+                    else {
+                        subLabel += (temp.focusArr[i].title)
                     }
                 }
-                
-                cell.textLabel?.text = label
-                cell.detailTextLabel?.text = subLabel
+            }
+            
+            cell.textLabel?.text = label
+            cell.detailTextLabel?.text = subLabel
 
-                return cell
-            }
-            else {
-                cell.textLabel?.text = ""
-                return cell
-            }
-//        }
+            return cell
+        }
+        else {
+            cell.textLabel?.text = ""
+            return cell
+        }
         
-//        return cell
+        return cell
     }
     
     override func viewDidLoad() {

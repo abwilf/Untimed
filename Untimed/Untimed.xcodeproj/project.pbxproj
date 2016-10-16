@@ -182,7 +182,6 @@
 		211329C41D5251580070948F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A21977871D5CFC8100D1CE30 /* HamburgerTableViewController.swift */,
 				A2A7327A1D5A8ABF00285D28 /* AccountabilityTableViewController.swift */,
 				A227C4F91CB46AD400B3971D /* AddAppointmentTableViewController.swift */,
 				A24771581CB5494D00FD4FC3 /* AddAssignmentTableViewController.swift */,
@@ -199,6 +198,7 @@
 				A29A9A2B1CBE98480011A5BF /* EditAppointmentTableViewController.swift */,
 				A29A9A291CBE98340011A5BF /* EditAssignmentTableViewController.swift */,
 				218DA31E1D42915A00E269CA /* EndRepeatTableViewController.swift */,
+				A21977871D5CFC8100D1CE30 /* HamburgerTableViewController.swift */,
 				A2A5A8D51D4932D200030AAE /* PickAClassTableViewController.swift */,
 				A283E7A41D50ED8500636B09 /* PickAProjectTableViewController.swift */,
 				A2A5A8D31D49296A00030AAE /* ProjectsAndAssignmentsTableViewController.swift */,

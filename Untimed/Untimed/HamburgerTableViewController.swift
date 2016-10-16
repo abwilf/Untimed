@@ -23,7 +23,7 @@ class HamburgerTableViewController: UITableViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
-        tmObj = TaskManager()
+//        tmObj = TaskManager()
       //  assert(tmObj.dailyListArray.count != 0, "")
         tmObj.loadFromDisc()
         //assert(tmObj.dailyListArray.count != 0, "")

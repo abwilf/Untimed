@@ -14,6 +14,14 @@ class WorkingBlock: Task {
     // should be saved if it contains a focus
     var hasFocus = false
     
+    func updateHasFocus() {
+        if focusArr.isEmpty {
+            hasFocus = false
+        }
+        else {
+            hasFocus = true
+        }
+    }
     
     override init() {
         super.init()
@@ -22,7 +30,7 @@ class WorkingBlock: Task {
     
     override func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(title, forKey:"Title")
-        aCoder.encodeObject(focusArr, forKey: "focusArr")
+        aCoder.encodeObject(focusArr, forKey:"focusArr")
         aCoder.encodeObject(startTime, forKey:"StartTime")
         aCoder.encodeObject(endTime, forKey:"EndTime")
     }
@@ -33,6 +41,6 @@ class WorkingBlock: Task {
         self.focusArr = aDecoder.decodeObjectForKey("focusArr") as? [Task] ?? []
         self.startTime = aDecoder.decodeObjectForKey("StartTime") as? NSDate ?? NSDate()
         self.endTime = aDecoder.decodeObjectForKey("EndTime") as? NSDate ?? NSDate()
-
+        updateHasFocus()
     }
 }
