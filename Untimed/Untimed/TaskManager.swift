@@ -235,20 +235,27 @@ class TaskManager: NSObject {
             appointmentArray.removeLast()
         }
     }
+    
+    private func clearAppts() {
+        clearAppointmentArray()
+        
+        clearCalArray()
+        save()
+    }
+    
+    private func clearAll() {
+        clearClassArray()
+
+        clearAppointmentArray()
+
+        clearCalArray()
+        save()
+    }
 
     func allocateTime() {
-        // for testing
-//        clearClassArray()
         
-        // for testing
-//        clearAppointmentArray()
-//        save()
-//
-//        clearCalArray()
-//        save()
-
-        // put appts in
-//        allocateAppts()
+//        clearAll()
+//        clearAppts()
         
          updateCalArray()
         
@@ -442,20 +449,20 @@ class TaskManager: NSObject {
         }
         else {
             for j in 1..<calendarArray[i].count {
-                if isDate(calendarArray[i][j].startTime, earlierThan: lastWorkingHour) {
-                    if !isDate(calendarArray[i][j].startTime, sameAs: calendarArray[i][j - 1].endTime) {
-                        startTime = calendarArray[i][j - 1].endTime
-                        endTime = calendarArray[i][j].startTime
-                        rowIndex = j
-                        break
-                    }
-                }
-                else if isDate(calendarArray[i][j-1].endTime, earlierThan: lastWorkingHour) {
-                    startTime = calendarArray[i][j-1].endTime
-                    endTime = lastWorkingHour
-                    rowIndex = j
-                    break
-                }
+//                if isDate(calendarArray[i][j].startTime, earlierThan: lastWorkingHour) {
+//                    if !isDate(calendarArray[i][j].startTime, sameAs: calendarArray[i][j - 1].endTime) {
+//                        startTime = calendarArray[i][j - 1].endTime
+//                        endTime = calendarArray[i][j].startTime
+//                        rowIndex = j
+//                        break
+//                    }
+//                }
+//                else if isDate(calendarArray[i][j-1].endTime, earlierThan: lastWorkingHour) {
+//                    startTime = calendarArray[i][j-1].endTime
+//                    endTime = lastWorkingHour
+//                    rowIndex = j
+//                    break
+//                }
             }
             if isDate((calendarArray[i].last?.endTime)!, earlierThan: lastWorkingHour) {
                 startTime = calendarArray[i].last?.endTime
