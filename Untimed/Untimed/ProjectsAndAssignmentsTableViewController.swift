@@ -10,6 +10,10 @@ import UIKit
 
 class ProjectsAndAssignmentsTableViewController: UITableViewController {
 
+    @IBAction func cancelPressed(sender: UIBarButtonItem) {
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     // assns and projects for this class stored here
     var tmObj = TaskManager()
     var selectedClass = Class()

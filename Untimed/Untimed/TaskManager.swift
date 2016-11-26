@@ -243,7 +243,7 @@ class TaskManager: NSObject {
         // for testing
 //        clearAppointmentArray()
 //        save()
-//        
+//
 //        clearCalArray()
 //        save()
 

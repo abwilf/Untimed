@@ -10,6 +10,9 @@ import UIKit
 
 class TaskTableTableViewController: UITableViewController {
     
+    @IBAction func cancelPressed(sender: UIBarButtonItem) {
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
     var tmObj = TaskManager()
     
     // whether in focus or view mode

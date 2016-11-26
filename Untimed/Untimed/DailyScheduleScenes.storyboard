@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6cJ-wJ-D9u">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6cJ-wJ-D9u">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -720,7 +720,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Classes" id="PVO-oF-DYn">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="THU-Uw-KAP"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="THU-Uw-KAP">
+                            <connections>
+                                <action selector="cancelPressed:" destination="NIU-It-OTn" id="xlG-Zf-0lD"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GAF-K5-0mq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -767,7 +771,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Projects and Assignments" id="f6K-1v-Mws">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="UKk-ri-LGP"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="UKk-ri-LGP">
+                            <connections>
+                                <action selector="cancelPressed:" destination="e4A-x6-mq6" id="Hmf-Ko-UuZ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="C9T-yc-Mok" kind="presentation" identifier="To Project Task Focus" id="TPf-XM-hEE"/>
@@ -775,7 +783,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u09-sB-1gO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1459.5" y="808.5"/>
+            <point key="canvasLocation" x="1445.5" y="808.5"/>
         </scene>
         <!--Project Tasks-->
         <scene sceneID="qbC-Kc-ooI">
@@ -817,7 +825,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Project Tasks" id="lXP-FL-dBW">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="gV0-K2-TcQ"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="gV0-K2-TcQ">
+                            <connections>
+                                <action selector="cancelPressed:" destination="hbg-l6-qz3" id="7ff-fp-VX6"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="msU-CP-84J">
                             <connections>
                                 <segue destination="YNk-8h-nn0" kind="unwind" unwindAction="unwindFromPickFocus:" id="Q17-uY-8fl"/>

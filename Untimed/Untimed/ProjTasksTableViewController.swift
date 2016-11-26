@@ -9,6 +9,12 @@
 import UIKit
 
 class ProjTasksTableViewController: UITableViewController {
+    
+    
+    @IBAction func cancelPressed(sender: UIBarButtonItem) {
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
 //    var projTasksArr: [ProjectTask] = []
     var selectedProject = Project()
 
