@@ -449,20 +449,23 @@ class TaskManager: NSObject {
         }
         else {
             for j in 1..<calendarArray[i].count {
-//                if isDate(calendarArray[i][j].startTime, earlierThan: lastWorkingHour) {
-//                    if !isDate(calendarArray[i][j].startTime, sameAs: calendarArray[i][j - 1].endTime) {
-//                        startTime = calendarArray[i][j - 1].endTime
-//                        endTime = calendarArray[i][j].startTime
-//                        rowIndex = j
-//                        break
-//                    }
-//                }
-//                else if isDate(calendarArray[i][j-1].endTime, earlierThan: lastWorkingHour) {
-//                    startTime = calendarArray[i][j-1].endTime
-//                    endTime = lastWorkingHour
-//                    rowIndex = j
-//                    break
-//                }
+                if isDate(calendarArray[i][j].startTime, earlierThan: lastWorkingHour) {
+                    if isDate(calendarArray[i][j].startTime, earlierThan: calendarArray[i][j - 1].endTime) {
+                        break
+                    }
+                    else if isDate(calendarArray[i][j - 1].endTime, earlierThan: calendarArray[i][j].startTime) {
+                        startTime = calendarArray[i][j - 1].endTime
+                        endTime = calendarArray[i][j].startTime
+                        rowIndex = j
+                        break
+                    }
+                }
+                else if !isDate(calendarArray[i][j-1].endTime, sameAs: lastWorkingHour) {
+                    startTime = calendarArray[i][j-1].endTime
+                    endTime = lastWorkingHour
+                    rowIndex = j
+                    break
+                }
             }
             if isDate((calendarArray[i].last?.endTime)!, earlierThan: lastWorkingHour) {
                 startTime = calendarArray[i].last?.endTime
