@@ -516,6 +516,7 @@ class TaskManager: NSObject {
                         }
                     }
                     self.calendarArray[dayIn].insert(appt, atIndex: rowIndex)
+                    break
                 }
                 if let _ = compareTask as? WorkingBlock {
                     var compareWB = calendarArray[dayIn][rowIndex]
@@ -529,6 +530,7 @@ class TaskManager: NSObject {
                         }
                     }
                     self.calendarArray[dayIn].insert(appt, atIndex: rowIndex)
+                    break
                 }
             }
         }
