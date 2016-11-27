@@ -303,6 +303,8 @@ class DailyScheduleTableViewController: UITableViewController{
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+
         tableView.reloadData()
     }
     
@@ -417,6 +419,22 @@ class DailyScheduleTableViewController: UITableViewController{
         }
         
         return cell
+    }
+    
+    
+    func add_to_detail_test(UITableViewCell: cell_in, Task: task_in) {
+        // find start time
+        
+        // find end time
+        
+        // find hour value difference
+        
+        // find minute value difference
+        
+        // find number of chars per line approx
+        
+        // add to detail test by BLANK LINES
+        
     }
     
     override func viewDidLoad() {
