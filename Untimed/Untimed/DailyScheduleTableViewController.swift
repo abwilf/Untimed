@@ -223,7 +223,7 @@ class DailyScheduleTableViewController: UITableViewController{
                     // FIXME: temporary until we get the task list sorted out!
                     
                     // create a task with that name to put in the wbObj's focus array
-                    var newTaskObj = Task()
+                    let newTaskObj = Task()
                     
                     newTaskObj.title = textField.text! as String
                     
@@ -302,9 +302,10 @@ class DailyScheduleTableViewController: UITableViewController{
             menuButton.action = "revealToggle:"
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
-        
-        self.tableView.rowHeight = UITableViewAutomaticDimension
 
+        self.tableView.estimatedRowHeight = 44
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
         tableView.reloadData()
     }
     
@@ -362,6 +363,28 @@ class DailyScheduleTableViewController: UITableViewController{
         return false
     }
     
+    
+    
+    func add_to_detail(task_in: Task) -> String {
+        // find start and end times in HHMM format
+        let start_time = task_in.startTime.getTimeValForComparison()
+        let end_time = task_in.endTime.getTimeValForComparison()
+        
+        // find hour value difference
+        var hour_diff = (end_time - start_time) / 100
+        var string_out = ""
+        if (hour_diff == 0) {return ""}
+        else {
+            while (hour_diff > 0) {
+                string_out += "aaaaaaaaaaaaaaa;lakjdsflkjasdivjaenawnvoiwnaoenvkl;asl;dkfja;lkwdjlkawnelvk;nal;wkjfl;kjal;skdjflkasjdf;lkjawl;ekfjl;akdjflksdjf"
+                hour_diff -= 1
+            }
+        }
+        
+        return string_out
+    }
+    
+    
     // allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -409,36 +432,22 @@ class DailyScheduleTableViewController: UITableViewController{
             }
             
             cell.textLabel?.text = label
+            subLabel += add_to_detail(task)
             cell.detailTextLabel?.text = subLabel
-
+            
             return cell
         }
         else {
+            assert(false)
             cell.textLabel?.text = ""
             return cell
         }
-        
-        return cell
     }
     
-    
-    func add_to_detail_test(UITableViewCell: cell_in, Task: task_in) {
-        // find start time
-        
-        // find end time
-        
-        // find hour value difference
-        
-        // find minute value difference
-        
-        // find number of chars per line approx
-        
-        // add to detail test by BLANK LINES
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         
         /*self.settingsButton.title = NSString(string: "\u{2699}") as String
         if let font = UIFont(name: "Helvetica", size: 18.0) {
