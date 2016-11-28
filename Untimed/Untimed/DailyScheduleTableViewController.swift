@@ -363,27 +363,19 @@ class DailyScheduleTableViewController: UITableViewController{
         return false
     }
     
-    
-    
-    func add_to_detail(task_in: Task) -> String {
-        // find start and end times in HHMM format
-        let start_time = task_in.startTime.getTimeValForComparison()
-        let end_time = task_in.endTime.getTimeValForComparison()
-        
-        // find hour value difference
-        var hour_diff = (end_time - start_time) / 100
-        var string_out = ""
-        if (hour_diff == 0) {return ""}
-        else {
-            while (hour_diff > 0) {
-                string_out += "aaaaaaaaaaaaaaa;lakjdsflkjasdivjaenawnvoiwnaoenvkl;asl;dkfja;lkwdjlkawnelvk;nal;wkjfl;kjal;skdjflkasjdf;lkjawl;ekfjl;akdjflksdjf"
-                hour_diff -= 1
-            }
-        }
-        
-        return string_out
+    override func tableView(tableView: UITableView,
+                            heightForRowAtIndexPath indexPath: NSIndexPath)
+        -> CGFloat {
+            
+            let task = taskManager.calendarArray[taskManager.dateLocationDay][indexPath.row]
+            let start_time = task.startTime.getTimeValForComparison()
+            let end_time = task.endTime.getTimeValForComparison()
+            
+            // find hour value difference
+            let hour_diff = (end_time - start_time) / 100
+            
+            return CGFloat(44 * hour_diff)
     }
-    
     
     // allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -432,7 +424,6 @@ class DailyScheduleTableViewController: UITableViewController{
             }
             
             cell.textLabel?.text = label
-            subLabel += add_to_detail(task)
             cell.detailTextLabel?.text = subLabel
             
             return cell
