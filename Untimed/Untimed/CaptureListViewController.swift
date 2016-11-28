@@ -27,7 +27,6 @@ class CaptureListViewController: UIViewController {
         textView.text = storedText
     }
   
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         storedText = textView.text
     }

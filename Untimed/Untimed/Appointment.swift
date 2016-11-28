@@ -9,13 +9,6 @@
 import Foundation
 
 class Appointment: Task {
-    
-//    // to test: var startTime = "11.30"
-//    var startTime: NSDate = NSDate()
-//    
-//    // to test: var endTime = " 1 am tomorrow"
-//    var endTime: NSDate = NSDate()
-    
     var doesRepeat: Bool {
         get {
             if repeatOptionsIndex == 0 {
@@ -37,8 +30,6 @@ class Appointment: Task {
     // repeatDaysIndex[0] corresponds to Sunday and [6] to Saturday
     var repeatDaysIndex = [Bool](count: 7, repeatedValue: false)
     
-//    var daysToRepeat = RepeatDays()
-    
     // 0: never
     // 1: daily
     // 2: every weekday
@@ -46,7 +37,7 @@ class Appointment: Task {
     // 4: custom
     var repeatOptionsIndex = 0
     
-    // FIXME: either make it a bool or make a third option for after so many repetitions
+
     // 0: never
     // 1: specific date
     var endRepeatIndex = 0
@@ -91,7 +82,6 @@ class Appointment: Task {
     
     private func repeatDaily() {
         repetitions.append(self)
-        // FIXME: how to work without endRepeat Date
         for i in 1..<26 {
             let daysToAdd = i
             
@@ -233,7 +223,6 @@ class Appointment: Task {
         }
     }
     
-    // note: this isn't very efficient
     private func repeatCustom() {
         repetitions.append(self)
 
@@ -297,18 +286,6 @@ class Appointment: Task {
         case Custom
     }
     
-//    struct RepeatDays {
-//        var Sunday = false
-//        var Monday = false
-//        var Tuesday = false
-//        var Wednesday = false
-//        var Thursday = false
-//        var Friday = false
-//        var Saturday = false
-//    }
-    
-
-    
     var dayIndexToString: [Int: String] = [0: "Sunday", 1: "Monday", 2: "Tuesday",
                                       3: "Wednesday", 4: "Thursday", 5: "Friday",
                                       6: "Saturday"]
@@ -342,10 +319,6 @@ class Appointment: Task {
             for i in 0..<7 {
                 repeatDaysIndex[i] = true
             }
-//            daysToRepeat.Sunday = true; daysToRepeat.Monday = true
-//            daysToRepeat.Tuesday = true; daysToRepeat.Wednesday = true
-//            daysToRepeat.Thursday = true; daysToRepeat.Friday = true
-//            daysToRepeat.Saturday = true
         }
         if option == .EveryWeekday {
             for i in 1..<6 {
@@ -353,9 +326,7 @@ class Appointment: Task {
             }
             repeatDaysIndex[0] = false
             repeatDaysIndex[6] = false
-//            daysToRepeat.Monday = true; daysToRepeat.Tuesday = true
-//            daysToRepeat.Wednesday = true; daysToRepeat.Thursday = true
-//            daysToRepeat.Friday = true
+
         }
         if option == .Weekly {
 //            let day = dayToString[0]

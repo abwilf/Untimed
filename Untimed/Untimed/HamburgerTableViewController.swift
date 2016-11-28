@@ -15,18 +15,10 @@ class HamburgerTableViewController: UITableViewController {
         super.viewDidLoad()
         
         tmObj.loadFromDisc()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func viewWillAppear(animated: Bool) {
-//        tmObj = TaskManager()
-      //  assert(tmObj.dailyListArray.count != 0, "")
         tmObj.loadFromDisc()
-        //assert(tmObj.dailyListArray.count != 0, "")
     }
     @IBAction func tasksButtonPressed(sender: UIButton) {
         self.performSegueWithIdentifier("To Tasks", sender: sender)

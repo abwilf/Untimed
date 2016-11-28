@@ -90,8 +90,7 @@ class DailyScheduleTableViewController: UITableViewController{
     
     
     @IBAction func unwindFromAccountability (sender: UIStoryboardSegue) {
-        if let atvc = sender.sourceViewController as? AccountabilityTableViewController {
-            // maybe get rid of tasks
+        if let _ = sender.sourceViewController as? AccountabilityTableViewController {
         }
     }
 
@@ -218,10 +217,6 @@ class DailyScheduleTableViewController: UITableViewController{
                 alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
                     let textField = alert.textFields![0] as UITextField
                     
-                    //print("Text field: \(textField.text)")
-                    
-                    // FIXME: temporary until we get the task list sorted out!
-                    
                     // create a task with that name to put in the wbObj's focus array
                     let newTaskObj = Task()
                     
@@ -286,9 +281,6 @@ class DailyScheduleTableViewController: UITableViewController{
         }
         
         taskManager.loadFromDisc()
-    
-        // FIXME: for testing only
-//        clearSelectedDate()
 
         // set selectedDate
         selectedDate = taskManager.selectedDate
@@ -319,29 +311,6 @@ class DailyScheduleTableViewController: UITableViewController{
     override func viewWillDisappear(animated: Bool) {
        // print (taskManager.calendarArray[0][0].title)
     }
-    
-//    // connecting add and single task viewer pages to this
-//    @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
-//    {
-//        // add assignment created here!
-//        if let aavc = sender.sourceViewController as? AddAssignmentTableViewController {
-//            
-//            taskManager.addAssignment(aavc.addedAssignment, forClass: )
-//            
-//            // tableView = inherited property from UITableViewCOntroller class
-//            tableView.reloadData()
-//        }
-//        
-//        
-//        // add appointment created here!
-//        if let aapptvc = sender.sourceViewController as? AddAppointmentTableViewController {
-//            taskManager.addTask(aapptvc.addedAppointment)
-//            
-//            tableView.reloadData()
-//        }
-//        
-//        // Pull any data from the view controller which initiated the unwind segue.
-//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -439,51 +408,7 @@ class DailyScheduleTableViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        
-        /*self.settingsButton.title = NSString(string: "\u{2699}") as String
-        if let font = UIFont(name: "Helvetica", size: 18.0) {
-            self.settingsButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-        }*/
- 
     }
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the specified item to be editable.
-    return true
-    }
-    */
-    
-    
-    /*
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    
-    if (editingStyle == UITableViewCellEditingStyle.Delete){
-    
-    // delete and save
-    taskManager.deleteTaskAtIndex(indexPath.row)
-    tableView.reloadData()
-    }
-    }
-    
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the item to be re-orderable.
-    return true
-    }
-    */
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     

@@ -20,22 +20,15 @@ class CustomRepeatTableViewController: AddAppointmentTableViewController {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
-    // self.view
-    
-
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 {
             let cell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
             if cell.accessoryType == UITableViewCellAccessoryType.None {
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-//                addedAppointment.repeatDaysIndex[indexPath.row] = true
                 repeatDaysArray[indexPath.row] = true
             }
             else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
-//                addedAppointment.repeatDaysIndex[indexPath.row] = false
                 repeatDaysArray[indexPath.row] = false
             }
         }
@@ -43,18 +36,6 @@ class CustomRepeatTableViewController: AddAppointmentTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
     }
-    
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if tableView.indexPathForSelectedRow?.section == 0 {
-//            if let indexChosen = tableView.indexPathForSelectedRow?.row {
-//                // send projAndAssnArray to the next view controller based on which project is selected
-//                optionIndex = indexChosen
-//            }
-//        }
-//        else if tableView.indexPathForSelectedRow?.section == 1 {
-//            optionIndex = 5
-//        }
-//    }
+
 }
