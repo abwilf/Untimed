@@ -376,6 +376,7 @@ class DailyScheduleTableViewController: UITableViewController{
             return CGFloat(44 * hour_diff)
     }
     
+    
     // allocate elements from calendar array to cells in view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -397,7 +398,7 @@ class DailyScheduleTableViewController: UITableViewController{
             if let temp = task as? Appointment {
                 let title = temp.title
                 label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): \(title)"
-                color = UIColor(red: 200/255, green: 75/255, blue: 25/255, alpha: 0.5)
+                color = UIColor(red: 75/255, green: 200/255, blue: 25/255, alpha: 0.5)
             }
             
             if let temp = task as? WorkingBlock {
@@ -430,7 +431,6 @@ class DailyScheduleTableViewController: UITableViewController{
             cell.textLabel?.backgroundColor = color;
             cell.detailTextLabel?.backgroundColor = color;
             cell.backgroundColor = color;
-            
             return cell
         }
         else {
