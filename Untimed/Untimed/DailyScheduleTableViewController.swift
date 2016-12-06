@@ -311,7 +311,6 @@ class DailyScheduleTableViewController: UITableViewController{
     
     func setWorkingHours() {
         assert(taskManager.settingsArray.count == 2, "tm settings arr is wrong")
-        
         taskManager.firstWorkingHour = taskManager.settingsArray[0]
         taskManager.lastWorkingHour = taskManager.settingsArray[1]
     }
@@ -383,6 +382,8 @@ class DailyScheduleTableViewController: UITableViewController{
         // giving cell information and telling where to find it
         let cell = tableView.dequeueReusableCellWithIdentifier("Daily Schedule Cell", forIndexPath: indexPath)
         
+        var color = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+
         if indexPath.row < taskManager.calendarArray[selectedDate.calendarDayIndex()].count {
             let task = taskManager.calendarArray[taskManager.dateLocationDay][indexPath.row]
         
@@ -390,17 +391,18 @@ class DailyScheduleTableViewController: UITableViewController{
             var subLabel = ""
             
             if let temp = task as? Free {
-                
                 label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): Free"
             }
             
             if let temp = task as? Appointment {
                 let title = temp.title
                 label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): \(title)"
+                color = UIColor(red: 200/255, green: 75/255, blue: 25/255, alpha: 0.5)
             }
             
             if let temp = task as? WorkingBlock {
                 label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): Working Block"
+                color = UIColor(red: 0, green: 100/255, blue: 165/255, alpha: 0.5)
                 if temp.focusArr.count != 0 {
                     subLabel = "Focus: "
                     for i in 0..<temp.focusArr.count {
@@ -425,6 +427,9 @@ class DailyScheduleTableViewController: UITableViewController{
             
             cell.textLabel?.text = label
             cell.detailTextLabel?.text = subLabel
+            cell.textLabel?.backgroundColor = color;
+            cell.detailTextLabel?.backgroundColor = color;
+            cell.backgroundColor = color;
             
             return cell
         }
