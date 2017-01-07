@@ -17,8 +17,6 @@ class AddProjectTableViewController: UITableViewController {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
-    
     @IBAction func editingDidChange(sender: UITextField) {
         if let newTitle = sender.text {
             addedProject.title = newTitle

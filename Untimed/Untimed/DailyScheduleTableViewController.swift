@@ -287,7 +287,7 @@ class DailyScheduleTableViewController: UITableViewController{
         
         taskManager.loadFromDisc()
     
-        // FIXME: for testing only
+        // for testing only
 //        clearSelectedDate()
 
         // set selectedDate

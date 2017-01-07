@@ -24,6 +24,4 @@ class EditAssignmentTableViewController: UITableViewController {
         newDueDate = sender.date
         assn.dueDate = newDueDate
     }
-    
-    // need changedTime action!!!
 }

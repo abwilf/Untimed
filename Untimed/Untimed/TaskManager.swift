@@ -182,11 +182,6 @@ class TaskManager: NSObject {
         }
     }
     
-//    func deleteSingleInstance(dayIndex col: Int, rowIndex row: Int) {
-//        calendarArray[col].removeAtIndex(row)
-//        save()
-//    }
-    
     func calArrayDescriptionAtIndex(min: Int, day: Int) {
         print ("\(calendarArray[min][day].title)")
     }
@@ -253,13 +248,7 @@ class TaskManager: NSObject {
     }
 
     func allocateTime() {
-        
-//        clearAll()
-//        clearAppts()
-        
          updateCalArray()
-        
-//        allocateWorkingBlocks()
     }
     
     // use this when an appt is added
@@ -413,10 +402,6 @@ class TaskManager: NSObject {
             return true
         }
         return false
-//        if earlier.compare(later) == NSComparisonResult.OrderedAscending {
-//            return true
-//        }
-//        return false
     }
     
     private func isDate(first: NSDate, sameAs second: NSDate) -> Bool {
@@ -426,10 +411,6 @@ class TaskManager: NSObject {
             return true
         }
         return false
-//        if first.compare(second) == NSComparisonResult.OrderedSame {
-//            return true
-//        }
-//        return false
     }
     
     private func firstWorkingBlockInDay(dayIndex i: Int) -> (startTime: NSDate?, endTime: NSDate?, rowIndex: Int?) {
@@ -486,14 +467,6 @@ class TaskManager: NSObject {
             calendarArray[dayIndex].insert(workingBlock, atIndex: rowIndex!)
             (startTime, endTime, rowIndex) = firstWorkingBlockInDay(dayIndex: dayIndex)
         }
-        //        for j in 0..<28 {
-        //            for i in firstWorkingMinute..<lastWorkingMinute {
-        //                if let _ = self.calendarArray[i][j] as? Free {
-        //
-        //                    self.calendarArray[i][j] = WorkingBlock()
-        //                }
-        //            }
-        //        }
     }
 
     private func allocateApptInCorrectSpot(appt: Appointment, day dayIn: Int) {
@@ -568,10 +541,6 @@ class TaskManager: NSObject {
         
         let archiveDateLastUsed: NSData = NSKeyedArchiver.archivedDataWithRootObject(dateLastUsed)
         
-       // let archiveDailyList: NSData? = NSKeyedArchiver.archivedDataWithRootObject(dailyListArray)
-
-//        let archiveCal: NSData = NSKeyedArchiver.archivedDataWithRootObject
-        
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(archiveClass, forKey: "classArray")
         defaults.setObject(archiveAppt, forKey: "appointmentArray")
@@ -579,7 +548,6 @@ class TaskManager: NSObject {
         defaults.setObject(archiveCaptureListText, forKey: "captureListText")
         defaults.setObject(archiveCal, forKey: "calendarArray")
         defaults.setObject(archiveDateLastUsed, forKey: "dateLastUsed")
-      //  defaults.setObject(archiveDailyList, forKey: "dailyListArray")
         
         setSettingsArray()
         assert(settingsArray.count == 2, "setSettingsArray func failed")
@@ -615,13 +583,9 @@ class TaskManager: NSObject {
         settingsArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] ?? []
         
         if (NSKeyedUnarchiver.unarchiveObjectWithData(archiveDailyList) as? [String]) != nil {
-            
-       //     dailyListArray = temp
-            
             print (dailyListArray)
         }
         else {
-//            assert(false, "dailyListArray not loading from disc!")
         }
         
         // captureListText
@@ -630,8 +594,6 @@ class TaskManager: NSObject {
         }
         else {
             captureListText = ""
-            // FIXME: this will fail for user's first run
-//            assert(false, "save and load failed for selectedDate")
         }
         
         
@@ -641,7 +603,7 @@ class TaskManager: NSObject {
         else {
             calendarArray = Array(count: 365, repeatedValue: Array(count: 0, repeatedValue: Free()))
         }
-//
+
         dateLastUsed = NSKeyedUnarchiver.unarchiveObjectWithData(archiveCal) as? NSDate ?? NSDate()
         
         if dateLastUsed.calendarDayIndex() < 0 {
@@ -657,8 +619,6 @@ class TaskManager: NSObject {
         }
         else {
             selectedDate = NSDate()
-        // FIXME: this is just for testing
-//            assert(false, "save and load failed for selectedDate")
         }
         
         

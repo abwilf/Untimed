@@ -15,11 +15,8 @@ class CaptureListViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        setTextView()
-        
-        
+        setTextView()   
     }
-    
     
     @IBOutlet var textView: UITextView!
     

@@ -8,7 +8,6 @@
 
 import UIKit
 
-// FIXME: include a button to check off tasks that you haven't specified as a focus
 class AccountabilityTableViewController: UITableViewController {
     var focusTasks: [Task] = []
     var indexSelected: Int = 0
@@ -24,12 +23,10 @@ class AccountabilityTableViewController: UITableViewController {
         }
     }
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return focusTasks.count
     }
 

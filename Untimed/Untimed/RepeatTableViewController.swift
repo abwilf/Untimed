@@ -16,13 +16,8 @@ class RepeatTableViewController: UITableViewController {
     
     var currentCategory: NSIndexPath? = nil
     var taskCategories: NSArray? = nil
-    
-    //var appointment = Appointment()
-    
+        
     override func viewDidAppear(animated: Bool) {
-        
-//        super.viewWillAppear(animated)
-        
         var initialIndexPath = NSIndexPath(forRow: optionIndex, inSection: 0)
         if optionIndex < 5 {
         }

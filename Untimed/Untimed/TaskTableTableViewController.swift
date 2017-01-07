@@ -35,15 +35,13 @@ class TaskTableTableViewController: UITableViewController {
         if focusIndicator == false {
             tmObj.loadFromDisc()
         }
-        
-//        taskManager.createClassArray()
     }
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
     override func viewWillAppear(animated: Bool) {
         
-        // FIXME: use only for testing
+        // use only for testing
 //        resetForTesting()
         
         super.viewWillAppear(animated)
@@ -67,58 +65,6 @@ class TaskTableTableViewController: UITableViewController {
     
     @IBAction func unwindAndAddTask(sender: UIStoryboardSegue)
     {
-//        // save from add assignment via unwind
-//        if let aavc =
-//            sender.sourceViewController as? AddAssignmentTableViewController {
-//            
-//            let classAddedAsgtBelongsTo = tmObj.classArray[aavc.addedAssignment.classTaskArrIndex]
-//            
-//            // add first to general tasks list, then erase and rederive classArray
-//            tmObj.addAssignment(aavc.addedAssignment, forClass: classAddedAsgtBelongsTo)
-//            
-////            let tasksIndexForClass = taskManager.classArray[aavc.addedAssignment.classClassArrIndex].tasksIndex
-//            
-//
-////            if let tmt = taskManager.tasks[tasksIndexForClass] as? Class {
-////                tmt.projAndAssns += [aavc.addedAssignment]
-////            }
-//            
-//            // draws from tasks array in creation and saves
-//            tmObj.save()
-//            
-//            tableView.reloadData()
-//        }
-        
-        
-        
-//        
-//        // add project
-//        if let aatvc = sender.sourceViewController as?
-//            AddProjectTableViewController {
-//            
-//            let classProjBelongsTo = tmObj.classArray[aatvc.addedProject.classClassArrIndex]
-//            
-//            tmObj.addProject(aatvc.addedProject, forClass: classProjBelongsTo)
-//        
-//            tmObj.save()
-//            
-//            tableView.reloadData()
-//        }
-//        
-//        // add project task
-//        if let apttvc = sender.sourceViewController as?
-//            AddProjectTaskTableViewController {
-//
-//            let projectThatTaskBelongsTo = tmObj.classArray[apttvc.classIndex].projAndAssns[apttvc.projectAndAssnArrIndex] as! Project
-//            
-//                tmObj.addProjectTask(apttvc.addedProjTask, forProject: projectThatTaskBelongsTo)
-//            
-//            // works up to here.  doesn't save and load correctly (at least within this page)
-//            tmObj.save()
-//            
-//            tableView.reloadData()
-//        }
-        
         // save from add class
         if let actvc = sender.sourceViewController as?
             AddClassTableViewController {
@@ -135,7 +81,6 @@ class TaskTableTableViewController: UITableViewController {
         if let sttvc =
             sender.sourceViewController as? SingleTaskTableViewController {
             _ = sttvc.index
-//            taskManager.deleteTaskAtIndex(index)
             tableView.reloadData()
         }
     }
@@ -175,8 +120,6 @@ class TaskTableTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -238,10 +181,6 @@ class TaskTableTableViewController: UITableViewController {
         }
         
         if (segue.identifier == "Add Project Task Segue") {
-            
-            // update all class array elements with proj only arrays
-//            tmObj.createProjOnlyArray()
-            
             let destinationNavigationController = segue.destinationViewController as! UINavigationController
             let targetController = destinationNavigationController.topViewController as! AddProjectTaskTableViewController
             targetController.classes = tmObj.classArray
