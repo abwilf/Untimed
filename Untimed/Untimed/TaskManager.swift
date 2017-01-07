@@ -614,7 +614,7 @@ class TaskManager: NSObject {
         
         settingsArray = NSKeyedUnarchiver.unarchiveObjectWithData(archiveSettings) as? [NSDate] ?? []
         
-        if let temp = NSKeyedUnarchiver.unarchiveObjectWithData(archiveDailyList) as? [String] {
+        if (NSKeyedUnarchiver.unarchiveObjectWithData(archiveDailyList) as? [String]) != nil {
             
        //     dailyListArray = temp
             

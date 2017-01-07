@@ -55,8 +55,8 @@ class AddProjectTaskTableViewController: UITableViewController {
     @IBAction func unwindFromPickAProject(sender: UIStoryboardSegue) {
         if let paptvc =
             sender.sourceViewController as? PickAProjectTableViewController {
-            let projOnlyIndex = paptvc.indexChosen
-            let classSelected = classes[classIndex]
+            _ = paptvc.indexChosen
+            _ = classes[classIndex]
 //            let indexInProjAndAssn = classSelected.projOnlyArray[projOnlyIndex].indexInProjAndAssnArr
 //            projectAndAssnArrIndex = indexInProjAndAssn!
         }

@@ -51,7 +51,7 @@ class TaskTableTableViewController: UITableViewController {
         // for hambuger icon
         if self.revealViewController() != nil {
             menuButton.target = self.revealViewController()
-            menuButton.action = "revealToggle:"
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
@@ -134,7 +134,7 @@ class TaskTableTableViewController: UITableViewController {
     @IBAction func unwindAndDeleteTask(sender: UIStoryboardSegue) {
         if let sttvc =
             sender.sourceViewController as? SingleTaskTableViewController {
-            let index = sttvc.index
+            _ = sttvc.index
 //            taskManager.deleteTaskAtIndex(index)
             tableView.reloadData()
         }

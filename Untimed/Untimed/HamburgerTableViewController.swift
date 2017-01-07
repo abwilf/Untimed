@@ -20,6 +20,7 @@ class HamburgerTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        tableView.tableFooterView = UIView(frame: CGRectZero)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -76,7 +77,7 @@ class HamburgerTableViewController: UITableViewController {
     }
     
     @IBAction func unwindFromAccountabilityToHamburger (sender: UIStoryboardSegue) {
-        if let atvc = sender.sourceViewController as? AccountabilityTableViewController {
+        if sender.sourceViewController is AccountabilityTableViewController {
             // maybe get rid of tasks
             tableView.reloadData()
         }

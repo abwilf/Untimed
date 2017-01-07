@@ -12,7 +12,6 @@
 		21895A721D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21895A711D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift */; };
 		218B9C4F1D6B54E500AF38EB /* TaskSequence.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 218B9C4D1D6B54E500AF38EB /* TaskSequence.storyboard */; };
 		218B9C511D6B5EE600AF38EB /* DailyScheduleScenes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 218B9C501D6B5EE600AF38EB /* DailyScheduleScenes.storyboard */; };
-		218B9C541D6B604F00AF38EB /* Misc.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 218B9C521D6B604F00AF38EB /* Misc.storyboard */; };
 		218CCE141D0C663800CB6E8A /* AddTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */; };
 		218CCE161D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */; };
 		218DA3191D42823100E269CA /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218DA3181D42823100E269CA /* Project.swift */; };
@@ -82,7 +81,6 @@
 		21895A711D4FF5DF0057FBAD /* AddProjectTaskTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProjectTaskTableViewController.swift; sourceTree = "<group>"; };
 		218B9C4E1D6B54E500AF38EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TaskSequence.storyboard; sourceTree = "<group>"; };
 		218B9C501D6B5EE600AF38EB /* DailyScheduleScenes.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DailyScheduleScenes.storyboard; sourceTree = "<group>"; };
-		218B9C531D6B604F00AF38EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Misc.storyboard; sourceTree = "<group>"; };
 		218CCE131D0C663800CB6E8A /* AddTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTimeViewController.swift; sourceTree = "<group>"; };
 		218CCE151D0C6A7700CB6E8A /* ChooseAssignmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAssignmentViewController.swift; sourceTree = "<group>"; };
 		218DA3181D42823100E269CA /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
@@ -238,7 +236,6 @@
 				A2116D781CA968EC003D221D /* Main.storyboard */,
 				218B9C501D6B5EE600AF38EB /* DailyScheduleScenes.storyboard */,
 				218B9C4D1D6B54E500AF38EB /* TaskSequence.storyboard */,
-				218B9C521D6B604F00AF38EB /* Misc.storyboard */,
 				211329C31D5251270070948F /* Models */,
 				211329C41D5251580070948F /* View Controllers */,
 				A21977821D5CF86700D1CE30 /* SWRevealController */,
@@ -386,7 +383,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				218B9C541D6B604F00AF38EB /* Misc.storyboard in Resources */,
 				A2116D7F1CA968EC003D221D /* LaunchScreen.storyboard in Resources */,
 				214745F41CB8B568007BABCA /* core.pdf in Resources */,
 				A2116D7C1CA968EC003D221D /* Assets.xcassets in Resources */,
@@ -499,14 +495,6 @@
 				218B9C4E1D6B54E500AF38EB /* Base */,
 			);
 			name = TaskSequence.storyboard;
-			sourceTree = "<group>";
-		};
-		218B9C521D6B604F00AF38EB /* Misc.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				218B9C531D6B604F00AF38EB /* Base */,
-			);
-			name = Misc.storyboard;
 			sourceTree = "<group>";
 		};
 		A2116D781CA968EC003D221D /* Main.storyboard */ = {

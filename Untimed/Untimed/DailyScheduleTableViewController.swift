@@ -90,7 +90,7 @@ class DailyScheduleTableViewController: UITableViewController{
     
     
     @IBAction func unwindFromAccountability (sender: UIStoryboardSegue) {
-        if let atvc = sender.sourceViewController as? AccountabilityTableViewController {
+        if sender.sourceViewController is AccountabilityTableViewController {
             // maybe get rid of tasks
         }
     }
@@ -207,7 +207,7 @@ class DailyScheduleTableViewController: UITableViewController{
             
             let writeInFocusAction = UIAlertAction(title: "Write In Focus", style: .Default) { (action) in
                 // Create the alert controller.
-                var alert = UIAlertController(title: "Write In Focus", message: "Enter Task Name", preferredStyle: .Alert)
+                let alert = UIAlertController(title: "Write In Focus", message: "Enter Task Name", preferredStyle: .Alert)
                 
                 // Add the text field. You can configure it however you need.
                 alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
@@ -299,7 +299,7 @@ class DailyScheduleTableViewController: UITableViewController{
         // for hamburger icon
         if self.revealViewController() != nil {
             menuButton.target = self.revealViewController()
-            menuButton.action = "revealToggle:"
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 

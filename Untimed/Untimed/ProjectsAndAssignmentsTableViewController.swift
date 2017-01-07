@@ -159,7 +159,7 @@ class ProjectsAndAssignmentsTableViewController: UITableViewController {
         else {
             if let indexSelected = tableView.indexPathForSelectedRow?.row {
                 // if it's an assignment
-                if let assnObj = selectedClass.projAndAssns[indexSelected] as? Assignment {
+                if selectedClass.projAndAssns[indexSelected] is Assignment {
                     // FIXME: segue to single task viewer
                 }
                     
