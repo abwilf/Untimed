@@ -398,12 +398,13 @@ class DailyScheduleTableViewController: UITableViewController{
             if let temp = task as? Appointment {
                 let title = temp.title
                 label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): \(title)"
-                color = UIColor(red: 75/255, green: 200/255, blue: 25/255, alpha: 0.5)
+                color = UIColor(red: 191/255, green:255/255, blue:82/255, alpha: 0.45)
+
             }
             
             if let temp = task as? WorkingBlock {
                 label = "\(hourMinuteStringFromNSDate(temp.startTime)) - \(hourMinuteStringFromNSDate(temp.endTime)): Working Block"
-                color = UIColor(red: 0, green: 100/255, blue: 165/255, alpha: 0.5)
+                color = UIColor(red: 82/255, green: 111/255, blue: 255/255, alpha: 0.45)
                 if temp.focusArr.count != 0 {
                     subLabel = "Focus: "
                     for i in 0..<temp.focusArr.count {
